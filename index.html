@@ -7,59 +7,25 @@
     <title>Wiigii's RankFinder</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-        }
+    <link rel="stylesheet" href="style.css">
 
-        /* Custom scrollbar for better aesthetics */
-        .custom-scrollbar::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        .custom-scrollbar::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-        }
-
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: rgba(168, 85, 247, 0.6);
-            /* purple-500 with opacity */
-            border-radius: 10px;
-        }
-
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-            background: rgba(168, 85, 247, 0.8);
-        }
-
-        .card-enter-active,
-        .card-leave-active {
-            transition: all 0.5s ease;
-        }
-
-        .card-enter-from,
-        .card-leave-to {
-            opacity: 0;
-            transform: translateY(20px);
-        }
-
-        /* Spinner animation */
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        .spinner {
-            animation: spin 1s linear infinite;
-        }
-    </style>
 </head>
 
-<body class="min-h-screen bg-gradient-to-br from-gray-900 to-black text-gray-100 p-4 flex items-center justify-center">
+<body
+    class="min-h-screen bg-gradient-to-br from-gray-900 to-black text-gray-100 p-4 flex flex-col items-center justify-center">
+
+    <!-- Navbar -->
+    <nav
+        class="w-full max-w-4xl mx-auto bg-gray-950 bg-opacity-80 rounded-t-3xl shadow-[0_10px_30px_rgba(168,85,247,0.2)] border border-purple-800 border-b-0 p-4 flex justify-center items-center gap-8 z-10 sticky top-0">
+
+        <a href="/completionist"
+            class="text-gray-300 hover:text-purple-400 transition-colors duration-200 font-semibold text-lg">
+            Completionist
+        </a>
+    </nav>
 
     <div
-        class="max-w-4xl w-full mx-auto bg-gray-950 bg-opacity-70 rounded-3xl shadow-[0_20px_50px_rgba(168,85,247,0.3)] p-10 space-y-10 backdrop-blur-md border border-purple-800">
+        class="max-w-4xl w-full mx-auto bg-gray-950 bg-opacity-70 rounded-b-3xl shadow-[0_20px_50px_rgba(168,85,247,0.3)] p-10 space-y-10 backdrop-blur-md border border-purple-800 border-t-0">
         <h1 class="text-5xl font-extrabold text-center text-purple-400 drop-shadow-[0_2px_2px_rgba(0,0,0,0.5)] mb-8">
             Wiigii's RankFinder 🔎
         </h1>

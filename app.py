@@ -1,23 +1,41 @@
-import os
+import os 
+import time
+import json
+import requests
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
-import requests
-import json
-import time
+from completionist import get_completionists  # import the wrapper function
 
 app = Flask(__name__)
-CORS(app)  # Enable CORS for all origins (adjust in production)
+CORS(app)  # Enable CORS for all origins
 
 # Base URLs
 WCA_API_BASE_URL = "https://www.worldcubeassociation.org/api/v0"
 WCA_RANK_DATA_BASE_URL = "https://raw.githubusercontent.com/robiningelbrecht/wca-rest-api/master/api/rank"
 
-# New route to serve the index.html file
+OFFICIAL_EVENTS = [
+    "333","222","444","555","666","777","333oh","333bf","333fm",
+    "clock","minx","pyram","skewb","sq1","444bf","555bf","333mbf"
+]
+
+# Route to serve index.html
 @app.route("/")
 def serve_index():
-    # If index.html is at the root of your application folder,
-    # the directory should be '.' (current directory).
-    return send_from_directory(os.path.dirname(os.path.abspath(__file__)), 'index.html')
+    return send_from_directory(os.path.dirname(os.path.abspath(__file__)), "index.html")
+
+@app.route("/completionist")
+def serve_completionists():
+    return send_from_directory(os.path.dirname(os.path.abspath(__file__)), "completionist.html")
+
+# Fix: allow /api/completionists without category
+@app.route("/api/completionists", defaults={"category": "all"})
+@app.route("/api/completionists/<category>")
+def completionists_route(category):
+    try:
+        data = get_completionists()
+        return jsonify(data)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 def fetch_data_with_retry(url, max_retries=5, backoff_factor=0.5):
     """Fetch data with retries and exponential backoff."""
@@ -29,13 +47,12 @@ def fetch_data_with_retry(url, max_retries=5, backoff_factor=0.5):
         except (requests.exceptions.RequestException, json.JSONDecodeError) as e:
             if i < max_retries - 1:
                 sleep_time = backoff_factor * (2 ** i)
-                print(f"Retrying {url} in {sleep_time:.2f} seconds due to error: {e}")
+                print(f"Retrying {url} in {sleep_time:.2f}s due to error: {e}")
                 time.sleep(sleep_time)
             else:
                 print(f"Failed to fetch {url} after {max_retries} retries: {e}")
                 raise
     return None
-
 
 def fetch_person(wca_id):
     """Fetch a single competitor from the official WCA API."""
@@ -52,39 +69,35 @@ def fetch_person(wca_id):
         print(f"⚠️ Error fetching person {wca_id}: {e}")
         return None
 
-
 @app.route("/api/search-competitor", methods=["GET"])
 def search_competitor():
-    """
-    Search competitors by WCA ID (exact match) or by name (partial match using WCA API search).
-    """
+    """Search competitors by WCA ID or name (via WCA API search)."""
     query = request.args.get("name", "").strip()
     if not query:
         return jsonify({"error": "Competitor name cannot be empty"}), 400
 
-    # If query looks like a WCA ID, fetch directly
+    # If query looks like a WCA ID
     if len(query) == 9 and query[:4].isdigit():
         person = fetch_person(query)
         return jsonify([person]) if person else (jsonify([]), 200)
 
-    # Otherwise, use WCA API search
+    # Otherwise use WCA API search
     url = f"{WCA_API_BASE_URL}/search/users?q={query}"
     try:
         data = fetch_data_with_retry(url)
         matches = data.get("result", [])
-        found = []
-        for m in matches:
-            if "wca_id" in m and m["wca_id"]:
-                found.append({
-                    "wcaId": m["wca_id"],
-                    "name": m.get("name", "Unknown"),
-                    "countryIso2": m.get("country_iso2", "N/A"),
-                })
-        return jsonify(found[:50])  # limit to 50 results
+        found = [
+            {
+                "wcaId": m["wca_id"],
+                "name": m.get("name", "Unknown"),
+                "countryIso2": m.get("country_iso2", "N/A"),
+            }
+            for m in matches if "wca_id" in m and m["wca_id"]
+        ]
+        return jsonify(found[:50])  # limit results
     except Exception as e:
         print(f"Error during search: {e}")
         return jsonify([]), 200
-
 
 @app.route("/api/rankings/<wca_id>", methods=["GET"])
 def get_rankings(wca_id):
@@ -105,7 +118,6 @@ def get_rankings(wca_id):
         return jsonify({"error": f"Failed to fetch rankings: {str(e)}"}), status
     except json.JSONDecodeError:
         return jsonify({"error": "Failed to decode WCA API response."}), 500
-
 
 @app.route("/api/global-rankings/<region>/<type_param>/<event>", methods=["GET"])
 def get_global_rankings(region, type_param, event):
@@ -138,14 +150,17 @@ def get_global_rankings(region, type_param, event):
             rank_to_check = item.get("worldRank")
             if region not in ["world", "europe", "north_america", "asia", "south_america", "africa", "oceania"]:
                 rank_to_check = item.get("rank", {}).get("country")
-            elif region not in ["world"]:
+            elif region != "world":
                 rank_to_check = item.get("rank", {}).get("continent")
             else:
                 rank_to_check = item.get("rank", {}).get("world")
 
             if rank_to_check == requested_rank:
                 person_id = item.get("personId")
-                person_obj = fetch_person(person_id) or {"name": f"Unknown (WCA ID: {person_id})", "countryIso2": "N/A"}
+                person_obj = fetch_person(person_id) or {
+                    "name": f"Unknown (WCA ID: {person_id})",
+                    "countryIso2": "N/A",
+                }
                 new_item = {
                     "personId": person_id,
                     "eventId": item.get("eventId"),
@@ -159,10 +174,9 @@ def get_global_rankings(region, type_param, event):
                 break
 
         if not filtered_items:
-            return (
-                jsonify({"error": f"No competitor found at rank #{requested_rank} for {event} ({type_param}) in {region}."}),
-                404,
-            )
+            return jsonify({
+                "error": f"No competitor found at rank #{requested_rank} for {event} ({type_param}) in {region}."
+            }), 404
 
         return jsonify({"items": filtered_items, "total": len(filtered_items)}), 200
 
@@ -173,7 +187,5 @@ def get_global_rankings(region, type_param, event):
     except json.JSONDecodeError:
         return jsonify({"error": "Failed to decode rankings response."}), 500
 
-# This `if __name__ == "__main__":` block is for local development only.
-# PythonAnywhere will not run this when deploying your app as a serverless function.
 if __name__ == "__main__":
     app.run(debug=True, port=5000)

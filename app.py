@@ -15,7 +15,9 @@ WCA_RANK_DATA_BASE_URL = "https://raw.githubusercontent.com/robiningelbrecht/wca
 # New route to serve the index.html file
 @app.route("/")
 def serve_index():
-    return send_from_directory('public', 'index.html')
+    # If index.html is at the root of your application folder,
+    # the directory should be '.' (current directory).
+    return send_from_directory(os.path.dirname(os.path.abspath(__file__)), 'index.html')
 
 def fetch_data_with_retry(url, max_retries=5, backoff_factor=0.5):
     """Fetch data with retries and exponential backoff."""
@@ -172,6 +174,6 @@ def get_global_rankings(region, type_param, event):
         return jsonify({"error": "Failed to decode rankings response."}), 500
 
 # This `if __name__ == "__main__":` block is for local development only.
-# Vercel will not run this when deploying your app as a serverless function.
+# PythonAnywhere will not run this when deploying your app as a serverless function.
 if __name__ == "__main__":
     app.run(debug=True, port=5000)

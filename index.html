@@ -258,22 +258,22 @@
                             <div class="flex flex-col">
                                 <label for="region-select" class="text-gray-300 text-sm font-medium mb-2">Region:</label>
                                 <select id="region-select" class="p-4 rounded-xl border border-gray-700 bg-gray-800 text-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-600 transition duration-200 ease-in-out cursor-pointer appearance-none bg-[url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="white"%3e%3cpath fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /%3e%3c/svg%3e')] bg-[length:1.5rem_1.5rem] bg-[right_1rem_center] bg-no-repeat">
-                                    ${regions.map(region => `<option value="${region.value}" ${selectedRegion === region.value ? 'selected' : ''}>${region.label}</option>`).join('')}
+                                        ${regions.map(region => `<option value="${region.value}" ${selectedRegion === region.value ? 'selected' : ''}>${region.label}</option>`).join('')}
                                 </select>
                             </div>
                             
                             <div class="flex flex-col">
                                 <label for="event-select" class="text-gray-300 text-sm font-medium mb-2">Event:</label>
                                 <select id="event-select" class="p-4 rounded-xl border border-gray-700 bg-gray-800 text-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-600 transition duration-200 ease-in-out cursor-pointer appearance-none bg-[url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="white"%3e%3cpath fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /%3e%3c/svg%3e')] bg-[length:1.5rem_1.5rem] bg-[right_1rem_center] bg-no-repeat">
-                                    ${events.map(event => `<option value="${event.value}" ${selectedEvent === event.value ? 'selected' : ''}>${event.label}</option>`).join('')}
+                                        ${events.map(event => `<option value="${event.value}" ${selectedEvent === event.value ? 'selected' : ''}>${event.label}</option>`).join('')}
                                 </select>
                             </div>
 
                             <div class="flex flex-col">
                                 <label for="ranking-type-select" class="text-gray-300 text-sm font-medium mb-2">Ranking Type:</label>
                                 <select id="ranking-type-select" class="p-4 rounded-xl border border-gray-700 bg-gray-800 text-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-600 transition duration-200 ease-in-out cursor-pointer appearance-none bg-[url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="white"%3e%3cpath fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /%3e%3c/svg%3e')] bg-[length:1.5rem_1.5rem] bg-[right_1rem_center] bg-no-repeat">
-                                    <option value="single" ${selectedRankingType === 'single' ? 'selected' : ''}>Single Rank</option>
-                                    <option value="average" ${selectedRankingType === 'average' ? 'selected' : ''}>Average Rank</option>
+                                        <option value="single" ${selectedRankingType === 'single' ? 'selected' : ''}>Single Rank</option>
+                                        <option value="average" ${selectedRankingType === 'average' ? 'selected' : ''}>Average Rank</option>
                                 </select>
                             </div>
                             
@@ -301,7 +301,7 @@
                         </button>
                     </div>
                 `;
-                // Add event listeners after elements are in DOM
+                // Add event listeners AFTER elements are in DOM
                 document.getElementById('region-select').onchange = (e) => { selectedRegion = e.target.value; };
                 document.getElementById('event-select').onchange = (e) => { selectedEvent = e.target.value; };
                 document.getElementById('ranking-type-select').onchange = (e) => { selectedRankingType = e.target.value; };
@@ -453,13 +453,11 @@
 
         /**
          * Navigates back to the main search form from any view.
+         * Retains previous input selections.
          */
         function handleBackToSearchForm() {
             viewMode = 'global_search_form';
-            selectedRegion = 'world';
-            selectedEvent = '333';
-            selectedRankingType = 'single';
-            rankNumber = '1'; // Reset rank number to default
+            // Removed lines that reset selectedRegion, selectedEvent, selectedRankingType, rankNumber
             globalRankings = null;
             selectedCompetitor = null;
             individualRankings = null;

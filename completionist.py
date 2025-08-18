@@ -1,6 +1,9 @@
 import requests
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import time
+from flask import Flask, jsonify
+
+app = Flask(__name__)
 
 # Event sets for categories
 SINGLE_EVENTS = {
@@ -13,11 +16,7 @@ AVERAGE_EVENTS_SILVER = {
     "minx","pyram","skewb","sq1","clock"
 }
 
-AVERAGE_EVENTS_GOLD = {
-    "333","222","444","555","666","777","333oh",
-    "minx","pyram","skewb","sq1","clock",
-    "333bf","333fm","444bf","555bf"
-}
+AVERAGE_EVENTS_GOLD = AVERAGE_EVENTS_SILVER | {"333bf","333fm","444bf","555bf"}
 
 TOTAL_PAGES = 267
 MAX_WORKERS = 50
@@ -29,40 +28,35 @@ session = requests.Session()
 
 
 def fetch_page(page, attempt=1):
+    """Fetch a JSON page with retries."""
     url = f"https://raw.githubusercontent.com/robiningelbrecht/wca-rest-api/master/api/persons-page-{page}.json"
     try:
-        response = session.get(url, timeout=10)
+        response = session.get(url, timeout=15)
         response.raise_for_status()
         return response.json()
-    except requests.exceptions.RequestException as e:
+    except requests.RequestException as e:
         if attempt < RETRY_ATTEMPTS:
-            delay = INITIAL_RETRY_DELAY * (2 ** (attempt - 1))
-            print(f"⚠️ Failed to fetch page {page} (Attempt {attempt}/{RETRY_ATTEMPTS}). Retrying in {delay}s. Error: {e}")
-            time.sleep(delay)
+            time.sleep(INITIAL_RETRY_DELAY * (2 ** (attempt - 1)))
             return fetch_page(page, attempt + 1)
-        else:
-            print(f"❌ Failed to fetch page {page} after {RETRY_ATTEMPTS} attempts. Error: {e}")
-            return None
+        print(f"❌ Failed to fetch page {page} after {RETRY_ATTEMPTS} attempts. Error: {e}")
+        return None
 
 
 def determine_category(person):
-    # Get event IDs for singles and averages
-    singles = {r.get("eventId") for r in person.get("rank", {}).get("singles", []) if r.get("eventId")}
-    averages = {r.get("eventId") for r in person.get("rank", {}).get("averages", []) if r.get("eventId")}
+    """Determine Bronze/Silver/Gold for a person, return None if not a completionist."""
+    rank = person.get("rank", {})
+    singles = {r.get("eventId") for r in rank.get("singles", []) if r.get("eventId")}
+    if not SINGLE_EVENTS <= singles:
+        return None  # Not all single events completed
 
-    # Check completion of all single events
-    if not SINGLE_EVENTS.issubset(singles):
-        return None
-
-    # Determine category
-    if AVERAGE_EVENTS_GOLD.issubset(averages):
+    averages = {r.get("eventId") for r in rank.get("averages", []) if r.get("eventId")}
+    if AVERAGE_EVENTS_GOLD <= averages:
         category = "Gold"
-    elif AVERAGE_EVENTS_SILVER.issubset(averages):
+    elif AVERAGE_EVENTS_SILVER <= averages:
         category = "Silver"
     else:
         category = "Bronze"
 
-    # Get last competition
     competitions = person.get("competitionResults", [])
     last_comp = max(competitions, key=lambda c: c.get("date", "0000-00-00"), default={})
 
@@ -76,43 +70,45 @@ def determine_category(person):
 
 
 def load_completionists():
+    """Load all completionists, fully concurrent."""
     global _completionists_cache
-    if _completionists_cache is not None:
-        print("Using cached completionists")
+    if _completionists_cache:
         return _completionists_cache
 
     completionists = []
 
+    # Step 1: Fetch all pages concurrently
     with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
-        futures = {executor.submit(fetch_page, p): p for p in range(1, TOTAL_PAGES + 1)}
+        futures = {executor.submit(fetch_page, page): page for page in range(1, TOTAL_PAGES + 1)}
+        pages = []
         for future in as_completed(futures):
-            page = futures[future]
             data = future.result()
-            if not data:
-                continue
+            if data and "items" in data:
+                pages.append(data["items"])
 
-            # Process all persons on this page
-            page_completionists = [p for p in (determine_category(person) for person in data.get("items", [])) if p]
-            completionists.extend(page_completionists)
+    # Step 2: Flatten all persons into a single list
+    all_persons = [person for page in pages for person in page]
 
-            print(f"Page {page} processed. Total completionists: {len(completionists)}")
+    # Step 3: Process all persons concurrently
+    with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
+        results = list(executor.map(determine_category, all_persons))
 
-    print(f"✅ Finished processing all pages. Total completionists found: {len(completionists)}")
+    # Filter out None
+    completionists = [c for c in results if c]
+
     _completionists_cache = completionists
-    return _completionists_cache
+    return completionists
 
 
-def get_completionists():
-    """Wrapper for Flask endpoint"""
-    return load_completionists()
-
-
-# Example usage
-if __name__ == "__main__":
+@app.route("/api/completionists")
+def completionists_endpoint():
+    """Flask API endpoint to serve completionists as JSON."""
     start = time.time()
-    result = get_completionists()
+    data = load_completionists()
     end = time.time()
-    print(f"Fetched {len(result)} completionists in {end - start:.2f}s")
-    # print first 5 completionists
-    for c in result[:5]:
-        print(c)
+    print(f"Served {len(data)} completionists in {end - start:.2f}s")
+    return jsonify(data)
+
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000, debug=True)

@@ -4,7 +4,7 @@ import json
 import requests
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
-from completionist import get_completionists  # import the wrapper function
+from completionist import load_completionists
 
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all origins
@@ -30,12 +30,11 @@ def serve_completionists():
 # Fix: allow /api/completionists without category
 @app.route("/api/completionists", defaults={"category": "all"})
 @app.route("/api/completionists/<category>")
-def completionists_route(category):
-    try:
-        data = get_completionists()
-        return jsonify(data)
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
+@app.route("/api/completionists")
+def completionists():
+    data = load_completionists()
+    return jsonify(data)
+
 
 def fetch_data_with_retry(url, max_retries=5, backoff_factor=0.5):
     """Fetch data with retries and exponential backoff."""

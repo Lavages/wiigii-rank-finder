@@ -1,0 +1,4916 @@
+[
+  {
+    "id": "2010HONG01",
+    "name": "Chi-Lun Hung (洪啟倫)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2010KILD02",
+    "name": "Wilhelm Kilders",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2008TAKA01",
+    "name": "Yuhei Takagi (高木佑平)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2008UENO01",
+    "name": "Shuto Ueno (上野柊斗)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2008VASC01",
+    "name": "Vasco Vasconcelos",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2008VIRO01",
+    "name": "Philippe Virouleau",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2008WEST02",
+    "name": "Simon Westlund",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2008YOUN02",
+    "name": "Michael Young",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2008YUDA01",
+    "name": "Yu Da-Hyun (유다현)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2008ZHAN13",
+    "name": "Hong Zhang (张宏)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2008ZHON01",
+    "name": "Qirun Zhong (钟奇润)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2009BAKK01",
+    "name": "Ivo Bakker",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016AQUI02",
+    "name": "Jose Polorhenzo Aquino",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016BAIR01",
+    "name": "Samuel Baird",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016BARO04",
+    "name": "Ben Baron",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016BENI05",
+    "name": "Jeremy Benik",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2008JONG03",
+    "name": "Jong-Ho Jeong (정종호)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2008LEEF01",
+    "name": "Felix Lee",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2008MAND01",
+    "name": "Nikhil Mande",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2008NIEL01",
+    "name": "Lars Vennike Nielsson",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2008OLLE01",
+    "name": "Alexander Olleta del Molino",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2008OMYO01",
+    "name": "Sanae Yamashita (山下佐苗)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2008SAMP01",
+    "name": "Bradley Sampson",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2008SHAN01",
+    "name": "Siva Shanmukh Vetcha",
+    "category": "Bronze",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2008SMIT04",
+    "name": "Maarten Smit",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2014SONG08",
+    "name": "Zian Song (宋子安)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2014TANA01",
+    "name": "Takayuki Tanaka (田中隆喜)",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2014TAOW01",
+    "name": "William Tao",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2014CHER05",
+    "name": "Clément Cherblanc",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2014CHIC01",
+    "name": "Christopher Chi",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2014DAYM01",
+    "name": "Max Day",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2014DETU01",
+    "name": "Eddy Deturche",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2014ENDO01",
+    "name": "Jolo Endona",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2014ESWA01",
+    "name": "Karthikeyan Eswaran",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2014WENW01",
+    "name": "Wong Chong Wen (黄崇文)",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2014WHEE01",
+    "name": "Alexander Wheeler",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2014WILD03",
+    "name": "Damian Wilding",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2014YUNO01",
+    "name": "Lucas Ichiro Yunomae",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2014ZAKR01",
+    "name": "Karol Zakrzewski",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2014ZARA01",
+    "name": "Rodrigo Zarate",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2014ZHAN11",
+    "name": "Yunke Zhang (张云柯)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2009COLO03",
+    "name": "Matteo Colombo",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2009DIEC01",
+    "name": "Cornelius Dieckmann",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2012WERB01",
+    "name": "Sebastian Werb",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2012WESC01",
+    "name": "Lucas Wesche",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2012YANA01",
+    "name": "Taku Yanai (矢内拓)",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2012YIND01",
+    "name": "Dongyun Yin (殷冬昀)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2012ZABR01",
+    "name": "Ivan Zabrodin",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2015ARYA03",
+    "name": "Aniketh Arya",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2015BAKK01",
+    "name": "Brendan Bakker (貝庭笙)",
+    "category": "Bronze",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2015BART01",
+    "name": "Luboš Bartík",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2015YOSH01",
+    "name": "Yuji Yoshida",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2015ZHAO07",
+    "name": "Xun Zhao (赵洵)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016ACUN04",
+    "name": "Brian Acuña",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016AMBE02",
+    "name": "Dieter Amberger",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2009SHEE01",
+    "name": "Matthew Sheerin",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2009SHEP01",
+    "name": "Daniel Sheppard",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2009SIEW02",
+    "name": "Eason Siew Ee Son (蕭奕晨)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2009TIRA01",
+    "name": "Javier Tirado Ortiz",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2009WHIT01",
+    "name": "Ben Whitmore",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2009XUAN03",
+    "name": "Yan Xuan (宣炎)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2009YANG31",
+    "name": "Chung Tze Yang (鍾志扬)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2009ZEMD01",
+    "name": "Feliks Zemdegs",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2009ZHAN24",
+    "name": "Junhe Zhang (张钧鹤)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2015MACK06",
+    "name": "Zeke Mackay",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2015MATT05",
+    "name": "Enzo Mattos",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2014PRID01",
+    "name": "Ethan Pride",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2014RENW01",
+    "name": "William Gan Wei Ren (颜伟仁)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2014RUIZ10",
+    "name": "Kevin Arturo Huamán Ruiz",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2014SALA15",
+    "name": "Luis Sinhue Medina Salas",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2014SCHO02",
+    "name": "Cale Schoon",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2014SCHW02",
+    "name": "Fabio Schwandt",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2007SHIR01",
+    "name": "Takuma Shirahase (白波瀬拓磨)",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2007SUNT01",
+    "name": "Timothy Sun",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2007VUNI01",
+    "name": "Nick Vu",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2007WONG02",
+    "name": "Tim Wong",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2007WOOR01",
+    "name": "Riley Woo",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2007YOUN04",
+    "name": "Ko Youngjin (고영진)",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2007YUNQ01",
+    "name": "Yunqi Ouyang (欧阳韵奇)",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2008AURO01",
+    "name": "Sébastien Auroux",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2008BAOY01",
+    "name": "Ting Sheng Bao Yang",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2008BARA01",
+    "name": "Bence Barát",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2008BERG04",
+    "name": "Mats Bergsten",
+    "category": "Bronze",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2008CASI01",
+    "name": "Gabriel Alejandro Orozco Casillas",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2008CLEM01",
+    "name": "Kit Clement",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2008COUR01",
+    "name": "François Courtès",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2008DONG06",
+    "name": "Baiqiang Dong (董百强)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2015CITT01",
+    "name": "Marco Edoardo Cittar",
+    "category": "Bronze",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2015CLAU02",
+    "name": "Carson Claud",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2015DAIS01",
+    "name": "Shifei Dai (代时飞)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2015DIAZ02",
+    "name": "Miguel Diaz",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2015DORN02",
+    "name": "Paris Dorn",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2015EWER01",
+    "name": "Helmer Ewert",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2015RIZZ02",
+    "name": "Luca Rizzi",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2015ROBI04",
+    "name": "Tyler Robinson",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2015ROSE01",
+    "name": "Daniel Rose-Levine",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2015RUSN01",
+    "name": "Ethan Rusnak",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2015RUSS03",
+    "name": "Will Russo",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2015SALO01",
+    "name": "Álvaro Aguilar Salobreña",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2015SANC18",
+    "name": "Josete Sánchez",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2015SETT01",
+    "name": "Fabian Settelen",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2014LALI01",
+    "name": "Ishaan Lal",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2014LEZA02",
+    "name": "Bruno Lezama",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2014LONG06",
+    "name": "Bertie Longden",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2014LOPE04",
+    "name": "Antonio López",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2014MAGA04",
+    "name": "Luis Gabriel Magadia",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2014MARQ02",
+    "name": "Marlon de V. Marques",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2014MAUR06",
+    "name": "Lorenzo Mauro",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2015JUNV01",
+    "name": "Victor Tang Yao Jun (湯曜駿)",
+    "category": "Bronze",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2015KANY01",
+    "name": "Yikuan Kan (阚亦宽)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2015KEAR01",
+    "name": "Steven Kearns",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2015KUCA01",
+    "name": "Carter Kucala",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2015LEHM01",
+    "name": "Alex Lehman",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2010MAOC01",
+    "name": "Can Mao (毛灿)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2010MATT02",
+    "name": "Kevin Matthews",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2010POSN02",
+    "name": "Jacob Posner",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2014BACC01",
+    "name": "Gabriele Bacchieri",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2014BEGU01",
+    "name": "Elian Beguec",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2014BILG01",
+    "name": "Jason Bilgrei",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2014BOYA01",
+    "name": "Mark Boyanowski",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2014BULU01",
+    "name": "Sergio Bulux",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2014CAIJ02",
+    "name": "Jack Cai",
+    "category": "Bronze",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2015SOAR01",
+    "name": "Nikhil Soares",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2015TRAC01",
+    "name": "Madeline Trace",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2014IRIA01",
+    "name": "Julen Simón Iriarte",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2014JIAN10",
+    "name": "Leia Jiang",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2014JOYO01",
+    "name": "Yong Hyeon Jo (조용현)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2014KIMJ02",
+    "name": "Jungwoo Kim (김정우)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2014KOUL01",
+    "name": "Sukant Koul",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2015QUAN03",
+    "name": "Ng Jia Quan (黄佳铨)",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2015RAME01",
+    "name": "Zach Ramer",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2015RAMI14",
+    "name": "Samuel Cuellar Ramirez",
+    "category": "Bronze",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2015RIBI01",
+    "name": "Vilius Ribinskas",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2013BOBE01",
+    "name": "Krzysztof Bober",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2013BOTZ01",
+    "name": "Alexander Botz",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2013BRAT01",
+    "name": "Martin Brath",
+    "category": "Bronze",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2013BROW04",
+    "name": "Evan Brown",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2013CABR01",
+    "name": "Christopher Cabrera",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2013CONA01",
+    "name": "Michael Conard",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2013CRON01",
+    "name": "Conor Cronin",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2013DICK01",
+    "name": "Matthew Dickman",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2013DIPI01",
+    "name": "Guido Dipietro",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2015FAUG01",
+    "name": "Marike Faught",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2015FEDE01",
+    "name": "Alexis Fedeler",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2015FUSH01",
+    "name": "Firstian Fushada (符逢城)",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2015GROB02",
+    "name": "Ruben Grobler",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2015GUNN01",
+    "name": "Jakob Gunnarsson",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2013EGDA01",
+    "name": "Daniel Vædele Egdal",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2013EGDA02",
+    "name": "Martin Vædele Egdal",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2013FRON01",
+    "name": "Martin Fronescu",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2013GARC08",
+    "name": "Jesús Lindo García",
+    "category": "Bronze",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2013GHOD01",
+    "name": "Abhijeet Ghodgaonkar (अभिजीत घोडगावकर)",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2013GOOD01",
+    "name": "Daniel Goodman",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2013HUBH01",
+    "name": "Hanns Hub",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2011LINB01",
+    "name": "Brandon Lin (林博浩)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2011LING02",
+    "name": "Rodson Lingad",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2011MAHT02",
+    "name": "Natthaphat Mahtani (ณัฐภัทร จี มาทานี)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2011MASS01",
+    "name": "Nikolai Masson (Николай Массон)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2011MIKE01",
+    "name": "Brandon Mikel",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2011MOLL01",
+    "name": "James Molloy",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2011NARA02",
+    "name": "Bhargav Narasimhan",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2011QUEJ01",
+    "name": "Jianyu Que (阙剑宇)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2012NICO02",
+    "name": "Alessandro Nicolì",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2012PLAC01",
+    "name": "Gianluca Placenti",
+    "category": "Bronze",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2012POHL01",
+    "name": "Andreas Pohl",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2012RUPE01",
+    "name": "Akash Rupela",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2012SEET01",
+    "name": "Nathan Seeto",
+    "category": "Bronze",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2012SEVE01",
+    "name": "Ainesh Sevellaraja",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2012SILV22",
+    "name": "Israel Fraga da Silva",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2012STRA02",
+    "name": "Roman Strakhov",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2012SUNL03",
+    "name": "Liudi Sun (孙柳笛)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2015MIKH04",
+    "name": "Farid Mikhailov",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2015MUZO01",
+    "name": "Zongwen Mu (牟宗文)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2015NICH04",
+    "name": "AJ Nicholls",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2015OHHA01",
+    "name": "Ha Min Oh (오해민)",
+    "category": "Bronze",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2015ONOF01",
+    "name": "Anuar Miguel Abib Onofre",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2009LIUE01",
+    "name": "Evan Liu",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2009MCWI01",
+    "name": "Zachary McWilliams",
+    "category": "Bronze",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2009OKAY01",
+    "name": "Tomoaki Okayama (岡山友昭)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2009OLSO01",
+    "name": "Christopher Olson",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2009ROTA01",
+    "name": "Marco Rota",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2014MILE01",
+    "name": "Patryk Milewczyk",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2014MODA01",
+    "name": "Shantanu Modak",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2014MUNJ02",
+    "name": "Jihu Mun (문지후)",
+    "category": "Bronze",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2014NIET03",
+    "name": "Oscar Nieto",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2014NUNE05",
+    "name": "Rodrigo Pueblas Núñez",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2014OHLE01",
+    "name": "Simone Bentlage",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2014PATT02",
+    "name": "Thomas Patterson",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2014PETE03",
+    "name": "Tobias Peter",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2013MINT01",
+    "name": "Deni Mintsaev",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2013MUAT01",
+    "name": "Matěj Mužátko",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2013NELS01",
+    "name": "Tom Nelson",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2015VANL01",
+    "name": "Luke Van Laningham",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2015VEER01",
+    "name": "Pranav Veera",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2015VOON01",
+    "name": "Liew Yee Voon (劉倚文)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2015WANG09",
+    "name": "Kai-Wen Wang (王楷文)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2015WITM01",
+    "name": "Mattheo de Wit",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2015WRIG07",
+    "name": "William Wright",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2015XION03",
+    "name": "Max Xiong (熊锐明)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2015BELO03",
+    "name": "Will Belote",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2015BERG10",
+    "name": "Ben Bergen",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2015BOLT01",
+    "name": "Matej Bolta",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2015BROW03",
+    "name": "Elijah Brown",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2015CAMP17",
+    "name": "Alexandre Henrique Afonso Campos",
+    "category": "Bronze",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2015CECC01",
+    "name": "Vicenzo Guerino Cecchini",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2015CHER07",
+    "name": "Tommy Cherry",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2003HARD01",
+    "name": "Chris Hardwick",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2003POCH01",
+    "name": "Stefan Pochmann",
+    "category": "Bronze",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2005AKKE01",
+    "name": "Erik Akkersdijk",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2005HSUA01",
+    "name": "Anthony Hsu",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2005KOCZ01",
+    "name": "István Kocza",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2005REYN01",
+    "name": "Tim Reynolds",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2006BUUS01",
+    "name": "Henrik Buus Aagaard",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2006LECK01",
+    "name": "Mimmi Leckius",
+    "category": "Bronze",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2013VASI02",
+    "name": "Vasile Dan",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2013WALL03",
+    "name": "Daniel Wallin",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2013WEAV01",
+    "name": "Sydney Weaver",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2013ZHAN41",
+    "name": "Lanshi Zhang (张岚石)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2013ZIRN01",
+    "name": "Jānis Zirnis",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2015HAMM01",
+    "name": "Billie Hammill",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2015HERN17",
+    "name": "Artur Miralles Hernàndez",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2015HIGH01",
+    "name": "Liam Highducheck",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2015HUAN48",
+    "name": "Cary Huang",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2015IVAN03",
+    "name": "Oleksandr Ivanchak (Олександр Іванчак)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2015JAEH01",
+    "name": "Konstantin Jaehne",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2015JAIN21",
+    "name": "Saiyam Jain",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2012FROS01",
+    "name": "Oliver Frost",
+    "category": "Bronze",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2012GOOD02",
+    "name": "Callum James Goodyear-Jørgensen",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2012GRAY01",
+    "name": "Enoch Gray",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2012HALE01",
+    "name": "Callum Hales-Jepp",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2012HAMA03",
+    "name": "Brock Hamann",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2012IONE01",
+    "name": "Andrei Răzvan Ionel",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2012JEFF01",
+    "name": "Billy Jeffs",
+    "category": "Bronze",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2010SHIX01",
+    "name": "Xin Shi (石欣)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2010SUGA01",
+    "name": "Sei Sugama (洲鎌星)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2010UTOM01",
+    "name": "Vincent Hartanto Utomo",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2010VERE01",
+    "name": "Manu Vereecken",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2010WANG53",
+    "name": "Jiayu Wang (王佳宇)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2010WUJI01",
+    "name": "Jiawen Wu (吴嘉文)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2010YAMA04",
+    "name": "Yuki Yamamoto (山本祐輝)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2010ZHAO11",
+    "name": "Jibo Zhao (赵吉波)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2010AMBR01",
+    "name": "Jacob Ambrose",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2010BENT01",
+    "name": "Jan Bentlage",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2010BREC01",
+    "name": "John Brechon",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2010CANT02",
+    "name": "Antoine Cantin",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2010CHAN20",
+    "name": "Nevins Chan Pak Hoong (陈百鸿)",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2010COOK01",
+    "name": "Tessa Cookmeyer",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2012KROK01",
+    "name": "Anton Krokhmal (Антон Крохмаль)",
+    "category": "Bronze",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2012LAHL01",
+    "name": "Fabian Löhle",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2012LAUR02",
+    "name": "Anthony Lauro",
+    "category": "Bronze",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2012MCNE01",
+    "name": "Jayden McNeill",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2012MORM01",
+    "name": "Serhii Mormul (Сергій Мормуль)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2011YUBE01",
+    "name": "Ben Yu",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2011ZHAN24",
+    "name": "Chunyu Zhang (张春雨)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2012ACHA01",
+    "name": "Carlos Pedro Casado de Achával",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2012BILL01",
+    "name": "Gregor Billing",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2012BUBE01",
+    "name": "Reto Bubendorf",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2012CHAJ01",
+    "name": "Joon Cha (차준혁)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2011ALVI01",
+    "name": "Wilson Alvis (陈智胜)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2011ANON06",
+    "name": "Anonymous",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2011BANS02",
+    "name": "Shivam Bansal",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2011CHAP01",
+    "name": "José Leonardo Chaparro Prieto",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2011CHEC01",
+    "name": "Maxim Chechnev",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2011FERA01",
+    "name": "Joshua Feran",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2011FRES01",
+    "name": "Linus Frész",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2011GJER02",
+    "name": "Ole Nikolai Gjerset",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2011GRIT01",
+    "name": "Oleg Gritsenko",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2011HAMI01",
+    "name": "Ahsanul Insan Hamid",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2011KERN02",
+    "name": "Patrick Kern",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2011KNOT01",
+    "name": "Wojciech Knott",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2011KOGL01",
+    "name": "Jakob Kogler",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2014FRIT02",
+    "name": "Oliver Fritz",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2014GARC27",
+    "name": "Arthur Garcin",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2014GERB01",
+    "name": "Henri Gerber",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2014GLYR01",
+    "name": "Victor Valentin Glyrskov",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2014GOME07",
+    "name": "António Gomes",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2014GOSL01",
+    "name": "Raymond Goslow",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2014HAMM01",
+    "name": "Jason Hammerman",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2014HANJ02",
+    "name": "Jiachi Han (韩佳池)",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2014HOLU01",
+    "name": "Lev Golub (Лев Голуб)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2011REED01",
+    "name": "Austin Reed",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2011RHEI01",
+    "name": "Emanuel Rheinert",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2011SAKO01",
+    "name": "Corey Sakowski",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2011SBAH01",
+    "name": "Rami Sbahi",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2011TRON02",
+    "name": "Sebastiano Tronto",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2011WELC01",
+    "name": "Walker Welch",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2013KOBA01",
+    "name": "Tomohiro Kobayashi (小林知広)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2013LANG03",
+    "name": "Mason Langenderfer",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2013LOYK01",
+    "name": "Nikita Loika",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017ASMU01",
+    "name": "Thor Muto Asmund",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017BACH09",
+    "name": "Gaurav Bachani",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016ZHEN09",
+    "name": "Ang Chin Zhen (洪靖程)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017AGGA01",
+    "name": "Sameer Aggarwal",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017AIPK01",
+    "name": "Igor Aipkin",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016DEXT01",
+    "name": "Riley Dexter",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016DICK03",
+    "name": "Eng Dickson (黄迪胜)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016DING05",
+    "name": "Tianping Ding (丁天平)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016DURA09",
+    "name": "Paweł Duraj",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016FANG01",
+    "name": "Shenghai Fang (方胜海)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016CHAP04",
+    "name": "Stanley Chapel",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016CHEH02",
+    "name": "Haoyang Chen (陈浩杨)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016CHEJ04",
+    "name": "Jianxu Chen (陈建旭)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016DAVI02",
+    "name": "Ethan Davis",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016KLAS01",
+    "name": "Jake Klassen",
+    "category": "Bronze",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016KOND04",
+    "name": "Bernabe Kondrak",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016KRAF01",
+    "name": "Noah Kraft",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016KRUE01",
+    "name": "Ivan Krueger",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016LEON04",
+    "name": "Moisés Alberto Rojas León",
+    "category": "Bronze",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016BRIJ01",
+    "name": "Abner Brijesh",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016BROD01",
+    "name": "Bernhard Brodowsky",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016CARA04",
+    "name": "Kristian Gil Caragan",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016CARL02",
+    "name": "Jérôme Carlier",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016CAST31",
+    "name": "Samuel Hernandez Castro",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016CAST48",
+    "name": "Timothy Castle",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016CHAN25",
+    "name": "Theodore Chan",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2013SANT13",
+    "name": "Sergio Torrijos Santano",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2013SATO01",
+    "name": "Shiori Yanai (矢内詩織)",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2013SAVA01",
+    "name": "Harry Savage",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2013SING12",
+    "name": "Abhimanyu Singhal (अभिमन्यु सिंघल)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2013TANG07",
+    "name": "Feilong Tang (唐飞龙)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2013TITO02",
+    "name": "Georgiy Titov (Георгій Тітов)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016VOSO01",
+    "name": "Olivier Vos",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016WADA01",
+    "name": "Shunsuke Wada (和田俊輔)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016WHEA01",
+    "name": "Oliver Wheat",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016WHIT16",
+    "name": "Jason White",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016MAIT02",
+    "name": "Joey Mait",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017CHOI07",
+    "name": "Kyeongmin Choi",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017CUES02",
+    "name": "Luis Fernando Aldás Cuestas",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017DEBS01",
+    "name": "Adrian Dębski",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016MART29",
+    "name": "Artyom Martirosov",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016MESZ01",
+    "name": "Luke Meszar",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016MOBE01",
+    "name": "Marcus Moberg",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016MOOR07",
+    "name": "James Moore",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016MORA24",
+    "name": "Sean Moran",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016GALA04",
+    "name": "Andrés Rodríguez Galán",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016JARM01",
+    "name": "Myles Jarman",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016JENS09",
+    "name": "William Jensen",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016JEON02",
+    "name": "Jaehyun Jeong (정재현)",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016JOHN30",
+    "name": "Keenan Johnson",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016JONE04",
+    "name": "Jode Brewster",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016KELL10",
+    "name": "Adam Marcellus Kelly",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016KELL12",
+    "name": "Simon Kellum",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016TARA04",
+    "name": "Igor Tarasov",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016TAYL02",
+    "name": "Paul Taylor",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016THOR08",
+    "name": "Elvin Thorsen",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016TIDS01",
+    "name": "Daniel Tidsey",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017LEMB02",
+    "name": "Mikus Lembergs",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017LIMJ02",
+    "name": "Jaden Lim",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2006OOKU01",
+    "name": "Takayuki Ookusa (大艸尊之)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2006TABU02",
+    "name": "Yumu Tabuchi (田渕雄夢)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2007COMP01",
+    "name": "Emile Compion",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2007GOHO01",
+    "name": "Choi Goho (최고호)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2007HESS01",
+    "name": "Rowe Hessler",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2007HUGH01",
+    "name": "Mike Hughey",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2007KRIS01",
+    "name": "Tomas Kristiansson",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2007MINH01",
+    "name": "Minhyun Kim (김민현)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2007NAKA03",
+    "name": "Yu Nakajima (中島悠)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2007OMUR01",
+    "name": "Shuhei Omura (大村周平)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2007OOBA01",
+    "name": "Kou Oobatake (大畠功)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2007POLI01",
+    "name": "Lorenzo Vigani Poli",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017GUTM01",
+    "name": "Manuel Gutman",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017HARR08",
+    "name": "Charlie Harrison",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016XIEY03",
+    "name": "Yikang Xie (谢轶康)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016XIZH01",
+    "name": "Zhifang Xi (席之枋)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016XUWE02",
+    "name": "Sora Wenjie Xu (徐文杰)",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016ZENK01",
+    "name": "Viktor Zenk",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016PARK10",
+    "name": "Yeon Kyun Park (박연균)",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016PATT02",
+    "name": "Nicholas Patterson",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016PERS01",
+    "name": "Ordway Persyn",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016PFEI01",
+    "name": "Jack Pfeifer",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016PILA03",
+    "name": "Ryan Pilat",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016PRES04",
+    "name": "Matt Prestwich",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016PRZY01",
+    "name": "Kamil Przybylski",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016PYWI01",
+    "name": "Wilfrid Py",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016QUIN01",
+    "name": "James Quinn",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016SIGG01",
+    "name": "Graham Siggins",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016SOON01",
+    "name": "Jareth Soong Ying Rui (宋颖锐)",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017CAST41",
+    "name": "Raymos Castillo",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017CHAM09",
+    "name": "Cham J. Chambers",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017CHAN47",
+    "name": "Vianne Chang",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017CHEN16",
+    "name": "Li Chengyu",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017CHEN36",
+    "name": "Xinyun Chen (陈新运)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017HICK04",
+    "name": "Daniel Hicklin",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017HUGH04",
+    "name": "Lennon Hughes",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016MULL04",
+    "name": "Daniel Mullen",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016NAGU02",
+    "name": "Christian Naguio",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016NGAN02",
+    "name": "Michael Ngan (顏律言)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016OCON02",
+    "name": "Lucas O'Connell",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016RIDL01",
+    "name": "Ben Ridley",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016RUCI01",
+    "name": "Marcel Ručigaj",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016RUIZ05",
+    "name": "Iker Carrasco Ruiz",
+    "category": "Bronze",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016SALA18",
+    "name": "Mikołaj Salamon",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017LOTZ01",
+    "name": "Moritz Lotz",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017LOUY01",
+    "name": "Yunhao Lou (娄云皓)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017LUND06",
+    "name": "Joel Lundström",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017MAND13",
+    "name": "Francisco Moraes Mandalozzo",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017MART94",
+    "name": "Víctor Adán Solis Martinez",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017DUMM01",
+    "name": "Matteo Dummar",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017ECHE04",
+    "name": "Alejandro Restrepo Echeverri",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017NORR01",
+    "name": "Timo Norrkniivilä",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017OPRE02",
+    "name": "Mara Oprea",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017FENG10",
+    "name": "Hill Pong Yong Feng",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017FONS04",
+    "name": "Jan Fonš",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017GARR05",
+    "name": "Luke Garrett",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017GOLU01",
+    "name": "Theo Goluboff",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017KELL08",
+    "name": "Simon Kelly",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016HARA02",
+    "name": "Knut Skaug Haraldsen",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016HART02",
+    "name": "Sean Hartman",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016HOBB01",
+    "name": "Emmet Hobbs",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016HOLZ01",
+    "name": "Laura Holzhauer",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016HORV04",
+    "name": "Mihály Horváth",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016HOUG01",
+    "name": "Levin Houghton",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2016HUNG08",
+    "name": "Lim Hung (林弘)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017BEVA01",
+    "name": "Thomas Bevan",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017BRYA06",
+    "name": "Aedan Bryant",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017BUSC03",
+    "name": "Danny Buschert",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017SASA03",
+    "name": "Akifumi Sasaki (佐々木彰史)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017SIAU02",
+    "name": "Max Siauw",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017PODZ01",
+    "name": "Modest Podzolkin",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017PRES02",
+    "name": "Peter Preston",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017PYLY01",
+    "name": "Bohdan Pylypchak (Богдан Пилипчак)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017QUER02",
+    "name": "Aria Querubin",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017RAKS01",
+    "name": "Aris Raksamani (อริศม์ รักษมณี)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017ZHUX01",
+    "name": "Xiaoliang Zhu (朱校良)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2018CENT02",
+    "name": "Giovanni Centili",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017KIRA01",
+    "name": "Kalyani H. Kiran",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017KLOS01",
+    "name": "Willem Klose",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017KOLI01",
+    "name": "Mohammed Aiman Koli",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017KUMA30",
+    "name": "Sukesh Kumar",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017LARS03",
+    "name": "Michael Larsen",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017LAWR04",
+    "name": "Timothy Lawrance",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017RICH02",
+    "name": "Braden Richards",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017SANT12",
+    "name": "Renan da Cunha Santos",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017MCLE03",
+    "name": "David McLean",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017MCNE01",
+    "name": "Dallas McNeil",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017MEYS02",
+    "name": "Cedric Meysing",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017MILL12",
+    "name": "Alistair Miller",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017MINA04",
+    "name": "Hannah Minas",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017MOLI05",
+    "name": "Samuel Moliver",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2018ADAM06",
+    "name": "Brayden Adams",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2018AHMA02",
+    "name": "Adam Ahmad",
+    "category": "Bronze",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2018AKAM01",
+    "name": "David Akamine",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2018AKER01",
+    "name": "David Akerboom",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2018AMSB02",
+    "name": "Stone Amsbaugh",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2018ARNE04",
+    "name": "Davide Arnesano",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017VILL30",
+    "name": "Carlos Villanueva",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017WANY29",
+    "name": "Yifan Wang (王逸帆)",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017XIAO09",
+    "name": "Bowen Xiao (肖博文)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017XUAN03",
+    "name": "Shawn Lee Zhi Xuan (李致轩)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017XUYO01",
+    "name": "Yonghao Xu (徐永浩)",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017YUZH03",
+    "name": "Yu Zhou (周煜)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2018AUBR01",
+    "name": "Étienne Aubry",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2018BALL01",
+    "name": "James Ballantine",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2018BEAU06",
+    "name": "Cyrille Beauchesne",
+    "category": "Bronze",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017TEIC01",
+    "name": "Cyril Teichmann",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017TIMM01",
+    "name": "Ben Timmons",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017TOYS01",
+    "name": "Azael Toysehua",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017TRAN21",
+    "name": "Kenneth Tran",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017TRAN25",
+    "name": "Celine Tran",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017TUMI02",
+    "name": "Joel Mamani Tumiri",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017TUNG13",
+    "name": "Anto Kam (甘浩東)",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017OSOV01",
+    "name": "Ivan Osovik",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017OSTD02",
+    "name": "Jason Ostdiek",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017OWEN01",
+    "name": "Harry Owen",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017PARK05",
+    "name": "DongSoo Park (박동수)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017PETE04",
+    "name": "Tripp Peters",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017PETR02",
+    "name": "Mihail Petrochenkov",
+    "category": "Bronze",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017PIWA01",
+    "name": "Wayne Pi",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017SOLE01",
+    "name": "Aaron Soley",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017SRIV11",
+    "name": "Lakshmi Sai Srivatsa",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017SUNC02",
+    "name": "Christopher Sun",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017SWAR03",
+    "name": "Dylan Swarts",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2017SWOR01",
+    "name": "Noah Swor",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2018DUTH01",
+    "name": "Manu Dutheil",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2018FANG03",
+    "name": "Lichi Fang (方力驰)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2018FANG10",
+    "name": "Weijie Fang (方伟杰)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2018CONN04",
+    "name": "Edward Connell",
+    "category": "Bronze",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2018CREE01",
+    "name": "Kerry Creech",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2018DATE01",
+    "name": "Yuto Date (伊達優人)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2018DEVE02",
+    "name": "Adam Devere",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2019ARAU07",
+    "name": "Luan Gomes de Almeida Araújo",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2019BANG01",
+    "name": "Andrew Tan Jing Bang",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2018ZHAH02",
+    "name": "Hongjie Zhang (张鸿杰)",
+    "category": "Bronze",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2018ZHEN45",
+    "name": "Frederick Zheng",
+    "category": "Bronze",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2018ZYNE01",
+    "name": "Arkadiusz Żynel",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2018FORS03",
+    "name": "Timo Forsthofer",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2018GONZ21",
+    "name": "Saul Emmanuel Ramirez Gonzalez",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2018GONZ30",
+    "name": "Julian Alejandro Forero Gonzalez",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2018LIUL05",
+    "name": "Lichao Liu (刘立超)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2018JIME14",
+    "name": "Emilio Alberto Rodríguez Jiménez",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2018SCHW02",
+    "name": "Philippe Schwartz",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2018SHEN07",
+    "name": "Mengfei Shen (沈梦非)",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2018XIEB01",
+    "name": "Bowen Xie",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2018YART01",
+    "name": "Mykhailo Yartsun (Михайло Ярцун)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2018YUAN02",
+    "name": "Anqi Yu",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2018GRAH05",
+    "name": "Kate Grahame",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2018HAUB01",
+    "name": "Alex Hauben",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2018NEVE02",
+    "name": "Adrien Neveu",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2018NOCI01",
+    "name": "Marcos Plaza Nocito",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2018LYON01",
+    "name": "Connor Lyons",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2018MACI02",
+    "name": "Logan Maciejewski",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2018MADR02",
+    "name": "Maxime Madrzyk",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2018MCCA02",
+    "name": "Colm McCarthy",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2018BIDW02",
+    "name": "Matthew Bidwell",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2018BLOC01",
+    "name": "Jonathan Blöcher",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2018BOND03",
+    "name": "Pavlo Bondar (Павло Бондар)",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2018BOND06",
+    "name": "Lage Bonde",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2018BRUU01",
+    "name": "Jacob Oliver Bruun",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2018CAMP15",
+    "name": "Cole Campbell",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2018CAST08",
+    "name": "Oliver Castledine",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2018CAST11",
+    "name": "Raúl Cuevas Castillo",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2019GIOR02",
+    "name": "Marco Giordano",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2018LINB02",
+    "name": "Bo-Yu Lin (林柏佑)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2018LINH02",
+    "name": "Hans Lin",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2019GRIE05",
+    "name": "Jens Grieme",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2019GUNT04",
+    "name": "Timo Günthardt",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2019GUOY04",
+    "name": "Yutao Guo (郭宇韬)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2019HEID03",
+    "name": "Thomas Heiden",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2019CAMP10",
+    "name": "Guilherme Santana Campos",
+    "category": "Bronze",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2019CELE01",
+    "name": "Earl Bien D. Celestino",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2019CHAU12",
+    "name": "Zayd Chaudhry",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2018MULL07",
+    "name": "Hannes Müller",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2019LIJI25",
+    "name": "Jingcai Li (李经才)",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2018TRAN09",
+    "name": "Tien Tran",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2018TURR01",
+    "name": "Jacob Turrubiartes",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2018VANS03",
+    "name": "Layne VanSiegel",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2019ECKE02",
+    "name": "Ryan Eckersley",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2019CSEN01",
+    "name": "Bálint Csengő",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2019CUTT01",
+    "name": "Elizabeth Cutting",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2018RIAB01",
+    "name": "Yurii Riabov (Юрій Рябов)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2018SACH03",
+    "name": "Christian Sachgau",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2018SAMK01",
+    "name": "Max Kwok U Sam (郭愉琛)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2018KHAN26",
+    "name": "Hassan Khanani",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2018SOLN01",
+    "name": "Andrei Solntsev",
+    "category": "Bronze",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2018SPIL01",
+    "name": "Aaron Spiller",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2018STOK01",
+    "name": "Ben Stokes",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2019HIRS01",
+    "name": "Ezra Hirschi",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2019HLAV02",
+    "name": "Adam Hlavín",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2019HOIN01",
+    "name": "Preston Hoing",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2019IGNA02",
+    "name": "Alexandru Ignat",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2019KOBE03",
+    "name": "Elliott Kobelansky",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2019KONI03",
+    "name": "Flurin König",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2018WEYE01",
+    "name": "Peter Weyers",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2018WILS11",
+    "name": "Currin Wilson",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2018WROT01",
+    "name": "Brayden Wroten",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2018WUYU03",
+    "name": "Yuheng Wu (吴雨衡)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2018SUNC02",
+    "name": "Chenhao Sun (孙晨皓)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2018TANJ05",
+    "name": "Jacob Miko Tan (陈在元)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2018TING05",
+    "name": "Ming Dao Ting",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2018PARA15",
+    "name": "Richard Anthony Parada",
+    "category": "Bronze",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2019EGGI02",
+    "name": "Charlie Eggins",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2019ENGE02",
+    "name": "Achia Engel",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2019FONG04",
+    "name": "Ryan Fong",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2019MORE28",
+    "name": "Tommy Moreno",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2019BENG02",
+    "name": "Liav Bengayev",
+    "category": "Bronze",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2019BONN05",
+    "name": "Chris Bonnello",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2019BORO03",
+    "name": "Šimon Borovský",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2019WANZ21",
+    "name": "Zhe Wang (王哲)",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2019WARE01",
+    "name": "Faiz Wareh",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2019WAWR01",
+    "name": "Igor Wojciech Wawrzynski",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2019SANC20",
+    "name": "Samuel Martinez Sanchez",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2019YANG94",
+    "name": "Cian-Jyun Yang (楊謙君)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2019YEUN01",
+    "name": "Alvin Cheng Hiu Yeung (鄭曉洋)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2019SPEI01",
+    "name": "Cyrill Speiser",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2019STOU02",
+    "name": "Ivo Stoutjesdijk",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2019SUNY09",
+    "name": "Yuhang Sun (孙煜航)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2019POUL02",
+    "name": "Brandon Poulton",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2019MARI16",
+    "name": "Sebastián Morón Mariscal",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2019SHEN10",
+    "name": "Jeremy Sheng",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2019SMIT36",
+    "name": "Amy Smith",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2020GUAR01",
+    "name": "Marco Guarasci",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2020KARA01",
+    "name": "David Karalli (داود قراعلي)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2019VILL03",
+    "name": "Brandon Villadolid",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2019RIBE11",
+    "name": "Bárbara Guerra",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2019RIED01",
+    "name": "Jan Riedl",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2020SCHL01",
+    "name": "Katharina Schlomberg",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2020TONG02",
+    "name": "Draco Tong",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2020MADD02",
+    "name": "Jack Maddigan",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2020MALI02",
+    "name": "Numair Malik",
+    "category": "Bronze",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2020MCDO01",
+    "name": "Jack McDougall",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2020MOCO01",
+    "name": "Conan Mo",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2020BERM02",
+    "name": "Adam Bermingham",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2020BROW01",
+    "name": "Jake Brown",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2020BURN06",
+    "name": "Luke Burns",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2020DECI01",
+    "name": "Remo Decio",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2020DWOR01",
+    "name": "Kacper Paweł Dworak",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2022BARU03",
+    "name": "Ognian Baruh",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2021BLAK01",
+    "name": "Jonah Blakeley",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2021BLAN02",
+    "name": "Jared Blanco",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2021BRUD01",
+    "name": "Enzo Bruder-Jeannot",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2021BUTE03",
+    "name": "Alex Butera",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2022AHLS01",
+    "name": "Arvid Ahlstrand",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2022ALEU01",
+    "name": "Ot Caminals Aleu",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2022BENS01",
+    "name": "Nathan Benson",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2022BERN01",
+    "name": "Beatriz Hernandes Bernardes",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2022BLAC01",
+    "name": "Adam Black",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2022BROO02",
+    "name": "CJ Brooke",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2023ABAR02",
+    "name": "Karl Liam L. Abarquez",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2023BARW01",
+    "name": "Wesley Barwinski",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2022HILA02",
+    "name": "Gabriel Angelo V. Hilado",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2022HOLT03",
+    "name": "Maria Holton",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2022HONG01",
+    "name": "Jinsol Hong",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2022HUHA01",
+    "name": "Haotian Hu (胡皓天)",
+    "category": "Bronze",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2022IDZE01",
+    "name": "Renske Idzenga",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2022HANT01",
+    "name": "Thiago Han",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2022HELL03",
+    "name": "Håvard Elias Helland",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2022MEEU02",
+    "name": "Jorian Meeuse",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2022MELE01",
+    "name": "Angelo Melera",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2022ESWA01",
+    "name": "Komahal Eswaran",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2022NIEL06",
+    "name": "Marius Bergo Nielsen",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2022OFER01",
+    "name": "Eitan Ofer",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2022SAND19",
+    "name": "Angel David Alvarado Sandoval",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2022SELL05",
+    "name": "Luke Selle",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2023DANG01",
+    "name": "Nhâm Nguyễn Hải Đăng",
+    "category": "Bronze",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2022CSON01",
+    "name": "János Csontos",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2022CUIA01",
+    "name": "Auric Cui",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2021TRIP01",
+    "name": "Michael Tripodi",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2021WALK02",
+    "name": "Mats Walker",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2021YAMA01",
+    "name": "Kai Yamamoto (山本快)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2021YEPU01",
+    "name": "Putian Ye (叶溥天)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2021ZHUR04",
+    "name": "Diasbek Zhuraev (Диасбек Жураев)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2022CAMP02",
+    "name": "Nicolas Campanario",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2022CARP05",
+    "name": "Owl Carpenter",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2022JOHA08",
+    "name": "Leo Johansson",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2022REID01",
+    "name": "Christopher Reid",
+    "category": "Bronze",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2022RICH02",
+    "name": "Oliver Richards",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2022RIPO01",
+    "name": "Riccardo Ripoldi",
+    "category": "Bronze",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2022ROGE05",
+    "name": "Eli Rogers",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2022ROSE07",
+    "name": "Tyler Rose",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2022RUIZ03",
+    "name": "Felipe Santamaría Ruiz",
+    "category": "Bronze",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2022LIPP01",
+    "name": "Lucas Lippman-Bruno",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2022MACC01",
+    "name": "Evan Maccagnan",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2022MUNT02",
+    "name": "Eskil Munthe",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2022WINT09",
+    "name": "Daniel Winterberg",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2022YAGI03",
+    "name": "Aiki Yaginuma (柳沼愛輝)",
+    "category": "Bronze",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2022YUSU01",
+    "name": "Bekzodjon Yusupov",
+    "category": "Bronze",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2021HUGO01",
+    "name": "Peter Hugosson-Miller",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2021LAMP01",
+    "name": "Elias Lampert",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2021LEBO01",
+    "name": "Maxence Leboeuf",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2021LIJI02",
+    "name": "Jinge Li (李金戈)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2021LOFT01",
+    "name": "Enda Loftus",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2022SHIM03",
+    "name": "Yedidya Nisim Shimoni",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2022SLOA01",
+    "name": "Jaye Sloan",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2022PURS01",
+    "name": "Maxim Pürstinger",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2022GORL02",
+    "name": "Azaro Gorloo",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2022GREC01",
+    "name": "Miles Greco",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2022VRAB01",
+    "name": "Oana-Simona Vrabie",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2022WADH02",
+    "name": "Ashwyn Wadhawan",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2022WANG06",
+    "name": "Daniel Wang",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2022WEIS03",
+    "name": "Yoad Yahalom Weiss",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2022WIJE01",
+    "name": "Hirosh Nividu",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2022WILL06",
+    "name": "Gabriel Williams V",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2022THOM14",
+    "name": "Brayden Thompson",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2022TICK01",
+    "name": "Pierce Tickle",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2021CHIL02",
+    "name": "Oscar Childs",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2021DAMM01",
+    "name": "Jonathan Dammann",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2021DIMP01",
+    "name": "Simon Dimpker",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2021ELIA01",
+    "name": "Niklas Aasen Eliasson",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2021FORB01",
+    "name": "Harry Forbes",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2021FOST01",
+    "name": "Jaxon Foster",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2021HEIS01",
+    "name": "Jindřich Heissiger",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2023JAIN31",
+    "name": "Akash Jain (ジェン明志)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2022STON03",
+    "name": "Tuval Stone",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2022STRA10",
+    "name": "Thomas Strasser",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2022STRE03",
+    "name": "Jáchym Střelec",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2022SUIJ01",
+    "name": "Justin Sui",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2023CHAI02",
+    "name": "Anawin Chaichana (อนาวิล ชัยชนะ)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2022PART02",
+    "name": "Daniel Partridge",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2023ESPI07",
+    "name": "Jerónimo Espinosa",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2023FADL01",
+    "name": "Martin Fádlik",
+    "category": "Bronze",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2021MORA01",
+    "name": "Mikołaj Morawski",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2021OTAI01",
+    "name": "Zakarya Otair",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2021PAND01",
+    "name": "Alessio Pandin",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2021PISK01",
+    "name": "Karol Piskorek",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2021PRAS02",
+    "name": "Simon Praschl",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2021RAME01",
+    "name": "Saisabari Ramesh",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2021SMIG01",
+    "name": "Adam Śmigaj",
+    "category": "Bronze",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2021SPIE01",
+    "name": "Achim Spies",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2021SREC01",
+    "name": "Jakov Srečković",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2021SUNG02",
+    "name": "Reid James Sungy",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2023JIWA01",
+    "name": "An JiWan (안지완)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2023HIMM02",
+    "name": "Dylan Himmelfarb",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2023FLEM01",
+    "name": "Jude Fleming",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2023FROH01",
+    "name": "Martin Fröhlich",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2023GAOJ02",
+    "name": "Joshua Gao",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2024ALHA03",
+    "name": "Khaled Al-Hathlool (خالد الهذلول)",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2023LIUK02",
+    "name": "Kevin Liu",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2023LOPE09",
+    "name": "Jordi Lleixà López",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2023KLYM02",
+    "name": "Valerii Klymenko",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2023OCAR01",
+    "name": "Rodrigo Ángeles Montes de Oca",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2023LANG03",
+    "name": "Alex Rosado Saez de Langarica",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2023SAND02",
+    "name": "Mark Sander",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2023TOLL02",
+    "name": "Benton Tolley",
+    "category": "Bronze",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2023TORO02",
+    "name": "Fabián Sánchez Del Toro",
+    "category": "Bronze",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2023ROSA05",
+    "name": "Braulio Lael Hernández Rosas",
+    "category": "Bronze",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2024GESH01",
+    "name": "Ge Shi (石歌)",
+    "category": "Bronze",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2023XUZI01",
+    "name": "Ziyi Xu (徐梓翼)",
+    "category": "Gold",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2023SULT02",
+    "name": "Rafael Sultanaliev",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2023WILL26",
+    "name": "Felix Williams",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2024MANA05",
+    "name": "Juan Miguel C. Manalo",
+    "category": "Silver",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2024KOIK01",
+    "name": "Akito Koike",
+    "category": "Bronze",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  },
+  {
+    "id": "2024NASC01",
+    "name": "Mikael Ribeiro do Nascimento",
+    "category": "Bronze",
+    "competitionDate": "N/A",
+    "lastEvent": "N/A"
+  }
+]

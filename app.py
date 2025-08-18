@@ -4,7 +4,7 @@ import json
 import requests
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
-from completionist import load_completionists
+from completionist import get_completionists
 
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all origins
@@ -32,7 +32,7 @@ def serve_completionists():
 @app.route("/api/completionists/<category>")
 @app.route("/api/completionists")
 def completionists():
-    data = load_completionists()
+    data = get_completionists()
     return jsonify(data)
 
 

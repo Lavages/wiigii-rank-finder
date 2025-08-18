@@ -1,0 +1,12 @@
+# Vercel-specific files
+.vercel
+.next
+
+# Python-specific files
+__pycache__/
+*.pyc
+venv/
+.env
+
+# Other temporary or system files
+.DS_Store

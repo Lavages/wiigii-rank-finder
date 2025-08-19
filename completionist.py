@@ -4,6 +4,7 @@ import json
 import requests
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from flask import Flask, jsonify
+import re
 
 app = Flask(__name__)
 
@@ -29,6 +30,30 @@ def fetch_page(page):
     resp.raise_for_status()
     return resp.json().get("items", [])
 
+def has_wr(person):
+    records = person.get("records", {})
+
+    # Check single records
+    single_records = records.get("single", {})
+    if isinstance(single_records, dict) and single_records.get("WR", 0) > 0:
+        return True
+
+    # Check average records
+    average_records = records.get("average", {})
+    if isinstance(average_records, dict) and average_records.get("WR", 0) > 0:
+        return True
+
+    return False
+def has_wc_podium(person):
+    """Check if the person placed 1st, 2nd, or 3rd in the Final round of any WC event."""
+    results = person.get("results", {})
+    for comp_id, events in results.items():
+        if re.match(r"WC\d+", comp_id):  # Only WC followed by digits
+            for event_results in events.values():
+                for r in event_results:
+                    if r.get("round") == "Final" and r.get("position") in (1, 2, 3):
+                        return True
+    return False
 
 def determine_category(person):
     singles = {r.get("eventId") for r in person.get("rank", {}).get("singles", []) if r.get("eventId")}
@@ -36,7 +61,10 @@ def determine_category(person):
         return None
     averages = {r.get("eventId") for r in person.get("rank", {}).get("averages", []) if r.get("eventId")}
     if AVERAGE_EVENTS_GOLD <= averages:
-        category = "Gold"
+        if has_wr(person) or has_wc_podium(person):
+            category = "Platinum"
+        else :
+            category = "Gold"
     elif AVERAGE_EVENTS_SILVER <= averages:
         category = "Silver"
     else:

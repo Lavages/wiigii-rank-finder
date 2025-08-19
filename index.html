@@ -7,14 +7,30 @@
     <title>Wiigii's RankFinder</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
 
+        .spinner {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
 </head>
 
 <body
     class="min-h-screen bg-gradient-to-br from-gray-900 to-black text-gray-100 p-4 flex flex-col items-center justify-center">
 
-    <!-- Navbar -->
     <nav
         class="w-full max-w-4xl mx-auto bg-gray-950 bg-opacity-80 rounded-t-3xl shadow-[0_10px_30px_rgba(168,85,247,0.2)] border border-purple-800 border-b-0 p-4 flex justify-center items-center gap-8 z-10 sticky top-0">
 
@@ -25,8 +41,9 @@
     </nav>
 
     <div
-        class="max-w-4xl w-full mx-auto bg-gray-950 bg-opacity-70 rounded-b-3xl shadow-[0_20px_50px_rgba(168,85,247,0.3)] p-10 space-y-10 backdrop-blur-md border border-purple-800 border-t-0">
-        <h1 class="text-5xl font-extrabold text-center text-purple-400 drop-shadow-[0_2px_2px_rgba(0,0,0,0.5)] mb-8">
+        class="max-w-4xl w-full mx-auto bg-gray-950 bg-opacity-70 rounded-b-3xl shadow-[0_20px_50px_rgba(168,85,247,0.3)] p-4 sm:p-10 space-y-10 backdrop-blur-md border border-purple-800 border-t-0">
+        <h1
+            class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-center text-purple-400 drop-shadow-[0_2px_2px_rgba(0,0,0,0.5)] mb-8">
             Wiigii's RankFinder 🔎
         </h1>
 
@@ -325,8 +342,8 @@
                                 </div>
                                 <div class="mt-6 border-t border-gray-700 pt-4">
                                    <a href="https://www.worldcubeassociation.org/persons/${foundCompetitor.person.wcaId}" target="_blank"
-                                     class="block text-center w-full bg-purple-600 hover:bg-purple-700 active:bg-purple-800 text-white font-bold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
-                                     View Full Profile
+                                      class="block text-center w-full bg-purple-600 hover:bg-purple-700 active:bg-purple-800 text-white font-bold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
+                                      View Full Profile
                                    </a>
                                 </div>
                             </div>

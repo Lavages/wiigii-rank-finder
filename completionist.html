@@ -24,6 +24,32 @@
       background: #6b21a8;
       border-radius: 3px;
     }
+
+    /* Ensure table cells have consistent padding and alignment */
+    .comp-table th,
+    .comp-table td {
+      padding: 0.75rem 1rem;
+      /* Consistent padding for cells */
+      vertical-align: middle;
+      /* Vertically align content in the middle */
+    }
+
+    /* Make table full width and allow it to scroll if content overflows */
+    .table-responsive {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      /* Smooth scrolling on iOS */
+    }
+
+    /* Ensure table takes full width of its container */
+    .comp-table {
+      min-width: 600px;
+      /* Minimum width to prevent excessive squishing on smaller desktops */
+      width: 100%;
+      table-layout: auto;
+      /* Allow column widths to adjust to content */
+    }
   </style>
 </head>
 
@@ -32,7 +58,13 @@
 
   <nav
     class="w-full max-w-4xl mx-auto bg-gray-950 bg-opacity-80 rounded-t-2xl sm:rounded-t-3xl shadow-lg border border-purple-800 border-b-0 p-3 sm:p-4 flex justify-center gap-4 sm:gap-8 sticky top-0 z-10 text-sm sm:text-base">
-    <a href="/" class="text-gray-300 hover:text-purple-400 transition-colors duration-200 font-semibold">RankFinder</a>
+    <a href="/" class="text-gray-300 hover:text-purple-400 transition-colors duration-200 font-semibold text-lg">
+      Rank Finder
+    </a>
+    <a href="/specialist"
+      class="text-gray-300 hover:text-purple-400 transition-colors duration-200 font-semibold text-lg">
+      Specialist
+    </a>
   </nav>
 
   <main
@@ -175,15 +207,15 @@
 
       // Desktop/tablet table
       const tableHtml = `
-                <div class="hidden sm:block w-full">
-                    <table class="w-full text-left text-gray-300">
+                <div class="hidden sm:block table-responsive">
+                    <table class="comp-table text-left text-gray-300">
                         <thead class="bg-gray-800 text-gray-100 uppercase text-xs sm:text-sm tracking-wider">
                             <tr>
-                                <th class="px-4 py-3 rounded-tl-xl">#</th>
-                                <th class="px-4 py-3">Competitor Name</th>
-                                <th class="px-4 py-3">WCA ID</th>
-                                <th class="px-4 py-3">Completion Date</th>
-                                <th class="px-4 py-3">Last Event</th>
+                                <th class="px-4 py-3 rounded-tl-xl w-1/12">#</th>
+                                <th class="px-4 py-3 w-4/12">Competitor Name</th>
+                                <th class="px-4 py-3 w-3/12">WCA ID</th>
+                                <th class="px-4 py-3 w-2/12">Completion Date</th>
+                                <th class="px-4 py-3 w-2/12">Last Event</th>
                             </tr>
                         </thead>
                         <tbody>

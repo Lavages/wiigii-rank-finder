@@ -2,219 +2,252 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Completionists</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        /* Highlight Platinum rows - even darker version */
-        .platinum-row {
-            background: linear-gradient(to right, #1a0d4a, #0d1f4a);
-            color: white;
-            font-weight: 600;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Completionists</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* Highlight Platinum rows - even darker version */
+    .platinum-row {
+      background: linear-gradient(to right, #1a0d4a, #0d1f4a);
+      color: white;
+      font-weight: 600;
+    }
 
-        /* Custom scrollbar for better mobile feel */
-        .custom-scrollbar::-webkit-scrollbar {
-            height: 6px;
-        }
+    /* Custom scrollbar for better mobile feel */
+    .custom-scrollbar::-webkit-scrollbar {
+      height: 6px;
+    }
 
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: #6b21a8;
-            border-radius: 3px;
-        }
-    </style>
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #6b21a8;
+      border-radius: 3px;
+    }
+  </style>
 </head>
 
 <body
-    class="min-h-screen bg-gradient-to-br from-gray-900 to-black text-gray-100 p-2 sm:p-4 flex flex-col items-center justify-center font-[Inter]">
+  class="min-h-screen bg-gradient-to-br from-gray-900 to-black text-gray-100 p-2 sm:p-4 flex flex-col items-center justify-center font-[Inter]">
 
-    <!-- Navigation -->
-    <nav
-        class="w-full max-w-4xl mx-auto bg-gray-950 bg-opacity-80 rounded-t-2xl sm:rounded-t-3xl shadow-lg border border-purple-800 border-b-0 p-3 sm:p-4 flex justify-center gap-4 sm:gap-8 sticky top-0 z-10 text-sm sm:text-base">
-        <a href="/"
-            class="text-gray-300 hover:text-purple-400 transition-colors duration-200 font-semibold">RankFinder</a>
-    </nav>
+  <nav
+    class="w-full max-w-4xl mx-auto bg-gray-950 bg-opacity-80 rounded-t-2xl sm:rounded-t-3xl shadow-lg border border-purple-800 border-b-0 p-3 sm:p-4 flex justify-center gap-4 sm:gap-8 sticky top-0 z-10 text-sm sm:text-base">
+    <a href="/" class="text-gray-300 hover:text-purple-400 transition-colors duration-200 font-semibold">RankFinder</a>
+  </nav>
 
-    <!-- Main -->
-    <main
-        class="max-w-4xl w-full mx-auto bg-gray-950 bg-opacity-70 rounded-b-2xl sm:rounded-b-3xl shadow-xl p-4 sm:p-8 space-y-6 sm:space-y-10 backdrop-blur-md border border-purple-800 border-t-0 flex-grow">
+  <main
+    class="max-w-4xl w-full mx-auto bg-gray-950 bg-opacity-70 rounded-b-2xl sm:rounded-b-3xl shadow-xl p-4 sm:p-8 space-y-6 sm:space-y-10 backdrop-blur-md border border-purple-800 border-t-0 flex-grow">
 
-        <h1
-            class="text-3xl sm:text-5xl font-extrabold text-center text-purple-400 drop-shadow-md mb-4 sm:mb-8 leading-tight">
-            Wiigii's Completionists Club ✨
-        </h1>
+    <h1
+      class="text-3xl sm:text-5xl font-extrabold text-center text-purple-400 drop-shadow-md mb-4 sm:mb-8 leading-tight">
+      Wiigii's Completionists Club ✨
+    </h1>
 
-        <!-- Category Buttons -->
-        <div class="flex justify-center flex-wrap gap-3 sm:gap-4 my-4 sm:my-8">
-            <button
-                class="btn-category bg-gradient-to-r from-yellow-800 to-amber-700 text-white font-bold py-2 px-4 sm:py-3 sm:px-6 rounded-full text-sm sm:text-base"
-                data-category="bronze">Bronze</button>
-            <button
-                class="btn-category bg-gradient-to-r from-gray-600 to-gray-400 text-white font-bold py-2 px-4 sm:py-3 sm:px-6 rounded-full text-sm sm:text-base"
-                data-category="silver">Silver</button>
-            <button
-                class="btn-category bg-gradient-to-r from-amber-500 to-yellow-300 text-gray-900 font-bold py-2 px-4 sm:py-3 sm:px-6 rounded-full text-sm sm:text-base"
-                data-category="gold">Gold</button>
-            <button
-                class="btn-category bg-gradient-to-r from-indigo-500 to-blue-400 text-white font-bold py-2 px-4 sm:py-3 sm:px-6 rounded-full text-sm sm:text-base"
-                data-category="platinum">Platinum</button>
-        </div>
-
-        <!-- Criteria Explanation Box -->
-        <div id="criteria-box"
-            class="bg-gray-900 bg-opacity-80 rounded-xl shadow-lg border border-purple-700 p-4 sm:p-6 text-gray-300 text-sm sm:text-lg text-center hidden transition-opacity duration-500">
-            <p>Select a tier above to see its requirements.</p>
-        </div>
-
-        <!-- Table Container -->
-        <div id="table-container"
-            class="overflow-x-auto custom-scrollbar rounded-xl border border-gray-700 shadow-xl min-h-[200px] flex flex-col items-center justify-center text-sm sm:text-base">
-            <div id="loading-spinner" class="hidden flex justify-center items-center py-6 sm:py-10">
-                <svg class="animate-spin h-8 w-8 sm:h-10 sm:w-10 text-purple-400" xmlns="http://www.w3.org/2000/svg"
-                    fill="none" viewBox="0 0 24 24">
-                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 00-8 8h4z">
-                    </path>
-                </svg>
-            </div>
-            <p id="error-message" class="text-red-400 hidden"></p>
-            <p id="no-data-message" class="text-gray-500 hidden text-center">No completionists found for this category.
-            </p>
-        </div>
-    </main>
-
-    <!-- Footer -->
-    <footer class="w-full max-w-4xl mx-auto text-center text-gray-500 text-xs sm:text-sm mt-6 sm:mt-8 pb-4">
-        <p>© 2025 Wiigii's WCA Rankings. All rights reserved.</p>
-    </footer>
-
-    <script>
-        const API_BASE_URL = '/api';
-        let allCompletionistsData = [];
-        let currentCategory = 'bronze';
-
-        const tableContainer = document.getElementById('table-container');
-        const loadingSpinner = document.getElementById('loading-spinner');
-        const errorMessage = document.getElementById('error-message');
-        const noDataMessage = document.getElementById('no-data-message');
-        const buttons = document.querySelectorAll(".btn-category");
-        const criteriaBox = document.getElementById("criteria-box");
-
-        const criteriaText = {
-            bronze: `<span class="font-semibold text-yellow-500">🥉 Bronze:</span> Must have a <strong>single result</strong> in every official WCA event.`,
-            silver: `<span class="font-semibold text-gray-300">🥈 Silver:</span> Must have <strong>all singles</strong> and <strong>all averages</strong>, except for <strong>FMC</strong> and <strong>Blindfolded events</strong>.`,
-            gold: `<span class="font-semibold text-yellow-300">🥇 Gold:</span> Must have <strong>all singles</strong> and <strong>all averages</strong>, including <strong>FMC</strong> and <strong>Blindfolded means</strong>.`,
-            platinum: `<span class="font-semibold text-indigo-400">🌌 Platinum:</span> Must have <strong>all singles</strong> and <strong>all averages</strong>, including <strong>FMC </strong> and <strong>Blindfolded means</strong>, plus either a <strong>World Record</strong> or a <strong>World Championship podium</strong>.`
-        };
-
-        function updateCriteria(category) {
-            criteriaBox.classList.remove("hidden", "opacity-0");
-            criteriaBox.classList.add("opacity-100");
-            criteriaBox.innerHTML = criteriaText[category] || `<p>Select a tier above to see its requirements.</p>`;
-        }
-
-        async function fetchAllCompletionists() {
-            loadingSpinner.classList.remove('hidden');
-            errorMessage.classList.add('hidden');
-            noDataMessage.classList.add('hidden');
-            tableContainer.innerHTML = '';
-
-            try {
-                const response = await fetch(`${API_BASE_URL}/completionists`);
-                if (!response.ok) throw new Error('Failed to fetch completionists');
-                allCompletionistsData = await response.json();
-                renderTable(currentCategory);
-            } catch (error) {
-                errorMessage.textContent = `Error loading data: ${error.message}`;
-                errorMessage.classList.remove('hidden');
-            } finally {
-                loadingSpinner.classList.add('hidden');
-            }
-        }
-
-        function renderTable(category) {
-            currentCategory = category;
-            tableContainer.innerHTML = '';
-            noDataMessage.classList.add('hidden');
-
-            const filtered = allCompletionistsData.filter(c => c.category.toLowerCase() === category.toLowerCase());
-            if (filtered.length === 0) {
-                noDataMessage.textContent = `No ${category} completionists found.`;
-                noDataMessage.classList.remove('hidden');
-                return;
-            }
-
-            // Desktop/tablet table
-            const tableHtml = `
-    <div class="hidden sm:block w-full">
-      <table class="w-full text-left text-gray-300">
-        <thead class="bg-gray-800 text-gray-100 uppercase text-xs sm:text-sm tracking-wider">
-          <tr>
-            <th class="px-4 py-3 rounded-tl-xl">#</th>
-            <th class="px-4 py-3">Competitor Name</th>
-            <th class="px-4 py-3">WCA ID</th>
-            <th class="px-4 py-3">Category</th>
-          </tr>
-        </thead>
-        <tbody>
-          ${filtered.map((c, i) => `
-            <tr class="${c.category.toLowerCase() === 'platinum'
-                    ? 'platinum-row'
-                    : 'bg-gray-900 border-b border-gray-800 hover:bg-gray-700 transition-colors duration-200'}">
-              <td class="px-4 py-3">${i + 1}</td>
-              <td class="px-4 py-3 font-medium text-gray-50">${c.name}</td>
-              <td class="px-4 py-3">
-                <a href="https://www.worldcubeassociation.org/persons/${c.id}" target="_blank"
-                  class="text-purple-400 hover:text-purple-300 hover:underline break-all">${c.id}</a>
-              </td>
-              <td class="px-4 py-3">${c.category}</td>
-            </tr>
-          `).join('')}
-        </tbody>
-      </table>
+    <div class="flex justify-center flex-wrap gap-3 sm:gap-4 my-4 sm:my-8">
+      <button
+        class="btn-category bg-gradient-to-r from-yellow-800 to-amber-700 text-white font-bold py-2 px-4 sm:py-3 sm:px-6 rounded-full text-sm sm:text-base"
+        data-category="bronze">Bronze</button>
+      <button
+        class="btn-category bg-gradient-to-r from-gray-600 to-gray-400 text-white font-bold py-2 px-4 sm:py-3 sm:px-6 rounded-full text-sm sm:text-base"
+        data-category="silver">Silver</button>
+      <button
+        class="btn-category bg-gradient-to-r from-amber-500 to-yellow-300 text-gray-900 font-bold py-2 px-4 sm:py-3 sm:px-6 rounded-full text-sm sm:text-base"
+        data-category="gold">Gold</button>
+      <button
+        class="btn-category bg-gradient-to-r from-indigo-500 to-blue-400 text-white font-bold py-2 px-4 sm:py-3 sm:px-6 rounded-full text-sm sm:text-base"
+        data-category="platinum">Platinum</button>
     </div>
-  `;
 
-            // Mobile stacked cards
-            const cardsHtml = `
-    <div class="sm:hidden flex flex-col gap-3 w-full">
-      ${filtered.map((c, i) => `
-        <div class="${c.category.toLowerCase() === 'platinum'
-                    ? 'platinum-row'
-                    : 'bg-gray-900 border border-gray-800'} rounded-xl p-4 shadow-md">
-          <p class="text-xs text-gray-400">#${i + 1}</p>
-          <p class="text-lg font-semibold text-gray-50">${c.name}</p>
-          <p>
-            <a href="https://www.worldcubeassociation.org/persons/${c.id}" target="_blank"
-              class="text-purple-400 hover:text-purple-300 hover:underline break-all">${c.id}</a>
-          </p>
-          <p class="mt-1 text-sm text-gray-300">Category: <span class="font-semibold">${c.category}</span></p>
-        </div>
-      `).join('')}
+    <div id="criteria-box"
+      class="bg-gray-900 bg-opacity-80 rounded-xl shadow-lg border border-purple-700 p-4 sm:p-6 text-gray-300 text-sm sm:text-lg text-center hidden transition-opacity duration-500">
+      <p>Select a tier above to see its requirements.</p>
     </div>
-  `;
 
-            tableContainer.innerHTML = tableHtml + cardsHtml;
-        }
+    <div id="table-container"
+      class="overflow-x-auto custom-scrollbar rounded-xl border border-gray-700 shadow-xl min-h-[200px] flex flex-col items-center justify-center text-sm sm:text-base">
+      <div id="loading-spinner" class="hidden flex justify-center items-center py-6 sm:py-10">
+        <svg class="animate-spin h-8 w-8 sm:h-10 sm:w-10 text-purple-400" xmlns="http://www.w3.org/2000/svg" fill="none"
+          viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 00-8 8h4z"></path>
+        </svg>
+      </div>
+      <p id="error-message" class="text-red-400 hidden"></p>
+      <p id="no-data-message" class="text-gray-500 hidden text-center">No completionists found for this category.</p>
+    </div>
+  </main>
 
-        // Handle button clicks
-        buttons.forEach(btn => {
-            btn.addEventListener("click", () => {
-                buttons.forEach(b => b.classList.remove('ring-2', 'ring-purple-400'));
-                btn.classList.add('ring-2', 'ring-purple-400');
-                renderTable(btn.dataset.category);
-                updateCriteria(btn.dataset.category); // show criteria
-            });
-        });
+  <footer class="w-full max-w-4xl mx-auto text-center text-gray-500 text-xs sm:text-sm mt-6 sm:mt-8 pb-4">
+    <p>© 2025 Wiigii's WCA Rankings. All rights reserved.</p>
+  </footer>
 
-        document.addEventListener('DOMContentLoaded', () => {
-            const defaultButton = document.querySelector(`.btn-category[data-category="${currentCategory}"]`);
-            if (defaultButton) defaultButton.classList.add('ring-2', 'ring-purple-400');
-            fetchAllCompletionists();
-        });
-    </script>
+  <script>
+    const API_BASE_URL = '/api';
+    let allCompletionistsData = [];
+    let currentCategory = 'bronze';
+
+    const tableContainer = document.getElementById('table-container');
+    const loadingSpinner = document.getElementById('loading-spinner');
+    const errorMessage = document.getElementById('error-message');
+    const noDataMessage = document.getElementById('no-data-message');
+    const buttons = document.querySelectorAll(".btn-category");
+    const criteriaBox = document.getElementById("criteria-box");
+
+    // NEW: Event name mapping
+    const EVENT_NAMES = {
+      "333": "3x3 Cube",
+      "222": "2x2 Cube",
+      "444": "4x4 Cube",
+      "555": "5x5 Cube",
+      "666": "6x6 Cube",
+      "777": "7x7 Cube",
+      "333oh": "3x3 One-Handed",
+      "333bf": "3x3 Blindfolded",
+      "333fm": "3x3 Fewest Moves",
+      "clock": "Clock",
+      "minx": "Megaminx",
+      "pyram": "Pyraminx",
+      "skewb": "Skewb",
+      "sq1": "Square-1",
+      "444bf": "4x4 Blindfolded",
+      "555bf": "5x5 Blindfolded",
+      "333mbf": "3x3 Multi-Blind",
+      "WC Podium": "WC Podium"
+    };
+
+    // NEW: Helper function to get event name
+    function getEventName(eventId) {
+      return EVENT_NAMES[eventId] || eventId;
+    }
+
+    const criteriaText = {
+      bronze: `<span class="font-semibold text-yellow-500">🥉 Bronze:</span> Must have a <strong>single result</strong> in every official WCA event.`,
+      silver: `<span class="font-semibold text-gray-300">🥈 Silver:</span> Must have <strong>all singles</strong> and <strong>all averages</strong>, except for <strong>FMC</strong> and <strong>Blindfolded events</strong>.`,
+      gold: `<span class="font-semibold text-yellow-300">🥇 Gold:</span> Must have <strong>all singles</strong> and <strong>all averages</strong>, including <strong>FMC</strong> and <strong>Blindfolded means</strong>.`,
+      platinum: `<span class="font-semibold text-indigo-400">🌌 Platinum:</span> Must have <strong>all singles</strong> and <strong>all averages</strong>, including <strong>FMC </strong> and <strong>Blindfolded means</strong>, plus either a <strong>World Record</strong> or a <strong>World Championship podium</strong>.`
+    };
+
+    function updateCriteria(category) {
+      criteriaBox.classList.remove("hidden", "opacity-0");
+      criteriaBox.classList.add("opacity-100");
+      criteriaBox.innerHTML = criteriaText[category] || `<p>Select a tier above to see its requirements.</p>`;
+    }
+
+    async function fetchAllCompletionists() {
+      loadingSpinner.classList.remove('hidden');
+      errorMessage.classList.add('hidden');
+      noDataMessage.classList.add('hidden');
+      tableContainer.innerHTML = '';
+
+      try {
+        const response = await fetch(`${API_BASE_URL}/completionists`);
+        if (!response.ok) throw new Error('Failed to fetch completionists');
+        allCompletionistsData = await response.json();
+        renderTable(currentCategory);
+      } catch (error) {
+        errorMessage.textContent = `Error loading data: ${error.message}`;
+        errorMessage.classList.remove('hidden');
+      } finally {
+        loadingSpinner.classList.add('hidden');
+      }
+    }
+
+    function renderTable(category) {
+      currentCategory = category;
+      tableContainer.innerHTML = '';
+      noDataMessage.classList.add('hidden');
+
+      // Filter by category
+      let filtered = allCompletionistsData.filter(c => c.category.toLowerCase() === category.toLowerCase());
+
+      if (filtered.length === 0) {
+        noDataMessage.textContent = `No ${category} completionists found.`;
+        noDataMessage.classList.remove('hidden');
+        return;
+      }
+
+      // Sort by completion date (oldest first). Handle "N/A" as latest.
+      filtered.sort((a, b) => {
+        const dateA = a.categoryDate === "N/A" ? "9999-12-31" : a.categoryDate;
+        const dateB = b.categoryDate === "N/A" ? "9999-12-31" : b.categoryDate;
+        return new Date(dateA) - new Date(dateB);
+      });
+
+      // Desktop/tablet table
+      const tableHtml = `
+                <div class="hidden sm:block w-full">
+                    <table class="w-full text-left text-gray-300">
+                        <thead class="bg-gray-800 text-gray-100 uppercase text-xs sm:text-sm tracking-wider">
+                            <tr>
+                                <th class="px-4 py-3 rounded-tl-xl">#</th>
+                                <th class="px-4 py-3">Competitor Name</th>
+                                <th class="px-4 py-3">WCA ID</th>
+                                <th class="px-4 py-3">Completion Date</th>
+                                <th class="px-4 py-3">Last Event</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${filtered.map((c, i) => `
+                                <tr class="${c.category.toLowerCase() === 'platinum' ? 'platinum-row' : 'bg-gray-900 border-b border-gray-800 hover:bg-gray-700 transition-colors duration-200'}">
+                                    <td class="px-4 py-3">${i + 1}</td>
+                                    <td class="px-4 py-3 font-medium text-gray-50">${c.name}</td>
+                                    <td class="px-4 py-3">
+                                        <a href="https://www.worldcubeassociation.org/persons/${c.id}" target="_blank"
+                                            class="text-purple-400 hover:text-purple-300 hover:underline break-all">${c.id}</a>
+                                    </td>
+                                    <td class="px-4 py-3">${c.categoryDate || "N/A"}</td>
+                                    <td class="px-4 py-3">${getEventName(c.lastEvent) || "N/A"}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+
+      // Mobile stacked cards
+      const cardsHtml = `
+                <div class="sm:hidden flex flex-col gap-3 w-full p-4">
+                    ${filtered.map((c, i) => `
+                        <div class="${c.category.toLowerCase() === 'platinum' ? 'platinum-row' : 'bg-gray-900 border border-gray-800'} rounded-xl p-4 shadow-md">
+                            <p class="text-xs text-gray-400">#${i + 1}</p>
+                            <p class="text-lg font-semibold text-gray-50">${c.name}</p>
+                            <p>
+                                <a href="https://www.worldcubeassociation.org/persons/${c.id}" target="_blank"
+                                    class="text-purple-400 hover:text-purple-300 hover:underline break-all">${c.id}</a>
+                            </p>
+                            <p class="mt-1 text-sm text-gray-300">
+                                Category: <span class="font-semibold">${c.category}</span>
+                            </p>
+                            <p class="mt-1 text-sm text-gray-400">
+                                Completion: <span class="font-medium">${c.categoryDate || "N/A"}</span>
+                            </p>
+                            <p class="mt-1 text-sm text-gray-400">
+                                Last Event: <span class="font-medium">${getEventName(c.lastEvent) || "N/A"}</span>
+                            </p>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+
+      tableContainer.innerHTML = tableHtml + cardsHtml;
+    }
+
+    // Handle button clicks
+    buttons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        buttons.forEach(b => b.classList.remove('ring-2', 'ring-purple-400'));
+        btn.classList.add('ring-2', 'ring-purple-400');
+        renderTable(btn.dataset.category);
+        updateCriteria(btn.dataset.category); // show criteria
+      });
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const defaultButton = document.querySelector(`.btn-category[data-category="${currentCategory}"]`);
+      if (defaultButton) defaultButton.classList.add('ring-2', 'ring-purple-400');
+      fetchAllCompletionists();
+    });
+  </script>
 </body>
 
 </html>

@@ -143,7 +143,7 @@ def find_specialists(selected_events, max_results=MAX_RESULTS):
 
     if not DATA_LOADED:
         print("❗ find_specialists called, waiting for preload...", file=sys.stderr)
-        DATA_READY_EVENT.wait(timeout=60)  # Wait up to 60s
+        DATA_READY_EVENT.wait(timeout=120)
 
     if not DATA_LOADED:
         return {"error": "Data is still loading. Please try again later."}

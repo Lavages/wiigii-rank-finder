@@ -144,7 +144,7 @@ def find_competitors(selected_events, max_results=MAX_RESULTS):
 
     if not DATA_LOADED:
         print("❗ find_competitors called, waiting for preload...", file=sys.stderr)
-        DATA_READY_EVENT.wait(timeout=60)
+        DATA_READY_EVENT.wait(timeout=120)
 
     if not DATA_LOADED:
         print("⚠️ Data still not loaded after waiting.", file=sys.stderr)

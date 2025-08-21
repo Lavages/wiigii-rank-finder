@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Specialists Finder</title>
+  <title>Competitors Compass</title>
 
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -15,7 +15,6 @@
   <style>
     .event-icon {
       font-size: 1.8rem;
-      /* Make icons larger */
       vertical-align: middle;
     }
   </style>
@@ -31,6 +30,8 @@
       Finder</a>
     <a href="/completionist"
       class="text-gray-300 hover:text-purple-400 transition-colors duration-200 font-semibold text-lg">Completionist</a>
+    <a href="/specialist"
+      class="text-gray-300 hover:text-purple-400 transition-colors duration-200 font-semibold text-lg">Specialist</a>
   </nav>
 
   <!-- Main -->
@@ -40,7 +41,7 @@
     <!-- Title -->
     <h1
       class="text-3xl sm:text-5xl font-extrabold text-center text-purple-400 drop-shadow-md mb-4 sm:mb-8 leading-tight">
-      Specialists Finder 🔍
+      Competitors Compass 🧭
     </h1>
 
     <!-- Event Selector -->
@@ -50,7 +51,7 @@
     <div class="flex justify-center mt-6">
       <button id="find-btn"
         class="bg-purple-600 hover:bg-purple-500 text-white font-bold py-2 px-6 rounded-full shadow-md transition">
-        Find Specialists
+        Find Competitors
       </button>
     </div>
 
@@ -67,7 +68,7 @@
     <div id="results-container"
       class="overflow-x-auto custom-scrollbar rounded-xl border border-gray-700 shadow-xl min-h-[200px] flex flex-col items-center justify-center text-sm sm:text-base">
       <p id="error-message" class="text-red-400 hidden"></p>
-      <p id="no-data-message" class="text-gray-500 hidden text-center">No specialists found for this selection.</p>
+      <p id="no-data-message" class="text-gray-500 hidden text-center">No competitors found for this selection.</p>
     </div>
   </main>
 
@@ -125,7 +126,7 @@
         eventSelector.appendChild(btn);
       });
 
-    // Fetch specialists
+    // Fetch competitors
     document.getElementById("find-btn").addEventListener("click", async () => {
       const container = document.getElementById("results-container");
       const spinner = document.getElementById("loading-spinner");
@@ -139,11 +140,11 @@
       container.querySelectorAll(".specialist-row, .specialist-card").forEach(el => el.remove());
 
       try {
-        const res = await fetch(`${API_BASE_URL}/specialists?events=${selectedEvents.join(",")}`);
-        if (!res.ok) throw new Error("Failed to fetch specialists");
-        const specialists = await res.json();
+        const res = await fetch(`${API_BASE_URL}/competitors?events=${selectedEvents.join(",")}`);
+        if (!res.ok) throw new Error("Failed to fetch competitors");
+        const competitors = await res.json();
 
-        if (!specialists.length) {
+        if (!competitors.length) {
           noData.classList.remove("hidden");
           return;
         }
@@ -161,7 +162,7 @@
                 </tr>
               </thead>
               <tbody>
-                ${specialists.map(c => `
+                ${competitors.map(c => `
                   <tr class="bg-gray-900 border-b border-gray-800 hover:bg-gray-700 transition-colors duration-200">
                     <td class="px-4 py-3 font-medium text-gray-50">${c.personName}</td>
                     <td class="px-4 py-3">
@@ -178,7 +179,7 @@
         // Mobile cards
         const cardsHtml = `
           <div class="sm:hidden flex flex-col gap-3 w-full p-4 specialist-card">
-            ${specialists.map(c => `
+            ${competitors.map(c => `
               <div class="bg-gray-900 border border-gray-800 rounded-xl p-4 shadow-md">
                 <p class="text-lg font-semibold text-gray-50">${c.personName}</p>
                 <p><a href="https://www.worldcubeassociation.org/persons/${c.personId}" target="_blank" class="text-purple-400 hover:text-purple-300 hover:underline break-all">${c.personId}</a></p>

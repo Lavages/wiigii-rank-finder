@@ -1,1 +1,38 @@
-.vercel
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+eggs/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environment
+.venv/
+venv/
+env/
+
+# Temp
+.tmp/
+tmp/
+*.tmp
+
+# Custom cache files
+competitors_cache.msgpack
+specialists_cache.msgpack
+completionists_cache.json
+competitors_cache.mp
+specialists_cache.mp
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log

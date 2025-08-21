@@ -6,7 +6,8 @@ from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 import threading
 import sys
-from competitors import competitors_bp
+# --- Import the preload function from competitors.py ---
+from competitors import competitors_bp, preload_wca_data
 from specialist import specialist_bp, preload_wca_data as preload_specialist_data
 from completionist import get_completionists, preload_completionist_data
 
@@ -18,8 +19,8 @@ app.register_blueprint(specialist_bp, url_prefix='/api')
 CORS(app)  # Enable CORS for all origins
 
 # ----------------- Data Preloading -----------------
-# Preload specialist and completionist data in background threads
-# Call the preload functions directly by their imported names
+# Preload all necessary data in background threads
+# This runs once on application startup
 if os.environ.get('FLASK_ENV') != 'development':
     print("Non-development environment detected. Starting data preloads in background.", file=sys.stdout)
     sys.stdout.flush()
@@ -27,6 +28,8 @@ if os.environ.get('FLASK_ENV') != 'development':
     # Corrected line: Call the imported function directly
     threading.Thread(target=preload_specialist_data, daemon=True).start()
     threading.Thread(target=preload_completionist_data, daemon=True).start()
+    # --- ADDED: Call the preload function for competitors data ---
+    threading.Thread(target=preload_wca_data, daemon=True).start()
 else:
     print("Development environment detected. Preloading data directly (blocking).", file=sys.stdout)
     sys.stdout.flush()
@@ -34,8 +37,9 @@ else:
     # Call the functions directly for development
     preload_specialist_data()
     preload_completionist_data()
+    # --- ADDED: Call the preload function for competitors data ---
+    preload_wca_data()
 
-# ... (rest of the code)
 # ----------------- Frontend Routes -----------------
 @app.route("/")
 def serve_index():

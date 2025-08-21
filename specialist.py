@@ -6,6 +6,7 @@ import os
 import sys
 import json
 import time
+import msgpack
 
 # --- Blueprint ---
 specialist_bp = Blueprint("specialist_bp", __name__)
@@ -13,7 +14,7 @@ specialist_bp = Blueprint("specialist_bp", __name__)
 # --- Constants ---
 TOTAL_PAGES = 268
 MAX_RESULTS = 1000
-CACHE_FILE = os.path.join(os.path.dirname(__file__), "specialists_cache.json")
+CACHE_FILE = os.path.join(os.path.dirname(__file__), "specialists_cache.mp")
 MAX_WORKERS = 16  # threads to speed up fetch
 
 # --- Removed events ---
@@ -33,51 +34,37 @@ def _fetch_and_parse_page(page_number):
         data = res.json()
         page_data = []
 
-        if isinstance(data, dict):
-            persons = data.get("items", [])
-        elif isinstance(data, list):
-            persons = data
-        else:
-            persons = []
+        persons = data.get("items", []) if isinstance(data, dict) else (data if isinstance(data, list) else [])
 
         for person in persons:
-            try:
-                # Add a check to ensure 'person' is a dictionary
-                if not isinstance(person, dict):
-                    print(f"Skipping malformed person object on page {page_number}", file=sys.stderr)
-                    continue
+            if not isinstance(person, dict):
+                continue
 
-                # --- START OF OPTIMIZATION ---
-                filtered_results = {}
-                for comp_id, comp_results in person.get("results", {}).items():
-                    filtered_comp_results = {}
-                    for event_id, rounds_list in comp_results.items():
-                        podium_rounds = []
-                        for r in rounds_list:
-                            # Only keep rounds that are finals with a podium position
-                            if r.get("round") == "Final" and r.get("position") in {1, 2, 3}:
-                                podium_rounds.append(r)
-                        if podium_rounds:
-                            filtered_comp_results[event_id] = podium_rounds
-                    if filtered_comp_results:
-                        filtered_results[comp_id] = filtered_comp_results
-                # --- END OF OPTIMIZATION ---
+            person_podiums = {}
+            has_podium = False
 
+            # Simplified filtering to only store podium finishes
+            for comp_id, comp_results in person.get("results", {}).items():
+                for event_id, rounds_list in comp_results.items():
+                    for r in rounds_list:
+                        if r.get("round") == "Final" and r.get("position") in {1, 2, 3}:
+                            has_podium = True
+                            # Use event_id as the key and just store the count
+                            person_podiums[event_id] = person_podiums.get(event_id, 0) + 1
+
+            if has_podium:
+                # Store the bare minimum data: ID, Name, Country, and podium counts
                 page_data.append({
-                    "personId": person.get("id", "Unknown"),
-                    "personName": person.get("name", "Unknown"),
-                    "personCountryId": person.get("country", "Unknown"),
-                    "results": filtered_results
+                    "personId": person.get("id"),
+                    "personName": person.get("name"),
+                    "personCountryId": person.get("country"),
+                    "podiums": person_podiums
                 })
-            except Exception as e:
-                print(f"Error processing person on page {page_number}: {e}", file=sys.stderr)
-                continue  # Continue to the next person
-
         return page_data
     except Exception as e:
         print(f"Error fetching page {page_number}: {e}", file=sys.stderr)
         return []
-    
+
 # --- Background Fetch All Pages ---
 def _fetch_all_pages_background():
     global DATA_LOADED, ALL_PERSONS_FLAT_LIST
@@ -92,8 +79,8 @@ def _fetch_all_pages_background():
     ALL_PERSONS_FLAT_LIST = temp_list
     DATA_LOADED = True
     try:
-        with open(CACHE_FILE, "w", encoding="utf-8") as f:
-            json.dump(ALL_PERSONS_FLAT_LIST, f)
+        with open(CACHE_FILE, "wb") as f: # Use binary write mode
+            f.write(msgpack.packb(ALL_PERSONS_FLAT_LIST))
         print(f"✅ Background fetch complete, {len(ALL_PERSONS_FLAT_LIST)} persons loaded")
     except Exception as e:
         print(f"Error saving cache: {e}", file=sys.stderr)
@@ -106,8 +93,17 @@ def preload_wca_data():
             return
         if os.path.exists(CACHE_FILE):
             try:
-                with open(CACHE_FILE, "r", encoding="utf-8") as f:
-                    ALL_PERSONS_FLAT_LIST = json.load(f)
+                # Check cache age
+                file_age = time.time() - os.path.getmtime(CACHE_FILE)
+                if file_age > 86400: # 86400 seconds = 24 hours
+                    print("Cache is older than 24 hours, starting fresh fetch...", file=sys.stderr)
+                    os.remove(CACHE_FILE)
+                    Thread(target=_fetch_all_pages_background, daemon=True).start()
+                    return
+                
+                # Load the cache
+                with open(CACHE_FILE, "rb") as f: # Use binary read mode
+                    ALL_PERSONS_FLAT_LIST = msgpack.unpackb(f.read(), raw=False)
                 DATA_LOADED = True
                 print(f"✅ Loaded {len(ALL_PERSONS_FLAT_LIST)} persons from cache")
                 return
@@ -131,24 +127,12 @@ def find_specialists(selected_events, max_results=MAX_RESULTS):
     specialists = []
     
     for person in ALL_PERSONS_FLAT_LIST:
-        podium_event_ids = set()
-        podium_counts = {}
-
-        person_results = person.get("results", {})
-        if not isinstance(person_results, dict):
-            continue
-
-        for comp_results in person_results.values():
-            for event_id, rounds_list in comp_results.items():
-                for r in rounds_list:
-                    # Logic here remains the same, but the data is already pre-filtered
-                    if r.get("round") == "Final" and r.get("position") in {1,2,3} and r.get("best", -1) != -1:
-                        podium_counts[event_id] = podium_counts.get(event_id, 0) + 1
-                        if event_id not in REMOVED_EVENTS:
-                            podium_event_ids.add(event_id)
-
-        if podium_event_ids == selected_set:
-            podiums_summary = [{"eventId": e, "count": c} for e, c in podium_counts.items()]
+        # Check if the person's podium events (excluding removed events) exactly match the selected events
+        podium_event_ids_for_check = set(person.get("podiums", {}).keys()) - REMOVED_EVENTS
+        
+        if podium_event_ids_for_check == selected_set:
+            # Reconstruct the podiums summary from the cached data, including removed events
+            podiums_summary = [{"eventId": e, "count": c} for e, c in person.get("podiums", {}).items()]
             specialists.append({
                 "personId": person["personId"],
                 "personName": person["personName"],
@@ -157,7 +141,6 @@ def find_specialists(selected_events, max_results=MAX_RESULTS):
             })
             if len(specialists) >= max_results:
                 break
-
     return specialists
 
 # --- WCA Events ---

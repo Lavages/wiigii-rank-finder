@@ -5,6 +5,8 @@ from concurrent.futures import ThreadPoolExecutor
 import os
 import sys
 import json
+import time
+import msgpack
 
 # --- Blueprint ---
 competitors_bp = Blueprint("competitors_bp", __name__)
@@ -13,7 +15,8 @@ competitors_bp = Blueprint("competitors_bp", __name__)
 TOTAL_PAGES = 268
 MAX_RESULTS = 1000
 PERMISSIBLE_EXTRA_EVENTS = {'magic', 'mmagic', '333ft', '333mbo'}
-CACHE_FILE = os.path.join(os.path.dirname(__file__), "competitors_cache.json")
+CACHE_FILE = os.path.join(os.path.dirname(__file__), "competitors_cache.mp")
+CACHE_EXPIRATION_SECONDS = 86400  # 24 hours
 
 # --- Global Data Control ---
 DATA_LOADING_LOCK = Lock()
@@ -29,7 +32,9 @@ def _fetch_and_parse_page(page_number):
         page_data = []
         for person in res.json().get("items", []):
             completed_events = {r["eventId"] for r in person.get("rank", {}).get("singles", [])} | \
-                               {r["eventId"] for r in person.get("rank", {}).get("averages", [])}
+                             {r["eventId"] for r in person.get("rank", {}).get("averages", [])}
+            
+            # --- Optimization: Store minimal data needed for logic ---
             page_data.append({
                 "personId": person["id"],
                 "personName": person["name"],
@@ -55,13 +60,13 @@ def _fetch_all_pages_background():
     ALL_PERSONS_FLAT_LIST = temp_list
     DATA_LOADED = True
     try:
-        with open(CACHE_FILE, "w", encoding="utf-8") as f:
-            json.dump(ALL_PERSONS_FLAT_LIST, f)
+        with open(CACHE_FILE, "wb") as f:
+            f.write(msgpack.packb(ALL_PERSONS_FLAT_LIST))
         print(f"✅ Background fetch complete, {len(ALL_PERSONS_FLAT_LIST)} competitors loaded")
     except Exception as e:
         print(f"Error saving cache: {e}", file=sys.stderr)
 
-# --- Preload Data ---
+# --- Preload Data (Now non-blocking) ---
 def preload_wca_data():
     global DATA_LOADED, ALL_PERSONS_FLAT_LIST
     with DATA_LOADING_LOCK:
@@ -71,8 +76,17 @@ def preload_wca_data():
         # Try loading from cache
         if os.path.exists(CACHE_FILE):
             try:
-                with open(CACHE_FILE, "r", encoding="utf-8") as f:
-                    ALL_PERSONS_FLAT_LIST = json.load(f)
+                # Check cache expiration
+                file_age = time.time() - os.path.getmtime(CACHE_FILE)
+                if file_age > CACHE_EXPIRATION_SECONDS:
+                    print("Cache is older than 24 hours, starting fresh fetch...", file=sys.stderr)
+                    os.remove(CACHE_FILE)
+                    Thread(target=_fetch_all_pages_background, daemon=True).start()
+                    return
+
+                # Load the cache
+                with open(CACHE_FILE, "rb") as f:
+                    ALL_PERSONS_FLAT_LIST = msgpack.unpackb(f.read(), raw=False)
                 DATA_LOADED = True
                 print(f"✅ Loaded {len(ALL_PERSONS_FLAT_LIST)} competitors from cache")
                 return
@@ -82,17 +96,14 @@ def preload_wca_data():
         # Fetch all pages in background
         print("Fetching all pages in background...")
         Thread(target=_fetch_all_pages_background, daemon=True).start()
-
+    
 # --- Find Competitors ---
 def find_competitors(selected_events, max_results=MAX_RESULTS):
     global DATA_LOADED, ALL_PERSONS_FLAT_LIST
 
     if not DATA_LOADED:
-        preload_wca_data()
-        # Return empty immediately if cache not ready (non-blocking)
-        if not DATA_LOADED:
-            print("Data not ready yet. Returning empty list.", file=sys.stderr)
-            return []
+        # Return an error message to the client indicating that data is loading
+        return {"error": "Data is still loading. Please try again in a moment."}
 
     selected_set = {e for e in selected_events if e not in PERMISSIBLE_EXTRA_EVENTS}
     if not selected_set:
@@ -131,11 +142,21 @@ def api_get_competitors():
         return jsonify([])
     selected_events = [e.strip() for e in event_ids_str.split(",") if e.strip()]
     competitors = find_competitors(selected_events, max_results=MAX_RESULTS)
+
+    # Check for the loading state and return an appropriate response
+    if isinstance(competitors, dict) and 'error' in competitors:
+        return jsonify(competitors), 503  # 503 Service Unavailable
+    
     return jsonify(competitors)
 
 @competitors_bp.route("/competitors/<event_id>")
 def api_competitors_single(event_id):
     competitors = find_competitors([event_id], max_results=MAX_RESULTS)
+    
+    # Check for the loading state and return an appropriate response
+    if isinstance(competitors, dict) and 'error' in competitors:
+        return jsonify(competitors), 503
+        
     return jsonify(competitors)
 
 @competitors_bp.route("/events")

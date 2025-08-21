@@ -36,7 +36,10 @@ async def _fetch_and_parse_page(session, page_number):
         try:
             async with session.get(url, timeout=15) as res:
                 res.raise_for_status()
-                data = await res.json()
+                # --- FIX START ---
+                raw_text = await res.text()
+                data = json.loads(raw_text)
+                # --- FIX END ---
                 page_data = []
 
                 persons = data.get("items", [])
@@ -69,7 +72,6 @@ async def _fetch_and_parse_page(session, page_number):
             await asyncio.sleep(RETRY_DELAY)
     print(f"❌ Failed to fetch page {page_number} after {RETRY_ATTEMPTS} attempts. Skipping.", file=sys.stderr)
     return []
-
 # --- Asynchronously Fetch All Pages ---
 async def _fetch_all_pages_async():
     """Asynchronously fetches all WCA pages concurrently."""

@@ -35,9 +35,11 @@ async def _fetch_and_parse_page(session, page_number):
         try:
             async with session.get(url, timeout=15) as res:
                 res.raise_for_status()
-                data = await res.json()
+                # --- FIX START ---
+                raw_text = await res.text()
+                data = json.loads(raw_text)
+                # --- FIX END ---
                 page_data = []
-
                 persons = data.get("items", []) if isinstance(data, dict) else (data if isinstance(data, list) else [])
 
                 for person in persons:

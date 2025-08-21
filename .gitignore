@@ -1,5 +1,0 @@
-# Ignore cache files
-specialists_cache.json
-competitors_cache.json
-*.log
-__pycache__/

@@ -15,6 +15,7 @@ competitors_bp = Blueprint("competitors_bp", __name__)
 # --- Constants ---
 TOTAL_PAGES = 268
 MAX_RESULTS = 1000
+MAX_WORKERS = 16 # threads to speed up fetch
 PERMISSIBLE_EXTRA_EVENTS = {'magic', 'mmagic', '333ft', '333mbo'}
 # Use a temporary directory for cache file, which is guaranteed to be writable on Render.
 CACHE_FILE = os.path.join(tempfile.gettempdir(), "competitors_cache.mp")

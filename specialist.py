@@ -15,7 +15,7 @@ specialist_bp = Blueprint("specialist_bp", __name__)
 TOTAL_PAGES = 268
 MAX_RESULTS = 1000
 CACHE_FILE = os.path.join(os.path.dirname(__file__), "specialists_cache.mp")
-MAX_WORKERS = 16
+MAX_WORKERS = 16 # threads to speed up fetch
 RETRY_ATTEMPTS = 3 # New: Number of retries for fetching a page
 RETRY_DELAY = 2 # New: Delay between retries in seconds
 

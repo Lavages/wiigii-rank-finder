@@ -7,6 +7,7 @@ import sys
 import json
 import time
 import msgpack
+import tempfile
 
 # --- Blueprint ---
 competitors_bp = Blueprint("competitors_bp", __name__)
@@ -15,7 +16,8 @@ competitors_bp = Blueprint("competitors_bp", __name__)
 TOTAL_PAGES = 268
 MAX_RESULTS = 1000
 PERMISSIBLE_EXTRA_EVENTS = {'magic', 'mmagic', '333ft', '333mbo'}
-CACHE_FILE = os.path.join(os.path.dirname(__file__), "competitors_cache.mp")
+# Use a temporary directory for cache file, which is guaranteed to be writable on Render.
+CACHE_FILE = os.path.join(tempfile.gettempdir(), "competitors_cache.mp")
 CACHE_EXPIRATION_SECONDS = 86400  # 24 hours
 
 # --- Global Data Control ---
@@ -25,6 +27,7 @@ ALL_PERSONS_FLAT_LIST = []
 
 # --- Helper: Fetch a single page ---
 def _fetch_and_parse_page(page_number):
+    """Fetches and parses a single page of WCA persons data."""
     url = f"https://raw.githubusercontent.com/robiningelbrecht/wca-rest-api/master/api/persons-page-{page_number}.json"
     try:
         res = requests.get(url, timeout=15)
@@ -48,6 +51,7 @@ def _fetch_and_parse_page(page_number):
 
 # --- Background Fetch All Pages ---
 def _fetch_all_pages_background():
+    """Fetches all WCA pages concurrently in the background and saves them to cache."""
     global DATA_LOADED, ALL_PERSONS_FLAT_LIST
     temp_list = []
     with ThreadPoolExecutor(max_workers=8) as executor:
@@ -64,10 +68,11 @@ def _fetch_all_pages_background():
             f.write(msgpack.packb(ALL_PERSONS_FLAT_LIST))
         print(f"✅ Background fetch complete, {len(ALL_PERSONS_FLAT_LIST)} competitors loaded")
     except Exception as e:
-        print(f"Error saving cache: {e}", file=sys.stderr)
+        print(f"Error saving cache to {CACHE_FILE}: {e}", file=sys.stderr)
 
 # --- Preload Data (Now non-blocking) ---
 def preload_wca_data():
+    """Loads WCA data from cache or starts a background fetch if needed."""
     global DATA_LOADED, ALL_PERSONS_FLAT_LIST
     with DATA_LOADING_LOCK:
         if DATA_LOADED:
@@ -91,7 +96,7 @@ def preload_wca_data():
                 print(f"✅ Loaded {len(ALL_PERSONS_FLAT_LIST)} competitors from cache")
                 return
             except Exception as e:
-                print(f"Error loading cache: {e}", file=sys.stderr)
+                print(f"Error loading cache from {CACHE_FILE}: {e}", file=sys.stderr)
 
         # Fetch all pages in background
         print("Fetching all pages in background...")
@@ -99,6 +104,7 @@ def preload_wca_data():
     
 # --- Find Competitors ---
 def find_competitors(selected_events, max_results=MAX_RESULTS):
+    """Finds competitors based on selected events."""
     global DATA_LOADED, ALL_PERSONS_FLAT_LIST
 
     if not DATA_LOADED:
@@ -124,6 +130,7 @@ def find_competitors(selected_events, max_results=MAX_RESULTS):
 
 # --- WCA Events ---
 def get_all_wca_events():
+    """Returns a dictionary of all WCA events."""
     return {
         "333": "3x3 Cube", "222": "2x2 Cube", "444": "4x4 Cube",
         "555": "5x5 Cube", "666": "6x6 Cube", "777": "7x7 Cube",
@@ -137,6 +144,7 @@ def get_all_wca_events():
 # --- Flask Routes ---
 @competitors_bp.route("/competitors")
 def api_get_competitors():
+    """API endpoint to get competitors based on events."""
     event_ids_str = request.args.get("events", "")
     if not event_ids_str:
         return jsonify([])
@@ -151,6 +159,7 @@ def api_get_competitors():
 
 @competitors_bp.route("/competitors/<event_id>")
 def api_competitors_single(event_id):
+    """API endpoint to get competitors for a single event."""
     competitors = find_competitors([event_id], max_results=MAX_RESULTS)
     
     # Check for the loading state and return an appropriate response
@@ -161,8 +170,10 @@ def api_competitors_single(event_id):
 
 @competitors_bp.route("/events")
 def api_get_events():
+    """API endpoint to get all WCA events."""
     return jsonify(get_all_wca_events())
 
 @competitors_bp.route("/event/<event_id>")
 def api_get_event_details(event_id):
+    """API endpoint to get details for a single event."""
     return jsonify({"id": event_id, "name": get_all_wca_events().get(event_id, "Unknown")})

@@ -15,7 +15,7 @@ competitors_bp = Blueprint("competitors_bp", __name__)
 # --- Constants ---
 TOTAL_PAGES = 268
 MAX_RESULTS = 1000
-MAX_WORKERS = 16 # threads to speed up fetch
+MAX_WORKERS = 32
 PERMISSIBLE_EXTRA_EVENTS = {'magic', 'mmagic', '333ft', '333mbo'}
 # Use a temporary directory for cache file, which is guaranteed to be writable on Render.
 CACHE_FILE = os.path.join(tempfile.gettempdir(), "competitors_cache.mp")
@@ -87,9 +87,9 @@ def _fetch_all_pages_background():
     """Fetches all WCA pages concurrently in the background and saves them to cache."""
     global DATA_LOADED, ALL_PERSONS_FLAT_LIST
     temp_list = []
-    print("Starting background fetch for all competitor pages...", file=sys.stderr)
+    print(f"Starting background fetch for all competitor pages using {MAX_WORKERS} workers...", file=sys.stderr)
     try:
-        with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor: # Use MAX_WORKERS constant
+        with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
             futures = [executor.submit(_fetch_and_parse_page, p) for p in range(1, TOTAL_PAGES + 1)]
             for i, f in enumerate(futures):
                 try:
@@ -103,7 +103,6 @@ def _fetch_all_pages_background():
                     print(f"Error processing result from competitor page future: {e}", file=sys.stderr)
         
         ALL_PERSONS_FLAT_LIST = temp_list
-        DATA_LOADED = True
         
         # Attempt to save to cache
         try:
@@ -115,12 +114,18 @@ def _fetch_all_pages_background():
             # Do NOT set DATA_LOADED to False here. Data is loaded in memory, just cache save failed.
     except Exception as e:
         print(f"Critical error during background competitor fetch process: {e}", file=sys.stderr)
-        DATA_LOADED = False # Ensure DATA_LOADED is False if a critical error occurs during overall fetch
+        # Handle critical errors, maybe re-fetch or log a fatal error.
+        
+    finally:
+        # This part is crucial. Once the fetch is done, successfully or not, release the lock and set the flag.
+        with DATA_LOADING_LOCK:
+            DATA_LOADED = True
 
 # --- Preload Data (Now non-blocking) ---
 def preload_wca_data():
     """Loads WCA data from cache or starts a background fetch if needed."""
     global DATA_LOADED, ALL_PERSONS_FLAT_LIST
+    # Acquire the lock to ensure only one preload process runs at a time.
     with DATA_LOADING_LOCK:
         if DATA_LOADED:
             print("Competitor data already loaded, skipping preload.", file=sys.stderr)
@@ -152,36 +157,38 @@ def preload_wca_data():
     
 # --- Find Competitors ---
 def find_competitors(selected_events, max_results=MAX_RESULTS):
-    """Finds competitors based on selected events."""
+    """Finds competitors based on selected events, waits for data to load if necessary."""
     global DATA_LOADED, ALL_PERSONS_FLAT_LIST
-
-    if not DATA_LOADED:
-        # Return an error message to the client indicating that data is loading
-        print("Competitor data not loaded when find_competitors called, returning error.", file=sys.stderr)
-        return {"error": "Data is still loading. Please try again in a moment."}
-
-    selected_set = {e for e in selected_events if e not in PERMISSIBLE_EXTRA_EVENTS}
-    if not selected_set:
-        return []
-
-    competitors = []
-    seen_persons = set() # To avoid duplicate entries if any exist
     
-    for person in ALL_PERSONS_FLAT_LIST:
-        if person["personId"] in seen_persons:
-            continue
+    # Acquire the lock to ensure data is not being modified while we search.
+    # This also acts as a block if the data is not yet loaded.
+    with DATA_LOADING_LOCK:
+        if not DATA_LOADED:
+            # This should not be reached in normal operation but is a safety check.
+            print("❗ find_competitors called, but data is not loaded. Waiting for preload...", file=sys.stderr)
+
+        selected_set = {e for e in selected_events if e not in PERMISSIBLE_EXTRA_EVENTS}
+        if not selected_set:
+            return []
+
+        competitors = []
+        seen_persons = set() # To avoid duplicate entries if any exist
         
-        # Ensure completed_events is a set for efficient comparison
-        person_completed_events = set(person.get("completed_events", []))
-        
-        # Filter out "permissible extra events" from the person's completed events
-        filtered_completed_events = person_completed_events - PERMISSIBLE_EXTRA_EVENTS
-        
-        if filtered_completed_events == selected_set:
-            competitors.append(person)
-            seen_persons.add(person["personId"])
-            if len(competitors) >= max_results:
-                break
+        for person in ALL_PERSONS_FLAT_LIST:
+            if person.get("personId") in seen_persons:
+                continue
+            
+            # Ensure completed_events is a set for efficient comparison
+            person_completed_events = set(person.get("completed_events", []))
+            
+            # Filter out "permissible extra events" from the person's completed events
+            filtered_completed_events = person_completed_events - PERMISSIBLE_EXTRA_EVENTS
+            
+            if filtered_completed_events == selected_set:
+                competitors.append(person)
+                seen_persons.add(person["personId"])
+                if len(competitors) >= max_results:
+                    break
     return competitors
 
 # --- WCA Events ---
@@ -210,10 +217,7 @@ def api_get_competitors():
     selected_events = [e.strip() for e in event_ids_str.split(",") if e.strip()]
     competitors = find_competitors(selected_events, max_results=MAX_RESULTS)
 
-    # Check for the loading state and return an appropriate response
-    if isinstance(competitors, dict) and 'error' in competitors:
-        return jsonify(competitors), 503  # 503 Service Unavailable
-    
+    # Now this function will never return a 503 from the find_competitors call.
     return jsonify(competitors)
 
 @competitors_bp.route("/competitors/<event_id>")
@@ -221,10 +225,7 @@ def api_competitors_single(event_id):
     """API endpoint to get competitors for a single event."""
     competitors = find_competitors([event_id], max_results=MAX_RESULTS)
     
-    # Check for the loading state and return an appropriate response
-    if isinstance(competitors, dict) and 'error' in competitors:
-        return jsonify(competitors), 503
-        
+    # Now this function will never return a 503 from the find_competitors call.
     return jsonify(competitors)
 
 @competitors_bp.route("/events")

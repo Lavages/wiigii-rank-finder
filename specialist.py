@@ -41,18 +41,44 @@ def _fetch_and_parse_page(page_number):
             persons = []
 
         for person in persons:
-            page_data.append({
-                "personId": person.get("id", "Unknown"),
-                "personName": person.get("name", "Unknown"),
-                "personCountryId": person.get("country", "Unknown"),
-                "results": person.get("results", {})  # store full results
-            })
+            try:
+                # Add a check to ensure 'person' is a dictionary
+                if not isinstance(person, dict):
+                    print(f"Skipping malformed person object on page {page_number}", file=sys.stderr)
+                    continue
+
+                # --- START OF OPTIMIZATION ---
+                filtered_results = {}
+                for comp_id, comp_results in person.get("results", {}).items():
+                    filtered_comp_results = {}
+                    for event_id, rounds_list in comp_results.items():
+                        podium_rounds = []
+                        for r in rounds_list:
+                            # Only keep rounds that are finals with a podium position
+                            if r.get("round") == "Final" and r.get("position") in {1, 2, 3}:
+                                podium_rounds.append(r)
+                        if podium_rounds:
+                            filtered_comp_results[event_id] = podium_rounds
+                    if filtered_comp_results:
+                        filtered_results[comp_id] = filtered_comp_results
+                # --- END OF OPTIMIZATION ---
+
+                page_data.append({
+                    "personId": person.get("id", "Unknown"),
+                    "personName": person.get("name", "Unknown"),
+                    "personCountryId": person.get("country", "Unknown"),
+                    "results": filtered_results
+                })
+            except Exception as e:
+                print(f"Error processing person on page {page_number}: {e}", file=sys.stderr)
+                continue  # Continue to the next person
+
         return page_data
     except Exception as e:
         print(f"Error fetching page {page_number}: {e}", file=sys.stderr)
         return []
-
-# --- Background Fetch All Pages (now synchronous for initial load) ---
+    
+# --- Background Fetch All Pages ---
 def _fetch_all_pages_background():
     global DATA_LOADED, ALL_PERSONS_FLAT_LIST
     temp_list = []
@@ -72,7 +98,7 @@ def _fetch_all_pages_background():
     except Exception as e:
         print(f"Error saving cache: {e}", file=sys.stderr)
 
-# --- Preload Data (now blocks until data is ready) ---
+# --- Preload Data (Async for production, Sync for dev) ---
 def preload_wca_data():
     global DATA_LOADED, ALL_PERSONS_FLAT_LIST
     with DATA_LOADING_LOCK:
@@ -88,11 +114,8 @@ def preload_wca_data():
             except Exception as e:
                 print(f"Error loading cache: {e}, starting fresh fetch...", file=sys.stderr)
         
-        # --- BLOCKING CALL HERE ---
-        # The app will not start serving requests until this completes
-        _fetch_all_pages_background()
-        
-# ... (rest of the code)
+        print("No cache found, starting background fetch...", file=sys.stderr)
+        Thread(target=_fetch_all_pages_background, daemon=True).start()
 
 # --- Find Specialists ---
 def find_specialists(selected_events, max_results=MAX_RESULTS):
@@ -111,14 +134,14 @@ def find_specialists(selected_events, max_results=MAX_RESULTS):
         podium_event_ids = set()
         podium_counts = {}
 
-        # Check if 'results' is a dictionary before calling .values()
         person_results = person.get("results", {})
         if not isinstance(person_results, dict):
-            continue  # Skip this person as the results format is invalid
+            continue
 
         for comp_results in person_results.values():
             for event_id, rounds_list in comp_results.items():
                 for r in rounds_list:
+                    # Logic here remains the same, but the data is already pre-filtered
                     if r.get("round") == "Final" and r.get("position") in {1,2,3} and r.get("best", -1) != -1:
                         podium_counts[event_id] = podium_counts.get(event_id, 0) + 1
                         if event_id not in REMOVED_EVENTS:
@@ -137,11 +160,8 @@ def find_specialists(selected_events, max_results=MAX_RESULTS):
 
     return specialists
 
-# ... (rest of the code)
-
 # --- WCA Events ---
 def get_all_wca_events():
-    # ... (code remains the same)
     return {
         "333": "3x3 Cube", "222": "2x2 Cube", "444": "4x4 Cube",
         "555": "5x5 Cube", "666": "6x6 Cube", "777": "7x7 Cube",
@@ -161,9 +181,8 @@ def api_get_specialists():
     selected_events = [e.strip() for e in event_ids_str.split(",") if e.strip()]
     specialists = find_specialists(selected_events, max_results=MAX_RESULTS)
     
-    # Check if find_specialists returned an error dictionary
     if isinstance(specialists, dict) and 'error' in specialists:
-        return jsonify(specialists), 503  # Service Unavailable
+        return jsonify(specialists), 503
     
     return jsonify(specialists)
 
@@ -171,9 +190,8 @@ def api_get_specialists():
 def api_specialists_single(event_id):
     specialists = find_specialists([event_id], max_results=MAX_RESULTS)
     
-    # Check if find_specialists returned an error dictionary
     if isinstance(specialists, dict) and 'error' in specialists:
-        return jsonify(specialists), 503  # Service Unavailable
+        return jsonify(specialists), 503
         
     return jsonify(specialists)
     

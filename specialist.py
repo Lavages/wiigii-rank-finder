@@ -35,10 +35,9 @@ async def _fetch_and_parse_page(session, page_number):
         try:
             async with session.get(url, timeout=15) as res:
                 res.raise_for_status()
-                # --- FIX START ---
                 raw_text = await res.text()
                 data = json.loads(raw_text)
-                # --- FIX END ---
+
                 page_data = []
                 persons = data.get("items", []) if isinstance(data, dict) else (data if isinstance(data, list) else [])
 
@@ -52,7 +51,18 @@ async def _fetch_and_parse_page(session, page_number):
                     for comp_id, comp_results in person.get("results", {}).items():
                         for event_id, rounds_list in comp_results.items():
                             for r in rounds_list:
-                                if r.get("round") == "Final" and r.get("position") in {1, 2, 3}:
+                                position = r.get("position")
+                                best = r.get("best", 0)
+                                average = r.get("average", 0)
+
+                                # 🛠 FIX: Require strictly positive result (exclude 0, -1 DNF, -2 DNS)
+                                is_valid_result = (best is not None and best > 0) or (average is not None and average > 0)
+
+                                if (
+                                    r.get("round") == "Final"
+                                    and position in {1, 2, 3}
+                                    and is_valid_result
+                                ):
                                     has_podium = True
                                     person_podiums[event_id] = person_podiums.get(event_id, 0) + 1
 
@@ -63,14 +73,17 @@ async def _fetch_and_parse_page(session, page_number):
                             "personCountryId": person.get("country"),
                             "podiums": person_podiums
                         })
+
                 print(f"✅ Successfully fetched page {page_number} (attempt {attempt + 1})", file=sys.stderr)
                 return page_data
+
         except (aiohttp.ClientError, asyncio.TimeoutError, json.JSONDecodeError, ValueError) as e:
             print(f"Error fetching page {page_number}, attempt {attempt + 1}/{RETRY_ATTEMPTS}: {e}", file=sys.stderr)
             await asyncio.sleep(RETRY_DELAY)
         except Exception as e:
             print(f"Unexpected error fetching page {page_number}, attempt {attempt + 1}/{RETRY_ATTEMPTS}: {e}", file=sys.stderr)
             await asyncio.sleep(RETRY_DELAY)
+
     print(f"❌ Failed to fetch page {page_number} after {RETRY_ATTEMPTS} attempts. Skipping.", file=sys.stderr)
     return []
 

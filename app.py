@@ -9,7 +9,7 @@ import sys
 
 # --- Import Blueprints and Preload Functions ---
 from competitors import competitors_bp, preload_wca_data as preload_competitors_data
-from specialist import specialist_bp, preload_wca_data_async
+from specialist import specialist_bp, preload_wca_data as preload_specialist_data
 from completionist import get_completionists, preload_completionist_data
 
 app = Flask(__name__, template_folder='templates')

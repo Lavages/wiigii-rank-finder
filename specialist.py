@@ -141,7 +141,7 @@ def _run_preload_in_thread():
     
     print("✅ Specialist data processing complete and ready for API access.", file=sys.stderr)
 
-def preload_wca_data_async():
+def preload_wca_data():
     """Starts the data preload process in a non-blocking background thread."""
     with DATA_LOADING_LOCK:
         if not DATA_LOADED:

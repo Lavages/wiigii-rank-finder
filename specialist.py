@@ -7,7 +7,7 @@ import sys
 import json
 import time
 import msgpack
-from threading import Lock
+from threading import Lock, Thread
 
 # --- Blueprint ---
 specialist_bp = Blueprint("specialist_bp", __name__)
@@ -17,14 +17,13 @@ TOTAL_PAGES = 268
 MAX_RESULTS = 1000
 MAX_CONCURRENT_REQUESTS = 32
 REMOVED_EVENTS = {"magic", "mmagic", "333mbo", "333ft"}
-CACHE_FILE = os.path.join(os.path.dirname(__file__), "specialists_cache.mp")
-CACHE_EXPIRATION_SECONDS = 86400  # 24 hours
 RETRY_ATTEMPTS = 3
 RETRY_DELAY = 2  # seconds
 
 # --- Global Data Control ---
 DATA_LOADING_LOCK = Lock()
 ALL_PERSONS_FLAT_LIST = []
+ALL_PODIUMS_BY_EVENT = {}  # New, optimized data structure
 DATA_LOADED = False
 
 # --- Helper: Asynchronously Fetch a single page with retries ---
@@ -55,7 +54,7 @@ async def _fetch_and_parse_page(session, page_number):
                                 best = r.get("best", 0)
                                 average = r.get("average", 0)
 
-                                # 🛠 FIX: Require strictly positive result (exclude 0, -1 DNF, -2 DNS)
+                                # Require strictly positive result (exclude 0, -1 DNF, -2 DNS)
                                 is_valid_result = (best is not None and best > 0) or (average is not None and average > 0)
 
                                 if (
@@ -107,58 +106,57 @@ async def _fetch_all_pages_async():
     print(f"✅ Async fetch complete, {len(temp_list)} specialists loaded.", file=sys.stderr)
     return temp_list
 
-# --- Preload Data (Synchronous) ---
-def preload_wca_data():
-    """Loads WCA data from cache or performs a synchronous fetch if needed."""
-    global ALL_PERSONS_FLAT_LIST, DATA_LOADED
+# --- Preload Data (Background) ---
+def _run_preload_in_thread():
+    """Runs the asynchronous data fetch in a background thread."""
+    global ALL_PERSONS_FLAT_LIST, ALL_PODIUMS_BY_EVENT, DATA_LOADED
     
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+    
+    # Run the async fetch synchronously within this background thread
+    raw_data = loop.run_until_complete(_fetch_all_pages_async())
+    loop.close()
+
+    # Process and store the data in the optimized structure
+    processed_podiums = {}
+    for person in raw_data:
+        for event_id, count in person.get("podiums", {}).items():
+            if event_id not in processed_podiums:
+                processed_podiums[event_id] = []
+            
+            podiums_summary = [{"eventId": e, "count": c} for e, c in person.get("podiums", {}).items()]
+            
+            processed_podiums[event_id].append({
+                "personId": person["personId"],
+                "personName": person["personName"],
+                "personCountryId": person.get("personCountryId", "Unknown"),
+                "podiums": podiums_summary
+            })
+
     with DATA_LOADING_LOCK:
-        if DATA_LOADED:
-            print("Specialist data already loaded, skipping preload.", file=sys.stderr)
-            return
-
-        # Try loading from cache
-        if os.path.exists(CACHE_FILE):
-            try:
-                file_age = time.time() - os.path.getmtime(CACHE_FILE)
-                if file_age <= CACHE_EXPIRATION_SECONDS:
-                    with open(CACHE_FILE, "rb") as f:
-                        ALL_PERSONS_FLAT_LIST = msgpack.unpackb(f.read(), raw=False)
-                    DATA_LOADED = True
-                    print(f"✅ Loaded {len(ALL_PERSONS_FLAT_LIST)} specialists from fresh cache.", file=sys.stderr)
-                    return
-                else:
-                    print("Specialist cache is older than 24 hours. Deleting and starting fresh fetch...", file=sys.stderr)
-                    os.remove(CACHE_FILE)
-            except Exception as e:
-                print(f"Error loading cache from {CACHE_FILE}: {e}. Starting fresh fetch...", file=sys.stderr)
-                if os.path.exists(CACHE_FILE):
-                    os.remove(CACHE_FILE)
-
-        print("No valid specialist cache found or cache is old. Starting synchronous fetch.", file=sys.stderr)
-        
-        # This is the key change: Run the async fetch synchronously
-        loop = asyncio.new_event_loop()
-        asyncio.set_event_loop(loop)
-        ALL_PERSONS_FLAT_LIST = loop.run_until_complete(_fetch_all_pages_async())
-        loop.close()
-
-        # Save to cache
-        try:
-            with open(CACHE_FILE, "wb") as f:
-                f.write(msgpack.packb(ALL_PERSONS_FLAT_LIST))
-            print(f"✅ Synchronous fetch complete and cache saved ({len(ALL_PERSONS_FLAT_LIST)} specialists).", file=sys.stderr)
-        except Exception as e:
-            print(f"Error saving specialist cache: {e}", file=sys.stderr)
-        
+        ALL_PERSONS_FLAT_LIST = raw_data
+        ALL_PODIUMS_BY_EVENT = processed_podiums
         DATA_LOADED = True
-        
+    
+    print("✅ Specialist data processing complete and ready for API access.", file=sys.stderr)
+
+def preload_wca_data_async():
+    """Starts the data preload process in a non-blocking background thread."""
+    with DATA_LOADING_LOCK:
+        if not DATA_LOADED:
+            print("Starting background preload of WCA data...", file=sys.stderr)
+            thread = Thread(target=_run_preload_in_thread)
+            thread.daemon = True  # Allows the thread to exit with the main program
+            thread.start()
+        else:
+            print("Specialist data already loaded, skipping preload.", file=sys.stderr)
+
 # --- Find Specialists ---
 def find_specialists(selected_events, max_results=MAX_RESULTS):
-    """Finds specialists based on selected events, ensures data is loaded."""
+    """Finds specialists based on selected events."""
     if not DATA_LOADED:
-        print("❗ find_specialists called before data is loaded. Triggering synchronous preload...", file=sys.stderr)
-        preload_wca_data()
+        return {"error": "Data is still loading, please try again in a moment."}
 
     selected_set = set(selected_events)
     if not selected_set:
@@ -166,22 +164,42 @@ def find_specialists(selected_events, max_results=MAX_RESULTS):
 
     specialists = []
     seen_persons = set()
-    for person in ALL_PERSONS_FLAT_LIST:
-        if person.get("personId") in seen_persons:
-            continue
+    
+    # Use the optimized data structure for the most common case (single event)
+    if len(selected_set) == 1:
+        event_id = list(selected_set)[0]
+        if event_id in ALL_PODIUMS_BY_EVENT:
+            for person in ALL_PODIUMS_BY_EVENT[event_id]:
+                if person.get("personId") in seen_persons:
+                    continue
+                
+                podium_event_ids = set(p["eventId"] for p in person.get("podiums", [])) - REMOVED_EVENTS
+                
+                if podium_event_ids == selected_set:
+                    specialists.append(person)
+                    seen_persons.add(person["personId"])
+                    if len(specialists) >= max_results:
+                        break
+    else:
+        # Fallback to the flat list for multi-event searches
+        for person in ALL_PERSONS_FLAT_LIST:
+            if person.get("personId") in seen_persons:
+                continue
+                
+            podium_event_ids_for_check = set(person.get("podiums", {}).keys()) - REMOVED_EVENTS
             
-        podium_event_ids_for_check = set(person.get("podiums", {}).keys()) - REMOVED_EVENTS
-        if podium_event_ids_for_check == selected_set:
-            podiums_summary = [{"eventId": e, "count": c} for e, c in person.get("podiums", {}).items()]
-            specialists.append({
-                "personId": person["personId"],
-                "personName": person["personName"],
-                "personCountryId": person.get("personCountryId", "Unknown"),
-                "podiums": podiums_summary
-            })
-            seen_persons.add(person["personId"])
-            if len(specialists) >= max_results:
-                break
+            if podium_event_ids_for_check == selected_set:
+                podiums_summary = [{"eventId": e, "count": c} for e, c in person.get("podiums", {}).items()]
+                specialists.append({
+                    "personId": person["personId"],
+                    "personName": person["personName"],
+                    "personCountryId": person.get("personCountryId", "Unknown"),
+                    "podiums": podiums_summary
+                })
+                seen_persons.add(person["personId"])
+                if len(specialists) >= max_results:
+                    break
+    
     return specialists
 
 # --- WCA Events ---

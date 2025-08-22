@@ -3,6 +3,7 @@ import asyncio
 import json
 import os
 import sys
+import msgpack
 from threading import Lock, Thread
 from flask import Blueprint, jsonify, request
 

@@ -132,7 +132,7 @@ def build_rank_lookup_cache(persons_data: list):
                         _rank_lookup_cache[person_country_iso2.lower()][event_id][rank_type][int(country_rank_value)] = compact_data
                     except ValueError:
                         app.logger.warning(f"⚠️ Invalid country rank value for {wca_id} {event_id} (country {person_country_iso2}): {country_rank_value}")
-
+                        
 def load_persons_cache():
     """Attempts to load the entire persons cache from a MessagePack file."""
     if os.path.exists(PERSONS_CACHE_FILE):
@@ -155,7 +155,8 @@ def load_ranks_cache():
     if os.path.exists(RANKS_CACHE_FILE):
         try:
             with open(RANKS_CACHE_FILE, "rb") as f:
-                return msgpack.load(f, raw=False)
+                # Use strict_map_key=False to allow integer keys
+                return msgpack.load(f, raw=False, strict_map_key=False)
         except Exception as e:
             app.logger.error(f"⚠️ Failed to load ranks cache: {e}. Deleting...")
             if os.path.exists(RANKS_CACHE_FILE):
@@ -175,10 +176,17 @@ def save_persons_cache(data: dict):
         app.logger.error(f"⚠️ Failed saving cache to '{PERSONS_CACHE_FILE}': {e}")
 
 def save_ranks_cache(data: dict):
-    """Saves the _rank_lookup_cache to a MessagePack file."""
+    """Saves the _rank_lookup_cache to a MessagePack file with integer keys encoded."""
+    def encode_int_keys(obj):
+        if isinstance(obj, dict):
+            # Recursively convert all integer keys to strings
+            return {str(k) if isinstance(k, int) else k: encode_int_keys(v) for k, v in obj.items()}
+        return obj
+
     try:
+        # Pass the custom encoder to msgpack
         with open(RANKS_CACHE_FILE, "wb") as f:
-            packed_data = msgpack.packb(data, use_bin_type=True)
+            packed_data = msgpack.packb(encode_int_keys(data), use_bin_type=True)
             f.write(packed_data)
         app.logger.info(f"✅ Saved rank lookup cache to file '{RANKS_CACHE_FILE}'")
     except Exception as e:
@@ -363,11 +371,13 @@ def serve_index():
 def serve_completionists():
     """Serves the completionist HTML page."""
     return render_template("completionist.html")
+app.register_blueprint(specialist_bp, url_prefix='/api')
 
 @app.route("/specialist")
 def serve_specialist_page():
     """Serves the specialist HTML page."""
     return render_template("specialist.html")
+app.register_blueprint(competitors_bp, url_prefix='/api')
 
 @app.route("/competitors")
 def serve_competitors_page():
@@ -441,16 +451,24 @@ def find_rank(scope: str, event_id: str, ranking_type: str, rank_number: int):
     if not ranks_dict_combined:
         return jsonify({"error": f"No ranks found for {event_id} ({ranking_type}) in scopes '{scope}'."}), 404
 
-    if rank_number in ranks_dict_combined:
+    # Convert dictionary keys to integers for comparison
+    ranks_dict_combined_int_keys = {int(k): v for k, v in ranks_dict_combined.items() if isinstance(k, str) and k.isdigit()}
+
+    # Update available_ranks to use integer keys
+    available_ranks = sorted(ranks_dict_combined_int_keys.keys())
+
+    if not available_ranks:
+        return jsonify({"error": f"No valid integer ranks found for {event_id} ({ranking_type}) in scopes '{scope}'."}), 404
+
+    if rank_number in available_ranks:
         actual_rank = rank_number
         warning = None
     else:
-        available_ranks = sorted(ranks_dict_combined.keys())
         closest_rank_lower_or_equal = next((r for r in reversed(available_ranks) if r <= rank_number), None)
         actual_rank = closest_rank_lower_or_equal if closest_rank_lower_or_equal is not None else available_ranks[0]
         warning = f"Requested rank #{rank_number} not available. Returning closest available rank #{actual_rank}."
 
-    rank_data = ranks_dict_combined.get(actual_rank)
+    rank_data = ranks_dict_combined_int_keys.get(actual_rank)
     if not rank_data:
         return jsonify({"error": f"No competitor data found for rank: {actual_rank}."}), 404
 

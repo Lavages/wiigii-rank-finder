@@ -50,9 +50,10 @@
         </h1>
 
         <div id="main-content" class="space-y-8">
+            <!-- Initial content will be a loading message -->
+            <p class="text-center text-xl text-purple-400 animate-pulse">Loading WCA Data, please wait...</p>
         </div>
     </div>
-
     <script>
         // Base URL for your Flask backend
         const API_BASE_URL = '/api';
@@ -61,14 +62,15 @@
         // State variables (mimicking React state with global variables)
         let selectedRegion = 'world';
         let selectedEvent = '333';
-        let selectedRankingType = 'single';
+        let selectedRankingType = 'singles';
         let rankNumber = '1'; // Rank number is now mandatory, default to 1
         let globalRankings = null; // Stores results from global ranking API (will contain 1 item or be null/empty)
         let selectedCompetitor = null; // The competitor whose individual rankings are displayed
         let individualRankings = null; // Rankings data for the selected individual competitor
-        let loading = false;
+        let loading = false; // This is for specific search loading, not initial data load
         let error = null;
         let viewMode = 'global_search_form'; // 'global_search_form', 'single_rank_result', 'individual_competitor_rankings'
+        let backendReady = false; // New state variable to track backend data readiness
 
         // DOM elements
         const mainContentDiv = document.getElementById('main-content');
@@ -108,24 +110,24 @@
         /**
          * Converts a result in centiseconds to a formatted time string (M:SS.ss or S.ss).
          * @param {number} centiseconds The result in hundredths of a second.
-         * @returns {string} The formatted time string, DNF, or DNS.
+         * @returns {string} The formatted time string, DNF, DNS, or 'No Result'.
          */
         function formatTime(centiseconds) {
-            // Check for DNF (Did Not Finish) or DNS (Did Not Start)
             if (centiseconds === -1) {
                 return 'DNF';
             }
             if (centiseconds === -2) {
                 return 'DNS';
             }
+            if (centiseconds === 0 || centiseconds === null) {
+                return 'No Result';
+            }
 
-            // Calculate minutes, seconds, and hundredths
             const totalSeconds = centiseconds / 100;
             const minutes = Math.floor(totalSeconds / 60);
             const seconds = Math.floor(totalSeconds % 60);
             const hundredths = Math.floor((totalSeconds * 100) % 100);
 
-            // Format minutes, seconds, and hundredths with leading zeros
             const formattedMinutes = minutes > 0 ? `${minutes}:` : '';
             const formattedSeconds = minutes > 0 && seconds < 10 ? `0${seconds}` : seconds.toString();
             const formattedHundredths = hundredths < 10 ? `0${hundredths}` : hundredths.toString();
@@ -139,18 +141,15 @@
 
         /**
          * Formats a WCA Multi-Blind result.
-         * The result is a single integer, with the following format:
-         * DNF = -1
-         * Time = last 2 digits
-         * Solved = next 2 digits
-         * Missed = next 2 digits
-         *
          * @param {number} result The integer result from the WCA API.
          * @returns {string} The formatted multi-blind result.
          */
         function formatMultiBlind(result) {
             if (result < 0) {
                 return 'DNF';
+            }
+            if (result === 0) {
+                return 'No Result';
             }
 
             const valueStr = String(result).padStart(10, '0');
@@ -181,7 +180,6 @@
             }
         }
 
-
         /**
          * Fetches country data and populates the regions array.
          */
@@ -196,11 +194,11 @@
 
                 // Add countries to the regions array, sorted alphabetically
                 const countryOptions = countryItems
-                    .map(country => ({ value: country.iso2Code, label: country.name }))
+                    .map(country => ({ value: country.iso2Code.toLowerCase(), label: country.name }))
                     .sort((a, b) => a.label.localeCompare(b.label));
 
                 regions = [...regions, ...countryOptions];
-                renderUI(); // Re-render to update the dropdown with new countries
+                // Do not call renderUI here, it will be called after backend is ready
             } catch (err) {
                 console.error("Error fetching countries:", err.message);
                 // Optionally display an error to the user about country loading failure
@@ -212,9 +210,17 @@
          * This function acts like React's render method, updating the DOM.
          */
         function renderUI() {
+            // Only render if backend is ready, otherwise show initial loading message
+            if (!backendReady) {
+                mainContentDiv.innerHTML = `
+                    <p class="text-center text-xl text-purple-400 animate-pulse">Loading WCA Data, please wait...</p>
+                `;
+                return;
+            }
+
             mainContentDiv.innerHTML = ''; // Clear previous content
 
-            if (loading) {
+            if (loading) { // This `loading` state is for the search button specifically
                 mainContentDiv.innerHTML = `
                     <p class="text-center text-xl text-purple-400 animate-pulse">Loading...</p>
                 `;
@@ -257,8 +263,8 @@
                             <div class="flex flex-col">
                                 <label for="ranking-type-select" class="text-gray-300 text-sm font-medium mb-2">Ranking Type:</label>
                                 <select id="ranking-type-select" class="p-4 rounded-xl border border-gray-700 bg-gray-800 text-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-600 transition duration-200 ease-in-out cursor-pointer appearance-none bg-[url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="white"%3e%3cpath fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /%3e%3c/svg%3e')] bg-[length:1.5rem_1.5rem] bg-[right_1rem_center] bg-no-repeat">
-                                        <option value="single" ${selectedRankingType === 'single' ? 'selected' : ''}>Single Rank</option>
-                                        <option value="average" ${selectedRankingType === 'average' ? 'selected' : ''}>Average Rank</option>
+                                        <option value="singles" ${selectedRankingType === 'singles' ? 'selected' : ''}>Single Rank</option>
+                                        <option value="averages" ${selectedRankingType === 'averages' ? 'selected' : ''}>Average Rank</option>
                                 </select>
                             </div>
                             
@@ -298,12 +304,12 @@
 
                 let resultValue = '';
                 if (foundCompetitor) {
-                    if (selectedEvent === '333fm' && selectedRankingType === 'single') {
+                    if (selectedEvent === '333fm' && selectedRankingType === 'singles') {
                         resultValue = `${foundCompetitor.result} moves`;
-                    } else if (selectedEvent === '333fm' && selectedRankingType === 'average') {
+                    } else if (selectedEvent === '333fm' && selectedRankingType === 'averages') {
                         const roundedResult = (foundCompetitor.result / 100).toFixed(2);
                         resultValue = `${roundedResult} moves`;
-                    } else if (selectedEvent === '333mbf' && selectedRankingType === 'single') {
+                    } else if (selectedEvent === '333mbf' && selectedRankingType === 'singles') {
                         resultValue = formatMultiBlind(foundCompetitor.result);
                     } else {
                         resultValue = formatTime(foundCompetitor.result);
@@ -321,7 +327,10 @@
                     <h2 class="text-4xl font-bold text-purple-300 text-center drop-shadow-md">
                         ${regionLabel} ${selectedRankingType.charAt(0).toUpperCase() + selectedRankingType.slice(1)} Ranking
                     </h2>
-                    <p class="text-center text-xl text-gray-400 font-medium">Rank # ${rankNumber} for ${eventLabel}</p>
+                    <!-- Display actualRank and optional warning message -->
+                    <p class="text-center text-xl text-gray-400 font-medium">Rank # ${foundCompetitor.actualRank} for ${eventLabel}</p>
+                    ${foundCompetitor.note ? `<p class="text-center text-red-400 text-sm mt-2">${foundCompetitor.note}</p>` : ''}
+
 
                     <div class="space-y-6">
                         ${foundCompetitor ? `
@@ -344,8 +353,8 @@
                                 </div>
                                 <div class="mt-6 border-t border-gray-700 pt-4">
                                    <a href="https://www.worldcubeassociation.org/persons/${foundCompetitor.person.wcaId}" target="_blank"
-                                      class="block text-center w-full bg-purple-600 hover:bg-purple-700 active:bg-purple-800 text-white font-bold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
-                                      View Full Profile
+                                       class="block text-center w-full bg-purple-600 hover:bg-purple-700 active:bg-purple-800 text-white font-bold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
+                                        View Full Profile
                                    </a>
                                 </div>
                             </div>
@@ -383,9 +392,6 @@
             }
         }
 
-        /**
-         * Fetches global/regional/country rankings from the backend.
-         */
         async function handleFetchGlobalRankings() {
             setButtonLoadingState(true);
             loading = true;
@@ -406,20 +412,31 @@
             }
 
             try {
-                // Now always include rankNumber as it's mandatory
-                const response = await fetch(`${API_BASE_URL}/global-rankings/${selectedRegion}/${selectedRankingType}/${selectedEvent}?rankNumber=${currentRankNumber}`);
+                const url = `/api/find-rank/${selectedRegion}/${selectedEvent}/${selectedRankingType}/${rankNumber}`;
+                const response = await fetch(url);
+
                 if (!response.ok) {
-                    const errorData = await response.json();
-                    throw new Error(errorData.error || 'Failed to fetch global rankings.');
+                    // Corrected error handling: parse the JSON response
+                    let errorData;
+                    try {
+                        errorData = await response.json();
+                    } catch (e) {
+                        // Fallback in case the response is not valid JSON
+                        throw new Error(`HTTP ${response.status}: Failed to parse error message.`);
+                    }
+                    // Use the specific error message from the JSON
+                    throw new Error(`HTTP ${response.status}: ${errorData.error || 'An unknown error occurred.'}`);
                 }
+
                 const data = await response.json();
 
-                // Backend now handles filtering for the specific rank
-                if (data.items && data.items.length > 0) {
-                    globalRankings = data.items; // Should contain only one item if successful
+                if (data.person) {
+                    globalRankings = [data];
                     viewMode = 'single_rank_result';
                 } else {
-                    error = `No competitor found at rank #${currentRankNumber} for ${events.find(e => e.value === selectedEvent)?.label} (${selectedRankingType}) in ${regions.find(r => r.value === selectedRegion)?.label}.`;
+                    // This else block handles cases where the API returns 200 OK but with no person data,
+                    // although the backend seems to return a 404 in this case.
+                    error = data.error || `No competitor found at rank #${currentRankNumber} for ${events.find(e => e.value === selectedEvent)?.label} (${selectedRankingType}) in ${regions.find(r => r.value === selectedRegion)?.label}.`;
                     viewMode = 'global_search_form';
                 }
             } catch (err) {
@@ -433,16 +450,9 @@
             }
         }
 
-        // We can now remove the handleViewIndividualRankings function since we're using a direct link.
-        // The handleBackToGlobalList function is also no longer needed from the `single_rank_result` view.
 
-        /**
-         * Navigates back to the main search form from any view.
-         * Retains previous input selections.
-         */
         function handleBackToSearchForm() {
             viewMode = 'global_search_form';
-            // Removed lines that reset selectedRegion, selectedEvent, selectedRankingType, rankNumber
             globalRankings = null;
             selectedCompetitor = null;
             individualRankings = null;
@@ -450,12 +460,38 @@
             renderUI();
         }
 
-        // Initial render when the page loads
+        /**
+         * Periodically checks the backend status until it's ready.
+         */
+        async function checkBackendStatus() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/status`);
+                const data = await response.json();
+
+                if (response.ok && data.status === 'ready') {
+                    console.log("Backend is ready!");
+                    backendReady = true;
+                    await fetchCountries(); // Fetch countries once backend is ready
+                    renderUI(); // Render the main UI with the search form
+                } else {
+                    console.log("Backend not ready, rechecking in 3 seconds...");
+                    setTimeout(checkBackendStatus, 3000); // Recheck after 3 seconds
+                }
+            } catch (err) {
+                console.error("Error checking backend status:", err);
+                console.log("Backend not reachable, rechecking in 5 seconds...");
+                setTimeout(checkBackendStatus, 5000); // Longer delay if backend is unreachable
+            }
+        }
+
+        // Initial setup when the page loads
         document.addEventListener('DOMContentLoaded', () => {
-            fetchCountries(); // Fetch countries first
-            renderUI(); // Then render the initial UI
+            checkBackendStatus(); // Start checking backend status
+            // Initial renderUI will show the "Loading WCA Data..." message
+            // The actual search form will be rendered once backendReady is true
         });
     </script>
+
 </body>
 
 </html>

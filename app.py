@@ -85,6 +85,7 @@ def fetch_page_with_retry(url: str, page_identifier: str = "data", max_retries: 
 def build_rank_lookup_cache(persons_data: list):
     """
     Builds a global lookup cache for WCA IDs based on rank, event, and type.
+    This version stores a compact tuple (wcaId, best) to save space.
     """
     global _rank_lookup_cache
     _rank_lookup_cache = defaultdict(lambda: defaultdict(lambda: {"singles": {}, "averages": {}}))
@@ -107,28 +108,31 @@ def build_rank_lookup_cache(persons_data: list):
                 rank_info = event_info.get("rank", {})
                 best_result = event_info.get("best")
                 if not event_id or not isinstance(rank_info, dict): continue
+                
+                # Use a compact tuple for storage: (wcaId, best_result)
+                compact_data = (wca_id, best_result)
 
                 world_rank_value = rank_info.get("world")
                 if world_rank_value is not None:
                     try:
-                        _rank_lookup_cache["world"][event_id][rank_type][int(world_rank_value)] = {"wcaId": wca_id, "best": best_result}
+                        _rank_lookup_cache["world"][event_id][rank_type][int(world_rank_value)] = compact_data
                     except ValueError:
                         app.logger.warning(f"⚠️ Invalid world rank value for {wca_id} {event_id}: {world_rank_value}")
 
                 continent_rank_value = rank_info.get("continent")
                 if continent_name_for_person and continent_rank_value is not None:
                     try:
-                        _rank_lookup_cache[continent_name_for_person][event_id][rank_type][int(continent_rank_value)] = {"wcaId": wca_id, "best": best_result}
+                        _rank_lookup_cache[continent_name_for_person][event_id][rank_type][int(continent_rank_value)] = compact_data
                     except ValueError:
                         app.logger.warning(f"⚠️ Invalid continent rank value for {wca_id} {event_id} (continent {continent_name_for_person}): {continent_rank_value}")
                 
                 country_rank_value = rank_info.get("country")
                 if person_country_iso2 and country_rank_value is not None:
                     try:
-                        _rank_lookup_cache[person_country_iso2.lower()][event_id][rank_type][int(country_rank_value)] = {"wcaId": wca_id, "best": best_result}
+                        _rank_lookup_cache[person_country_iso2.lower()][event_id][rank_type][int(country_rank_value)] = compact_data
                     except ValueError:
                         app.logger.warning(f"⚠️ Invalid country rank value for {wca_id} {event_id} (country {person_country_iso2}): {country_rank_value}")
-
+                        
 def load_persons_cache():
     """Attempts to load the entire persons cache from a MessagePack file."""
     if os.path.exists(PERSONS_CACHE_FILE):

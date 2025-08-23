@@ -19,7 +19,7 @@ app = Flask(__name__, template_folder='templates')
 CORS(app)
 
 # Configure Flask's logger to show info and debug messages for better visibility
-app.logger.setLevel(logging.DEBUG)
+app.logger.setLevel(logging.INFO)
 
 # Register blueprints
 app.register_blueprint(competitors_bp, url_prefix='/api')
@@ -93,7 +93,7 @@ def build_rank_lookup_cache(persons_data: list):
     global _rank_lookup_cache
     _rank_lookup_cache = defaultdict(lambda: defaultdict(lambda: {"singles": {}, "averages": {}}))
 
-    app.logger.debug(f"DEBUG: Starting build_rank_lookup_cache with {len(persons_data)} persons.")
+    app.logger.info(f"⏳ Starting build_rank_lookup_cache with {len(persons_data)} persons.")
 
     for person in persons_data:
         wca_id = person.get("id")

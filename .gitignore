@@ -17,6 +17,3 @@ env/
 # Logs and databases
 *.log
 *.sqlite3
-
-# Your custom cache files
-*.msgpack

@@ -30,7 +30,6 @@ _country_iso2_to_continent_name = {}
 
 _cache_lock = threading.Lock()
 _data_loaded_event = threading.Event()
-app_ready = False  # ✅ Flag for /api/status
 
 # ----------------- Config -----------------
 TOTAL_PERSONS_PAGES = 268
@@ -156,73 +155,60 @@ def filter_persons_data(persons_data: dict) -> dict:
     return filtered
 
 def preload_all_persons_data_thread():
-    """
-    Preloads all persons data and sets the global app_ready flag when finished.
-    """
-    global _all_persons_cache, _rank_lookup_cache, _continents_map, _countries_map, _country_iso2_to_continent_name, app_ready
+    global _all_persons_cache, _rank_lookup_cache, _continents_map, _countries_map, _country_iso2_to_continent_name
 
-    try:
-        # Fetch continents & countries
-        continents_list = fetch_page_with_retry(CONTINENTS_DATA_URL, "continents")
-        countries_list = fetch_page_with_retry(COUNTRIES_DATA_URL, "countries")
+    continents_list = fetch_page_with_retry(CONTINENTS_DATA_URL, "continents")
+    countries_list = fetch_page_with_retry(COUNTRIES_DATA_URL, "countries")
 
-        # Clear maps
-        _continents_map.clear()
-        _countries_map.clear()
-        _country_iso2_to_continent_name.clear()
+    _continents_map.clear()
+    _countries_map.clear()
+    _country_iso2_to_continent_name.clear()
 
-        HARDCODED_CONTINENT_MAP = {"AF": "africa", "AS": "asia", "EU": "europe", "NA": "north_america",
-                                   "SA": "south_america", "OC": "oceania"}
+    HARDCODED_CONTINENT_MAP = {"AF": "africa", "AS": "asia", "EU": "europe", "NA": "north_america",
+                               "SA": "south_america", "OC": "oceania"}
 
-        if continents_list:
-            _continent_iso2_to_normalized_name = {}
-            for item in continents_list:
-                iso2 = item.get("id")
-                if not iso2: continue
-                normalized_name = WCA_REGION_ISO2_TO_NORMALIZED_NAME.get(iso2.upper()) or HARDCODED_CONTINENT_MAP.get(iso2.upper()) or iso2.lower()
-                _continent_iso2_to_normalized_name[iso2.upper()] = normalized_name
-            _continents_map = {name: iso2 for iso2, name in _continent_iso2_to_normalized_name.items()}
-            _continents_map.setdefault("world", "WR")
-            app.logger.info(f"✅ Loaded continents: {list(_continents_map.keys())}")
+    if continents_list:
+        _continent_iso2_to_normalized_name = {}
+        for item in continents_list:
+            iso2 = item.get("id")
+            if not iso2: continue
+            normalized_name = WCA_REGION_ISO2_TO_NORMALIZED_NAME.get(iso2.upper()) or HARDCODED_CONTINENT_MAP.get(iso2.upper()) or iso2.lower()
+            _continent_iso2_to_normalized_name[iso2.upper()] = normalized_name
+        _continents_map = {name: iso2 for iso2, name in _continent_iso2_to_normalized_name.items()}
+        _continents_map.setdefault("world", "WR")
+        app.logger.info(f"✅ Loaded continents: {list(_continents_map.keys())}")
 
-        # Replace with your existing mapping
-        MANUAL_COUNTRY_TO_CONTINENT_MAP = { ... }  
-        _country_iso2_to_continent_name = MANUAL_COUNTRY_TO_CONTINENT_MAP
-        if countries_list:
-            _countries_map = {item.get("iso2Code", "").lower(): item for item in countries_list if item.get("iso2Code")}
-        app.logger.info(f"✅ Built country -> continent mapping for {len(_country_iso2_to_continent_name)} countries.")
+    MANUAL_COUNTRY_TO_CONTINENT_MAP = { ... }  # your existing country->continent mapping
+    _country_iso2_to_continent_name = MANUAL_COUNTRY_TO_CONTINENT_MAP
+    if countries_list:
+        _countries_map = {item.get("iso2Code", "").lower(): item for item in countries_list if item.get("iso2Code")}
+    app.logger.info(f"✅ Built country -> continent mapping for {len(_country_iso2_to_continent_name)} countries.")
 
-        # Load cache if available
-        cached_persons_data = load_persons_cache()
-        cached_ranks_data = load_ranks_cache()
-        if cached_persons_data and cached_ranks_data:
-            _all_persons_cache.update(cached_persons_data)
-            _rank_lookup_cache.update(cached_ranks_data)
-            _data_loaded_event.set()
-            app_ready = True
-            app.logger.info(f"✅ Loaded persons and ranks from cache")
-            return
-
-        # Fetch all person pages concurrently
-        temp_persons_list = []
-        with concurrent.futures.ThreadPoolExecutor(max_workers=30) as executor:
-            futures = {executor.submit(fetch_page_with_retry, f"{PERSONS_DATA_BASE_URL}/persons-page-{page}.json", f"persons-page-{page}") for page in range(1, TOTAL_PERSONS_PAGES + 1)}
-            for future in concurrent.futures.as_completed(futures):
-                page_data = future.result()
-                if page_data:
-                    with _cache_lock:
-                        temp_persons_list.extend(page_data)
-
-        full_persons_data = {p["id"]: p for p in temp_persons_list if "id" in p}
-        build_rank_lookup_cache(list(full_persons_data.values()))
-        save_ranks_cache(_rank_lookup_cache)
-        save_persons_cache(full_persons_data)
-        _all_persons_cache = filter_persons_data(full_persons_data)
+    cached_persons_data = load_persons_cache()
+    cached_ranks_data = load_ranks_cache()
+    if cached_persons_data and cached_ranks_data:
+        _all_persons_cache.update(cached_persons_data)
+        _rank_lookup_cache.update(cached_ranks_data)
         _data_loaded_event.set()
-        app_ready = True
-        app.logger.info("✅ Finished preloading all persons data")
-    except Exception as e:
-        app.logger.error(f"❌ Error in preload_all_persons_data_thread: {e}")
+        app.logger.info(f"✅ Loaded persons and ranks from cache")
+        return
+
+    temp_persons_list = []
+    with concurrent.futures.ThreadPoolExecutor(max_workers=30) as executor:
+        futures = {executor.submit(fetch_page_with_retry, f"{PERSONS_DATA_BASE_URL}/persons-page-{page}.json", f"persons-page-{page}") for page in range(1, TOTAL_PERSONS_PAGES + 1)}
+        for future in concurrent.futures.as_completed(futures):
+            page_data = future.result()
+            if page_data:
+                with _cache_lock:
+                    temp_persons_list.extend(page_data)
+
+    full_persons_data = {p["id"]: p for p in temp_persons_list if "id" in p}
+    build_rank_lookup_cache(list(full_persons_data.values()))
+    save_ranks_cache(_rank_lookup_cache)
+    save_persons_cache(full_persons_data)
+    _all_persons_cache = filter_persons_data(full_persons_data)
+    _data_loaded_event.set()
+    app.logger.info("✅ Finished preloading all persons data")
 
 def get_person_from_cache(wca_id: str):
     return _all_persons_cache.get(wca_id)
@@ -257,7 +243,7 @@ def serve_competitors_page():
 # ----------------- API routes -----------------
 @app.route("/api/status")
 def status():
-    if not app_ready:
+    if not _data_loaded_event.is_set():
         return jsonify({"status": "loading"}), 503
     return jsonify({"status": "ready"}), 200
 
@@ -336,9 +322,3 @@ def find_rank(scope: str, event_id: str, ranking_type: str, rank_number: int):
         return jsonify(response)
 
     return jsonify({"error": "No competitor data found."}), 404
-
-# ----------------- Run app -----------------
-if __name__ == "__main__":
-    app.logger.info("Starting Flask application...")
-    port = int(os.environ.get("PORT", 5000))
-    app.run

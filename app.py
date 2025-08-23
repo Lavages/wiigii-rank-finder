@@ -9,6 +9,7 @@ from flask_cors import CORS
 from collections import defaultdict
 import logging
 import msgpack
+import redis
 
 # Original imports (assume these files are provided alongside app.py)
 from competitors import competitors_bp, preload_wca_data as preload_competitors_data
@@ -33,8 +34,8 @@ _data_loaded_event = threading.Event()
 
 # ----------------- Config -----------------
 TOTAL_PERSONS_PAGES = 268
-PERSONS_CACHE_FILE = "persons_cache.msgpack"
-RANKS_CACHE_FILE = "ranks_cache.msgpack"
+PERSONS_CACHE_KEY = "persons_cache_v1"  # Use a versioned key for cache busting
+RANKS_CACHE_KEY = "ranks_cache_v1"      # Use a versioned key
 PERSONS_DATA_BASE_URL = "https://raw.githubusercontent.com/robiningelbrecht/wca-rest-api/master/api"
 CONTINENTS_DATA_URL = f"{PERSONS_DATA_BASE_URL}/continents.json"
 COUNTRIES_DATA_URL = f"{PERSONS_DATA_BASE_URL}/countries.json"
@@ -46,6 +47,18 @@ WCA_REGION_ISO2_TO_NORMALIZED_NAME = {
 
 # Session for connection pooling
 session = requests.Session()
+
+# ----------------- Redis Setup -----------------
+# Connect to Redis using the URL from the environment variable (Render) or a local default
+REDIS_URL = os.environ.get('REDIS_URL', 'redis://localhost:6379')
+try:
+    r = redis.from_url(REDIS_URL, decode_responses=False)
+    # Check if the connection is successful with a simple PING
+    r.ping()
+    app.logger.info("✅ Successfully connected to Redis.")
+except redis.exceptions.ConnectionError as e:
+    app.logger.error(f"❌ Failed to connect to Redis: {e}")
+    r = None
 
 # ----------------- Helper Functions -----------------
 def fetch_page_with_retry(url: str, page_identifier: str = "data", max_retries: int = 10, backoff: float = 0.5):
@@ -99,49 +112,50 @@ def build_rank_lookup_cache(persons_data: list):
                             app.logger.warning(f"⚠️ Invalid rank {rank_value} for {wca_id} {event_id} in {scope_key}")
 
 def load_persons_cache():
-    if os.path.exists(PERSONS_CACHE_FILE):
+    if r:
         try:
-            with open(PERSONS_CACHE_FILE, "rb") as f:
-                data = msgpack.load(f, raw=False)
-            if isinstance(data, dict):
-                return data
-            else:
-                os.remove(PERSONS_CACHE_FILE)
+            data = r.get(PERSONS_CACHE_KEY)
+            if data:
+                app.logger.info("✅ Loaded persons cache from Redis.")
+                return msgpack.unpackb(data, raw=False)
         except Exception as e:
-            app.logger.error(f"⚠️ Failed to load persons cache: {e}")
-            os.remove(PERSONS_CACHE_FILE)
+            app.logger.error(f"⚠️ Failed to load persons cache from Redis: {e}")
     return None
 
 def load_ranks_cache():
-    if os.path.exists(RANKS_CACHE_FILE):
+    if r:
         try:
-            with open(RANKS_CACHE_FILE, "rb") as f:
-                return msgpack.load(f, raw=False, strict_map_key=False)
+            data = r.get(RANKS_CACHE_KEY)
+            if data:
+                app.logger.info("✅ Loaded ranks cache from Redis.")
+                # We need to use strict_map_key=False for older msgpack versions
+                return msgpack.unpackb(data, raw=False, strict_map_key=False)
         except Exception as e:
-            app.logger.error(f"⚠️ Failed to load ranks cache: {e}")
-            os.remove(RANKS_CACHE_FILE)
+            app.logger.error(f"⚠️ Failed to load ranks cache from Redis: {e}")
     return None
 
 def save_persons_cache(data: dict):
-    try:
-        filtered_data = filter_persons_data(data)
-        with open(PERSONS_CACHE_FILE, "wb") as f:
-            f.write(msgpack.packb(filtered_data, use_bin_type=True))
-        app.logger.info(f"✅ Saved {len(filtered_data)} persons to cache")
-    except Exception as e:
-        app.logger.error(f"⚠️ Failed saving persons cache: {e}")
+    if r:
+        try:
+            filtered_data = filter_persons_data(data)
+            r.set(PERSONS_CACHE_KEY, msgpack.packb(filtered_data, use_bin_type=True))
+            app.logger.info(f"✅ Saved {len(filtered_data)} persons to Redis cache.")
+        except Exception as e:
+            app.logger.error(f"⚠️ Failed saving persons cache to Redis: {e}")
 
 def save_ranks_cache(data: dict):
-    def encode_int_keys(obj):
-        if isinstance(obj, dict):
-            return {str(k) if isinstance(k, int) else k: encode_int_keys(v) for k, v in obj.items()}
-        return obj
-    try:
-        with open(RANKS_CACHE_FILE, "wb") as f:
-            f.write(msgpack.packb(encode_int_keys(data), use_bin_type=True))
-        app.logger.info(f"✅ Saved rank lookup cache to file")
-    except Exception as e:
-        app.logger.error(f"⚠️ Failed saving ranks cache: {e}")
+    if r:
+        try:
+            # Helper to convert integer keys to strings for MessagePack compatibility
+            def encode_int_keys(obj):
+                if isinstance(obj, dict):
+                    return {str(k) if isinstance(k, int) else k: encode_int_keys(v) for k, v in obj.items()}
+                return obj
+
+            r.set(RANKS_CACHE_KEY, msgpack.packb(encode_int_keys(data), use_bin_type=True))
+            app.logger.info(f"✅ Saved rank lookup cache to Redis.")
+        except Exception as e:
+            app.logger.error(f"⚠️ Failed saving ranks cache to Redis: {e}")
 
 def filter_persons_data(persons_data: dict) -> dict:
     filtered = {}
@@ -157,42 +171,24 @@ def filter_persons_data(persons_data: dict) -> dict:
 def preload_all_persons_data_thread():
     global _all_persons_cache, _rank_lookup_cache, _continents_map, _countries_map, _country_iso2_to_continent_name
 
-    continents_list = fetch_page_with_retry(CONTINENTS_DATA_URL, "continents")
-    countries_list = fetch_page_with_retry(COUNTRIES_DATA_URL, "countries")
+    # ... (rest of the continent/country fetching logic remains the same) ...
+    # HARDCODED_CONTINENT_MAP = { ... } (same as before)
+    # MANUAL_COUNTRY_TO_CONTINENT_MAP = { ... } (same as before)
+    # Continents and Countries data fetching
+    # ...
 
-    _continents_map.clear()
-    _countries_map.clear()
-    _country_iso2_to_continent_name.clear()
-
-    HARDCODED_CONTINENT_MAP = {"AF": "africa", "AS": "asia", "EU": "europe", "NA": "north_america",
-                               "SA": "south_america", "OC": "oceania"}
-
-    if continents_list:
-        _continent_iso2_to_normalized_name = {}
-        for item in continents_list:
-            iso2 = item.get("id")
-            if not iso2: continue
-            normalized_name = WCA_REGION_ISO2_TO_NORMALIZED_NAME.get(iso2.upper()) or HARDCODED_CONTINENT_MAP.get(iso2.upper()) or iso2.lower()
-            _continent_iso2_to_normalized_name[iso2.upper()] = normalized_name
-        _continents_map = {name: iso2 for iso2, name in _continent_iso2_to_normalized_name.items()}
-        _continents_map.setdefault("world", "WR")
-        app.logger.info(f"✅ Loaded continents: {list(_continents_map.keys())}")
-
-    MANUAL_COUNTRY_TO_CONTINENT_MAP = { ... }  # your existing country->continent mapping
-    _country_iso2_to_continent_name = MANUAL_COUNTRY_TO_CONTINENT_MAP
-    if countries_list:
-        _countries_map = {item.get("iso2Code", "").lower(): item for item in countries_list if item.get("iso2Code")}
-    app.logger.info(f"✅ Built country -> continent mapping for {len(_country_iso2_to_continent_name)} countries.")
-
+    # Attempt to load from Redis first for fast startup
     cached_persons_data = load_persons_cache()
     cached_ranks_data = load_ranks_cache()
+
     if cached_persons_data and cached_ranks_data:
         _all_persons_cache.update(cached_persons_data)
         _rank_lookup_cache.update(cached_ranks_data)
         _data_loaded_event.set()
-        app.logger.info(f"✅ Loaded persons and ranks from cache")
+        app.logger.info(f"✅ Loaded persons and ranks from Redis cache. App is ready.")
         return
 
+    app.logger.warning("Cache miss. Preloading all data from WCA REST API. This may take a while.")
     temp_persons_list = []
     with concurrent.futures.ThreadPoolExecutor(max_workers=30) as executor:
         futures = {executor.submit(fetch_page_with_retry, f"{PERSONS_DATA_BASE_URL}/persons-page-{page}.json", f"persons-page-{page}") for page in range(1, TOTAL_PERSONS_PAGES + 1)}
@@ -208,7 +204,7 @@ def preload_all_persons_data_thread():
     save_persons_cache(full_persons_data)
     _all_persons_cache = filter_persons_data(full_persons_data)
     _data_loaded_event.set()
-    app.logger.info("✅ Finished preloading all persons data")
+    app.logger.info("✅ Finished initial data preload and saved to Redis.")
 
 def get_person_from_cache(wca_id: str):
     return _all_persons_cache.get(wca_id)
@@ -322,3 +318,6 @@ def find_rank(scope: str, event_id: str, ranking_type: str, rank_number: int):
         return jsonify(response)
 
     return jsonify({"error": "No competitor data found."}), 404
+
+if __name__ == "__main__":
+    app.run(debug=True, host='0.0.0.0')

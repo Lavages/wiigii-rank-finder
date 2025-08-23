@@ -7,7 +7,7 @@ import sys
 import json
 import time
 import msgpack
-import tempfile
+# import tempfile # Removed as we no longer need temporary directory
 from threading import Lock
 
 # --- Blueprint ---
@@ -18,10 +18,13 @@ TOTAL_PAGES = 268
 MAX_RESULTS = 1000
 MAX_CONCURRENT_REQUESTS = 32
 PERMISSIBLE_EXTRA_EVENTS = {'magic', 'mmagic', '333ft', '333mbo'}
-CACHE_FILE = os.path.join(tempfile.gettempdir(), "competitors_cache.mp")
-CACHE_EXPIRATION_SECONDS = 86400  # 24 hours
+# --- FIX START ---
+# Define CACHE_FILE relative to the current script's directory for persistence
+CACHE_FILE = os.path.join(os.path.dirname(__file__), "competitors_cache.mp")
+# --- FIX END ---
+CACHE_EXPIRATION_SECONDS = 86400    # 24 hours
 RETRY_ATTEMPTS = 3
-RETRY_DELAY = 2  # seconds
+RETRY_DELAY = 2     # seconds
 
 # --- Global Data Control ---
 DATA_LOADING_LOCK = Lock()
@@ -36,10 +39,8 @@ async def _fetch_and_parse_page(session, page_number):
         try:
             async with session.get(url, timeout=15) as res:
                 res.raise_for_status()
-                # --- FIX START ---
                 raw_text = await res.text()
                 data = json.loads(raw_text)
-                # --- FIX END ---
                 page_data = []
 
                 persons = data.get("items", [])

@@ -1,38 +1,22 @@
-# Byte-compiled / optimized / DLL files
+# Byte-compiled files
 __pycache__/
-*.py[cod]
-*$py.class
-
-# Distribution / packaging
-.Python
-build/
-develop-eggs/
-dist/
-eggs/
-*.egg-info/
-.installed.cfg
-*.egg
+*.pyc
 
 # Virtual environment
-.venv/
+.venv
 venv/
 env/
+/bin/
+/lib/
+/include/
 
-# Temp
-.tmp/
-tmp/
-*.tmp
+# IDE files
+.idea/
+.vscode/
 
-# Custom cache files
-competitors_cache.msgpack
-specialists_cache.msgpack
-completionists_cache.json
-competitors_cache.mp
-specialists_cache.mp
-
-# OS-specific files
-.DS_Store
-Thumbs.db
-
-# Logs
+# Logs and databases
 *.log
+*.sqlite3
+
+# Your custom cache files
+*.msgpack

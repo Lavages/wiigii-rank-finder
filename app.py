@@ -132,7 +132,7 @@ def build_rank_lookup_cache(persons_data: list):
                         _rank_lookup_cache[person_country_iso2.lower()][event_id][rank_type][int(country_rank_value)] = compact_data
                     except ValueError:
                         app.logger.warning(f"⚠️ Invalid country rank value for {wca_id} {event_id} (country {person_country_iso2}): {country_rank_value}")
-                        
+
 def load_persons_cache():
     """Attempts to load the entire persons cache from a MessagePack file."""
     if os.path.exists(PERSONS_CACHE_FILE):
@@ -454,8 +454,9 @@ def find_rank(scope: str, event_id: str, ranking_type: str, rank_number: int):
     if not rank_data:
         return jsonify({"error": f"No competitor data found for rank: {actual_rank}."}), 404
 
-    wca_id = rank_data.get("wcaId")
-    result = rank_data.get("best")
+    # Unpack the tuple here
+    wca_id, result = rank_data
+    
     person = get_person_from_cache(wca_id) if wca_id else None
 
     if person:

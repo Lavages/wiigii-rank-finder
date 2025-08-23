@@ -21,10 +21,6 @@ CORS(app)
 # Configure Flask's logger to show info and debug messages for better visibility
 app.logger.setLevel(logging.INFO)
 
-# Register blueprints
-app.register_blueprint(competitors_bp, url_prefix='/api')
-app.register_blueprint(specialist_bp, url_prefix='/api')
-
 # ----------------- Global caches -----------------
 _all_persons_cache = {}
 _rank_lookup_cache = defaultdict(lambda: defaultdict(lambda: {"singles": {}, "averages": {}}))
@@ -38,6 +34,7 @@ _data_loaded_event = threading.Event()
 # ----------------- Config -----------------
 TOTAL_PERSONS_PAGES = 268
 PERSONS_CACHE_FILE = "persons_cache.msgpack"
+RANKS_CACHE_FILE = "ranks_cache.msgpack"
 PERSONS_DATA_BASE_URL = "https://raw.githubusercontent.com/robiningelbrecht/wca-rest-api/master/api"
 CONTINENTS_DATA_URL = f"{PERSONS_DATA_BASE_URL}/continents.json"
 COUNTRIES_DATA_URL = f"{PERSONS_DATA_BASE_URL}/countries.json"
@@ -53,9 +50,9 @@ session = requests.Session()
 
 # ----------------- Helper Functions -----------------
 
-def fetch_page_with_retry(url: str, page_identifier: str = "data", max_retries: int = 5, backoff: float = 0.5):
+def fetch_page_with_retry(url: str, page_identifier: str = "data", max_retries: int = 10, backoff: float = 0.5):
     """
-    Fetches data from a given URL with retry logic. Uses a shared session.
+    Fetches data from a given URL with retry logic. Increased retries and backoff.
     """
     for attempt in range(max_retries):
         try:
@@ -88,7 +85,6 @@ def fetch_page_with_retry(url: str, page_identifier: str = "data", max_retries: 
 def build_rank_lookup_cache(persons_data: list):
     """
     Builds a global lookup cache for WCA IDs based on rank, event, and type.
-    This cache will contain all the necessary ranking data.
     """
     global _rank_lookup_cache
     _rank_lookup_cache = defaultdict(lambda: defaultdict(lambda: {"singles": {}, "averages": {}}))
@@ -150,6 +146,41 @@ def load_persons_cache():
                 os.remove(PERSONS_CACHE_FILE)
     return None
 
+def load_ranks_cache():
+    """Attempts to load the entire ranks cache from a MessagePack file."""
+    if os.path.exists(RANKS_CACHE_FILE):
+        try:
+            with open(RANKS_CACHE_FILE, "rb") as f:
+                return msgpack.load(f, raw=False)
+        except Exception as e:
+            app.logger.error(f"⚠️ Failed to load ranks cache: {e}. Deleting...")
+            if os.path.exists(RANKS_CACHE_FILE):
+                os.remove(RANKS_CACHE_FILE)
+    return None
+
+def save_persons_cache(data: dict):
+    """Saves the _all_persons_cache to a MessagePack file."""
+    try:
+        filtered_data = filter_persons_data(data)
+        
+        with open(PERSONS_CACHE_FILE, "wb") as f:
+            packed_data = msgpack.packb(filtered_data, use_bin_type=True)
+            f.write(packed_data)
+        app.logger.info(f"✅ Saved {len(filtered_data)} persons to cache file '{PERSONS_CACHE_FILE}'")
+    except Exception as e:
+        app.logger.error(f"⚠️ Failed saving cache to '{PERSONS_CACHE_FILE}': {e}")
+
+def save_ranks_cache(data: dict):
+    """Saves the _rank_lookup_cache to a MessagePack file."""
+    try:
+        with open(RANKS_CACHE_FILE, "wb") as f:
+            packed_data = msgpack.packb(data, use_bin_type=True)
+            f.write(packed_data)
+        app.logger.info(f"✅ Saved rank lookup cache to file '{RANKS_CACHE_FILE}'")
+    except Exception as e:
+        app.logger.error(f"⚠️ Failed saving ranks cache to '{RANKS_CACHE_FILE}': {e}")
+
+
 def filter_persons_data(persons_data: dict) -> dict:
     """
     Filters the full person data, keeping only the essential fields
@@ -169,19 +200,6 @@ def filter_persons_data(persons_data: dict) -> dict:
     
     app.logger.info(f"✅ Finished filtering. Original size: {len(persons_data)}, Filtered size: {len(filtered_data)}")
     return filtered_data
-
-def save_persons_cache(data: dict):
-    """Saves the _all_persons_cache to a MessagePack file."""
-    try:
-        filtered_data = filter_persons_data(data)
-        
-        with open(PERSONS_CACHE_FILE, "wb") as f:
-            packed_data = msgpack.packb(filtered_data, use_bin_type=True)
-            f.write(packed_data)
-        app.logger.info(f"✅ Saved {len(filtered_data)} persons to cache file '{PERSONS_CACHE_FILE}'")
-    except Exception as e:
-        app.logger.error(f"⚠️ Failed saving cache to '{PERSONS_CACHE_FILE}': {e}")
-
 
 # ----------------- Preload Thread -----------------
 
@@ -275,11 +293,14 @@ def preload_all_persons_data_thread():
         _countries_map = {item.get("iso2Code", "").lower(): item for item in countries_list if item.get("iso2Code")}
     app.logger.info(f"✅ Built country -> continent mapping for {len(_country_iso2_to_continent_name)} countries.")
 
-    # --- Load persons from cache if available ---
-    cached_data = load_persons_cache()
-    if cached_data:
-        _all_persons_cache = cached_data
-        app.logger.info(f"✅ Loaded {len(_all_persons_cache)} persons from cache.")
+    # --- Load persons and ranks from cache if available ---
+    cached_persons_data = load_persons_cache()
+    cached_ranks_data = load_ranks_cache()
+
+    if cached_persons_data and cached_ranks_data:
+        _all_persons_cache.update(cached_persons_data)
+        _rank_lookup_cache.update(cached_ranks_data)
+        app.logger.info(f"✅ Loaded {len(_all_persons_cache)} persons and ranks from cache.")
         _data_loaded_event.set()
         return
 
@@ -303,14 +324,18 @@ def preload_all_persons_data_thread():
 
     full_persons_data = {p["id"]: p for p in temp_persons_list if "id" in p}
     app.logger.info(f"✅ Finished fetching all persons: {len(full_persons_data)}")
+    
+    if len(full_persons_data) < 260000:
+        app.logger.critical(f"⚠️ Only fetched {len(full_persons_data)} persons out of expected 268000. Data will be incomplete.")
 
-    # <--- NEW ORDER: Build rank cache from full data, then save filtered cache
+    # <--- Build and save both caches --->
     build_rank_lookup_cache(list(full_persons_data.values()))
-    app.logger.info("✅ Rank lookup cache successfully built from full data.")
+    save_ranks_cache(_rank_lookup_cache)
+    app.logger.info("✅ Rank lookup cache successfully built and saved.")
 
-    save_persons_cache(full_persons_data) # This function will filter the data before saving
+    save_persons_cache(full_persons_data)
     _all_persons_cache = filter_persons_data(full_persons_data)
-
+    
     _data_loaded_event.set()
 
 def get_person_from_cache(wca_id: str):

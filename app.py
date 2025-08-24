@@ -12,7 +12,7 @@ import msgpack
 
 # ---- Blueprints / module imports (assumed present) ----
 from competitors import competitors_bp, preload_wca_data as preload_competitors_data
-from specialist import specialist_bp, preload_wca_data as preload_specialist_data
+from specialist import specialist_bp, preload_specialist_data
 from completionist import get_completionists, preload_completionist_data
 
 # ---- App / CORS / Logging ----

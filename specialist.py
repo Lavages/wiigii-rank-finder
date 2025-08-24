@@ -199,15 +199,16 @@ def _run_preload_in_thread():
     else:
         print("❌ Data fetch failed, API will return a 503 error.", file=sys.stderr)
 
-def preload_wca_data():
+def preload_specialist_data():
     with DATA_LOADING_LOCK:
         if not DATA_LOADED:
-            print("Starting background preload of WCA data...", file=sys.stderr)
+            print("Starting background preload of specialist data...", file=sys.stderr)
             thread = Thread(target=_run_preload_in_thread)
             thread.daemon = True
             thread.start()
         else:
             print("Specialist data already loaded, skipping preload.", file=sys.stderr)
+
 
 # --- Find Specialists ---
 def find_specialists(selected_events, max_results=MAX_RESULTS):

@@ -1,57 +1,46 @@
-import os
-import time
-import requests # Still useful for non-async parts, though aiohttp is for main fetch
+import aiohttp
+import asyncio
+import requests
 from flask import Blueprint, jsonify, request
+import os
 import sys
-# Removed json, as msgpack is used for caching and aiohttp.ClientResponse.json() handles decoding
+import json
+import time
 import msgpack
-import logging # New import for consistent logging
-import asyncio # For running async code
-import aiohttp # For asynchronous HTTP requests
-from threading import Lock, Event # New: Event for signaling data readiness
+# import tempfile # Removed as we no longer need temporary directory
+from threading import Lock
 
 # --- Blueprint ---
 competitors_bp = Blueprint("competitors_bp", __name__)
 
-# --- Logger Setup ---
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
-# For Render, Flask's app.logger typically gets configured centrally.
-# If testing this module standalone, you might need to add a StreamHandler:
-# if not logger.handlers:
-#    handler = logging.StreamHandler(sys.stdout)
-#    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-#    handler.setFormatter(formatter)
-#    logger.addHandler(handler)
-
 # --- Constants ---
-TOTAL_PAGES = 268 # Total number of person pages to fetch
-MAX_RESULTS = 1000 # Maximum number of results to return for API queries
-MAX_CONCURRENT_REQUESTS = 32 # Max concurrent HTTP requests for async fetching
-PERMISSIBLE_EXTRA_EVENTS = {'magic', 'mmagic', '333ft', '333mbo'} # Events to exclude from "all events" calculation
-
+TOTAL_PAGES = 268
+MAX_RESULTS = 1000
+MAX_CONCURRENT_REQUESTS = 32
+PERMISSIBLE_EXTRA_EVENTS = {'magic', 'mmagic', '333ft', '333mbo'}
+# --- FIX START ---
 # Define CACHE_FILE relative to the current script's directory for persistence
-CACHE_FILE = os.path.join(os.path.dirname(__file__), "competitors_cache.msgpack") # Changed extension to msgpack
-
-CACHE_EXPIRATION_SECONDS = 86400 # 24 hours
+CACHE_FILE = os.path.join(os.path.dirname(__file__), "competitors_cache.mp")
+# --- FIX END ---
+CACHE_EXPIRATION_SECONDS = 86400    # 24 hours
 RETRY_ATTEMPTS = 3
-RETRY_DELAY = 2 # seconds
+RETRY_DELAY = 2     # seconds
 
 # --- Global Data Control ---
-DATA_LOADING_LOCK = Lock() # Lock to ensure preload happens only once per process
-ALL_PERSONS_FLAT_LIST = [] # List to store all preloaded person data
-DATA_LOADED = False # Flag to indicate if data has been loaded in this process
-COMPETITORS_READY_EVENT = Event() # Event to signal when competitors data is fully ready
+DATA_LOADING_LOCK = Lock()
+ALL_PERSONS_FLAT_LIST = []
+DATA_LOADED = False
 
 # --- Helper: Asynchronously Fetch a single page with retries ---
-async def _fetch_and_parse_page(session: aiohttp.ClientSession, page_number: int) -> list:
+async def _fetch_and_parse_page(session, page_number):
     """Asynchronously fetches and parses a single page of WCA persons data with retries."""
     for attempt in range(RETRY_ATTEMPTS):
         url = f"https://raw.githubusercontent.com/robiningelbrecht/wca-rest-api/master/api/persons-page-{page_number}.json"
         try:
-            async with session.get(url, timeout=30) as res: # Increased timeout to 30s
+            async with session.get(url, timeout=15) as res:
                 res.raise_for_status()
-                data = await res.json() # Use res.json() directly
+                raw_text = await res.text()
+                data = json.loads(raw_text)
                 page_data = []
 
                 persons = data.get("items", [])
@@ -71,57 +60,48 @@ async def _fetch_and_parse_page(session: aiohttp.ClientSession, page_number: int
                     page_data.append({
                         "personId": person.get("id"),
                         "personName": person.get("name"),
-                        "completed_events": list(completed_events), # Convert set to list for serialization
+                        "completed_events": list(completed_events),
                         "personCountryId": person.get("country", "Unknown")
                     })
-                logger.info(f"✅ Successfully fetched page {page_number} (attempt {attempt + 1})")
+                print(f"✅ Successfully fetched page {page_number} (attempt {attempt + 1})", file=sys.stderr)
                 return page_data
-        except (aiohttp.ClientError, asyncio.TimeoutError) as e:
-            logger.error(f"Network/Timeout error fetching page {page_number}, attempt {attempt + 1}/{RETRY_ATTEMPTS}: {e}")
+        except (aiohttp.ClientError, asyncio.TimeoutError, json.JSONDecodeError, ValueError) as e:
+            print(f"Error fetching page {page_number}, attempt {attempt + 1}/{RETRY_ATTEMPTS}: {e}", file=sys.stderr)
             await asyncio.sleep(RETRY_DELAY)
-        except Exception as e: # Catch other parsing or unexpected errors
-            logger.error(f"Unexpected error fetching/parsing page {page_number}, attempt {attempt + 1}/{RETRY_ATTEMPTS}: {e}")
+        except Exception as e:
+            print(f"Unexpected error fetching page {page_number}, attempt {attempt + 1}/{RETRY_ATTEMPTS}: {e}", file=sys.stderr)
             await asyncio.sleep(RETRY_DELAY)
-    logger.warning(f"❌ Failed to fetch page {page_number} after {RETRY_ATTEMPTS} attempts. Skipping.")
+    print(f"❌ Failed to fetch page {page_number} after {RETRY_ATTEMPTS} attempts. Skipping.", file=sys.stderr)
     return []
-
 # --- Asynchronously Fetch All Pages ---
-async def _fetch_all_pages_async() -> list:
+async def _fetch_all_pages_async():
     """Asynchronously fetches all WCA pages concurrently."""
     temp_list = []
-    logger.info(f"Starting async fetch for all competitor pages with {MAX_CONCURRENT_REQUESTS} concurrent requests...")
+    print(f"Starting async fetch for all competitor pages with {MAX_CONCURRENT_REQUESTS} concurrent requests...", file=sys.stderr)
     
-    # aiohttp.TCPConnector for connection pooling and limit
     conn = aiohttp.TCPConnector(limit=MAX_CONCURRENT_REQUESTS)
     async with aiohttp.ClientSession(connector=conn) as session:
         tasks = [_fetch_and_parse_page(session, p) for p in range(1, TOTAL_PAGES + 1)]
-        # asyncio.gather runs tasks concurrently and waits for all to complete
         results = await asyncio.gather(*tasks, return_exceptions=True)
         
     for result in results:
         if isinstance(result, list):
             temp_list.extend(result)
         elif isinstance(result, Exception):
-            logger.error(f"An exception occurred during fetch: {result}")
+            print(f"An exception occurred during fetch: {result}", file=sys.stderr)
             
-    logger.info(f"✅ Async fetch complete, {len(temp_list)} persons loaded.")
+    print(f"✅ Async fetch complete, {len(temp_list)} persons loaded.", file=sys.stderr)
     return temp_list
 
-# --- Preload Data (Synchronous Wrapper for Async Fetch) ---
+# --- Preload Data (Synchronous) ---
 def preload_wca_data():
-    """
-    Loads WCA data from msgpack cache or performs a synchronous fetch if needed.
-    This function is designed to be called once per process at application startup
-    (e.g., from app.py's main_preload_task).
-    """
+    """Loads WCA data from cache or performs a synchronous fetch if needed."""
     global ALL_PERSONS_FLAT_LIST, DATA_LOADED
     
-    with DATA_LOADING_LOCK: # Ensure only one thread/process attempts to load data
+    with DATA_LOADING_LOCK:
         if DATA_LOADED:
-            logger.info("Competitor data already loaded in this process, skipping preload.")
+            print("Competitor data already loaded, skipping preload.", file=sys.stderr)
             return
-
-        COMPETITORS_READY_EVENT.clear() # Clear the event before starting load
 
         # Try loading from cache
         if os.path.exists(CACHE_FILE):
@@ -131,68 +111,49 @@ def preload_wca_data():
                     with open(CACHE_FILE, "rb") as f:
                         ALL_PERSONS_FLAT_LIST = msgpack.unpackb(f.read(), raw=False)
                     DATA_LOADED = True
-                    logger.info(f"✅ Loaded {len(ALL_PERSONS_FLAT_LIST)} competitors from fresh cache file '{CACHE_FILE}'.")
-                    COMPETITORS_READY_EVENT.set() # Signal readiness
+                    print(f"✅ Loaded {len(ALL_PERSONS_FLAT_LIST)} competitors from fresh cache.", file=sys.stderr)
                     return
                 else:
-                    logger.info(f"Competitor cache is older than {CACHE_EXPIRATION_SECONDS / 3600} hours. Deleting and starting fresh fetch...")
+                    print("Competitor cache is older than 24 hours. Deleting and starting fresh fetch...", file=sys.stderr)
                     os.remove(CACHE_FILE)
             except Exception as e:
-                logger.error(f"Error loading cache from '{CACHE_FILE}': {e}. Starting fresh fetch...")
+                print(f"Error loading cache from {CACHE_FILE}: {e}. Starting fresh fetch...", file=sys.stderr)
                 if os.path.exists(CACHE_FILE):
                     os.remove(CACHE_FILE)
 
-        logger.info("No valid competitor cache found or cache is old. Starting asynchronous fetch wrapped synchronously.")
+        print("No valid competitor cache found or cache is old. Starting synchronous fetch.", file=sys.stderr)
         
-        # This is the key change: Run the async fetch synchronously within this thread.
-        # It creates a new event loop, runs the async task, and then closes it.
-        # This allows an async function to be called from a synchronous context.
-        try:
-            loop = asyncio.new_event_loop()
-            asyncio.set_event_loop(loop)
-            ALL_PERSONS_FLAT_LIST = loop.run_until_complete(_fetch_all_pages_async())
-        except Exception as e:
-            logger.critical(f"❌ Fatal error during asynchronous data fetch for competitors: {e}")
-            ALL_PERSONS_FLAT_LIST = [] # Ensure list is empty on critical failure
-        finally:
-            loop.close()
+        # This is the key change: Run the async fetch synchronously
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+        ALL_PERSONS_FLAT_LIST = loop.run_until_complete(_fetch_all_pages_async())
+        loop.close()
 
         # Save to cache
         try:
             with open(CACHE_FILE, "wb") as f:
                 f.write(msgpack.packb(ALL_PERSONS_FLAT_LIST))
-            logger.info(f"✅ Asynchronous fetch complete and cache saved to '{CACHE_FILE}' ({len(ALL_PERSONS_FLAT_LIST)} persons).")
+            print(f"✅ Synchronous fetch complete and cache saved ({len(ALL_PERSONS_FLAT_LIST)} persons).", file=sys.stderr)
         except Exception as e:
-            logger.error(f"Error saving competitor cache to '{CACHE_FILE}': {e}")
+            print(f"Error saving competitor cache: {e}", file=sys.stderr)
         
         DATA_LOADED = True
-        COMPETITORS_READY_EVENT.set() # Signal that data is fully loaded and ready
         
 # --- Find Competitors ---
-def find_competitors(selected_events: list, max_results: int = MAX_RESULTS) -> list:
-    """
-    Finds competitors based on selected events.
-    Waits for data to be loaded if not already.
-    """
+def find_competitors(selected_events, max_results=MAX_RESULTS):
+    """Finds competitors based on selected events, ensures data is loaded."""
     if not DATA_LOADED:
-        logger.warning("❗ find_competitors called before data is loaded. Waiting for preload...")
-        # Wait for the data to be loaded. Use a timeout to prevent indefinite blocking.
-        COMPETITORS_READY_EVENT.wait(timeout=300) # Wait up to 5 minutes for data to load
-        if not DATA_LOADED:
-            logger.critical("Competitor data failed to load after timeout. Returning empty list.")
-            return []
+        print("❗ find_competitors called before data is loaded. Triggering synchronous preload...", file=sys.stderr)
+        preload_wca_data()
 
     selected_set = {e for e in selected_events if e not in PERMISSIBLE_EXTRA_EVENTS}
     if not selected_set:
         return []
 
     competitors = []
-    seen_persons = set() # To avoid duplicate persons if any exist in the flat list
-
-    # Iterate through the preloaded data
+    seen_persons = set()
     for person in ALL_PERSONS_FLAT_LIST:
-        person_id = person.get("personId")
-        if person_id is None or person_id in seen_persons: # Check for None personId and duplicates
+        if person.get("personId") in seen_persons:
             continue
         
         person_completed_events = set(person.get("completed_events", []))
@@ -200,14 +161,13 @@ def find_competitors(selected_events: list, max_results: int = MAX_RESULTS) -> l
         
         if filtered_completed_events == selected_set:
             competitors.append(person)
-            seen_persons.add(person_id)
+            seen_persons.add(person["personId"])
             if len(competitors) >= max_results:
                 break
     return competitors
 
 # --- WCA Events ---
-def get_all_wca_events() -> dict:
-    """Returns a dictionary of all WCA event IDs and their descriptive names."""
+def get_all_wca_events():
     return {
         "333": "3x3 Cube", "222": "2x2 Cube", "444": "4x4 Cube",
         "555": "5x5 Cube", "666": "6x6 Cube", "777": "7x7 Cube",
@@ -222,38 +182,21 @@ def get_all_wca_events() -> dict:
 
 # --- Flask Routes ---
 @competitors_bp.route("/competitors")
-def api_get_competitors() -> jsonify:
-    """API endpoint to get competitors based on a comma-separated list of event IDs."""
-    if not DATA_LOADED:
-        # If data is not ready, return 503 Service Unavailable
-        logger.warning("Competitor API accessed before data is loaded. Returning 503.")
-        return jsonify({"error": "Competitor data is still loading. Please try again shortly."}), 503
-
+def api_get_competitors():
     event_ids_str = request.args.get("events", "")
     if not event_ids_str:
-        return jsonify([]) # Return empty list if no events are specified
+        return jsonify([])
     selected_events = [e.strip() for e in event_ids_str.split(",") if e.strip()]
-    
-    competitors = find_competitors(selected_events, max_results=MAX_RESULTS)
-    return jsonify(competitors)
+    return jsonify(find_competitors(selected_events, max_results=MAX_RESULTS))
 
 @competitors_bp.route("/competitors/<event_id>")
-def api_competitors_single(event_id: str) -> jsonify:
-    """API endpoint to get competitors for a single event ID."""
-    if not DATA_LOADED:
-        logger.warning("Competitor API accessed before data is loaded. Returning 503.")
-        return jsonify({"error": "Competitor data is still loading. Please try again shortly."}), 503
-
-    competitors = find_competitors([event_id], max_results=MAX_RESULTS)
-    return jsonify(competitors)
+def api_competitors_single(event_id):
+    return jsonify(find_competitors([event_id], max_results=MAX_RESULTS))
 
 @competitors_bp.route("/events")
-def api_get_events() -> jsonify:
-    """API endpoint to get a list of all WCA events."""
+def api_get_events():
     return jsonify(get_all_wca_events())
 
 @competitors_bp.route("/event/<event_id>")
-def api_get_event_details(event_id: str) -> jsonify:
-    """API endpoint to get details for a specific WCA event."""
-    event_name = get_all_wca_events().get(event_id, "Unknown Event")
-    return jsonify({"id": event_id, "name": event_name})
+def api_get_event_details(event_id):
+    return jsonify({"id": event_id, "name": get_all_wca_events().get(event_id, "Unknown")})

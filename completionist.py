@@ -310,5 +310,3 @@ def get_completionists():
             return []
 
     return ALL_COMPLETIONISTS_DATA
-
-preload_wca_data = preload_completionist_data

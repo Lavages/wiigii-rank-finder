@@ -178,7 +178,7 @@ def preload_all_persons_data_thread():
         _continents_map.setdefault("world", "WR")
         app.logger.info(f"✅ Loaded continents: {list(_continents_map.keys())}")
 
-    MANUAL_COUNTRY_TO_CONTINENT_MAP = { ... }  # keep your existing country->continent mapping here
+    MANUAL_COUNTRY_TO_CONTINENT_MAP = {}
     _country_iso2_to_continent_name = MANUAL_COUNTRY_TO_CONTINENT_MAP
     if countries_list:
         _countries_map = {item.get("iso2Code", "").lower(): item for item in countries_list if item.get("iso2Code")}

@@ -35,36 +35,62 @@ async def _fetch_and_parse_page(session, page_number):
     for attempt in range(RETRY_ATTEMPTS):
         try:
             async with session.get(url, timeout=15) as res:
-                res.raise_for_status()  # Raises HTTPError for bad responses (4xx or 5xx)
+                res.raise_for_status()
                 raw_text = await res.text()
-                data = json.loads(raw_text)
 
-            # Ensure data is a list of persons; handle potential malformed data
+                try:
+                    data = await res.json()
+                except Exception:
+                    data = json.loads(raw_text)
+
             persons = data.get("items", []) if isinstance(data, dict) else (data if isinstance(data, list) else [])
 
             page_data = []
             for person in persons:
                 if not isinstance(person, dict) or "results" not in person:
-                    continue  # Skip malformed person entries
+                    continue
 
                 person_podiums = {}
-                for comp_id, comp_results in person["results"].items():
-                    for event_id, rounds_list in comp_results.items():
-                        for round_data in rounds_list:
-                            position = round_data.get("position")
-                            best = round_data.get("best")
-                            average = round_data.get("average")
+                results = person.get("results", {})
 
-                            is_valid_result = (best is not None and best > 0) or (average is not None and average > 0)
+                # --- Handle dict form ---
+                if isinstance(results, dict):
+                    for comp_id, comp_results in results.items():
+                        if not isinstance(comp_results, dict):
+                            continue
+                        for event_id, rounds_list in comp_results.items():
+                            for round_data in rounds_list:
+                                position = round_data.get("position")
+                                best = round_data.get("best")
+                                average = round_data.get("average")
+                                is_valid_result = (best and best > 0) or (average and average > 0)
 
-                            if (
-                                round_data.get("round") == "Final"
-                                and position in {1, 2, 3}
-                                and is_valid_result
-                            ):
-                                person_podiums[event_id] = person_podiums.get(event_id, 0) + 1
+                                if (
+                                    round_data.get("round") == "Final"
+                                    and position in {1, 2, 3}
+                                    and is_valid_result
+                                ):
+                                    person_podiums[event_id] = person_podiums.get(event_id, 0) + 1
 
-                if person_podiums:  # Check if the dictionary is not empty
+                # --- Handle list form ---
+                elif isinstance(results, list):
+                    for round_data in results:
+                        if not isinstance(round_data, dict):
+                            continue
+                        event_id = round_data.get("eventId")
+                        position = round_data.get("position")
+                        best = round_data.get("best")
+                        average = round_data.get("average")
+                        is_valid_result = (best and best > 0) or (average and average > 0)
+
+                        if (
+                            round_data.get("round") == "Final"
+                            and position in {1, 2, 3}
+                            and is_valid_result
+                        ):
+                            person_podiums[event_id] = person_podiums.get(event_id, 0) + 1
+
+                if person_podiums:
                     page_data.append({
                         "personId": person.get("id"),
                         "personName": person.get("name"),
@@ -85,9 +111,9 @@ async def _fetch_and_parse_page(session, page_number):
     print(f"❌ Failed to fetch page {page_number} after {RETRY_ATTEMPTS} attempts. Skipping.", file=sys.stderr)
     return []
 
+
 # --- Asynchronously Fetch All Pages ---
 async def _fetch_all_pages_async():
-    """Asynchronously fetches all WCA pages concurrently."""
     print(f"Starting async fetch for all specialist pages with {MAX_CONCURRENT_REQUESTS} concurrent requests...", file=sys.stderr)
     
     conn = aiohttp.TCPConnector(limit=MAX_CONCURRENT_REQUESTS)
@@ -95,7 +121,6 @@ async def _fetch_all_pages_async():
         tasks = [_fetch_and_parse_page(session, p) for p in range(1, TOTAL_PAGES + 1)]
         results = await asyncio.gather(*tasks, return_exceptions=True)
     
-    # Process results, handling any exceptions returned
     raw_data = []
     for result in results:
         if isinstance(result, list):
@@ -108,7 +133,6 @@ async def _fetch_all_pages_async():
 
 # --- Preload Data (Background) ---
 def _load_data_from_cache():
-    """Loads data from a MsgPack cache file."""
     if os.path.exists(CACHE_FILE):
         try:
             with open(CACHE_FILE, "rb") as f:
@@ -118,11 +142,10 @@ def _load_data_from_cache():
                     return data
         except Exception as e:
             print(f"Error loading cache: {e}", file=sys.stderr)
-            os.remove(CACHE_FILE) # Corrupted cache, delete it
+            os.remove(CACHE_FILE)
     return None
 
 def _save_data_to_cache(data):
-    """Saves data to a MsgPack cache file."""
     try:
         with open(CACHE_FILE, "wb") as f:
             f.write(msgpack.packb(data, use_bin_type=True))
@@ -131,7 +154,6 @@ def _save_data_to_cache(data):
         print(f"Error saving data to cache: {e}", file=sys.stderr)
 
 def _process_and_store_data(raw_data):
-    """Processes raw fetched data into the optimized data structures."""
     processed_podiums = {}
     for person in raw_data:
         person_podiums = person.get("podiums", {})
@@ -160,7 +182,6 @@ def _process_and_store_data(raw_data):
     print("✅ Specialist data processing complete and ready for API access.", file=sys.stderr)
 
 def _run_preload_in_thread():
-    """Runs the data fetch, processing, and caching logic in a background thread."""
     cached_data = _load_data_from_cache()
     if cached_data:
         _process_and_store_data(cached_data)
@@ -179,7 +200,6 @@ def _run_preload_in_thread():
         print("❌ Data fetch failed, API will return a 503 error.", file=sys.stderr)
 
 def preload_wca_data():
-    """Starts the data preload process in a non-blocking background thread."""
     with DATA_LOADING_LOCK:
         if not DATA_LOADED:
             print("Starting background preload of WCA data...", file=sys.stderr)
@@ -191,7 +211,6 @@ def preload_wca_data():
 
 # --- Find Specialists ---
 def find_specialists(selected_events, max_results=MAX_RESULTS):
-    """Finds specialists based on selected events."""
     if not DATA_LOADED:
         return {"error": "Data is still loading, please try again in a moment."}
 
@@ -202,7 +221,6 @@ def find_specialists(selected_events, max_results=MAX_RESULTS):
     specialists = []
     seen_persons = set()
     
-    # Use the optimized data structure for the most common case (single event)
     if len(selected_set) == 1:
         event_id = list(selected_set)[0]
         if event_id in ALL_PODIUMS_BY_EVENT:
@@ -219,7 +237,6 @@ def find_specialists(selected_events, max_results=MAX_RESULTS):
                     if len(specialists) >= max_results:
                         break
     else:
-        # Fallback to the flat list for multi-event searches
         for person in ALL_PERSONS_FLAT_LIST:
             if person["personId"] in seen_persons:
                 continue
@@ -240,7 +257,7 @@ def find_specialists(selected_events, max_results=MAX_RESULTS):
     
     return specialists
 
-# --- WCA Events (No change) ---
+# --- WCA Events ---
 def get_all_wca_events():
     return {
         "333": "3x3 Cube", "222": "2x2 Cube", "444": "4x4 Cube",
@@ -254,7 +271,7 @@ def get_all_wca_events():
         "333mbo": "3x3 Multi Blind Old", "333ft": "3x3 with Feet"
     }
 
-# --- Flask Routes (No change) ---
+# --- Flask Routes ---
 @specialist_bp.route("/specialists")
 def api_get_specialists():
     event_ids_str = request.args.get("events", "")

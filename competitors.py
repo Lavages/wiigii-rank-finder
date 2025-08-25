@@ -1,15 +1,13 @@
 import aiohttp
 import asyncio
-import requests
-from flask import Blueprint, jsonify, request
+import json
 import os
 import sys
-import json
-import time
 import msgpack
-# import tempfile # Removed as we no longer need temporary directory
-from threading import Lock
-
+import tempfile
+import time
+from threading import Lock, Thread
+from flask import Blueprint, jsonify, request
 # --- Blueprint ---
 competitors_bp = Blueprint("competitors_bp", __name__)
 
@@ -18,13 +16,11 @@ TOTAL_PAGES = 268
 MAX_RESULTS = 1000
 MAX_CONCURRENT_REQUESTS = 32
 PERMISSIBLE_EXTRA_EVENTS = {'magic', 'mmagic', '333ft', '333mbo'}
-# --- FIX START ---
-# Define CACHE_FILE relative to the current script's directory for persistence
-CACHE_FILE = os.path.join(os.path.dirname(__file__), "competitors_cache.mp")
-# --- FIX END ---
-CACHE_EXPIRATION_SECONDS = 86400    # 24 hours
+# Store the cache file in a temp directory for cross-platform compatibility
+CACHE_FILE = os.path.join(tempfile.gettempdir(), "wca_competitors_cache.msgpack")
+CACHE_EXPIRATION_SECONDS = 86400  # 24 hours
 RETRY_ATTEMPTS = 3
-RETRY_DELAY = 2     # seconds
+RETRY_DELAY = 2  # seconds
 
 # --- Global Data Control ---
 DATA_LOADING_LOCK = Lock()
@@ -33,46 +29,63 @@ DATA_LOADED = False
 
 # --- Helper: Asynchronously Fetch a single page with retries ---
 async def _fetch_and_parse_page(session, page_number):
-    """Asynchronously fetches and parses a single page of WCA persons data with retries."""
+    """
+    Asynchronously fetches and parses a single page of WCA persons data with retries.
+    """
+    url = f"https://raw.githubusercontent.com/robiningelbrecht/wca-rest-api/master/api/persons-page-{page_number}.json"
     for attempt in range(RETRY_ATTEMPTS):
-        url = f"https://raw.githubusercontent.com/robiningelbrecht/wca-rest-api/master/api/persons-page-{page_number}.json"
         try:
             async with session.get(url, timeout=15) as res:
                 res.raise_for_status()
-                raw_text = await res.text()
-                data = json.loads(raw_text)
-                page_data = []
 
+                # --- FIX START ---
+                # Pass content_type=None to ignore the MIME type check.
+                # This is necessary because the server might return text/plain for some responses.
+                data = await res.json(content_type=None)
+                # --- FIX END ---
+                
+            persons = []
+            if isinstance(data, list):
+                persons = data
+            elif isinstance(data, dict):
                 persons = data.get("items", [])
-                if not isinstance(persons, list):
-                    raise ValueError(f"Expected list for 'items' on page {page_number}, got {type(persons)}")
+            else:
+                raise ValueError(f"Unexpected data format on page {page_number}: {type(data)}")
 
-                for person in persons:
-                    if not isinstance(person, dict):
-                        continue
+            if not isinstance(persons, list):
+                raise ValueError(f"Expected list of persons on page {page_number}, but got {type(persons)}")
 
-                    completed_events = set()
-                    singles_rank = person.get("rank", {}).get("singles", [])
-                    averages_rank = person.get("rank", {}).get("averages", [])
-                    completed_events.update({r["eventId"] for r in singles_rank if "eventId" in r})
-                    completed_events.update({r["eventId"] for r in averages_rank if "eventId" in r})
-                    
-                    page_data.append({
-                        "personId": person.get("id"),
-                        "personName": person.get("name"),
-                        "completed_events": list(completed_events),
-                        "personCountryId": person.get("country", "Unknown")
-                    })
-                print(f"✅ Successfully fetched page {page_number} (attempt {attempt + 1})", file=sys.stderr)
-                return page_data
+            page_data = []
+            for person in persons:
+                if not isinstance(person, dict):
+                    continue
+
+                completed_events = set()
+                singles_rank = person.get("rank", {}).get("singles", [])
+                averages_rank = person.get("rank", {}).get("averages", [])
+                completed_events.update({r["eventId"] for r in singles_rank if isinstance(r, dict) and "eventId" in r})
+                completed_events.update({r["eventId"] for r in averages_rank if isinstance(r, dict) and "eventId" in r})
+                
+                page_data.append({
+                    "personId": person.get("id"),
+                    "personName": person.get("name"),
+                    "completed_events": list(completed_events),
+                    "personCountryId": person.get("country", "Unknown")
+                })
+            
+            print(f"✅ Successfully fetched page {page_number} (attempt {attempt + 1})", file=sys.stderr)
+            return page_data
+
         except (aiohttp.ClientError, asyncio.TimeoutError, json.JSONDecodeError, ValueError) as e:
             print(f"Error fetching page {page_number}, attempt {attempt + 1}/{RETRY_ATTEMPTS}: {e}", file=sys.stderr)
             await asyncio.sleep(RETRY_DELAY)
         except Exception as e:
             print(f"Unexpected error fetching page {page_number}, attempt {attempt + 1}/{RETRY_ATTEMPTS}: {e}", file=sys.stderr)
             await asyncio.sleep(RETRY_DELAY)
+            
     print(f"❌ Failed to fetch page {page_number} after {RETRY_ATTEMPTS} attempts. Skipping.", file=sys.stderr)
     return []
+
 # --- Asynchronously Fetch All Pages ---
 async def _fetch_all_pages_async():
     """Asynchronously fetches all WCA pages concurrently."""
@@ -93,7 +106,35 @@ async def _fetch_all_pages_async():
     print(f"✅ Async fetch complete, {len(temp_list)} persons loaded.", file=sys.stderr)
     return temp_list
 
-# --- Preload Data (Synchronous) ---
+# --- Preload Data Helpers ---
+def _load_data_from_cache():
+    """Attempts to load competitor data from the local MsgPack cache file."""
+    if os.path.exists(CACHE_FILE):
+        try:
+            file_age = time.time() - os.path.getmtime(CACHE_FILE)
+            if file_age <= CACHE_EXPIRATION_SECONDS:
+                with open(CACHE_FILE, "rb") as f:
+                    data = msgpack.unpackb(f.read(), raw=False)
+                print(f"✅ Loaded {len(data)} competitors from fresh cache.", file=sys.stderr)
+                return data
+            else:
+                print("Competitor cache is older than 24 hours. Deleting and starting fresh fetch...", file=sys.stderr)
+                os.remove(CACHE_FILE)
+        except Exception as e:
+            print(f"Error loading cache from {CACHE_FILE}: {e}. Deleting corrupted cache and starting fresh fetch...", file=sys.stderr)
+            if os.path.exists(CACHE_FILE):
+                os.remove(CACHE_FILE)
+    return None
+
+def _save_data_to_cache(data):
+    """Saves the fetched competitor data to a local MsgPack cache file."""
+    try:
+        with open(CACHE_FILE, "wb") as f:
+            f.write(msgpack.packb(data, use_bin_type=True))
+        print(f"✅ Successfully saved {len(data)} competitors to cache.", file=sys.stderr)
+    except Exception as e:
+        print(f"Error saving competitor data to cache: {e}", file=sys.stderr)
+
 def preload_wca_data():
     """Loads WCA data from cache or performs a synchronous fetch if needed."""
     global ALL_PERSONS_FLAT_LIST, DATA_LOADED
@@ -103,48 +144,35 @@ def preload_wca_data():
             print("Competitor data already loaded, skipping preload.", file=sys.stderr)
             return
 
-        # Try loading from cache
-        if os.path.exists(CACHE_FILE):
-            try:
-                file_age = time.time() - os.path.getmtime(CACHE_FILE)
-                if file_age <= CACHE_EXPIRATION_SECONDS:
-                    with open(CACHE_FILE, "rb") as f:
-                        ALL_PERSONS_FLAT_LIST = msgpack.unpackb(f.read(), raw=False)
-                    DATA_LOADED = True
-                    print(f"✅ Loaded {len(ALL_PERSONS_FLAT_LIST)} competitors from fresh cache.", file=sys.stderr)
-                    return
-                else:
-                    print("Competitor cache is older than 24 hours. Deleting and starting fresh fetch...", file=sys.stderr)
-                    os.remove(CACHE_FILE)
-            except Exception as e:
-                print(f"Error loading cache from {CACHE_FILE}: {e}. Starting fresh fetch...", file=sys.stderr)
-                if os.path.exists(CACHE_FILE):
-                    os.remove(CACHE_FILE)
+        cached_data = _load_data_from_cache()
+        if cached_data:
+            ALL_PERSONS_FLAT_LIST = cached_data
+            DATA_LOADED = True
+            return
 
         print("No valid competitor cache found or cache is old. Starting synchronous fetch.", file=sys.stderr)
         
-        # This is the key change: Run the async fetch synchronously
+        # Run the async fetch synchronously
         loop = asyncio.new_event_loop()
         asyncio.set_event_loop(loop)
         ALL_PERSONS_FLAT_LIST = loop.run_until_complete(_fetch_all_pages_async())
         loop.close()
 
-        # Save to cache
-        try:
-            with open(CACHE_FILE, "wb") as f:
-                f.write(msgpack.packb(ALL_PERSONS_FLAT_LIST))
-            print(f"✅ Synchronous fetch complete and cache saved ({len(ALL_PERSONS_FLAT_LIST)} persons).", file=sys.stderr)
-        except Exception as e:
-            print(f"Error saving competitor cache: {e}", file=sys.stderr)
-        
-        DATA_LOADED = True
-        
+        if ALL_PERSONS_FLAT_LIST:
+            _save_data_to_cache(ALL_PERSONS_FLAT_LIST)
+            DATA_LOADED = True
+            print("✅ Synchronous fetch complete and data loaded.", file=sys.stderr)
+        else:
+            print("❌ Data fetch failed. API will return a 503 error.", file=sys.stderr)
+            
 # --- Find Competitors ---
 def find_competitors(selected_events, max_results=MAX_RESULTS):
     """Finds competitors based on selected events, ensures data is loaded."""
     if not DATA_LOADED:
         print("❗ find_competitors called before data is loaded. Triggering synchronous preload...", file=sys.stderr)
         preload_wca_data()
+        if not DATA_LOADED:
+            return {"error": "Data is still loading, please try again in a moment."}
 
     selected_set = {e for e in selected_events if e not in PERMISSIBLE_EXTRA_EVENTS}
     if not selected_set:
@@ -187,11 +215,17 @@ def api_get_competitors():
     if not event_ids_str:
         return jsonify([])
     selected_events = [e.strip() for e in event_ids_str.split(",") if e.strip()]
-    return jsonify(find_competitors(selected_events, max_results=MAX_RESULTS))
+    competitors = find_competitors(selected_events, max_results=MAX_RESULTS)
+    if isinstance(competitors, dict) and 'error' in competitors:
+        return jsonify(competitors), 503
+    return jsonify(competitors)
 
 @competitors_bp.route("/competitors/<event_id>")
 def api_competitors_single(event_id):
-    return jsonify(find_competitors([event_id], max_results=MAX_RESULTS))
+    competitors = find_competitors([event_id], max_results=MAX_RESULTS)
+    if isinstance(competitors, dict) and 'error' in competitors:
+        return jsonify(competitors), 503
+    return jsonify(competitors)
 
 @competitors_bp.route("/events")
 def api_get_events():

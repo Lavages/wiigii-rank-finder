@@ -35,62 +35,36 @@ async def _fetch_and_parse_page(session, page_number):
     for attempt in range(RETRY_ATTEMPTS):
         try:
             async with session.get(url, timeout=15) as res:
-                res.raise_for_status()
+                res.raise_for_status()  # Raises HTTPError for bad responses (4xx or 5xx)
                 raw_text = await res.text()
+                data = json.loads(raw_text)
 
-                try:
-                    data = await res.json()
-                except Exception:
-                    data = json.loads(raw_text)
-
+            # Ensure data is a list of persons; handle potential malformed data
             persons = data.get("items", []) if isinstance(data, dict) else (data if isinstance(data, list) else [])
 
             page_data = []
             for person in persons:
                 if not isinstance(person, dict) or "results" not in person:
-                    continue
+                    continue  # Skip malformed person entries
 
                 person_podiums = {}
-                results = person.get("results", {})
+                for comp_id, comp_results in person["results"].items():
+                    for event_id, rounds_list in comp_results.items():
+                        for round_data in rounds_list:
+                            position = round_data.get("position")
+                            best = round_data.get("best")
+                            average = round_data.get("average")
 
-                # --- Handle dict form ---
-                if isinstance(results, dict):
-                    for comp_id, comp_results in results.items():
-                        if not isinstance(comp_results, dict):
-                            continue
-                        for event_id, rounds_list in comp_results.items():
-                            for round_data in rounds_list:
-                                position = round_data.get("position")
-                                best = round_data.get("best")
-                                average = round_data.get("average")
-                                is_valid_result = (best and best > 0) or (average and average > 0)
+                            is_valid_result = (best is not None and best > 0) or (average is not None and average > 0)
 
-                                if (
-                                    round_data.get("round") == "Final"
-                                    and position in {1, 2, 3}
-                                    and is_valid_result
-                                ):
-                                    person_podiums[event_id] = person_podiums.get(event_id, 0) + 1
+                            if (
+                                round_data.get("round") == "Final"
+                                and position in {1, 2, 3}
+                                and is_valid_result
+                            ):
+                                person_podiums[event_id] = person_podiums.get(event_id, 0) + 1
 
-                # --- Handle list form ---
-                elif isinstance(results, list):
-                    for round_data in results:
-                        if not isinstance(round_data, dict):
-                            continue
-                        event_id = round_data.get("eventId")
-                        position = round_data.get("position")
-                        best = round_data.get("best")
-                        average = round_data.get("average")
-                        is_valid_result = (best and best > 0) or (average and average > 0)
-
-                        if (
-                            round_data.get("round") == "Final"
-                            and position in {1, 2, 3}
-                            and is_valid_result
-                        ):
-                            person_podiums[event_id] = person_podiums.get(event_id, 0) + 1
-
-                if person_podiums:
+                if person_podiums:  # Check if the dictionary is not empty
                     page_data.append({
                         "personId": person.get("id"),
                         "personName": person.get("name"),
@@ -111,9 +85,9 @@ async def _fetch_and_parse_page(session, page_number):
     print(f"❌ Failed to fetch page {page_number} after {RETRY_ATTEMPTS} attempts. Skipping.", file=sys.stderr)
     return []
 
-
 # --- Asynchronously Fetch All Pages ---
 async def _fetch_all_pages_async():
+    """Asynchronously fetches all WCA pages concurrently."""
     print(f"Starting async fetch for all specialist pages with {MAX_CONCURRENT_REQUESTS} concurrent requests...", file=sys.stderr)
     
     conn = aiohttp.TCPConnector(limit=MAX_CONCURRENT_REQUESTS)
@@ -121,6 +95,7 @@ async def _fetch_all_pages_async():
         tasks = [_fetch_and_parse_page(session, p) for p in range(1, TOTAL_PAGES + 1)]
         results = await asyncio.gather(*tasks, return_exceptions=True)
     
+    # Process results, handling any exceptions returned
     raw_data = []
     for result in results:
         if isinstance(result, list):
@@ -133,6 +108,7 @@ async def _fetch_all_pages_async():
 
 # --- Preload Data (Background) ---
 def _load_data_from_cache():
+    """Loads data from a MsgPack cache file."""
     if os.path.exists(CACHE_FILE):
         try:
             with open(CACHE_FILE, "rb") as f:
@@ -142,10 +118,11 @@ def _load_data_from_cache():
                     return data
         except Exception as e:
             print(f"Error loading cache: {e}", file=sys.stderr)
-            os.remove(CACHE_FILE)
+            os.remove(CACHE_FILE) # Corrupted cache, delete it
     return None
 
 def _save_data_to_cache(data):
+    """Saves data to a MsgPack cache file."""
     try:
         with open(CACHE_FILE, "wb") as f:
             f.write(msgpack.packb(data, use_bin_type=True))
@@ -154,6 +131,7 @@ def _save_data_to_cache(data):
         print(f"Error saving data to cache: {e}", file=sys.stderr)
 
 def _process_and_store_data(raw_data):
+    """Processes raw fetched data into the optimized data structures."""
     processed_podiums = {}
     for person in raw_data:
         person_podiums = person.get("podiums", {})
@@ -182,6 +160,7 @@ def _process_and_store_data(raw_data):
     print("✅ Specialist data processing complete and ready for API access.", file=sys.stderr)
 
 def _run_preload_in_thread():
+    """Runs the data fetch, processing, and caching logic in a background thread."""
     cached_data = _load_data_from_cache()
     if cached_data:
         _process_and_store_data(cached_data)
@@ -199,72 +178,69 @@ def _run_preload_in_thread():
     else:
         print("❌ Data fetch failed, API will return a 503 error.", file=sys.stderr)
 
-def preload_specialist_data():
+def preload_wca_data():
+    """Starts the data preload process in a non-blocking background thread."""
     with DATA_LOADING_LOCK:
         if not DATA_LOADED:
-            print("Starting background preload of specialist data...", file=sys.stderr)
+            print("Starting background preload of WCA data...", file=sys.stderr)
             thread = Thread(target=_run_preload_in_thread)
             thread.daemon = True
             thread.start()
         else:
             print("Specialist data already loaded, skipping preload.", file=sys.stderr)
 
+# --- Find Specialists ---
 def find_specialists(selected_events, max_results=MAX_RESULTS):
-    """
-    Return ONLY competitors whose podium set matches the selected set,
-    but allow them to also have podiums in REMOVED_EVENTS.
-    Podiums remain as a list of {"eventId","count"} so icons show in frontend.
-    """
+    """Finds specialists based on selected events."""
     if not DATA_LOADED:
         return {"error": "Data is still loading, please try again in a moment."}
 
-    selected_set = {e for e in selected_events if e} - REMOVED_EVENTS
+    selected_set = set(selected_events)
     if not selected_set:
         return []
 
-    results = []
-
-    # --- Single-event fast path ---
+    specialists = []
+    seen_persons = set()
+    
+    # Use the optimized data structure for the most common case (single event)
     if len(selected_set) == 1:
-        event_id = next(iter(selected_set))
-        for person in ALL_PODIUMS_BY_EVENT.get(event_id, []):
-            podium_event_ids = {p["eventId"] for p in person.get("podiums", [])}
-            # Allow extras only if they are in REMOVED_EVENTS
-            extra = podium_event_ids - selected_set
-            if extra.issubset(REMOVED_EVENTS):
-                results.append(person)
-                if len(results) >= max_results:
+        event_id = list(selected_set)[0]
+        if event_id in ALL_PODIUMS_BY_EVENT:
+            candidates = ALL_PODIUMS_BY_EVENT[event_id]
+            for person in candidates:
+                if person["personId"] in seen_persons:
+                    continue
+                
+                podium_event_ids = set(p["eventId"] for p in person.get("podiums", [])) - REMOVED_EVENTS
+                
+                if podium_event_ids == selected_set:
+                    specialists.append(person)
+                    seen_persons.add(person["personId"])
+                    if len(specialists) >= max_results:
+                        break
+    else:
+        # Fallback to the flat list for multi-event searches
+        for person in ALL_PERSONS_FLAT_LIST:
+            if person["personId"] in seen_persons:
+                continue
+            
+            podium_event_ids_for_check = set(person.get("podiums", {}).keys()) - REMOVED_EVENTS
+            
+            if podium_event_ids_for_check == selected_set:
+                podiums_summary = [{"eventId": e, "count": c} for e, c in person.get("podiums", {}).items()]
+                specialists.append({
+                    "personId": person["personId"],
+                    "personName": person["personName"],
+                    "personCountryId": person.get("personCountryId", "Unknown"),
+                    "podiums": podiums_summary
+                })
+                seen_persons.add(person["personId"])
+                if len(specialists) >= max_results:
                     break
-        return results
+    
+    return specialists
 
-    # --- Multi-event case ---
-    candidate_lists = [ALL_PODIUMS_BY_EVENT.get(e, []) for e in selected_set]
-    if not all(candidate_lists):
-        return []
-
-    count_by_person = {}
-    person_ref = {}
-
-    for lst in candidate_lists:
-        for person in lst:
-            pid = person["personId"]
-            count_by_person[pid] = count_by_person.get(pid, 0) + 1
-            person_ref[pid] = person
-
-    for pid, cnt in count_by_person.items():
-        if cnt == len(selected_set):  # has podiums in all selected
-            person = person_ref[pid]
-            podium_event_ids = {p["eventId"] for p in person.get("podiums", [])}
-            # Allow extras if they are only REMOVED_EVENTS
-            extra = podium_event_ids - selected_set
-            if extra.issubset(REMOVED_EVENTS):
-                results.append(person)
-                if len(results) >= max_results:
-                    break
-
-    return results
-
-# --- WCA Events ---
+# --- WCA Events (No change) ---
 def get_all_wca_events():
     return {
         "333": "3x3 Cube", "222": "2x2 Cube", "444": "4x4 Cube",
@@ -278,7 +254,7 @@ def get_all_wca_events():
         "333mbo": "3x3 Multi Blind Old", "333ft": "3x3 with Feet"
     }
 
-# --- Flask Routes ---
+# --- Flask Routes (No change) ---
 @specialist_bp.route("/specialists")
 def api_get_specialists():
     event_ids_str = request.args.get("events", "")

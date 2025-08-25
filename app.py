@@ -210,7 +210,7 @@ def get_global_rankings(region, type_param, event):
             rank_to_check = None
             if region == "world":
                 rank_to_check = rank_obj.get("world")
-            elif region in ["europe", "north_america", "asia", "south_america", "africa", "oceania"]:
+            elif region in ["europe", "north-america", "asia", "south-america", "africa", "oceania"]:
                 rank_to_check = rank_obj.get("continent")
             else:
                 rank_to_check = rank_obj.get("country")

@@ -208,14 +208,7 @@ def determine_category(person: dict) -> dict | None:
         "lastEvent": last_event_name
     }
 
-# --- Data Preloading/Generation Function ---
 def preload_completionist_data():
-    """
-    Generates and caches completionist data for all persons.
-    Designed to be called once per process at application startup
-    (e.g., from app.py's main_preload_task).
-    It reads from a msgpack cache file if available, otherwise fetches and processes data.
-    """
     global COMPLETIONIST_DATA_LOADED, ALL_COMPLETIONISTS_DATA
 
     with COMPLETIONIST_LOADING_LOCK:
@@ -223,7 +216,7 @@ def preload_completionist_data():
             logger.info("Completionist data already loaded. Skipping preload.")
             return
 
-        COMPLETIONIST_READY_EVENT.clear() # Clear event before starting load
+        COMPLETIONIST_READY_EVENT.clear()  # Clear event before starting load
 
         # Try to load from cache first
         if os.path.exists(CACHE_FILE):
@@ -232,22 +225,37 @@ def preload_completionist_data():
                     ALL_COMPLETIONISTS_DATA = msgpack.load(f, raw=False)
                 COMPLETIONIST_DATA_LOADED = True
                 logger.info(f"✅ Loaded {len(ALL_COMPLETIONISTS_DATA)} completionists from cache file '{CACHE_FILE}'.")
-                COMPLETIONIST_READY_EVENT.set() # Signal readiness
+                COMPLETIONIST_READY_EVENT.set()
                 return
             except Exception as e:
                 logger.error(f"Error loading completionist cache '{CACHE_FILE}': {e}. Regenerating...")
-                # If cache is corrupted, attempt to remove it to force a fresh fetch
                 if os.path.exists(CACHE_FILE):
                     os.remove(CACHE_FILE)
+
+        # Optional: attempt to download a prebuilt cache if available
+        PREBUILT_CACHE_URL = "https://www.dropbox.com/s/your_prebuilt_cache_link/completionists_cache.msgpack?dl=1"
+        try:
+            logger.info("⚡ Attempting to download prebuilt completionist cache...")
+            resp = session.get(PREBUILT_CACHE_URL, timeout=60)
+            resp.raise_for_status()
+            with open(CACHE_FILE, "wb") as f:
+                f.write(resp.content)
+            with open(CACHE_FILE, "rb") as f:
+                ALL_COMPLETIONISTS_DATA = msgpack.load(f, raw=False)
+            COMPLETIONIST_DATA_LOADED = True
+            logger.info(f"✅ Loaded {len(ALL_COMPLETIONISTS_DATA)} completionists from prebuilt cache.")
+            COMPLETIONIST_READY_EVENT.set()
+            return
+        except Exception:
+            logger.warning("Prebuilt cache unavailable or failed. Generating from scratch...")
 
         logger.info("⚡ Generating completionists data (no cache found or cache corrupted)...")
 
         # Fetch all person pages concurrently
         all_persons = []
-        # Use ThreadPoolExecutor for concurrent fetching of person pages
         with ThreadPoolExecutor(max_workers=os.cpu_count() * 2 if os.cpu_count() else 8) as executor:
             futures = [executor.submit(fetch_person_page, p) for p in range(1, TOTAL_PERSON_PAGES + 1)]
-            for f in as_completed(futures): # Iterate directly on futures for async processing
+            for f in as_completed(futures):
                 try:
                     page_data = f.result()
                     if page_data:
@@ -255,8 +263,6 @@ def preload_completionist_data():
                 except Exception as e:
                     logger.error(f"Error fetching and processing person page: {e}")
 
-        # Ensure competition data is fetched before determining categories
-        # This will populate the global 'competitions_data' in this specific worker process.
         if not competitions_data:
             fetch_competition_pages()
 
@@ -267,28 +273,26 @@ def preload_completionist_data():
             for f in as_completed(futures):
                 try:
                     res = f.result()
-                    if res: # Only append if a valid category was determined
+                    if res:
                         results.append(res)
                 except Exception as e:
                     logger.error(f"Error determining category for a person: {e}")
 
         completionists = [c for c in results if c and c["category"] is not None]
 
-        # Sort the final list for consistency (e.g., by category date, then name)
         completionists.sort(key=lambda x: (x["categoryDate"] if x["categoryDate"] != "N/A" else "9999-12-31", x["name"]))
 
         # Save to msgpack cache file
         try:
             with open(CACHE_FILE, "wb") as f:
-                msgpack.pack(completionists, f) # Use msgpack.pack for binary serialization
+                msgpack.dump(completionists, f, use_bin_type=True)  # safer
             logger.info(f"✅ Cache generated with {len(completionists)} completionists and saved to '{CACHE_FILE}'.")
         except Exception as e:
             logger.error(f"Error writing completionist cache file '{CACHE_FILE}': {e}")
 
         ALL_COMPLETIONISTS_DATA = completionists
         COMPLETIONIST_DATA_LOADED = True
-        COMPLETIONIST_READY_EVENT.set() # Signal readiness
-
+        COMPLETIONIST_READY_EVENT.set()
 
 # --- Public function to get completionists (API entry point) ---
 def get_completionists():

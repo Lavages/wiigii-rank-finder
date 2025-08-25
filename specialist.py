@@ -209,54 +209,60 @@ def preload_specialist_data():
         else:
             print("Specialist data already loaded, skipping preload.", file=sys.stderr)
 
-
-# --- Find Specialists ---
 def find_specialists(selected_events, max_results=MAX_RESULTS):
+    """
+    Return ONLY competitors whose podium set matches the selected set,
+    but allow them to also have podiums in REMOVED_EVENTS.
+    Podiums remain as a list of {"eventId","count"} so icons show in frontend.
+    """
     if not DATA_LOADED:
         return {"error": "Data is still loading, please try again in a moment."}
 
-    selected_set = set(selected_events)
+    selected_set = {e for e in selected_events if e} - REMOVED_EVENTS
     if not selected_set:
         return []
 
-    specialists = []
-    seen_persons = set()
-    
+    results = []
+
+    # --- Single-event fast path ---
     if len(selected_set) == 1:
-        event_id = list(selected_set)[0]
-        if event_id in ALL_PODIUMS_BY_EVENT:
-            candidates = ALL_PODIUMS_BY_EVENT[event_id]
-            for person in candidates:
-                if person["personId"] in seen_persons:
-                    continue
-                
-                podium_event_ids = set(p["eventId"] for p in person.get("podiums", [])) - REMOVED_EVENTS
-                
-                if podium_event_ids == selected_set:
-                    specialists.append(person)
-                    seen_persons.add(person["personId"])
-                    if len(specialists) >= max_results:
-                        break
-    else:
-        for person in ALL_PERSONS_FLAT_LIST:
-            if person["personId"] in seen_persons:
-                continue
-            
-            podium_event_ids_for_check = set(person.get("podiums", {}).keys()) - REMOVED_EVENTS
-            
-            if podium_event_ids_for_check == selected_set:
-                podiums_summary = [{"eventId": e, "count": c} for e, c in person.get("podiums", {}).items()]
-                specialists.append({
-                    "personId": person["personId"],
-                    "personName": person["personName"],
-                    "personCountryId": person.get("personCountryId", "Unknown"),
-                    "podiums": podiums_summary
-                })
-                seen_persons.add(person["personId"])
-                if len(specialists) >= max_results:
+        event_id = next(iter(selected_set))
+        for person in ALL_PODIUMS_BY_EVENT.get(event_id, []):
+            podium_event_ids = {p["eventId"] for p in person.get("podiums", [])}
+            # Allow extras only if they are in REMOVED_EVENTS
+            extra = podium_event_ids - selected_set
+            if extra.issubset(REMOVED_EVENTS):
+                results.append(person)
+                if len(results) >= max_results:
                     break
-    
-    return specialists
+        return results
+
+    # --- Multi-event case ---
+    candidate_lists = [ALL_PODIUMS_BY_EVENT.get(e, []) for e in selected_set]
+    if not all(candidate_lists):
+        return []
+
+    count_by_person = {}
+    person_ref = {}
+
+    for lst in candidate_lists:
+        for person in lst:
+            pid = person["personId"]
+            count_by_person[pid] = count_by_person.get(pid, 0) + 1
+            person_ref[pid] = person
+
+    for pid, cnt in count_by_person.items():
+        if cnt == len(selected_set):  # has podiums in all selected
+            person = person_ref[pid]
+            podium_event_ids = {p["eventId"] for p in person.get("podiums", [])}
+            # Allow extras if they are only REMOVED_EVENTS
+            extra = podium_event_ids - selected_set
+            if extra.issubset(REMOVED_EVENTS):
+                results.append(person)
+                if len(results) >= max_results:
+                    break
+
+    return results
 
 # --- WCA Events ---
 def get_all_wca_events():

@@ -1,36 +1,22 @@
 import os
 import time
-# Removed json, as msgpack is now used for caching. Kept for clarity if needed elsewhere.
 import requests
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from threading import Lock, Event
 import sys
 import re
 import logging
-import msgpack # New import for efficient binary serialization
+import msgpack
 
 # Get a logger for this module
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
-# For Render, Flask's app.logger typically gets configured centrally.
-# If testing this module standalone, you might need to add a StreamHandler:
-# if not logger.handlers:
-#    handler = logging.StreamHandler(sys.stdout)
-#    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-#    handler.setFormatter(formatter)
-#    logger.addHandler(handler)
 
 # --- Global Caching and Data Loading Control for Completionists ---
-# Path for the local MSGPack cache file
 CACHE_FILE = os.path.join(os.path.dirname(__file__), "completionists_cache.msgpack")
-
-# Lock to ensure data loading/generation happens only once *per process* (important for Gunicorn)
 COMPLETIONIST_LOADING_LOCK = Lock()
-# Flag to track if completionist data has been successfully preloaded in this process
 COMPLETIONIST_DATA_LOADED = False
-# List to store all preloaded completionist data in memory
 ALL_COMPLETIONISTS_DATA = []
-# Event to signal when completionist data is ready for consumption
 COMPLETIONIST_READY_EVENT = Event()
 
 # --- Event Definitions ---
@@ -41,7 +27,6 @@ AVERAGE_EVENTS_SILVER = {"333", "222", "444", "555", "666", "777", "333oh",
 AVERAGE_EVENTS_GOLD = AVERAGE_EVENTS_SILVER | {"333bf", "333fm", "444bf", "555bf"}
 EXCLUDED_EVENTS = {"333mbo", "magic", "mmagic", "333ft"}
 
-# Mapping of WCA event IDs to descriptive names
 EVENT_NAMES = {
     "333": "3x3 Cube", "222": "2x2 Cube", "444": "4x4 Cube",
     "555": "5x5 Cube", "666": "6x6 Cube", "777": "7x7 Cube",
@@ -53,12 +38,10 @@ EVENT_NAMES = {
     "wcpodium": "Worlds Podium", "wr": "World Record",
 }
 
-TOTAL_PERSON_PAGES = 268 # Corrected to 268, matching app.py's constant
+TOTAL_PERSON_PAGES = 268
 TOTAL_COMPETITION_PAGES = 16
 
-# Session for requests to reuse connections
 session = requests.Session()
-# Global dictionary to cache competition data for quicker lookups
 competitions_data = {}
 
 # --- Helper Functions ---
@@ -66,7 +49,7 @@ def fetch_person_page(page: int):
     """Fetches a single page of person data from the WCA REST API."""
     url = f"https://raw.githubusercontent.com/robiningelbrecht/wca-rest-api/master/api/persons-page-{page}.json"
     try:
-        resp = session.get(url, timeout=30) # Increased timeout for potentially large pages
+        resp = session.get(url, timeout=30)
         resp.raise_for_status()
         return resp.json().get("items", [])
     except requests.exceptions.RequestException as e:
@@ -78,7 +61,6 @@ def fetch_competition_pages():
     global competitions_data
     logger.info("Fetching competition data...")
     try:
-        # Use ThreadPoolExecutor for concurrent fetching of competition pages
         with ThreadPoolExecutor(max_workers=os.cpu_count() * 2 if os.cpu_count() else 8) as executor:
             futures = [executor.submit(_fetch_single_competition_page, p) for p in range(1, TOTAL_COMPETITION_PAGES + 1)]
             for future in as_completed(futures):
@@ -96,7 +78,7 @@ def _fetch_single_competition_page(page: int):
     """Helper to fetch a single competition page."""
     url = f"https://raw.githubusercontent.com/robiningelbrecht/wca-rest-api/master/api/competitions-page-{page}.json"
     try:
-        resp = session.get(url, timeout=30) # Increased timeout
+        resp = session.get(url, timeout=30)
         resp.raise_for_status()
         return resp.json().get("items", [])
     except requests.exceptions.RequestException as e:
@@ -122,32 +104,46 @@ def has_wc_podium(person: dict) -> bool:
                     if r.get("round") == "Final" and r.get("position") in (1, 2, 3):
                         return True
     return False
+    
+def events_won(person: dict) -> set:
+    """
+    Returns a set of event IDs where the competitor has a 1st place finish in a Final.
+    """
+    won = set()
+    for comp_id, events in person.get("results", {}).items():
+        for ev, ev_results in events.items():
+            if ev in EXCLUDED_EVENTS:
+                continue
+            for r in ev_results:
+                if r.get("round") == "Final" and r.get("position") == 1:
+                    won.add(ev)
+    return won
 
 def determine_category(person: dict) -> dict | None:
     """Determines the completionist category for a given person."""
-    # This function expects 'person' to have 'rank' and 'results' fields,
-    # and relies on 'competitions_data' global being populated.
     singles = {r.get("eventId") for r in person.get("rank", {}).get("singles", []) if r.get("eventId")}
-
-    # Not a completionist if all single events are not completed
     if not SINGLE_EVENTS.issubset(singles):
         return None
 
     averages = {r.get("eventId") for r in person.get("rank", {}).get("averages", []) if r.get("eventId")}
-
-    is_platinum_candidate = has_wr(person) or has_wc_podium(person)
-
+    
+    # Determine the base category (Bronze, Silver, Gold) based on averages
     category = "Bronze"
     required_averages = set()
-
     if AVERAGE_EVENTS_GOLD.issubset(averages):
         category = "Gold"
         required_averages = AVERAGE_EVENTS_GOLD.copy()
-        if is_platinum_candidate:
-            category = "Platinum"
     elif AVERAGE_EVENTS_SILVER.issubset(averages):
         category = "Silver"
         required_averages = AVERAGE_EVENTS_SILVER.copy()
+    
+    # Check for Platinum and Palladium tiers
+    if category == "Gold":
+        is_platinum_candidate = has_wr(person) or has_wc_podium(person)
+        if is_platinum_candidate:
+            category = "Platinum"
+            if SINGLE_EVENTS.issubset(events_won(person)):
+                category = "Palladium"
 
     category_date = "N/A"
     last_event_id = "N/A"
@@ -158,15 +154,12 @@ def determine_category(person: dict) -> dict | None:
             if event_id in EXCLUDED_EVENTS:
                 continue
             for result_entry in event_results:
-                # Ensure competitions_data is accessible and populated
                 comp_detail = competitions_data.get(comp_id, {})
                 date_till = comp_detail.get("date", {}).get("till")
                 if date_till:
                     competitions_participated.append({
-                        "competitionId": comp_id,
-                        "eventId": event_id,
-                        "date": date_till,
-                        "best": result_entry.get("best"),
+                        "competitionId": comp_id, "eventId": event_id,
+                        "date": date_till, "best": result_entry.get("best"),
                         "average": result_entry.get("average")
                     })
 
@@ -176,35 +169,26 @@ def determine_category(person: dict) -> dict | None:
     current_completed_averages = set()
 
     for comp in competitions_participated:
-        ev = comp["eventId"]
-        date = comp["date"]
-        best = comp.get("best")
-        avg = comp.get("average")
-
-        if ev in SINGLE_EVENTS and best not in (0, -1, -2): # Check for valid single result
+        ev, date, best, avg = comp["eventId"], comp["date"], comp.get("best"), comp.get("average")
+        if ev in SINGLE_EVENTS and best not in (0, -1, -2):
             current_completed_singles.add(ev)
-        if ev in required_averages and avg not in (0, -1, -2): # Check for valid average result
+        if ev in required_averages and avg not in (0, -1, -2):
             current_completed_averages.add(ev)
 
-        # Check if the person has met the criteria for their determined category
         if current_completed_singles.issuperset(SINGLE_EVENTS) and \
            current_completed_averages.issuperset(required_averages):
-            # For Platinum, we must also ensure WR/WC Podium is met by this point.
-            if category == "Platinum" and not is_platinum_candidate:
-                continue # If not a Platinum candidate, don't consider this a Platinum completion date
+            # For Platinum and Palladium, the criteria must be met before this date.
+            if (category in ["Platinum", "Palladium"] and not has_wr(person) and not has_wc_podium(person)):
+                continue
 
-            category_date = date
-            last_event_id = ev # The event that completed the criteria
+            category_date, last_event_id = date, ev
             break
 
-    # Use the EVENT_NAMES dictionary for the last event name (for display)
     last_event_name = EVENT_NAMES.get(last_event_id, last_event_id)
 
     return {
-        "id": person.get("id"),
-        "name": person.get("name", "Unknown"),
-        "category": category,
-        "categoryDate": category_date,
+        "id": person.get("id"), "name": person.get("name", "Unknown"),
+        "category": category, "categoryDate": category_date,
         "lastEvent": last_event_name
     }
 
@@ -216,9 +200,8 @@ def preload_completionist_data():
             logger.info("Completionist data already loaded. Skipping preload.")
             return
 
-        COMPLETIONIST_READY_EVENT.clear()  # Clear event before starting load
+        COMPLETIONIST_READY_EVENT.clear()
 
-        # Try to load from cache first
         if os.path.exists(CACHE_FILE):
             try:
                 with open(CACHE_FILE, "rb") as f:
@@ -232,7 +215,6 @@ def preload_completionist_data():
                 if os.path.exists(CACHE_FILE):
                     os.remove(CACHE_FILE)
 
-        # Optional: attempt to download a prebuilt cache if available
         PREBUILT_CACHE_URL = "https://www.dropbox.com/s/your_prebuilt_cache_link/completionists_cache.msgpack?dl=1"
         try:
             logger.info("⚡ Attempting to download prebuilt completionist cache...")
@@ -251,7 +233,6 @@ def preload_completionist_data():
 
         logger.info("⚡ Generating completionists data (no cache found or cache corrupted)...")
 
-        # Fetch all person pages concurrently
         all_persons = []
         with ThreadPoolExecutor(max_workers=os.cpu_count() * 2 if os.cpu_count() else 8) as executor:
             futures = [executor.submit(fetch_person_page, p) for p in range(1, TOTAL_PERSON_PAGES + 1)]
@@ -266,7 +247,6 @@ def preload_completionist_data():
         if not competitions_data:
             fetch_competition_pages()
 
-        # Determine categories for all persons concurrently
         results = []
         with ThreadPoolExecutor(max_workers=os.cpu_count() * 2 if os.cpu_count() else 8) as executor:
             futures = [executor.submit(determine_category, person) for person in all_persons]
@@ -282,10 +262,9 @@ def preload_completionist_data():
 
         completionists.sort(key=lambda x: (x["categoryDate"] if x["categoryDate"] != "N/A" else "9999-12-31", x["name"]))
 
-        # Save to msgpack cache file
         try:
             with open(CACHE_FILE, "wb") as f:
-                msgpack.dump(completionists, f, use_bin_type=True)  # safer
+                msgpack.dump(completionists, f, use_bin_type=True)
             logger.info(f"✅ Cache generated with {len(completionists)} completionists and saved to '{CACHE_FILE}'.")
         except Exception as e:
             logger.error(f"Error writing completionist cache file '{CACHE_FILE}': {e}")
@@ -294,7 +273,6 @@ def preload_completionist_data():
         COMPLETIONIST_DATA_LOADED = True
         COMPLETIONIST_READY_EVENT.set()
 
-# --- Public function to get completionists (API entry point) ---
 def get_completionists():
     """
     Returns the preloaded completionist data.
@@ -304,12 +282,9 @@ def get_completionists():
 
     if not COMPLETIONIST_DATA_LOADED:
         logger.warning("Completionist data not preloaded. Waiting for it to be ready...")
-        # Wait for the data to be loaded. Use a timeout to prevent indefinite blocking.
-        # This scenario should ideally be rare if app.py's main_preload_task is functioning.
-        COMPLETIONIST_READY_EVENT.wait(timeout=300) # Wait up to 5 minutes for data to load
+        COMPLETIONIST_READY_EVENT.wait(timeout=300)
 
         if not COMPLETIONIST_DATA_LOADED:
-            # If still not loaded after waiting, it means preload failed or timed out.
             logger.critical("Completionist data failed to load after timeout. Returning empty list.")
             return []
 

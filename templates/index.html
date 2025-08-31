@@ -79,9 +79,9 @@
         let regions = [
             { value: 'world', label: 'World' },
             { value: 'europe', label: 'Europe' },
-            { value: 'north_america', label: 'North America' },
+            { value: 'north-america', label: 'North America' },
             { value: 'asia', label: 'Asia' },
-            { value: 'south_america', label: 'South America' },
+            { value: 'south-america', label: 'South America' },
             { value: 'africa', label: 'Africa' },
             { value: 'oceania', label: 'Oceania' },
         ];
@@ -412,7 +412,12 @@
             }
 
             try {
-                const url = `/api/find-rank/${selectedRegion}/${selectedEvent}/${selectedRankingType}/${rankNumber}`;
+                // Convert frontend's 'singles'/'averages' to backend's 'single'/'average'
+                const typeParamMap = { singles: "single", averages: "average" };
+                const backendType = typeParamMap[selectedRankingType] || "single";
+
+                const url = `/api/global-rankings/${selectedRegion}/${backendType}/${selectedEvent}?rankNumber=${rankNumber}`;
+
                 const response = await fetch(url);
 
                 if (!response.ok) {
@@ -430,15 +435,14 @@
 
                 const data = await response.json();
 
-                if (data.person) {
-                    globalRankings = [data];
+                if (data.items && data.items.length > 0) {
+                    globalRankings = data.items;
                     viewMode = 'single_rank_result';
                 } else {
-                    // This else block handles cases where the API returns 200 OK but with no person data,
-                    // although the backend seems to return a 404 in this case.
-                    error = data.error || `No competitor found at rank #${currentRankNumber} for ${events.find(e => e.value === selectedEvent)?.label} (${selectedRankingType}) in ${regions.find(r => r.value === selectedRegion)?.label}.`;
+                    error = data.error || `No competitor found at rank #${rankNumber} for ${events.find(e => e.value === selectedEvent)?.label} (${selectedRankingType}) in ${regions.find(r => r.value === selectedRegion)?.label}.`;
                     viewMode = 'global_search_form';
                 }
+
             } catch (err) {
                 error = err.message;
                 globalRankings = null;

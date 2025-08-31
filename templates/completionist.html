@@ -22,9 +22,7 @@
     .comp-table th,
     .comp-table td {
       padding: 0.75rem 1rem;
-      /* Consistent padding for cells */
       vertical-align: middle;
-      /* Vertically align content in the middle */
     }
 
     /* Make table full width and allow it to scroll if content overflows */
@@ -32,16 +30,42 @@
       width: 100%;
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
-      /* Smooth scrolling on iOS */
     }
 
     /* Ensure table takes full width of its container */
     .comp-table {
       min-width: 600px;
-      /* Minimum width to prevent excessive squishing on smaller desktops */
       width: 100%;
       table-layout: auto;
-      /* Allow column widths to adjust to content */
+    }
+
+    /* NEW: Palladium row styling */
+    .palladium-row {
+      background: linear-gradient(90deg, #4c1d95, #7c3aed);
+      color: #ffffff;
+      font-weight: 500;
+    }
+
+    /* New styling to differentiate the platinum from the rest */
+    .platinum-row {
+      background: #2d3142;
+    }
+
+    /* Add a subtle shine animation for Palladium */
+    @keyframes shine {
+      0% {
+        background-position: -200%;
+      }
+
+      100% {
+        background-position: 200%;
+      }
+    }
+
+    .shine-button {
+      background-size: 200% auto;
+      background-image: linear-gradient(90deg, #00000000, rgba(255, 255, 255, 0.5), #00000000);
+      animation: shine 3s linear infinite;
     }
 
     /* New Palladium style */
@@ -104,7 +128,11 @@
         class="btn-category bg-gradient-to-r from-indigo-500 to-blue-400 text-white font-bold py-2 px-4 sm:py-3 sm:px-6 rounded-full text-sm sm:text-base"
         data-category="platinum">Platinum</button>
       <button
+<<<<<<< HEAD
         class="btn-category bg-gradient-to-r from-blue-700 to-sky-400 text-white font-bold py-2 px-4 sm:py-3 sm:px-6 rounded-full text-sm sm:text-base"
+=======
+        class="btn-category bg-gradient-to-r from-purple-800 to-pink-500 text-white font-bold py-2 px-4 sm:py-3 sm:px-6 rounded-full text-sm sm:text-base shine-button"
+>>>>>>> 955b4e83306cec3625c28920b25f6467ab7c0170
         data-category="palladium">Palladium</button>
     </div>
 
@@ -119,7 +147,8 @@
         <svg class="animate-spin h-8 w-8 sm:h-10 sm:w-10 text-purple-400" xmlns="http://www.w3.org/2000/svg" fill="none"
           viewBox="0 0 24 24">
           <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 00-8 8h4z"></path>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 00-8 8h4z">
+          </path>
         </svg>
       </div>
       <p id="error-message" class="text-red-400 hidden"></p>
@@ -162,9 +191,12 @@
       "444bf": "4x4 Blindfolded",
       "555bf": "5x5 Blindfolded",
       "333mbf": "3x3 Multi-Blind",
+<<<<<<< HEAD
       "wcpodium": "WC Podium",
       "wr": "World Record",
       "All Events": "All Events"
+=======
+>>>>>>> 955b4e83306cec3625c28920b25f6467ab7c0170
     };
 
     // NEW: Helper function to get event name
@@ -176,8 +208,13 @@
       bronze: `<span class="font-semibold text-yellow-500">🥉 Bronze:</span> Must have a <strong>single result</strong> in every official WCA event.`,
       silver: `<span class="font-semibold text-gray-300">🥈 Silver:</span> Must have <strong>all singles</strong> and <strong>all averages</strong>, except for <strong>FMC</strong> and <strong>Blindfolded events</strong>.`,
       gold: `<span class="font-semibold text-yellow-300">🥇 Gold:</span> Must have <strong>all singles</strong> and <strong>all averages</strong>, including <strong>FMC</strong> and <strong>Blindfolded means</strong>.`,
+<<<<<<< HEAD
       platinum: `<span class="font-semibold text-indigo-400">🌌 Platinum:</span> Must have <strong>all singles</strong> and <strong>all averages</strong>, including <strong>FMC </strong> and <strong>Blindfolded means</strong>, plus either a <strong>World Record</strong> or a <strong>World Championship podium</strong>.`,
       palladium: `<span class="font-semibold text-sky-400">🌠 Palladium:</span> Must have <strong>all singles</strong> and <strong>all averages</strong>, including <strong>FMC</strong> and <strong>Blindfolded means</strong>, hold a <strong>World Record</strong> or <strong>Worlds podium</strong>, AND have won a final in <strong>every single WCA event</strong>.`
+=======
+      platinum: `<span class="font-semibold text-indigo-400">🌌 Platinum:</span> Must have <strong>all singles</strong> and <strong>all averages</strong>, including <strong>FMC</strong> and <strong>Blindfolded means</strong>, plus either a <strong>World Record</strong> or a <strong>World Championship podium</strong>.`,
+      palladium: `<span class="font-semibold text-purple-400">✨ Palladium:</span> Must have met the <strong>Platinum</strong> criteria and also have a <strong>1st place finish</strong> in a Final for every official WCA event.`
+>>>>>>> 955b4e83306cec3625c28920b25f6467ab7c0170
     };
 
     function updateCriteria(category) {
@@ -241,7 +278,11 @@
                         </thead>
                         <tbody>
                             ${filtered.map((c, i) => `
+<<<<<<< HEAD
                                 <tr class="${c.category.toLowerCase() === 'platinum' ? 'platinum-row' : c.category.toLowerCase() === 'palladium' ? 'palladium-row' : 'bg-gray-900 border-b border-gray-800 hover:bg-gray-700 transition-colors duration-200'}">
+=======
+                                <tr class="${c.category.toLowerCase() === 'palladium' ? 'palladium-row' : (c.category.toLowerCase() === 'platinum' ? 'platinum-row' : 'bg-gray-900 border-b border-gray-800 hover:bg-gray-700 transition-colors duration-200')}">
+>>>>>>> 955b4e83306cec3625c28920b25f6467ab7c0170
                                     <td class="px-4 py-3">${i + 1}</td>
                                     <td class="px-4 py-3 font-medium text-gray-50">${c.name}</td>
                                     <td class="px-4 py-3">
@@ -261,7 +302,11 @@
       const cardsHtml = `
                 <div class="sm:hidden flex flex-col gap-3 w-full p-4">
                     ${filtered.map((c, i) => `
+<<<<<<< HEAD
                         <div class="${c.category.toLowerCase() === 'platinum' ? 'platinum-row' : c.category.toLowerCase() === 'palladium' ? 'palladium-row' : 'bg-gray-900 border border-gray-800'} rounded-xl p-4 shadow-md">
+=======
+                        <div class="${c.category.toLowerCase() === 'palladium' ? 'palladium-row' : (c.category.toLowerCase() === 'platinum' ? 'platinum-row' : 'bg-gray-900 border border-gray-800')} rounded-xl p-4 shadow-md">
+>>>>>>> 955b4e83306cec3625c28920b25f6467ab7c0170
                             <p class="text-xs text-gray-400">#${i + 1}</p>
                             <p class="text-lg font-semibold text-gray-50">${c.name}</p>
                             <p>

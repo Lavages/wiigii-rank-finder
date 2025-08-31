@@ -149,7 +149,7 @@
   {
     "id": "2010BENT01",
     "name": "Jan Bentlage",
-    "category": "Platinum",
+    "category": "Palladium",
     "categoryDate": "2014-03-23",
     "lastEvent": "5x5 Blindfolded"
   },
@@ -165,7 +165,7 @@
     "name": "Emanuel Rheinert",
     "category": "Silver",
     "categoryDate": "2014-04-06",
-    "lastEvent": "Skewb"
+    "lastEvent": "Clock"
   },
   {
     "id": "2011KERN02",
@@ -662,13 +662,6 @@
     "name": "Karthikeyan Eswaran",
     "category": "Silver",
     "categoryDate": "2017-04-09",
-    "lastEvent": "5x5 Blindfolded"
-  },
-  {
-    "id": "2013GARC08",
-    "name": "Jesús Lindo García",
-    "category": "Bronze",
-    "categoryDate": "2017-05-14",
     "lastEvent": "5x5 Blindfolded"
   },
   {
@@ -1360,7 +1353,7 @@
   {
     "id": "2009LIUE01",
     "name": "Evan Liu",
-    "category": "Platinum",
+    "category": "Palladium",
     "categoryDate": "2019-03-10",
     "lastEvent": "5x5 Blindfolded"
   },
@@ -1493,7 +1486,7 @@
   {
     "id": "2013WALL03",
     "name": "Daniel Wallin",
-    "category": "Platinum",
+    "category": "Palladium",
     "categoryDate": "2019-06-02",
     "lastEvent": "5x5 Blindfolded"
   },
@@ -1549,7 +1542,7 @@
   {
     "id": "2016CHAP04",
     "name": "Stanley Chapel",
-    "category": "Platinum",
+    "category": "Palladium",
     "categoryDate": "2019-07-14",
     "lastEvent": "4x4 Blindfolded"
   },
@@ -1577,7 +1570,7 @@
   {
     "id": "2011WELC01",
     "name": "Walker Welch",
-    "category": "Platinum",
+    "category": "Palladium",
     "categoryDate": "2019-08-04",
     "lastEvent": "5x5 Blindfolded"
   },
@@ -1766,14 +1759,14 @@
   {
     "id": "2013EGDA02",
     "name": "Martin Vædele Egdal",
-    "category": "Platinum",
+    "category": "Palladium",
     "categoryDate": "2020-09-06",
     "lastEvent": "4x4 Blindfolded"
   },
   {
     "id": "2015EWER01",
     "name": "Helmer Ewert",
-    "category": "Platinum",
+    "category": "Palladium",
     "categoryDate": "2020-09-27",
     "lastEvent": "5x5 Blindfolded"
   },
@@ -1990,7 +1983,7 @@
   {
     "id": "2014WENW01",
     "name": "Wong Chong Wen (黄崇文)",
-    "category": "Platinum",
+    "category": "Palladium",
     "categoryDate": "2022-07-24",
     "lastEvent": "5x5 Blindfolded"
   },
@@ -3117,7 +3110,7 @@
   {
     "id": "2015KUCA01",
     "name": "Carter Kucala",
-    "category": "Platinum",
+    "category": "Palladium",
     "categoryDate": "2024-02-11",
     "lastEvent": "5x5 Blindfolded"
   },
@@ -3313,7 +3306,7 @@
   {
     "id": "2016PILA03",
     "name": "Ryan Pilat",
-    "category": "Platinum",
+    "category": "Palladium",
     "categoryDate": "2024-04-27",
     "lastEvent": "4x4 Blindfolded"
   },
@@ -3838,7 +3831,7 @@
   {
     "id": "2015FUSH01",
     "name": "Firstian Fushada (符逢城)",
-    "category": "Platinum",
+    "category": "Palladium",
     "categoryDate": "2024-10-13",
     "lastEvent": "5x5 Blindfolded"
   },
@@ -4160,7 +4153,7 @@
   {
     "id": "2017GARR05",
     "name": "Luke Garrett",
-    "category": "Platinum",
+    "category": "Palladium",
     "categoryDate": "2024-12-29",
     "lastEvent": "5x5 Blindfolded"
   },
@@ -4690,13 +4683,6 @@
     "lastEvent": "Clock"
   },
   {
-    "id": "2017PETR02",
-    "name": "Mihail Petrochenkov",
-    "category": "Bronze",
-    "categoryDate": "2025-06-09",
-    "lastEvent": "Clock"
-  },
-  {
     "id": "2015ONOF01",
     "name": "Anuar Miguel Abib Onofre",
     "category": "Platinum",
@@ -4946,6 +4932,27 @@
     "name": "William Phommaha",
     "category": "Silver",
     "categoryDate": "2025-08-17",
+    "lastEvent": "Clock"
+  },
+  {
+    "id": "2023XING02",
+    "name": "Jacob Keh Zheng Xing (郭正兴)",
+    "category": "Bronze",
+    "categoryDate": "2025-08-24",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2013GARC08",
+    "name": "Jesús Lindo García",
+    "category": "Silver",
+    "categoryDate": "2025-08-24",
+    "lastEvent": "6x6 Cube"
+  },
+  {
+    "id": "2017PETR02",
+    "name": "Mihail Petrochenkov",
+    "category": "Silver",
+    "categoryDate": "2025-08-24",
     "lastEvent": "Clock"
   }
 ]

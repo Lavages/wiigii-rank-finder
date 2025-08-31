@@ -96,19 +96,38 @@ def has_wc_podium(person):
                         return True
     return False
 
+def events_won(person):
+    """Return set of eventIds where competitor has 1st place in a Final round"""
+    won = set()
+    for comp_id, events in person.get("results", {}).items():
+        for ev, ev_results in events.items():
+            if ev in EXCLUDED_EVENTS:
+                continue
+            for r in ev_results:
+                if r.get("round") == "Final" and r.get("position") == 1:
+                    won.add(ev)
+    return won
+
 def determine_category(person):
     singles = {r.get("eventId") for r in person.get("rank", {}).get("singles", []) if r.get("eventId")}
     if not SINGLE_EVENTS.issubset(singles): return None
 
     averages = {r.get("eventId") for r in person.get("rank", {}).get("averages", []) if r.get("eventId")}
-    is_platinum_candidate = has_wr(person) or has_wc_podium(person)
-
+    
+    # Determine basic category
     category, required_averages = "Bronze", set()
     if AVERAGE_EVENTS_GOLD.issubset(averages):
         category, required_averages = "Gold", AVERAGE_EVENTS_GOLD.copy()
-        if is_platinum_candidate: category = "Platinum"
     elif AVERAGE_EVENTS_SILVER.issubset(averages):
         category, required_averages = "Silver", AVERAGE_EVENTS_SILVER.copy()
+
+    # Apply Platinum and Palladium logic
+    if category == "Gold":
+        is_platinum_candidate = has_wr(person) or has_wc_podium(person)
+        if is_platinum_candidate:
+            category = "Platinum"
+            if SINGLE_EVENTS.issubset(events_won(person)):
+                category = "Palladium"
 
     competitions_participated = []
     for comp_id, events_in_comp in person.get("results", {}).items():
@@ -133,7 +152,6 @@ def determine_category(person):
         if ev in SINGLE_EVENTS and best not in (0, -1, -2): current_completed_singles.add(ev)
         if ev in required_averages and avg not in (0, -1, -2): current_completed_averages.add(ev)
         if current_completed_singles.issuperset(SINGLE_EVENTS) and current_completed_averages.issuperset(required_averages):
-            if category == "Platinum" and not is_platinum_candidate: continue
             category_date, last_event_id = date, ev
             break
 

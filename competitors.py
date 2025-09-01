@@ -4,23 +4,42 @@ import json
 import os
 import sys
 import msgpack
+<<<<<<< HEAD
+import random
+from threading import Lock
+
+=======
 import tempfile
 import time
 from threading import Lock, Thread
 from flask import Blueprint, jsonify, request
+>>>>>>> 955b4e83306cec3625c28920b25f6467ab7c0170
 # --- Blueprint ---
 competitors_bp = Blueprint("competitors_bp", __name__)
 
 # --- Constants ---
 TOTAL_PAGES = 268
 MAX_RESULTS = 1000
-MAX_CONCURRENT_REQUESTS = 32
+MAX_CONCURRENT_REQUESTS = 16  # tuned for Render free-tier
 PERMISSIBLE_EXTRA_EVENTS = {'magic', 'mmagic', '333ft', '333mbo'}
+<<<<<<< HEAD
+
+# Cache file stored alongside script
+CACHE_FILE = os.path.join(os.path.dirname(__file__), "competitors_cache.msgpack")
+CACHE_EXPIRATION_SECONDS = 86400    # 24 hours
+
+# Retry + jitter settings
+RETRY_ATTEMPTS = 2
+RETRY_DELAY = 2
+MIN_JITTER = 0.05
+MAX_JITTER = 0.15
+=======
 # Store the cache file in a temp directory for cross-platform compatibility
 CACHE_FILE = os.path.join(tempfile.gettempdir(), "wca_competitors_cache.msgpack")
 CACHE_EXPIRATION_SECONDS = 86400  # 24 hours
 RETRY_ATTEMPTS = 3
 RETRY_DELAY = 2  # seconds
+>>>>>>> 955b4e83306cec3625c28920b25f6467ab7c0170
 
 # --- Global Data Control ---
 DATA_LOADING_LOCK = Lock()
@@ -94,7 +113,11 @@ async def _fetch_all_pages_async():
     
     conn = aiohttp.TCPConnector(limit=MAX_CONCURRENT_REQUESTS)
     async with aiohttp.ClientSession(connector=conn) as session:
-        tasks = [_fetch_and_parse_page(session, p) for p in range(1, TOTAL_PAGES + 1)]
+        tasks = []
+        for p in range(1, TOTAL_PAGES + 1):
+            # add jitter between scheduling requests
+            await asyncio.sleep(random.uniform(MIN_JITTER, MAX_JITTER))
+            tasks.append(_fetch_and_parse_page(session, p))
         results = await asyncio.gather(*tasks, return_exceptions=True)
         
     for result in results:
@@ -158,6 +181,18 @@ def preload_wca_data():
         ALL_PERSONS_FLAT_LIST = loop.run_until_complete(_fetch_all_pages_async())
         loop.close()
 
+<<<<<<< HEAD
+        # Save to cache
+        try:
+            with open(CACHE_FILE, "wb") as f:
+                f.write(msgpack.packb(ALL_PERSONS_FLAT_LIST))
+            print(f"✅ Synchronous fetch complete and cache saved ({len(ALL_PERSONS_FLAT_LIST)} persons).", file=sys.stderr)
+        except Exception as e:
+            print(f"Error saving competitor cache: {e}", file=sys.stderr)
+        
+        DATA_LOADED = True
+
+=======
         if ALL_PERSONS_FLAT_LIST:
             _save_data_to_cache(ALL_PERSONS_FLAT_LIST)
             DATA_LOADED = True
@@ -165,6 +200,7 @@ def preload_wca_data():
         else:
             print("❌ Data fetch failed. API will return a 503 error.", file=sys.stderr)
             
+>>>>>>> 955b4e83306cec3625c28920b25f6467ab7c0170
 # --- Find Competitors ---
 def find_competitors(selected_events, max_results=MAX_RESULTS):
     """Finds competitors based on selected events, ensures data is loaded."""

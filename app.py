@@ -17,7 +17,7 @@ app = Flask(__name__, template_folder='templates')
 app.register_blueprint(competitors_bp, url_prefix='/api')
 app.register_blueprint(specialist_bp, url_prefix='/api')
 app.register_blueprint(completionists_bp, url_prefix='/api')
-CORS(app)  # Enable CORS for all origins
+CORS(app) # Enable CORS for all origins
 
 # ----------------- Track Data Preloading -----------------
 data_loaded = {
@@ -196,7 +196,7 @@ def get_global_rankings(region, type_param, event):
     except ValueError:
         return jsonify({"error": "rankNumber must be a positive integer."}), 400
 
-    rankings_url = f"{WCA_RANK_DATA_BASE_URL}/{region}/{type_param}/{event_id}.json"
+    rankings_url = f"{WCA_RANK_DATA_BASE_URL}/{region.upper()}/{type_param}/{event_id}.json"
     try:
         response = requests.get(rankings_url, timeout=5)
         response.raise_for_status()
@@ -231,7 +231,7 @@ def get_global_rankings(region, type_param, event):
                     "result": item.get("best"),
                     "person": person_obj,
                 })
-                break  # Stop after finding the first match
+                break # Stop after finding the first match
 
         if not filtered_items:
             return jsonify({

@@ -4954,5 +4954,12 @@
     "category": "Silver",
     "categoryDate": "2025-08-24",
     "lastEvent": "Clock"
+  },
+  {
+    "id": "2016NANK01",
+    "name": "Chris Nankervis",
+    "category": "Bronze",
+    "categoryDate": "2025-08-30",
+    "lastEvent": "5x5 Blindfolded"
   }
 ]

@@ -2016,13 +2016,6 @@
     "lastEvent": "Square-1"
   },
   {
-    "id": "2019EGGI02",
-    "name": "Charlie Eggins",
-    "category": "Silver",
-    "categoryDate": "2022-09-24",
-    "lastEvent": "5x5 Blindfolded"
-  },
-  {
     "id": "2014DETU01",
     "name": "Eddy Deturche",
     "category": "Gold",
@@ -4960,6 +4953,34 @@
     "name": "Chris Nankervis",
     "category": "Bronze",
     "categoryDate": "2025-08-30",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2014PAUL05",
+    "name": "Benjamin Paul",
+    "category": "Bronze",
+    "categoryDate": "2025-08-31",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2019EGGI02",
+    "name": "Charlie Eggins",
+    "category": "Platinum",
+    "categoryDate": "2025-08-31",
+    "lastEvent": "4x4 Blindfolded"
+  },
+  {
+    "id": "2017KITA03",
+    "name": "Haruka Kitamura (北村晴香)",
+    "category": "Silver",
+    "categoryDate": "2025-08-31",
+    "lastEvent": "6x6 Cube"
+  },
+  {
+    "id": "2022BURN09",
+    "name": "Joseph Burnett",
+    "category": "Silver",
+    "categoryDate": "2025-08-31",
     "lastEvent": "5x5 Blindfolded"
   }
 ]

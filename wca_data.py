@@ -5,8 +5,6 @@ from time import sleep
 import threading
 import math
 import sys
-import re
-import json
 import os
 import msgpack
 
@@ -95,24 +93,36 @@ def has_wr(person):
 def has_wc_podium(person):
     """Checks if a person has a podium finish at a World Championship."""
     results = person.get("results", {})
-    for comp_id in results:
-        if comp_id.startswith("WC"):
-            for event_results in results[comp_id].values():
-                for r in event_results:
-                    if r.get("round") == "Final" and r.get("position") in (1, 2, 3):
-                        return True
+    # Handle both dict and list structures for results
+    if isinstance(results, dict):
+        for comp_id in results:
+            if comp_id.startswith("WC"):
+                # Ensure the value for the competition is a dict
+                if isinstance(results[comp_id], dict):
+                    for event_results in results[comp_id].values():
+                        if isinstance(event_results, list):
+                            for r in event_results:
+                                if r.get("round") == "Final" and r.get("position") in (1, 2, 3):
+                                    return True
     return False
+
 
 def events_won(person):
     """Returns a set of events a person has won in a final round."""
     won = set()
-    for comp_id, events in person.get("results", {}).items():
-        for ev, ev_results in events.items():
-            if ev in EXCLUDED_EVENTS: continue
-            for r in ev_results:
-                if r.get("round") == "Final" and r.get("position") == 1:
-                    won.add(ev)
+    results = person.get("results", {})
+    # Handle both dict and list structures for results
+    if isinstance(results, dict):
+        for comp_id, events in results.items():
+            if not isinstance(events, dict): continue
+            for ev, ev_results in events.items():
+                if ev in EXCLUDED_EVENTS: continue
+                if isinstance(ev_results, list):
+                    for r in ev_results:
+                        if r.get("round") == "Final" and r.get("position") == 1:
+                            won.add(ev)
     return won
+
 
 def determine_completionist_category(person, competitions_data):
     """Determines a person's completionist category and the date of achievement."""
@@ -122,7 +132,7 @@ def determine_completionist_category(person, competitions_data):
     averages = {r.get("eventId") for r in person.get("rank", {}).get("averages", []) if r.get("eventId")}
     
     # Check for the highest tier first: Palladium
-    if AVERAGE_EVENTS_GOLD.issubset(averages) and (has_wr(person) or has_wc_podium(person)) and SINGLE_EVENTS.issubset(events_won(person)):
+    if AVERAGE_EVENTS_GOLD.issubset(averages) and (has_wr(person) or has_wc_podium(person)) and events_won(person).issuperset(SINGLE_EVENTS):
         category = "Palladium"
         required_averages = AVERAGE_EVENTS_GOLD.copy()
     # Check for Platinum
@@ -143,19 +153,25 @@ def determine_completionist_category(person, competitions_data):
         required_averages = set()
 
     competitions_participated = []
-    for comp_id, events_in_comp in person.get("results", {}).items():
-        date_till = competitions_data.get(comp_id)
-        if not date_till:
-            continue
-            
-        for event_id, event_results in events_in_comp.items():
-            if event_id in EXCLUDED_EVENTS: continue
-            for result_entry in event_results:
-                competitions_participated.append({
-                    "competitionId": comp_id, "eventId": event_id,
-                    "date": date_till, "best": result_entry.get("best"),
-                    "average": result_entry.get("average")
-                })
+    
+    # Check if the results are a dictionary, as this is the most common format
+    results = person.get("results", {})
+    if isinstance(results, dict):
+        for comp_id, events_in_comp in results.items():
+            date_till = competitions_data.get(comp_id)
+            if not date_till:
+                continue
+                
+            if isinstance(events_in_comp, dict):
+                for event_id, event_results in events_in_comp.items():
+                    if event_id in EXCLUDED_EVENTS: continue
+                    if isinstance(event_results, list):
+                        for result_entry in event_results:
+                            competitions_participated.append({
+                                "competitionId": comp_id, "eventId": event_id,
+                                "date": date_till, "best": result_entry.get("best"),
+                                "average": result_entry.get("average")
+                            })
 
     competitions_participated.sort(key=lambda x: x["date"])
     
@@ -184,10 +200,12 @@ def process_specialist_data(raw_data):
         person_podiums = {}
         results = person.get("results", {})
 
+        # Handle both dict and list structures
         if isinstance(results, dict):
             for comp_id, comp_results in results.items():
                 if not isinstance(comp_results, dict): continue
                 for event_id, rounds_list in comp_results.items():
+                    if not isinstance(rounds_list, list): continue
                     for round_data in rounds_list:
                         position = round_data.get("position")
                         is_valid_result = (round_data.get("best", 0) > 0) or (round_data.get("average", 0) > 0)
@@ -228,22 +246,25 @@ def preload_wca_data_thread():
     _data_loaded_event.clear()
 
     # --- Try loading from cache first ---
-    if os.path.exists(CACHE_FILE):
+    if os.path.exists(CACHE_FILE) and os.path.getsize(CACHE_FILE) > 0:
         try:
             logger.info("Cached data file found. Loading from cache...")
+            
+            def convert_list_keys_to_tuples(pairs):
+                """Converts list keys in a dictionary to tuples."""
+                new_dict = {}
+                for key, value in pairs:
+                    if isinstance(key, list):
+                        new_dict[tuple(key)] = value
+                    else:
+                        new_dict[key] = value
+                return new_dict
+
             with open(CACHE_FILE, 'rb') as f:
-                cached_data = msgpack.unpackb(f.read(), raw=False)
+                # Use strict_map_key=False to allow unhashable keys during unpacking
+                cached_data = msgpack.unpackb(f.read(), raw=False, object_pairs_hook=convert_list_keys_to_tuples, strict_map_key=False)
 
-            # Convert any list keys in competitors to tuples recursively
-            def convert_keys(obj):
-                if isinstance(obj, dict):
-                    return {convert_keys(k): convert_keys(v) for k, v in obj.items()}
-                elif isinstance(obj, list):
-                    return tuple(convert_keys(i) for i in obj)
-                else:
-                    return obj
-
-            _precomputed_competitors = convert_keys(cached_data.get("competitors", {}))
+            _precomputed_competitors = cached_data.get("competitors", {})
             _precomputed_specialists = cached_data.get("specialists", {})
             _precomputed_completionists = cached_data.get("completionists", [])
             _wca_country_to_continent_map = cached_data.get("country_to_continent_map", {})
@@ -302,12 +323,13 @@ def preload_wca_data_thread():
     for person in _wca_persons_data.values():
         completed_events = set()
         rank = person.get("rank", {})
-        for r in rank.get("singles", []):
-            if isinstance(r, dict) and "eventId" in r:
-                completed_events.add(r["eventId"])
-        for r in rank.get("averages", []):
-            if isinstance(r, dict) and "eventId" in r:
-                completed_events.add(r["eventId"])
+        if isinstance(rank, dict):
+            for r in rank.get("singles", []):
+                if isinstance(r, dict) and "eventId" in r:
+                    completed_events.add(r["eventId"])
+            for r in rank.get("averages", []):
+                if isinstance(r, dict) and "eventId" in r:
+                    completed_events.add(r["eventId"])
 
         filtered_events = tuple(sorted(list(completed_events - EXCLUDED_EVENTS)))
         if filtered_events not in _precomputed_competitors:
@@ -330,7 +352,8 @@ def preload_wca_data_thread():
             if res:
                 _precomputed_completionists.append(res)
         except Exception as e:
-            logger.error(f"Error determining category for person {person.get('id', 'Unknown')}: {e}", file=sys.stderr)
+            # Removed the invalid 'file' argument
+            logger.error(f"Error determining category for person {person.get('id', 'Unknown')}: {e}")
 
     _precomputed_completionists.sort(key=lambda x: (x["categoryDate"] if x["categoryDate"] != "N/A" else "9999-12-31", x["name"]))
 
@@ -348,10 +371,9 @@ def preload_wca_data_thread():
             "completionists": _precomputed_completionists,
             "country_to_continent_map": _wca_country_to_continent_map,
         }
-
+        # Corrected method for saving with msgpack
         with open(CACHE_FILE, 'wb') as f:
-            packed_data = msgpack.packb(data_to_cache, use_bin_type=True)
-            f.write(packed_data)
+            msgpack.dump(data_to_cache, f, use_bin_type=True)
         logger.info(f"Pre-computed data saved to {CACHE_FILE}.")
     except Exception as e:
         logger.error(f"Failed to save pre-computed data to cache: {e}")

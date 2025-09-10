@@ -6,7 +6,6 @@ import logging
 from flask import Flask, jsonify, request, render_template
 from dotenv import load_dotenv
 from collections import defaultdict
-from wca_data import get_all_wca_persons_data, continent_map
 
 # Load environment variables from .env file
 load_dotenv()
@@ -16,17 +15,16 @@ app = Flask(__name__)
 app.logger.setLevel(logging.INFO)
 
 # --- WCA Data Module Imports ---
-from wca_data import get_all_wca_persons_data, is_wca_data_loaded
-
-# --- Continent Scope Mapping ---
-CONTINENT_SCOPES = {
-    "africa": "af",
-    "asia": "as",
-    "europe": "eu",
-    "north-america": "na",
-    "south-america": "sa",
-    "oceania": "oc",
-}
+from wca_data import (
+    get_all_wca_persons_data, 
+    is_wca_data_loaded, 
+    get_continent_map, 
+    get_precomputed_competitors_by_events,
+    get_precomputed_specialists,
+    get_precomputed_completionists,
+    get_all_wca_events
+)
+from wca_data import EVENT_NAMES, EXCLUDED_EVENTS
 
 # --- API Route Functions ---
 def find_and_format_rank(scope_str: str, ranking_type: str, event_id: str, rank_number: int):
@@ -50,6 +48,7 @@ def find_and_format_rank(scope_str: str, ranking_type: str, event_id: str, rank_
 
     ranks_dict_combined = {}
     persons_data = get_all_wca_persons_data()
+    continent_map = get_continent_map()
     if not persons_data:
         return jsonify({"error": "Failed to retrieve competitor data."}), 500
 
@@ -64,7 +63,7 @@ def find_and_format_rank(scope_str: str, ranking_type: str, event_id: str, rank_
         for scope_key in requested_scopes:
             if scope_key == "world":
                 eligible = True
-            elif scope_key in CONTINENT_SCOPES and scope_key == person_continent:
+            elif scope_key == person_continent:
                 eligible = True
             elif scope_key == person_country.lower():
                 eligible = True

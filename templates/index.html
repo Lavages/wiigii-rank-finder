@@ -41,7 +41,6 @@
             class="text-sm sm:text-lg text-gray-300 hover:text-purple-400 transition-colors duration-200 font-semibold px-2 sm:px-4">Completionist</a>
     </nav>
 
-
     <div
         class="max-w-4xl w-full mx-auto bg-gray-950 bg-opacity-70 rounded-b-3xl shadow-[0_20px_50px_rgba(168,85,247,0.3)] p-4 sm:p-10 space-y-10 backdrop-blur-md border border-purple-800 border-t-0">
         <h1
@@ -56,20 +55,17 @@
     </div>
     <script>
         // Base URL for your Flask backend
-        const API_BASE_URL = '/api';
         const WCA_DATA_API_BASE_URL = 'https://raw.githubusercontent.com/robiningelbrecht/wca-rest-api/master/api';
 
         // State variables (mimicking React state with global variables)
         let selectedRegion = 'world';
         let selectedEvent = '333';
         let selectedRankingType = 'singles';
-        let rankNumber = '1'; // Rank number is now mandatory, default to 1
-        let globalRankings = null; // Stores results from global ranking API (will contain 1 item or be null/empty)
-        let selectedCompetitor = null; // The competitor whose individual rankings are displayed
-        let individualRankings = null; // Rankings data for the selected individual competitor
-        let loading = false; // This is for specific search loading, not initial data load
+        let rankNumber = '1';
+        let foundCompetitor = null;
+        let loading = false;
         let error = null;
-        let viewMode = 'global_search_form'; // 'global_search_form', 'single_rank_result', 'individual_competitor_rankings'
+        let viewMode = 'global_search_form';
 
         // DOM elements
         const mainContentDiv = document.getElementById('main-content');
@@ -210,7 +206,7 @@
         function renderUI() {
             mainContentDiv.innerHTML = ''; // Clear previous content
 
-            if (loading) { // This `loading` state is for the search button specifically
+            if (loading) {
                 mainContentDiv.innerHTML = `
                     <p class="text-center text-xl text-purple-400 animate-pulse">Loading...</p>
                 `;
@@ -239,22 +235,22 @@
                             <div class="flex flex-col">
                                 <label for="region-select" class="text-gray-300 text-sm font-medium mb-2">Region:</label>
                                 <select id="region-select" class="p-4 rounded-xl border border-gray-700 bg-gray-800 text-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-600 transition duration-200 ease-in-out cursor-pointer appearance-none bg-[url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="white"%3e%3cpath fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /%3e%3c/svg%3e')] bg-[length:1.5rem_1.5rem] bg-[right_1rem_center] bg-no-repeat">
-                                        ${regions.map(region => `<option value="${region.value}" ${selectedRegion === region.value ? 'selected' : ''}>${region.label}</option>`).join('')}
+                                    ${regions.map(region => `<option value="${region.value}" ${selectedRegion === region.value ? 'selected' : ''}>${region.label}</option>`).join('')}
                                 </select>
                             </div>
                             
                             <div class="flex flex-col">
                                 <label for="event-select" class="text-gray-300 text-sm font-medium mb-2">Event:</label>
                                 <select id="event-select" class="p-4 rounded-xl border border-gray-700 bg-gray-800 text-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-600 transition duration-200 ease-in-out cursor-pointer appearance-none bg-[url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="white"%3e%3cpath fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /%3e%3c/svg%3e')] bg-[length:1.5rem_1.5rem] bg-[right_1rem_center] bg-no-repeat">
-                                        ${events.map(event => `<option value="${event.value}" ${selectedEvent === event.value ? 'selected' : ''}>${event.label}</option>`).join('')}
+                                    ${events.map(event => `<option value="${event.value}" ${selectedEvent === event.value ? 'selected' : ''}>${event.label}</option>`).join('')}
                                 </select>
                             </div>
 
                             <div class="flex flex-col">
                                 <label for="ranking-type-select" class="text-gray-300 text-sm font-medium mb-2">Ranking Type:</label>
                                 <select id="ranking-type-select" class="p-4 rounded-xl border border-gray-700 bg-gray-800 text-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-600 transition duration-200 ease-in-out cursor-pointer appearance-none bg-[url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="white"%3e%3cpath fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /%3e%3c/svg%3e')] bg-[length:1.5rem_1.5rem] bg-[right_1rem_center] bg-no-repeat">
-                                        <option value="singles" ${selectedRankingType === 'singles' ? 'selected' : ''}>Single Rank</option>
-                                        <option value="averages" ${selectedRankingType === 'averages' ? 'selected' : ''}>Average Rank</option>
+                                    <option value="singles" ${selectedRankingType === 'singles' ? 'selected' : ''}>Single Rank</option>
+                                    <option value="averages" ${selectedRankingType === 'averages' ? 'selected' : ''}>Average Rank</option>
                                 </select>
                             </div>
                             
@@ -290,7 +286,6 @@
             } else if (viewMode === 'single_rank_result') {
                 const eventLabel = events.find(e => e.value === selectedEvent)?.label || selectedEvent;
                 const regionLabel = regions.find(r => r.value === selectedRegion)?.label || selectedRegion;
-                const foundCompetitor = globalRankings && globalRankings.length > 0 ? globalRankings[0] : null;
 
                 let resultValue = '';
                 if (foundCompetitor) {
@@ -317,7 +312,7 @@
                     <h2 class="text-4xl font-bold text-purple-300 text-center drop-shadow-md">
                         ${regionLabel} ${selectedRankingType.charAt(0).toUpperCase() + selectedRankingType.slice(1)} Ranking
                     </h2>
-                    <!-- Display actualRank and optional warning message -->
+                    
                     <p class="text-center text-xl text-gray-400 font-medium">Rank # ${foundCompetitor.actualRank} for ${eventLabel}</p>
                     ${foundCompetitor.note ? `<p class="text-center text-red-400 text-sm mt-2">${foundCompetitor.note}</p>` : ''}
 
@@ -353,10 +348,6 @@
                         `}
                     </div>
                 `;
-            } else if (viewMode === 'individual_competitor_rankings') {
-                // This view is no longer needed since the button redirects.
-                // We'll keep the function for now in case you want to revert or add more functionality.
-                // It will never be reached with the new anchor tag.
             }
         }
 
@@ -386,12 +377,9 @@
             setButtonLoadingState(true);
             loading = true;
             error = null;
-            globalRankings = null;
-            selectedCompetitor = null;
-            individualRankings = null;
+            foundCompetitor = null;
             renderUI(); // Show loading state
 
-            // Validate rank number on the client side before sending to backend
             const currentRankNumber = parseInt(rankNumber);
             if (isNaN(currentRankNumber) || currentRankNumber <= 0) {
                 error = "Please enter a valid positive rank number.";
@@ -402,46 +390,20 @@
             }
 
             try {
-                // Convert frontend's 'singles'/'averages' to backend's 'single'/'average'
-                const typeParamMap = { singles: "single", averages: "average" };
-                const backendType = typeParamMap[selectedRankingType] || "single";
-
-                // NOTE: The original code was configured to look for a local backend, which doesn't exist.
-                // This URL assumes a local Flask backend. For this self-contained HTML file,
-                // the app won't be able to fetch data, but the rest of the UI will work.
-                // To make this fully functional, you would need to run a server that
-                // proxies requests to the WCA API, as the API itself does not have a rank-based endpoint.
-                const url = `/api/rankings/${selectedRegion}/${selectedEvent}/${backendType}/${rankNumber}`;
-
+                const url = `/api/rankings/${selectedRegion}/${selectedEvent}/${selectedRankingType}/${currentRankNumber}`;
                 const response = await fetch(url);
 
                 if (!response.ok) {
-                    // Corrected error handling: parse the JSON response
-                    let errorData;
-                    try {
-                        errorData = await response.json();
-                    } catch (e) {
-                        // Fallback in case the response is not valid JSON
-                        throw new Error(`HTTP ${response.status}: Failed to parse error message.`);
-                    }
-                    // Use the specific error message from the JSON
-                    throw new Error(`HTTP ${response.status}: ${errorData.error || 'An unknown error occurred.'}`);
+                    let errorData = await response.json().catch(() => ({ error: `HTTP ${response.status}: Failed to retrieve data.` }));
+                    throw new Error(errorData.error || `An unknown error occurred.`);
                 }
 
                 const data = await response.json();
-
-                if (data && data.person) {
-                    globalRankings = [data]; // wrap single object in array so UI code still works
-                    viewMode = 'single_rank_result';
-                } else {
-                    error = data.error || `No competitor found at rank #${rankNumber} for ${events.find(e => e.value === selectedEvent)?.label} (${selectedRankingType}) in ${regions.find(r => r.value === selectedRegion)?.label}.`;
-                    viewMode = 'global_search_form';
-                }
-
+                foundCompetitor = data;
+                viewMode = 'single_rank_result';
 
             } catch (err) {
                 error = err.message;
-                globalRankings = null;
                 viewMode = 'global_search_form';
             } finally {
                 loading = false;
@@ -450,26 +412,19 @@
             }
         }
 
-
         function handleBackToSearchForm() {
             viewMode = 'global_search_form';
-            globalRankings = null;
-            selectedCompetitor = null;
-            individualRankings = null;
+            foundCompetitor = null;
             error = null;
             renderUI();
         }
 
         // Initial setup when the page loads
         document.addEventListener('DOMContentLoaded', async () => {
-            // NOTE: The original code was waiting for a backend to be "ready".
-            // Since this is a single, self-contained file, we will directly
-            // fetch the countries and then render the main UI.
             await fetchCountries();
             renderUI();
         });
     </script>
-
 </body>
 
 </html>

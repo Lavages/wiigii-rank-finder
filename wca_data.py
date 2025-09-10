@@ -9,7 +9,6 @@ import re
 import json
 import os
 import msgpack
-from msgpack.exceptions import UnpackException
 
 # --- Logging ---
 logging.basicConfig(level=logging.INFO,
@@ -30,7 +29,7 @@ _is_loading = False
 BASE_URL_PERSONS = "https://raw.githubusercontent.com/robiningelbrecht/wca-rest-api/master/api/persons-page-{}.json"
 BASE_URL_COMPETITIONS = "https://raw.githubusercontent.com/robiningelbrecht/wca-rest-api/master/api/competitions-page-{}.json"
 BASE_URL_COUNTRIES = "https://raw.githubusercontent.com/robiningelbrecht/wca-rest-api/master/api/countries.json"
-CACHE_FILE = "wca_precomputed_data.msgpack"
+CACHE_FILE = "wca_precomputed_data.mp"
 MAX_RETRIES = 5
 THREADS = 16
 
@@ -253,9 +252,6 @@ def preload_wca_data_thread():
             _is_loading = False
             _data_loaded_event.set()
             return
-        except UnpackException as e:
-            logger.error(f"Failed to load data from cache: {e}. The cache file might be corrupted. Deleting and falling back to web download.")
-            os.remove(CACHE_FILE)
         except Exception as e:
             logger.error(f"Failed to load data from cache: {e}. Falling back to web download.")
 

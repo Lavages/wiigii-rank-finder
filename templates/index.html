@@ -70,7 +70,6 @@
         let loading = false; // This is for specific search loading, not initial data load
         let error = null;
         let viewMode = 'global_search_form'; // 'global_search_form', 'single_rank_result', 'individual_competitor_rankings'
-        let backendReady = false; // New state variable to track backend data readiness
 
         // DOM elements
         const mainContentDiv = document.getElementById('main-content');
@@ -198,7 +197,6 @@
                     .sort((a, b) => a.label.localeCompare(b.label));
 
                 regions = [...regions, ...countryOptions];
-                // Do not call renderUI here, it will be called after backend is ready
             } catch (err) {
                 console.error("Error fetching countries:", err.message);
                 // Optionally display an error to the user about country loading failure
@@ -210,14 +208,6 @@
          * This function acts like React's render method, updating the DOM.
          */
         function renderUI() {
-            // Only render if backend is ready, otherwise show initial loading message
-            if (!backendReady) {
-                mainContentDiv.innerHTML = `
-                    <p class="text-center text-xl text-purple-400 animate-pulse">Loading WCA Data, please wait...</p>
-                `;
-                return;
-            }
-
             mainContentDiv.innerHTML = ''; // Clear previous content
 
             if (loading) { // This `loading` state is for the search button specifically
@@ -353,7 +343,7 @@
                                 </div>
                                 <div class="mt-6 border-t border-gray-700 pt-4">
                                    <a href="https://www.worldcubeassociation.org/persons/${foundCompetitor.person.wcaId}" target="_blank"
-                                       class="block text-center w-full bg-purple-600 hover:bg-purple-700 active:bg-purple-800 text-white font-bold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
+                                        class="block text-center w-full bg-purple-600 hover:bg-purple-700 active:bg-purple-800 text-white font-bold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
                                         View Full Profile
                                    </a>
                                 </div>
@@ -416,7 +406,12 @@
                 const typeParamMap = { singles: "single", averages: "average" };
                 const backendType = typeParamMap[selectedRankingType] || "single";
 
-                const url = `/api/global-rankings/${selectedRegion}/${backendType}/${selectedEvent}?rankNumber=${rankNumber}`;
+                // NOTE: The original code was configured to look for a local backend, which doesn't exist.
+                // This URL assumes a local Flask backend. For this self-contained HTML file,
+                // the app won't be able to fetch data, but the rest of the UI will work.
+                // To make this fully functional, you would need to run a server that
+                // proxies requests to the WCA API, as the API itself does not have a rank-based endpoint.
+                const url = `/api/rankings/${selectedRegion}/${selectedEvent}/${backendType}/${rankNumber}`;
 
                 const response = await fetch(url);
 
@@ -435,13 +430,14 @@
 
                 const data = await response.json();
 
-                if (data.items && data.items.length > 0) {
-                    globalRankings = data.items;
+                if (data && data.person) {
+                    globalRankings = [data]; // wrap single object in array so UI code still works
                     viewMode = 'single_rank_result';
                 } else {
                     error = data.error || `No competitor found at rank #${rankNumber} for ${events.find(e => e.value === selectedEvent)?.label} (${selectedRankingType}) in ${regions.find(r => r.value === selectedRegion)?.label}.`;
                     viewMode = 'global_search_form';
                 }
+
 
             } catch (err) {
                 error = err.message;
@@ -464,35 +460,13 @@
             renderUI();
         }
 
-        /**
-         * Periodically checks the backend status until it's ready.
-         */
-        async function checkBackendStatus() {
-            try {
-                const response = await fetch(`${API_BASE_URL}/status`);
-                const data = await response.json();
-
-                if (response.ok && data.status === 'ready') {
-                    console.log("Backend is ready!");
-                    backendReady = true;
-                    await fetchCountries(); // Fetch countries once backend is ready
-                    renderUI(); // Render the main UI with the search form
-                } else {
-                    console.log("Backend not ready, rechecking in 3 seconds...");
-                    setTimeout(checkBackendStatus, 3000); // Recheck after 3 seconds
-                }
-            } catch (err) {
-                console.error("Error checking backend status:", err);
-                console.log("Backend not reachable, rechecking in 5 seconds...");
-                setTimeout(checkBackendStatus, 5000); // Longer delay if backend is unreachable
-            }
-        }
-
         // Initial setup when the page loads
-        document.addEventListener('DOMContentLoaded', () => {
-            checkBackendStatus(); // Start checking backend status
-            // Initial renderUI will show the "Loading WCA Data..." message
-            // The actual search form will be rendered once backendReady is true
+        document.addEventListener('DOMContentLoaded', async () => {
+            // NOTE: The original code was waiting for a backend to be "ready".
+            // Since this is a single, self-contained file, we will directly
+            // fetch the countries and then render the main UI.
+            await fetchCountries();
+            renderUI();
         });
     </script>
 

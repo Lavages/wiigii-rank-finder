@@ -1,68 +1,69 @@
 import os
+import sys
 import time
 import json
 import requests
 import threading
+import logging
 from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
-import sys
 
 # --- Import Blueprints and Preload Functions ---
 from competitors import competitors_bp, preload_wca_data as preload_competitors_data
 from specialist import specialist_bp, preload_wca_data as preload_specialist_data
 from completionist import completionists_bp, preload_completionist_data
+from comparison import comparison_bp, preload_comparison_data  # NEW
 
+# --- Logging Setup ---
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger(__name__)
+
+# --- Flask App Initialization ---
 app = Flask(__name__, template_folder='templates')
+CORS(app)  # Enable CORS for all origins
 
-# Register blueprints
+# --- Register Blueprints ---
 app.register_blueprint(competitors_bp, url_prefix='/api')
 app.register_blueprint(specialist_bp, url_prefix='/api')
 app.register_blueprint(completionists_bp, url_prefix='/api')
-CORS(app)  # Enable CORS for all origins
+app.register_blueprint(comparison_bp, url_prefix='/api')  # NEW
 
 # ----------------- Track Data Preloading -----------------
 data_loaded = {
     "competitors": False,
     "specialist": False,
     "completionist": False,
+    "comparison": False,  # NEW
 }
 
-print("Starting data preloads in background...", file=sys.stdout)
-sys.stdout.flush()
+logger.info("Starting data preloads in background...")
 
 
 def preload_all():
-    try:
-        preload_specialist_data()
-        data_loaded["specialist"] = True
-    except Exception as e:
-        print(f"[ERROR] Failed to preload specialist data: {e}", file=sys.stderr)
-
-    try:
-        preload_competitors_data()
-        data_loaded["competitors"] = True
-    except Exception as e:
-        print(f"[ERROR] Failed to preload competitors data: {e}", file=sys.stderr)
-
-    try:
-        preload_completionist_data()
-        data_loaded["completionist"] = True
-    except Exception as e:
-        print(f"[ERROR] Failed to preload completionist data: {e}", file=sys.stderr)
+    for key, preload_func in [
+        ("specialist", preload_specialist_data),
+        ("competitors", preload_competitors_data),
+        ("completionist", preload_completionist_data),
+        ("comparison", preload_comparison_data),  # NEW
+    ]:
+        try:
+            preload_func()
+            data_loaded[key] = True
+            logger.info(f"{key.capitalize()} data preloaded successfully.")
+        except Exception as e:
+            logger.error(f"Failed to preload {key} data: {e}")
 
 
-preload_thread = threading.Thread(target=preload_all)
-preload_thread.daemon = True
-preload_thread.start()
+threading.Thread(target=preload_all, daemon=True).start()
 
 # ----------------- Status Endpoint -----------------
 @app.route("/api/status")
 def api_status():
-    all_ready = all(data_loaded.values())
-    return jsonify({
-        "status": "ready" if all_ready else "loading",
-        "details": data_loaded
-    })
+    status = "ready" if all(data_loaded.values()) else "loading"
+    return jsonify({"status": status, "details": data_loaded})
 
 # ----------------- Frontend Routes -----------------
 @app.route("/")
@@ -80,6 +81,10 @@ def serve_specialist_page():
 @app.route("/competitors")
 def serve_competitors_page():
     return render_template("competitors.html")
+
+@app.route("/comparison")
+def serve_comparison_page():
+    return render_template("comparison.html")
 
 # ----------------- Helper Functions -----------------
 WCA_API_BASE_URL = "https://www.worldcubeassociation.org/api/v0"
@@ -104,22 +109,23 @@ EVENT_NAME_TO_ID = {
 }
 
 
-def fetch_data_with_retry(url, max_retries=5, backoff_factor=0.5):
-    for i in range(max_retries):
+def fetch_data_with_retry(url: str, max_retries: int = 5, backoff_factor: float = 0.5):
+    """Fetch JSON data with retries and exponential backoff."""
+    for attempt in range(max_retries):
         try:
             response = requests.get(url, timeout=5)
             response.raise_for_status()
             return response.json()
         except (requests.exceptions.RequestException, json.JSONDecodeError) as e:
-            print(f"Error fetching {url}, attempt {i + 1}/{max_retries}: {e}", file=sys.stderr)
-            if i < max_retries - 1:
-                time.sleep(backoff_factor * (2 ** i))
+            logger.warning(f"Error fetching {url}, attempt {attempt + 1}/{max_retries}: {e}")
+            if attempt < max_retries - 1:
+                time.sleep(backoff_factor * (2 ** attempt))
             else:
                 raise
     return None
 
 
-def fetch_person(wca_id):
+def fetch_person(wca_id: str):
     """Fetch official WCA profile details (name + country)."""
     url = f"{WCA_API_BASE_URL}/persons/{wca_id}.json"
     try:
@@ -133,25 +139,24 @@ def fetch_person(wca_id):
             "countryIso2": person.get("country", {}).get("iso2", "N/A"),
         }
     except Exception as e:
-        print(f"Error fetching person {wca_id}: {e}", file=sys.stderr)
+        logger.error(f"Error fetching person {wca_id}: {e}")
         return {"wcaId": wca_id, "name": "Unknown", "countryIso2": "N/A"}
 
 # ----------------- Rankings API -----------------
 @app.route("/api/rankings/<wca_id>", methods=["GET"])
-def get_rankings(wca_id):
+def get_rankings(wca_id: str):
     if not wca_id:
         return jsonify({"error": "WCA ID cannot be empty"}), 400
-
     if '/' in wca_id or ' ' in wca_id:
         return jsonify({
-            "error": "Invalid WCA ID format. This endpoint is for a single competitor's rankings, not global rankings."
+            "error": "Invalid WCA ID format. This endpoint is for a single competitor's rankings only."
         }), 400
 
     rankings_url = f"https://wca-rest-api.robiningelbrecht.be/persons/{wca_id}/rankings"
     try:
         response = requests.get(rankings_url, timeout=5)
         response.raise_for_status()
-        return jsonify(response.json()), 200
+        return jsonify(response.json())
     except requests.exceptions.RequestException as e:
         status = getattr(e.response, "status_code", 500)
         return jsonify({"error": f"Failed to fetch rankings for WCA ID '{wca_id}': {str(e)}"}), status
@@ -160,14 +165,13 @@ def get_rankings(wca_id):
 
 
 @app.route("/api/global-rankings/<region>/<type_param>/<event>", methods=["GET"])
-def get_global_rankings(region, type_param, event):
-    """Fetches global rankings and enriches with official WCA name & country."""
+def get_global_rankings(region: str, type_param: str, event: str):
+    """Fetch global rankings and enrich with official WCA name & country."""
     valid_types = ["single", "average"]
     if type_param not in valid_types:
         return jsonify({"error": f"Invalid type. Must be {', '.join(valid_types)}"}), 400
 
     event_id = EVENT_NAME_TO_ID.get(event, event)
-
     try:
         requested_rank = int(request.args.get("rankNumber", "0"))
         if requested_rank <= 0:
@@ -175,16 +179,10 @@ def get_global_rankings(region, type_param, event):
     except ValueError:
         return jsonify({"error": "rankNumber must be a positive integer."}), 400
 
-    continent_regions = {
-        "world", "europe", "north-america", "south-america", "asia", "africa", "oceania"
-    }
-    if region.lower() in continent_regions:
-        region_path = region.lower()
-    else:
-        region_path = region.upper()
+    continent_regions = {"world", "europe", "north-america", "south-america", "asia", "africa", "oceania"}
+    region_path = region.lower() if region.lower() in continent_regions else region.upper()
 
     rankings_url = f"{WCA_RANK_DATA_BASE_URL}/{region_path}/{type_param}/{event_id}.json"
-
     try:
         response = requests.get(rankings_url, timeout=5)
         response.raise_for_status()
@@ -199,7 +197,6 @@ def get_global_rankings(region, type_param, event):
         item = items[requested_rank - 1]
         rank_obj = item.get("rank", {})
 
-        # Fetch full WCA profile for accurate name/country
         person_data = fetch_person(item.get("personId"))
 
         return jsonify({
@@ -212,14 +209,11 @@ def get_global_rankings(region, type_param, event):
             "result": item.get("best"),
             "person": person_data,
             "actualRank": requested_rank
-        }), 200
-
+        })
     except requests.exceptions.RequestException as e:
         status_code = getattr(e.response, "status_code", 500)
         if status_code == 404:
-            return jsonify({
-                "error": "Data not found for the requested event, rank type, and region."
-            }), 404
+            return jsonify({"error": "Data not found for the requested event, rank type, and region."}), 404
         return jsonify({"error": f"Failed to fetch global rankings: {str(e)}"}), status_code
     except json.JSONDecodeError:
         return jsonify({"error": "Failed to decode rankings response."}), 500
@@ -227,4 +221,5 @@ def get_global_rankings(region, type_param, event):
 # ----------------- Run Flask -----------------
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 5000))
+    logger.info(f"Starting Flask on port {port}...")
     app.run(debug=True, host='0.0.0.0', port=port)

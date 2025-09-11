@@ -8,23 +8,34 @@ import tempfile
 import time
 from threading import Lock, Thread
 from flask import Blueprint, jsonify, request
+
 # --- Blueprint ---
 competitors_bp = Blueprint("competitors_bp", __name__)
 
 # --- Constants ---
+# Total number of pages of competitor data to fetch
 TOTAL_PAGES = 268
+# Maximum number of results to return from a query
 MAX_RESULTS = 1000
+# Limit concurrent HTTP requests to avoid overwhelming the source server
 MAX_CONCURRENT_REQUESTS = 32
+# Events that are considered "extra" or deprecated and are ignored for the main search
 PERMISSIBLE_EXTRA_EVENTS = {'magic', 'mmagic', '333ft', '333mbo'}
 # Store the cache file in a temp directory for cross-platform compatibility
 CACHE_FILE = os.path.join(tempfile.gettempdir(), "wca_competitors_cache.msgpack")
+# The cache will expire after 24 hours to ensure data freshness
 CACHE_EXPIRATION_SECONDS = 86400  # 24 hours
+# Number of times to retry a failed fetch
 RETRY_ATTEMPTS = 3
+# Delay between retries
 RETRY_DELAY = 2  # seconds
 
 # --- Global Data Control ---
+# A lock to prevent multiple threads from trying to load data at the same time
 DATA_LOADING_LOCK = Lock()
+# In-memory list to store all competitor data
 ALL_PERSONS_FLAT_LIST = []
+# Flag to indicate whether the data has been successfully loaded
 DATA_LOADED = False
 
 # --- Helper: Asynchronously Fetch a single page with retries ---
@@ -38,11 +49,9 @@ async def _fetch_and_parse_page(session, page_number):
             async with session.get(url, timeout=15) as res:
                 res.raise_for_status()
 
-                # --- FIX START ---
-                # Pass content_type=None to ignore the MIME type check.
-                # This is necessary because the server might return text/plain for some responses.
+                # Pass content_type=None to ignore the MIME type check, which can fail
+                # if the server returns a non-standard MIME type for JSON.
                 data = await res.json(content_type=None)
-                # --- FIX END ---
                 
             persons = []
             if isinstance(data, list):
@@ -50,7 +59,7 @@ async def _fetch_and_parse_page(session, page_number):
             elif isinstance(data, dict):
                 persons = data.get("items", [])
             else:
-                raise ValueError(f"Unexpected data format on page {page_number}: {type(data)}")
+                raise ValueError(f"Unexpected data format on page {page_number}")
 
             if not isinstance(persons, list):
                 raise ValueError(f"Expected list of persons on page {page_number}, but got {type(persons)}")
@@ -139,6 +148,7 @@ def preload_wca_data():
     """Loads WCA data from cache or performs a synchronous fetch if needed."""
     global ALL_PERSONS_FLAT_LIST, DATA_LOADED
     
+    # Use a lock to ensure only one thread attempts to load data at a time
     with DATA_LOADING_LOCK:
         if DATA_LOADED:
             print("Competitor data already loaded, skipping preload.", file=sys.stderr)
@@ -152,7 +162,7 @@ def preload_wca_data():
 
         print("No valid competitor cache found or cache is old. Starting synchronous fetch.", file=sys.stderr)
         
-        # Run the async fetch synchronously
+        # Run the async fetch synchronously within a new event loop
         loop = asyncio.new_event_loop()
         asyncio.set_event_loop(loop)
         ALL_PERSONS_FLAT_LIST = loop.run_until_complete(_fetch_all_pages_async())
@@ -170,8 +180,10 @@ def find_competitors(selected_events, max_results=MAX_RESULTS):
     """Finds competitors based on selected events, ensures data is loaded."""
     if not DATA_LOADED:
         print("❗ find_competitors called before data is loaded. Triggering synchronous preload...", file=sys.stderr)
+        # This will block the current request until data is loaded
         preload_wca_data()
         if not DATA_LOADED:
+            # Return an error if data loading failed
             return {"error": "Data is still loading, please try again in a moment."}
 
     selected_set = {e for e in selected_events if e not in PERMISSIBLE_EXTRA_EVENTS}

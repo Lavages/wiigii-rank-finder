@@ -5,14 +5,14 @@ import json
 import requests
 import threading
 import logging
-from flask import Flask, request, jsonify, render_template, Blueprint
+from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 
 # --- Import Blueprints and Preload Functions ---
 from competitors import competitors_bp, preload_wca_data as preload_competitors_data
 from specialist import specialist_bp, preload_wca_data as preload_specialist_data
 from completionist import completionists_bp, preload_completionist_data
-from comparison import comparison_bp, preload_comparison_data
+from comparison import comparison_bp, preload_comparison_data  # NEW
 
 # --- Logging Setup ---
 logging.basicConfig(
@@ -29,14 +29,14 @@ CORS(app)  # Enable CORS for all origins
 app.register_blueprint(competitors_bp, url_prefix='/api')
 app.register_blueprint(specialist_bp, url_prefix='/api')
 app.register_blueprint(completionists_bp, url_prefix='/api')
-app.register_blueprint(comparison_bp, url_prefix='/api')
+app.register_blueprint(comparison_bp, url_prefix='/api')  # NEW
 
 # ----------------- Track Data Preloading -----------------
 data_loaded = {
     "competitors": False,
     "specialist": False,
     "completionist": False,
-    "comparison": False,
+    "comparison": False,  # NEW
 }
 
 logger.info("Starting data preloads in background...")
@@ -47,7 +47,7 @@ def preload_all():
         ("specialist", preload_specialist_data),
         ("competitors", preload_competitors_data),
         ("completionist", preload_completionist_data),
-        ("comparison", preload_comparison_data),
+        ("comparison", preload_comparison_data),  # NEW
     ]:
         try:
             preload_func()
@@ -86,7 +86,7 @@ def serve_competitors_page():
 def serve_comparison_page():
     return render_template("comparison.html")
 
-# ----------------- Helper Functions (Kept in app.py as requested) -----------------
+# ----------------- Helper Functions -----------------
 WCA_API_BASE_URL = "https://www.worldcubeassociation.org/api/v0"
 WCA_RANK_DATA_BASE_URL = "https://raw.githubusercontent.com/robiningelbrecht/wca-rest-api/master/api/rank"
 
@@ -142,7 +142,7 @@ def fetch_person(wca_id: str):
         logger.error(f"Error fetching person {wca_id}: {e}")
         return {"wcaId": wca_id, "name": "Unknown", "countryIso2": "N/A"}
 
-# ----------------- Rankings API (Kept in app.py as requested) -----------------
+# ----------------- Rankings API -----------------
 @app.route("/api/rankings/<wca_id>", methods=["GET"])
 def get_rankings(wca_id: str):
     if not wca_id:

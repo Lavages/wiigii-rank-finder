@@ -567,13 +567,6 @@
     "lastEvent": "5x5 Blindfolded"
   },
   {
-    "id": "2011TRON02",
-    "name": "Sebastiano Tronto",
-    "category": "Silver",
-    "categoryDate": "2016-10-09",
-    "lastEvent": "Clock"
-  },
-  {
     "id": "2008OLLE01",
     "name": "Alexander Olleta del Molino",
     "category": "Silver",
@@ -4981,6 +4974,34 @@
     "name": "Joseph Burnett",
     "category": "Silver",
     "categoryDate": "2025-08-31",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2018PERK01",
+    "name": "Elliott Perkins",
+    "category": "Silver",
+    "categoryDate": "2025-09-07",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2014WOLL01",
+    "name": "Ethan Woll",
+    "category": "Silver",
+    "categoryDate": "2025-09-07",
+    "lastEvent": "Square-1"
+  },
+  {
+    "id": "2011TRON02",
+    "name": "Sebastiano Tronto",
+    "category": "Platinum",
+    "categoryDate": "2025-09-07",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2017CHAN44",
+    "name": "Vincent Chan",
+    "category": "Silver",
+    "categoryDate": "2025-09-07",
     "lastEvent": "5x5 Blindfolded"
   }
 ]

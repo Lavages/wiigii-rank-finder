@@ -17,3 +17,6 @@ env/
 # Logs and databases
 *.log
 *.sqlite3
+cache/*.mp
+cache/*.msgpack
+wca_precomputed_data.msgpack

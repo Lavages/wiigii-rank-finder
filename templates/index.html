@@ -32,18 +32,21 @@
     class="min-h-screen bg-gradient-to-br from-gray-900 to-black text-gray-100 p-4 flex flex-col items-center justify-center">
 
     <nav
-        class="w-full max-w-4xl mx-auto bg-gray-950 bg-opacity-80 rounded-t-2xl sm:rounded-t-3xl shadow-lg border border-purple-800 border-b-0 p-3 sm:p-4 flex flex-wrap justify-center gap-2 sm:gap-8 sticky top-0 z-10">
-        <a href="/"
-            class="text-xs sm:text-sm md:text-lg text-gray-300 hover:text-purple-400 transition-colors duration-200 font-semibold px-2 sm:px-4">Rank
-            Finder</a>
-        <a href="/competitors"
-            class="text-xs sm:text-sm md:text-lg text-gray-300 hover:text-purple-400 transition-colors duration-200 font-semibold px-2 sm:px-4">Competitors</a>
-        <a href="/specialist"
-            class="text-xs sm:text-sm md:text-lg text-gray-300 hover:text-purple-400 transition-colors duration-200 font-semibold px-2 sm:px-4">Specialist</a>
-        <a href="/completionist"
-            class="text-xs sm:text-sm md:text-lg text-gray-300 hover:text-purple-400 transition-colors duration-200 font-semibold px-2 sm:px-4">Completionist</a>
-        <a href="/comparison"
-            class="text-xs sm:text-sm md:text-lg text-gray-300 hover:text-purple-400 transition-colors duration-200 font-semibold px-2 sm:px-4">Comparison</a>
+        class="w-full max-w-4xl mx-auto bg-gray-950 bg-opacity-80 rounded-t-2xl sm:rounded-t-3xl shadow-lg border border-purple-800 border-b-0 p-3 sm:p-4 flex flex-wrap justify-between items-center sticky top-0 z-10">
+
+        <div class="flex flex-wrap justify-center gap-2 sm:gap-8">
+            <a href="/"
+                class="text-xs sm:text-sm md:text-lg text-gray-300 hover:text-purple-400 transition-colors duration-200 font-semibold px-2 sm:px-4">Rank
+                Finder</a>
+            <a href="/competitors"
+                class="text-xs sm:text-sm md:text-lg text-gray-300 hover:text-purple-400 transition-colors duration-200 font-semibold px-2 sm:px-4">Competitors</a>
+            <a href="/specialist"
+                class="text-xs sm:text-sm md:text-lg text-gray-300 hover:text-purple-400 transition-colors duration-200 font-semibold px-2 sm:px-4">Specialist</a>
+            <a href="/completionist"
+                class="text-xs sm:text-sm md:text-lg text-gray-300 hover:text-purple-400 transition-colors duration-200 font-semibold px-2 sm:px-4">Completionist</a>
+            <a href="/comparison"
+                class="text-xs sm:text-sm md:text-lg text-gray-300 hover:text-purple-400 transition-colors duration-200 font-semibold px-2 sm:px-4">Comparison</a>
+        </div>
     </nav>
 
     <div
@@ -54,7 +57,6 @@
         </h1>
 
         <div id="main-content" class="space-y-8">
-            <!-- Content will be rendered here by JavaScript -->
         </div>
     </div>
     <script>
@@ -176,6 +178,7 @@
             try {
                 const response = await fetch(`${WCA_DATA_API_BASE_URL}/countries.json`);
                 if (!response.ok) {
+                    z
                     throw new Error('Failed to fetch country data.');
                 }
                 const data = await response.json();
@@ -204,36 +207,36 @@
 
             if (loading) {
                 mainContentDiv.innerHTML = `
-                    <div class="flex flex-col items-center justify-center p-10">
-                        <div class="spinner text-purple-400">
-                            <svg class="h-16 w-16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M12 4.75V6.25" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                <path d="M17.1266 6.87343L16.0659 7.93409" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                <path d="M19.25 12L17.75 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                <path d="M17.1266 17.1266L16.0659 16.0659" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                <path d="M12 17.75V19.25" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                <path d="M7.9341 16.0659L6.87344 17.1266" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                <path d="M6.25 12L4.75 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                <path d="M7.9341 7.93409L6.87344 6.87343" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                            </svg>
-                        </div>
-                        <p class="mt-4 text-center text-xl text-purple-400 animate-pulse">Loading WCA Data, please wait...</p>
+                <div class="flex flex-col items-center justify-center p-10">
+                    <div class="spinner text-purple-400">
+                        <svg class="h-16 w-16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 4.75V6.25" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                            <path d="M17.1266 6.87343L16.0659 7.93409" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                            <path d="M19.25 12L17.75 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                            <path d="M17.1266 17.1266L16.0659 16.0659" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                            <path d="M12 17.75V19.25" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                            <path d="M7.9341 16.0659L6.87344 17.1266" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                            <path d="M6.25 12L4.75 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                            <path d="M7.9341 7.93409L6.87344 6.87343" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg>
                     </div>
+                    <p class="mt-4 text-center text-xl text-purple-400 animate-pulse">Loading WCA Data, please wait...</p>
+                </div>
                 `;
                 return;
             }
 
             if (error) {
                 mainContentDiv.innerHTML = `
-                    <div class="bg-red-900 bg-opacity-50 text-white p-6 rounded-xl flex items-center gap-4 shadow-inner border border-red-700">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        <p class="font-medium text-lg">${error}</p>
-                    </div>
-                    <button onclick="handleBackToSearchForm()" class="w-full bg-purple-700 hover:bg-purple-800 active:bg-purple-900 text-white font-bold py-4 px-8 rounded-xl shadow-lg hover:shadow-xl transition duration-300 ease-in-out transform hover:scale-105 mt-6">
-                        Back to Search Form
-                    </button>
+                <div class="bg-red-900 bg-opacity-50 text-white p-6 rounded-xl flex items-center gap-4 shadow-inner border border-red-700">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <p class="font-medium text-lg">${error}</p>
+                </div>
+                <button onclick="handleBackToSearchForm()" class="w-full bg-purple-700 hover:bg-purple-800 active:bg-purple-900 text-white font-bold py-4 px-8 rounded-xl shadow-lg hover:shadow-xl transition duration-300 ease-in-out transform hover:scale-105 mt-6">
+                    Back to Search Form
+                </button>
                 `;
                 return;
             }
@@ -252,69 +255,69 @@
 
         function renderPlaceholderView(viewName) {
             mainContentDiv.innerHTML = `
-                <div class="text-center p-10 space-y-4">
-                    <p class="text-xl sm:text-2xl font-bold text-gray-300">
-                        Content for "${viewName.replace('_', ' ').split(' ').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join(' ')}" is coming soon!
-                    </p>
-                    <p class="text-sm text-gray-500">
-                        This is a single-page application.
-                    </p>
-                    <a href="#" onclick="setViewMode('rank_finder')" class="text-purple-400 hover:text-purple-300 transition-colors duration-200">
-                        Go back to Rank Finder
-                    </a>
-                </div>
+            <div class="text-center p-10 space-y-4">
+                <p class="text-xl sm:text-2xl font-bold text-gray-300">
+                    Content for "${viewName.replace('_', ' ').split(' ').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join(' ')}" is coming soon!
+                </p>
+                <p class="text-sm text-gray-500">
+                    This is a single-page application.
+                </p>
+                <a href="#" onclick="setViewMode('rank_finder')" class="text-purple-400 hover:text-purple-300 transition-colors duration-200">
+                    Go back to Rank Finder
+                </a>
+            </div>
             `;
         }
 
         function renderRankFinderForm() {
             mainContentDiv.innerHTML = `
-                <div class="space-y-8">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                        <div class="flex flex-col">
-                            <label for="region-select" class="text-gray-300 text-sm font-medium mb-2">Region:</label>
-                            <select id="region-select" class="p-4 rounded-xl border border-gray-700 bg-gray-800 text-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-600 transition duration-200 ease-in-out cursor-pointer appearance-none bg-[url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="white"%3e%3cpath fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /%3e%3c/svg%3e')] bg-[length:1.5rem_1.5rem] bg-[right_1rem_center] bg-no-repeat">
-                                ${regions.map(region => `<option value="${region.value}" ${selectedRegion === region.value ? 'selected' : ''}>${region.label}</option>`).join('')}
-                            </select>
-                        </div>
-                        
-                        <div class="flex flex-col">
-                            <label for="event-select" class="text-gray-300 text-sm font-medium mb-2">Event:</label>
-                            <select id="event-select" class="p-4 rounded-xl border border-gray-700 bg-gray-800 text-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-600 transition duration-200 ease-in-out cursor-pointer appearance-none bg-[url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="white"%3e%3cpath fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /%3e%3c/svg%3e')] bg-[length:1.5rem_1.5rem] bg-[right_1rem_center] bg-no-repeat">
-                                ${events.map(event => `<option value="${event.value}" ${selectedEvent === event.value ? 'selected' : ''}>${event.label}</option>`).join('')}
-                            </select>
-                        </div>
-
-                        <div class="flex flex-col">
-                            <label for="ranking-type-select" class="text-gray-300 text-sm font-medium mb-2">Ranking Type:</label>
-                            <select id="ranking-type-select" class="p-4 rounded-xl border border-gray-700 bg-gray-800 text-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-600 transition duration-200 ease-in-out cursor-pointer appearance-none bg-[url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="white"%3e%3cpath fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /%3e%3c/svg%3e')] bg-[length:1.5rem_1.5rem] bg-[right_1rem_center] bg-no-repeat">
-                                <option value="single" ${selectedRankingType === 'single' ? 'selected' : ''}>Single Rank</option>
-                                <option value="average" ${selectedRankingType === 'average' ? 'selected' : ''}>Average Rank</option>
-                            </select>
-                        </div>
-                        
-                        <div class="flex flex-col">
-                            <label for="rank-number-input" class="text-gray-300 text-sm font-medium mb-2">Specific Rank Number:</label>
-                            <input type="number" id="rank-number-input" placeholder="e.g., 1, 50, 100" value="${rankNumber}" required min="1"
-                                class="p-4 rounded-xl border border-gray-700 bg-gray-800 text-gray-200 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-600 transition duration-200 ease-in-out" />
-                        </div>
+            <div class="space-y-8">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 items-center">
+                    <div class="flex flex-col">
+                        <label for="region-select" class="text-gray-300 text-sm font-medium mb-2">Region:</label>
+                        <select id="region-select" class="p-4 rounded-xl border border-gray-700 bg-gray-800 text-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-600 transition duration-200 ease-in-out cursor-pointer appearance-none bg-[url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="white"%3e%3cpath fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /%3e%3c/svg%3e')] bg-[length:1.5rem_1.5rem] bg-[right_1rem_center] bg-no-repeat">
+                            ${regions.map(region => `<option value="${region.value}" ${selectedRegion === region.value ? 'selected' : ''}>${region.label}</option>`).join('')}
+                        </select>
+                    </div>
+                    
+                    <div class="flex flex-col">
+                        <label for="event-select" class="text-gray-300 text-sm font-medium mb-2">Event:</label>
+                        <select id="event-select" class="p-4 rounded-xl border border-gray-700 bg-gray-800 text-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-600 transition duration-200 ease-in-out cursor-pointer appearance-none bg-[url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="white"%3e%3cpath fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /%3e%3c/svg%3e')] bg-[length:1.5rem_1.5rem] bg-[right_1rem_center] bg-no-repeat">
+                            ${events.map(event => `<option value="${event.value}" ${selectedEvent === event.value ? 'selected' : ''}>${event.label}</option>`).join('')}
+                        </select>
                     </div>
 
-                    <button id="search-button" onclick="handleFetchGlobalRankings()" class="w-full bg-purple-700 hover:bg-purple-800 active:bg-purple-900 text-white font-bold py-4 px-8 rounded-xl shadow-lg hover:shadow-xl transition duration-300 ease-in-out transform hover:scale-105 flex items-center justify-center space-x-2">
-                        <span id="button-text">Search Rankings</span>
-                        <div id="button-spinner" class="hidden spinner">
-                            <svg class="h-5 w-5 text-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M12 4.75V6.25" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                <path d="M17.1266 6.87343L16.0659 7.93409" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                <path d="M19.25 12L17.75 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                <path d="M17.1266 17.1266L16.0659 16.0659" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                <path d="M12 17.75V19.25" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                <path d="M7.9341 16.0659L6.87344 17.1266" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                <path d="M6.25 12L4.75 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                <path d="M7.9341 7.93409L6.87344 6.87343" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                            </svg>
-                        </div>
-                    </button>
+                    <div class="flex flex-col">
+                        <label for="ranking-type-select" class="text-gray-300 text-sm font-medium mb-2">Ranking Type:</label>
+                        <select id="ranking-type-select" class="p-4 rounded-xl border border-gray-700 bg-gray-800 text-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-600 transition duration-200 ease-in-out cursor-pointer appearance-none bg-[url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="white"%3e%3cpath fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /%3e%3c/svg%3e')] bg-[length:1.5rem_1.5rem] bg-[right_1rem_center] bg-no-repeat">
+                            <option value="single" ${selectedRankingType === 'single' ? 'selected' : ''}>Single Rank</option>
+                            <option value="average" ${selectedRankingType === 'average' ? 'selected' : ''}>Average Rank</option>
+                        </select>
+                    </div>
+                    
+                    <div class="flex flex-col">
+                        <label for="rank-number-input" class="text-gray-300 text-sm font-medium mb-2">Specific Rank Number:</label>
+                        <input type="number" id="rank-number-input" placeholder="e.g., 1, 50, 100" value="${rankNumber}" required min="1"
+                            class="p-4 rounded-xl border border-gray-700 bg-gray-800 text-gray-200 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-600 transition duration-200 ease-in-out" />
+                    </div>
                 </div>
+
+                <button id="search-button" onclick="handleFetchGlobalRankings()" class="w-full bg-purple-700 hover:bg-purple-800 active:bg-purple-900 text-white font-bold py-4 px-8 rounded-xl shadow-lg hover:shadow-xl transition duration-300 ease-in-out transform hover:scale-105 flex items-center justify-center space-x-2">
+                    <span id="button-text">Search Rankings</span>
+                    <div id="button-spinner" class="hidden spinner">
+                        <svg class="h-5 w-5 text-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 4.75V6.25" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                            <path d="M17.1266 6.87343L16.0659 7.93409" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                            <path d="M19.25 12L17.75 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                            <path d="M17.1266 17.1266L16.0659 16.0659" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                            <path d="M12 17.75V19.25" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                            <path d="M7.9341 16.0659L6.87344 17.1266" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                            <path d="M6.25 12L4.75 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                            <path d="M7.9341 7.93409L6.87344 6.87343" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg>
+                    </div>
+                </button>
+            </div>
             `;
             // Add event listeners AFTER elements are in DOM
             document.getElementById('region-select').onchange = (e) => { selectedRegion = e.target.value; };
@@ -342,50 +345,50 @@
             }
 
             mainContentDiv.innerHTML = `
-                <button onclick="handleBackToSearchForm()" class="flex items-center gap-2 text-purple-400 hover:text-purple-300 transition duration-200 group font-semibold">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 group-hover:-translate-x-1 transition duration-200" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
-                    </svg>
-                    Back to New Search
-                </button>
+            <button onclick="handleBackToSearchForm()" class="flex items-center gap-2 text-purple-400 hover:text-purple-300 transition duration-200 group font-semibold">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 group-hover:-translate-x-1 transition duration-200" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+                </svg>
+                Back to New Search
+            </button>
 
-                <h2 class="text-4xl font-bold text-purple-300 text-center drop-shadow-md">
-                    ${regionLabel} ${selectedRankingType.charAt(0).toUpperCase() + selectedRankingType.slice(1)} Ranking
-                </h2>
-                
-                <p class="text-center text-xl text-gray-400 font-medium">Rank # ${foundCompetitor.actualRank} for ${eventLabel}</p>
-                ${foundCompetitor.note ? `<p class="text-center text-red-400 text-sm mt-2">${foundCompetitor.note}</p>` : ''}
+            <h2 class="text-4xl font-bold text-purple-300 text-center drop-shadow-md">
+                ${regionLabel} ${selectedRankingType.charAt(0).toUpperCase() + selectedRankingType.slice(1)} Ranking
+            </h2>
+            
+            <p class="text-center text-xl text-gray-400 font-medium">Rank # ${foundCompetitor.actualRank} for ${eventLabel}</p>
+            ${foundCompetitor.note ? `<p class="text-center text-red-400 text-sm mt-2">${foundCompetitor.note}</p>` : ''}
 
-                <div class="space-y-6">
-                    ${foundCompetitor ? `
-                        <div class="bg-gray-800 p-8 rounded-xl shadow-xl border border-gray-700 transform transition duration-300 ease-in-out hover:scale-[1.01]">
-                            <div class="flex flex-col md:flex-row md:items-center md:justify-between">
-                                <div class="mb-4 md:mb-0">
-                                    <p class="font-extrabold text-2xl text-gray-50">
-                                        ${foundCompetitor.person.name}
-                                    </p>
-                                    <p class="text-sm text-gray-400 mt-1">
-                                        WCA ID: <span class="text-purple-300">${foundCompetitor.person.wcaId}</span> | Country: ${foundCompetitor.person.countryIso2}
-                                    </p>
-                                </div>
-                                <div class="text-right">
-                                    <p class="text-sm text-gray-300">Best Result:</p>
-                                    <p class="font-black text-4xl text-purple-400">
-                                        ${resultValue}
-                                    </p>
-                                </div>
+            <div class="space-y-6">
+                ${foundCompetitor ? `
+                    <div class="bg-gray-800 p-8 rounded-xl shadow-xl border border-gray-700 transform transition duration-300 ease-in-out hover:scale-[1.01]">
+                        <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+                            <div class="mb-4 md:mb-0">
+                                <p class="font-extrabold text-2xl text-gray-50">
+                                    ${foundCompetitor.person.name}
+                                </p>
+                                <p class="text-sm text-gray-400 mt-1">
+                                    WCA ID: <span class="text-purple-300">${foundCompetitor.person.wcaId}</span> | Country: ${foundCompetitor.person.country}
+                                </p>
                             </div>
-                            <div class="mt-6 border-t border-gray-700 pt-4">
-                                <a href="https://www.worldcubeassociation.org/persons/${foundCompetitor.person.wcaId}" target="_blank"
-                                    class="block text-center w-full bg-purple-600 hover:bg-purple-700 active:bg-purple-800 text-white font-bold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
-                                    View Full Profile
-                                </a>
+                            <div class="text-right">
+                                <p class="text-sm text-gray-300">Best Result:</p>
+                                <p class="font-black text-4xl text-purple-400">
+                                    ${resultValue}
+                                </p>
                             </div>
                         </div>
-                    ` : `
-                        <p class="text-center text-xl text-gray-500 font-light">No competitor found at rank #${rankNumber} for this selection.</p>
-                    `}
-                </div>
+                        <div class="mt-6 border-t border-gray-700 pt-4">
+                            <a href="https://www.worldcubeassociation.org/persons/${foundCompetitor.person.wcaId}" target="_blank"
+                                class="block text-center w-full bg-purple-600 hover:bg-purple-700 active:bg-purple-800 text-white font-bold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
+                                View Full Profile
+                            </a>
+                        </div>
+                    </div>
+                ` : `
+                    <p class="text-center text-xl text-gray-500 font-light">No competitor found at rank #${rankNumber} for this selection.</p>
+                `}
+            </div>
             `;
         }
 
@@ -416,7 +419,7 @@
             loading = true;
             error = null;
             foundCompetitor = null;
-            renderUI(); // Show loading state
+            renderUI(); // Show loading spinner
 
             const currentRankNumber = parseInt(rankNumber);
             if (isNaN(currentRankNumber) || currentRankNumber <= 0) {
@@ -428,34 +431,34 @@
             }
 
             try {
-                // Corrected API endpoint URL to directly fetch the JSON file
-                let url;
-                if (selectedRegion === 'world') {
-                    url = `${WCA_DATA_API_BASE_URL}/rankings/world/${selectedEvent}/${selectedRankingType}.json`;
-                } else if (['europe', 'north-america', 'asia', 'south-america', 'africa', 'oceania'].includes(selectedRegion)) {
-                    url = `${WCA_DATA_API_BASE_URL}/rankings/continents/${selectedRegion}/${selectedEvent}/${selectedRankingType}.json`;
-                } else {
-                    url = `${WCA_DATA_API_BASE_URL}/rankings/countries/${selectedRegion}/${selectedEvent}/${selectedRankingType}.json`;
-                }
-
+                // Call Flask backend
+                const url = `/api/global-rankings?eventId=${selectedEvent}&type=${selectedRankingType}&region=${selectedRegion}&rank=${currentRankNumber}`;
                 const response = await fetch(url);
 
                 if (!response.ok) {
-                    throw new Error(`HTTP ${response.status}: Failed to retrieve data for this ranking.`);
+                    const errorData = await response.json().catch(() => ({}));
+                    throw new Error(errorData.error || `HTTP ${response.status}: Failed to retrieve data.`);
                 }
 
                 const data = await response.json();
-                const items = data.items;
 
-                // WCA ranking data is 0-indexed, so we subtract 1 from the user's rank number
-                const index = currentRankNumber - 1;
-                if (index < 0 || index >= items.length) {
-                    foundCompetitor = null; // No competitor at this rank
+                // Grab the first item from the API response
+                const item = data.items && data.items.length > 0 ? data.items[0] : null;
+
+                if (!item || !item.person) {
+                    foundCompetitor = null;
                 } else {
-                    foundCompetitor = items[index];
-                    foundCompetitor.actualRank = items[index].rank; // Store the official rank
+                    foundCompetitor = {
+                        person: {
+                            name: item.person.name || `Unknown (WCA ID: ${item.person.wcaId})`,
+                            wcaId: item.person.wcaId,
+                            country: item.person.countryIso2 || "N/A",
+                        },
+                        result: item.result,
+                        actualRank: item.rank?.world || item.rank?.continent || item.rank?.country || currentRankNumber,
+                        note: item.note || null,
+                    };
                 }
-
             } catch (err) {
                 error = err.message;
             } finally {

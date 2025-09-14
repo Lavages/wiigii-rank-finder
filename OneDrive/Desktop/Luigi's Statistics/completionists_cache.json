@@ -1,0 +1,5007 @@
+[
+  {
+    "id": "2012POHL01",
+    "name": "Andreas Pohl",
+    "category": "Silver",
+    "categoryDate": "2014-01-05",
+    "lastEvent": "Square-1"
+  },
+  {
+    "id": "2008COUR01",
+    "name": "François Courtès",
+    "category": "Silver",
+    "categoryDate": "2014-01-05",
+    "lastEvent": "Skewb"
+  },
+  {
+    "id": "2008AURO01",
+    "name": "Sébastien Auroux",
+    "category": "Silver",
+    "categoryDate": "2014-01-05",
+    "lastEvent": "Skewb"
+  },
+  {
+    "id": "2009ZEMD01",
+    "name": "Feliks Zemdegs",
+    "category": "Silver",
+    "categoryDate": "2014-01-11",
+    "lastEvent": "Skewb"
+  },
+  {
+    "id": "2010BREC01",
+    "name": "John Brechon",
+    "category": "Silver",
+    "categoryDate": "2014-01-11",
+    "lastEvent": "Skewb"
+  },
+  {
+    "id": "2010WUJI01",
+    "name": "Jiawen Wu (吴嘉文)",
+    "category": "Silver",
+    "categoryDate": "2014-01-12",
+    "lastEvent": "Skewb"
+  },
+  {
+    "id": "2008MAND01",
+    "name": "Nikhil Mande",
+    "category": "Silver",
+    "categoryDate": "2014-01-12",
+    "lastEvent": "Skewb"
+  },
+  {
+    "id": "2003POCH01",
+    "name": "Stefan Pochmann",
+    "category": "Bronze",
+    "categoryDate": "2014-01-19",
+    "lastEvent": "Skewb"
+  },
+  {
+    "id": "2011SAKO01",
+    "name": "Corey Sakowski",
+    "category": "Silver",
+    "categoryDate": "2014-02-01",
+    "lastEvent": "Skewb"
+  },
+  {
+    "id": "2005REYN01",
+    "name": "Tim Reynolds",
+    "category": "Silver",
+    "categoryDate": "2014-02-01",
+    "lastEvent": "Skewb"
+  },
+  {
+    "id": "2006BUUS01",
+    "name": "Henrik Buus Aagaard",
+    "category": "Silver",
+    "categoryDate": "2014-02-02",
+    "lastEvent": "Skewb"
+  },
+  {
+    "id": "2009OKAY01",
+    "name": "Tomoaki Okayama (岡山友昭)",
+    "category": "Silver",
+    "categoryDate": "2014-02-08",
+    "lastEvent": "Skewb"
+  },
+  {
+    "id": "2008TAKA01",
+    "name": "Yuhei Takagi (高木佑平)",
+    "category": "Silver",
+    "categoryDate": "2014-02-08",
+    "lastEvent": "Skewb"
+  },
+  {
+    "id": "2007SUNT01",
+    "name": "Timothy Sun",
+    "category": "Silver",
+    "categoryDate": "2014-02-15",
+    "lastEvent": "Skewb"
+  },
+  {
+    "id": "2008BARA01",
+    "name": "Bence Barát",
+    "category": "Silver",
+    "categoryDate": "2014-02-23",
+    "lastEvent": "Skewb"
+  },
+  {
+    "id": "2009YANG31",
+    "name": "Chung Tze Yang (鍾志扬)",
+    "category": "Silver",
+    "categoryDate": "2014-02-23",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2009DIEC01",
+    "name": "Cornelius Dieckmann",
+    "category": "Silver",
+    "categoryDate": "2014-02-23",
+    "lastEvent": "Skewb"
+  },
+  {
+    "id": "2009SHEP01",
+    "name": "Daniel Sheppard",
+    "category": "Silver",
+    "categoryDate": "2014-02-23",
+    "lastEvent": "Skewb"
+  },
+  {
+    "id": "2008OMYO01",
+    "name": "Sanae Yamashita (山下佐苗)",
+    "category": "Silver",
+    "categoryDate": "2014-02-23",
+    "lastEvent": "Skewb"
+  },
+  {
+    "id": "2007VUNI01",
+    "name": "Nick Vu",
+    "category": "Silver",
+    "categoryDate": "2014-03-01",
+    "lastEvent": "Skewb"
+  },
+  {
+    "id": "2011ZHAN24",
+    "name": "Chunyu Zhang (张春雨)",
+    "category": "Silver",
+    "categoryDate": "2014-03-02",
+    "lastEvent": "Skewb"
+  },
+  {
+    "id": "2010BENT01",
+    "name": "Jan Bentlage",
+    "category": "Palladium",
+    "categoryDate": "2014-03-23",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2009WHIT01",
+    "name": "Ben Whitmore",
+    "category": "Silver",
+    "categoryDate": "2014-04-06",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2011RHEI01",
+    "name": "Emanuel Rheinert",
+    "category": "Silver",
+    "categoryDate": "2014-04-06",
+    "lastEvent": "Clock"
+  },
+  {
+    "id": "2011KERN02",
+    "name": "Patrick Kern",
+    "category": "Silver",
+    "categoryDate": "2014-04-06",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2011QUEJ01",
+    "name": "Jianyu Que (阙剑宇)",
+    "category": "Silver",
+    "categoryDate": "2014-04-26",
+    "lastEvent": "Skewb"
+  },
+  {
+    "id": "2008ZHON01",
+    "name": "Qirun Zhong (钟奇润)",
+    "category": "Silver",
+    "categoryDate": "2014-05-02",
+    "lastEvent": "Skewb"
+  },
+  {
+    "id": "2008WEST02",
+    "name": "Simon Westlund",
+    "category": "Silver",
+    "categoryDate": "2014-05-04",
+    "lastEvent": "Skewb"
+  },
+  {
+    "id": "2012JEFF01",
+    "name": "Billy Jeffs",
+    "category": "Bronze",
+    "categoryDate": "2014-05-18",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2007WONG02",
+    "name": "Tim Wong",
+    "category": "Silver",
+    "categoryDate": "2014-05-18",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2012BILL01",
+    "name": "Gregor Billing",
+    "category": "Silver",
+    "categoryDate": "2014-06-08",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2012WESC01",
+    "name": "Lucas Wesche",
+    "category": "Silver",
+    "categoryDate": "2014-06-08",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2012ZABR01",
+    "name": "Ivan Zabrodin",
+    "category": "Silver",
+    "categoryDate": "2014-06-29",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2008ZHAN13",
+    "name": "Hong Zhang (张宏)",
+    "category": "Silver",
+    "categoryDate": "2014-07-06",
+    "lastEvent": "Skewb"
+  },
+  {
+    "id": "2012SEVE01",
+    "name": "Ainesh Sevellaraja",
+    "category": "Silver",
+    "categoryDate": "2014-07-20",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2012RUPE01",
+    "name": "Akash Rupela",
+    "category": "Silver",
+    "categoryDate": "2014-07-27",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2010CANT02",
+    "name": "Antoine Cantin",
+    "category": "Silver",
+    "categoryDate": "2014-08-03",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2013BROW04",
+    "name": "Evan Brown",
+    "category": "Silver",
+    "categoryDate": "2014-08-03",
+    "lastEvent": "3x3 Multi-Blind"
+  },
+  {
+    "id": "2007WOOR01",
+    "name": "Riley Woo",
+    "category": "Silver",
+    "categoryDate": "2014-08-03",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2011KOGL01",
+    "name": "Jakob Kogler",
+    "category": "Silver",
+    "categoryDate": "2014-08-10",
+    "lastEvent": "Skewb"
+  },
+  {
+    "id": "2007NAKA03",
+    "name": "Yu Nakajima (中島悠)",
+    "category": "Silver",
+    "categoryDate": "2014-08-10",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2008SHAN01",
+    "name": "Siva Shanmukh Vetcha",
+    "category": "Bronze",
+    "categoryDate": "2014-08-17",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2006LECK01",
+    "name": "Mimmi Leckius",
+    "category": "Bronze",
+    "categoryDate": "2014-09-21",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2011FRES01",
+    "name": "Linus Frész",
+    "category": "Silver",
+    "categoryDate": "2014-10-05",
+    "lastEvent": "Square-1"
+  },
+  {
+    "id": "2013CRON01",
+    "name": "Conor Cronin",
+    "category": "Silver",
+    "categoryDate": "2014-10-12",
+    "lastEvent": "Square-1"
+  },
+  {
+    "id": "2005HSUA01",
+    "name": "Anthony Hsu",
+    "category": "Silver",
+    "categoryDate": "2014-11-02",
+    "lastEvent": "Square-1"
+  },
+  {
+    "id": "2011MIKE01",
+    "name": "Brandon Mikel",
+    "category": "Silver",
+    "categoryDate": "2014-11-15",
+    "lastEvent": "7x7 Cube"
+  },
+  {
+    "id": "2008SMIT04",
+    "name": "Maarten Smit",
+    "category": "Silver",
+    "categoryDate": "2014-11-23",
+    "lastEvent": "Skewb"
+  },
+  {
+    "id": "2012KROK01",
+    "name": "Anton Krokhmal (Антон Крохмаль)",
+    "category": "Bronze",
+    "categoryDate": "2015-02-01",
+    "lastEvent": "6x6 Cube"
+  },
+  {
+    "id": "2009TIRA01",
+    "name": "Javier Tirado Ortiz",
+    "category": "Silver",
+    "categoryDate": "2015-02-22",
+    "lastEvent": "7x7 Cube"
+  },
+  {
+    "id": "2010SUGA01",
+    "name": "Sei Sugama (洲鎌星)",
+    "category": "Silver",
+    "categoryDate": "2015-03-29",
+    "lastEvent": "Square-1"
+  },
+  {
+    "id": "2006TABU02",
+    "name": "Yumu Tabuchi (田渕雄夢)",
+    "category": "Silver",
+    "categoryDate": "2015-03-29",
+    "lastEvent": "Skewb"
+  },
+  {
+    "id": "2012FROS01",
+    "name": "Oliver Frost",
+    "category": "Bronze",
+    "categoryDate": "2015-04-12",
+    "lastEvent": "Clock"
+  },
+  {
+    "id": "2010ZHAO11",
+    "name": "Jibo Zhao (赵吉波)",
+    "category": "Silver",
+    "categoryDate": "2015-05-03",
+    "lastEvent": "Skewb"
+  },
+  {
+    "id": "2010MATT02",
+    "name": "Kevin Matthews",
+    "category": "Silver",
+    "categoryDate": "2015-06-21",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2012WERB01",
+    "name": "Sebastian Werb",
+    "category": "Silver",
+    "categoryDate": "2015-07-05",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2008JONG03",
+    "name": "Jong-Ho Jeong (정종호)",
+    "category": "Silver",
+    "categoryDate": "2015-07-12",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2010KILD02",
+    "name": "Wilhelm Kilders",
+    "category": "Silver",
+    "categoryDate": "2015-08-02",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2008UENO01",
+    "name": "Shuto Ueno (上野柊斗)",
+    "category": "Silver",
+    "categoryDate": "2015-09-22",
+    "lastEvent": "Clock"
+  },
+  {
+    "id": "2011CHEC01",
+    "name": "Maxim Chechnev",
+    "category": "Silver",
+    "categoryDate": "2015-10-25",
+    "lastEvent": "7x7 Cube"
+  },
+  {
+    "id": "2011ANON06",
+    "name": "Anonymous",
+    "category": "Silver",
+    "categoryDate": "2015-11-01",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2013MUAT01",
+    "name": "Matěj Mužátko",
+    "category": "Silver",
+    "categoryDate": "2015-11-15",
+    "lastEvent": "4x4 Blindfolded"
+  },
+  {
+    "id": "2007OMUR01",
+    "name": "Shuhei Omura (大村周平)",
+    "category": "Silver",
+    "categoryDate": "2015-12-27",
+    "lastEvent": "Clock"
+  },
+  {
+    "id": "2010SHIX01",
+    "name": "Xin Shi (石欣)",
+    "category": "Silver",
+    "categoryDate": "2016-01-03",
+    "lastEvent": "7x7 Cube"
+  },
+  {
+    "id": "2014ZHAN11",
+    "name": "Yunke Zhang (张云柯)",
+    "category": "Silver",
+    "categoryDate": "2016-01-03",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2013TITO02",
+    "name": "Georgiy Titov (Георгій Тітов)",
+    "category": "Silver",
+    "categoryDate": "2016-01-10",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2012HAMA03",
+    "name": "Brock Hamann",
+    "category": "Silver",
+    "categoryDate": "2016-01-23",
+    "lastEvent": "Square-1"
+  },
+  {
+    "id": "2014NUNE05",
+    "name": "Rodrigo Pueblas Núñez",
+    "category": "Silver",
+    "categoryDate": "2016-02-28",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2012PLAC01",
+    "name": "Gianluca Placenti",
+    "category": "Bronze",
+    "categoryDate": "2016-03-12",
+    "lastEvent": "3x3 Fewest Moves"
+  },
+  {
+    "id": "2011LINB01",
+    "name": "Brandon Lin (林博浩)",
+    "category": "Silver",
+    "categoryDate": "2016-04-16",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2009SHEE01",
+    "name": "Matthew Sheerin",
+    "category": "Silver",
+    "categoryDate": "2016-05-01",
+    "lastEvent": "Clock"
+  },
+  {
+    "id": "2011CHAP01",
+    "name": "José Leonardo Chaparro Prieto",
+    "category": "Silver",
+    "categoryDate": "2016-05-09",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2012MCNE01",
+    "name": "Jayden McNeill",
+    "category": "Silver",
+    "categoryDate": "2016-05-22",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2015IVAN03",
+    "name": "Oleksandr Ivanchak (Олександр Іванчак)",
+    "category": "Silver",
+    "categoryDate": "2016-05-22",
+    "lastEvent": "7x7 Cube"
+  },
+  {
+    "id": "2013WEAV01",
+    "name": "Sydney Weaver",
+    "category": "Silver",
+    "categoryDate": "2016-06-05",
+    "lastEvent": "Square-1"
+  },
+  {
+    "id": "2007KRIS01",
+    "name": "Tomas Kristiansson",
+    "category": "Silver",
+    "categoryDate": "2016-06-19",
+    "lastEvent": "3x3 One-Handed"
+  },
+  {
+    "id": "2009COLO03",
+    "name": "Matteo Colombo",
+    "category": "Silver",
+    "categoryDate": "2016-07-31",
+    "lastEvent": "Square-1"
+  },
+  {
+    "id": "2008YOUN02",
+    "name": "Michael Young",
+    "category": "Silver",
+    "categoryDate": "2016-07-31",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2014GOSL01",
+    "name": "Raymond Goslow",
+    "category": "Silver",
+    "categoryDate": "2016-07-31",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2012GOOD02",
+    "name": "Callum James Goodyear-Jørgensen",
+    "category": "Silver",
+    "categoryDate": "2016-08-07",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2014GERB01",
+    "name": "Henri Gerber",
+    "category": "Silver",
+    "categoryDate": "2016-10-09",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2008OLLE01",
+    "name": "Alexander Olleta del Molino",
+    "category": "Silver",
+    "categoryDate": "2016-10-30",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2013SANT13",
+    "name": "Sergio Torrijos Santano",
+    "category": "Silver",
+    "categoryDate": "2016-10-30",
+    "lastEvent": "Square-1"
+  },
+  {
+    "id": "2008DONG06",
+    "name": "Baiqiang Dong (董百强)",
+    "category": "Silver",
+    "categoryDate": "2016-11-06",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2016FANG01",
+    "name": "Shenghai Fang (方胜海)",
+    "category": "Silver",
+    "categoryDate": "2016-11-27",
+    "lastEvent": "6x6 Cube"
+  },
+  {
+    "id": "2014SONG08",
+    "name": "Zian Song (宋子安)",
+    "category": "Silver",
+    "categoryDate": "2017-01-02",
+    "lastEvent": "3x3 Multi-Blind"
+  },
+  {
+    "id": "2008YUDA01",
+    "name": "Yu Da-Hyun (유다현)",
+    "category": "Silver",
+    "categoryDate": "2017-02-18",
+    "lastEvent": "3x3 Fewest Moves"
+  },
+  {
+    "id": "2014CHER05",
+    "name": "Clément Cherblanc",
+    "category": "Silver",
+    "categoryDate": "2017-03-05",
+    "lastEvent": "4x4 Blindfolded"
+  },
+  {
+    "id": "2014SCHO02",
+    "name": "Cale Schoon",
+    "category": "Platinum",
+    "categoryDate": "2017-03-18",
+    "lastEvent": "7x7 Cube"
+  },
+  {
+    "id": "2009XUAN03",
+    "name": "Yan Xuan (宣炎)",
+    "category": "Silver",
+    "categoryDate": "2017-03-19",
+    "lastEvent": "Skewb"
+  },
+  {
+    "id": "2010POSN02",
+    "name": "Jacob Posner",
+    "category": "Silver",
+    "categoryDate": "2017-03-25",
+    "lastEvent": "7x7 Cube"
+  },
+  {
+    "id": "2010MAOC01",
+    "name": "Can Mao (毛灿)",
+    "category": "Silver",
+    "categoryDate": "2017-03-26",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2009BAKK01",
+    "name": "Ivo Bakker",
+    "category": "Silver",
+    "categoryDate": "2017-04-09",
+    "lastEvent": "Skewb"
+  },
+  {
+    "id": "2014ESWA01",
+    "name": "Karthikeyan Eswaran",
+    "category": "Silver",
+    "categoryDate": "2017-04-09",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2016XIEY03",
+    "name": "Yikang Xie (谢轶康)",
+    "category": "Silver",
+    "categoryDate": "2017-05-21",
+    "lastEvent": "7x7 Cube"
+  },
+  {
+    "id": "2016BROD01",
+    "name": "Bernhard Brodowsky",
+    "category": "Silver",
+    "categoryDate": "2017-05-28",
+    "lastEvent": "7x7 Cube"
+  },
+  {
+    "id": "2013CABR01",
+    "name": "Christopher Cabrera",
+    "category": "Silver",
+    "categoryDate": "2017-06-04",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2008LEEF01",
+    "name": "Felix Lee",
+    "category": "Silver",
+    "categoryDate": "2017-06-25",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2015ZHAO07",
+    "name": "Xun Zhao (赵洵)",
+    "category": "Silver",
+    "categoryDate": "2017-06-25",
+    "lastEvent": "3x3 Multi-Blind"
+  },
+  {
+    "id": "2011GRIT01",
+    "name": "Oleg Gritsenko",
+    "category": "Gold",
+    "categoryDate": "2017-07-23",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2014PETE03",
+    "name": "Tobias Peter",
+    "category": "Silver",
+    "categoryDate": "2017-07-23",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2015OHHA01",
+    "name": "Ha Min Oh (오해민)",
+    "category": "Bronze",
+    "categoryDate": "2017-07-30",
+    "lastEvent": "Clock"
+  },
+  {
+    "id": "2014JOYO01",
+    "name": "Yong Hyeon Jo (조용현)",
+    "category": "Silver",
+    "categoryDate": "2017-07-30",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2009OLSO01",
+    "name": "Christopher Olson",
+    "category": "Silver",
+    "categoryDate": "2017-08-13",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2012YIND01",
+    "name": "Dongyun Yin (殷冬昀)",
+    "category": "Silver",
+    "categoryDate": "2017-08-20",
+    "lastEvent": "Square-1"
+  },
+  {
+    "id": "2013SAVA01",
+    "name": "Harry Savage",
+    "category": "Silver",
+    "categoryDate": "2017-08-27",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2015FEDE01",
+    "name": "Alexis Fedeler",
+    "category": "Silver",
+    "categoryDate": "2017-09-17",
+    "lastEvent": "Clock"
+  },
+  {
+    "id": "2010COOK01",
+    "name": "Tessa Cookmeyer",
+    "category": "Silver",
+    "categoryDate": "2017-09-17",
+    "lastEvent": "Skewb"
+  },
+  {
+    "id": "2014IRIA01",
+    "name": "Julen Simón Iriarte",
+    "category": "Silver",
+    "categoryDate": "2017-09-24",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2013EGDA01",
+    "name": "Daniel Vædele Egdal",
+    "category": "Silver",
+    "categoryDate": "2017-10-08",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2012MORM01",
+    "name": "Serhii Mormul (Сергій Мормуль)",
+    "category": "Silver",
+    "categoryDate": "2017-10-15",
+    "lastEvent": "Clock"
+  },
+  {
+    "id": "2014RENW01",
+    "name": "William Gan Wei Ren (颜伟仁)",
+    "category": "Silver",
+    "categoryDate": "2017-10-15",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2014DAYM01",
+    "name": "Max Day",
+    "category": "Silver",
+    "categoryDate": "2017-10-29",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2016WHEA01",
+    "name": "Oliver Wheat",
+    "category": "Silver",
+    "categoryDate": "2017-10-29",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2016DAVI02",
+    "name": "Ethan Davis",
+    "category": "Silver",
+    "categoryDate": "2017-12-02",
+    "lastEvent": "Clock"
+  },
+  {
+    "id": "2017CHEN36",
+    "name": "Xinyun Chen (陈新运)",
+    "category": "Silver",
+    "categoryDate": "2017-12-10",
+    "lastEvent": "4x4 Blindfolded"
+  },
+  {
+    "id": "2012LAHL01",
+    "name": "Fabian Löhle",
+    "category": "Silver",
+    "categoryDate": "2018-01-07",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2014BILG01",
+    "name": "Jason Bilgrei",
+    "category": "Silver",
+    "categoryDate": "2018-01-20",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2014BOYA01",
+    "name": "Mark Boyanowski",
+    "category": "Platinum",
+    "categoryDate": "2018-02-04",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2013HUBH01",
+    "name": "Hanns Hub",
+    "category": "Gold",
+    "categoryDate": "2018-02-11",
+    "lastEvent": "7x7 Cube"
+  },
+  {
+    "id": "2015JAEH01",
+    "name": "Konstantin Jaehne",
+    "category": "Silver",
+    "categoryDate": "2018-02-11",
+    "lastEvent": "7x7 Cube"
+  },
+  {
+    "id": "2015RIZZ02",
+    "name": "Luca Rizzi",
+    "category": "Silver",
+    "categoryDate": "2018-02-18",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2015DORN02",
+    "name": "Paris Dorn",
+    "category": "Silver",
+    "categoryDate": "2018-03-11",
+    "lastEvent": "3x3 Multi-Blind"
+  },
+  {
+    "id": "2013KOBA01",
+    "name": "Tomohiro Kobayashi (小林知広)",
+    "category": "Silver",
+    "categoryDate": "2018-04-01",
+    "lastEvent": "Clock"
+  },
+  {
+    "id": "2010YAMA04",
+    "name": "Yuki Yamamoto (山本祐輝)",
+    "category": "Silver",
+    "categoryDate": "2018-04-01",
+    "lastEvent": "Clock"
+  },
+  {
+    "id": "2016HARA02",
+    "name": "Knut Skaug Haraldsen",
+    "category": "Silver",
+    "categoryDate": "2018-04-08",
+    "lastEvent": "3x3 Multi-Blind"
+  },
+  {
+    "id": "2016KRUE01",
+    "name": "Ivan Krueger",
+    "category": "Silver",
+    "categoryDate": "2018-04-15",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2010AMBR01",
+    "name": "Jacob Ambrose",
+    "category": "Silver",
+    "categoryDate": "2018-04-29",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2011MOLL01",
+    "name": "James Molloy",
+    "category": "Silver",
+    "categoryDate": "2018-04-29",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2009ZHAN24",
+    "name": "Junhe Zhang (张钧鹤)",
+    "category": "Silver",
+    "categoryDate": "2018-05-01",
+    "lastEvent": "3x3 Multi-Blind"
+  },
+  {
+    "id": "2016DING05",
+    "name": "Tianping Ding (丁天平)",
+    "category": "Silver",
+    "categoryDate": "2018-05-01",
+    "lastEvent": "4x4 Blindfolded"
+  },
+  {
+    "id": "2015MUZO01",
+    "name": "Zongwen Mu (牟宗文)",
+    "category": "Silver",
+    "categoryDate": "2018-05-06",
+    "lastEvent": "4x4 Blindfolded"
+  },
+  {
+    "id": "2017NORR01",
+    "name": "Timo Norrkniivilä",
+    "category": "Silver",
+    "categoryDate": "2018-05-13",
+    "lastEvent": "7x7 Cube"
+  },
+  {
+    "id": "2016VOSO01",
+    "name": "Olivier Vos",
+    "category": "Silver",
+    "categoryDate": "2018-05-20",
+    "lastEvent": "7x7 Cube"
+  },
+  {
+    "id": "2016KLAS01",
+    "name": "Jake Klassen",
+    "category": "Bronze",
+    "categoryDate": "2018-05-26",
+    "lastEvent": "Skewb"
+  },
+  {
+    "id": "2015ROSE01",
+    "name": "Daniel Rose-Levine",
+    "category": "Silver",
+    "categoryDate": "2018-05-27",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2015SOAR01",
+    "name": "Nikhil Soares",
+    "category": "Silver",
+    "categoryDate": "2018-05-27",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2010WANG53",
+    "name": "Jiayu Wang (王佳宇)",
+    "category": "Silver",
+    "categoryDate": "2018-06-10",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2015DAIS01",
+    "name": "Shifei Dai (代时飞)",
+    "category": "Silver",
+    "categoryDate": "2018-06-30",
+    "lastEvent": "3x3 Fewest Moves"
+  },
+  {
+    "id": "2017YUZH03",
+    "name": "Yu Zhou (周煜)",
+    "category": "Silver",
+    "categoryDate": "2018-06-30",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2007YUNQ01",
+    "name": "Yunqi Ouyang (欧阳韵奇)",
+    "category": "Gold",
+    "categoryDate": "2018-06-30",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2008CLEM01",
+    "name": "Kit Clement",
+    "category": "Gold",
+    "categoryDate": "2018-07-15",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2012SUNL03",
+    "name": "Liudi Sun (孙柳笛)",
+    "category": "Silver",
+    "categoryDate": "2018-07-15",
+    "lastEvent": "4x4 Blindfolded"
+  },
+  {
+    "id": "2014MODA01",
+    "name": "Shantanu Modak",
+    "category": "Silver",
+    "categoryDate": "2018-07-15",
+    "lastEvent": "7x7 Cube"
+  },
+  {
+    "id": "2016XIZH01",
+    "name": "Zhifang Xi (席之枋)",
+    "category": "Silver",
+    "categoryDate": "2018-07-15",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2007MINH01",
+    "name": "Minhyun Kim (김민현)",
+    "category": "Silver",
+    "categoryDate": "2018-07-22",
+    "lastEvent": "Clock"
+  },
+  {
+    "id": "2014NIET03",
+    "name": "Oscar Nieto",
+    "category": "Silver",
+    "categoryDate": "2018-07-22",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2017ZHUX01",
+    "name": "Xiaoliang Zhu (朱校良)",
+    "category": "Silver",
+    "categoryDate": "2018-07-22",
+    "lastEvent": "3x3 Multi-Blind"
+  },
+  {
+    "id": "2014KOUL01",
+    "name": "Sukant Koul",
+    "category": "Gold",
+    "categoryDate": "2018-07-29",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2015VEER01",
+    "name": "Pranav Veera",
+    "category": "Silver",
+    "categoryDate": "2018-08-12",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2016WADA01",
+    "name": "Shunsuke Wada (和田俊輔)",
+    "category": "Silver",
+    "categoryDate": "2018-08-12",
+    "lastEvent": "Square-1"
+  },
+  {
+    "id": "2015TRAC01",
+    "name": "Madeline Trace",
+    "category": "Silver",
+    "categoryDate": "2018-08-19",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2016RIDL01",
+    "name": "Ben Ridley",
+    "category": "Silver",
+    "categoryDate": "2018-08-26",
+    "lastEvent": "Megaminx"
+  },
+  {
+    "id": "2013BRAT01",
+    "name": "Martin Brath",
+    "category": "Bronze",
+    "categoryDate": "2018-09-09",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2017LIMJ02",
+    "name": "Jaden Lim",
+    "category": "Silver",
+    "categoryDate": "2018-09-30",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2011LING02",
+    "name": "Rodson Lingad",
+    "category": "Silver",
+    "categoryDate": "2018-09-30",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2016WHIT16",
+    "name": "Jason White",
+    "category": "Gold",
+    "categoryDate": "2018-10-07",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2017PETE04",
+    "name": "Tripp Peters",
+    "category": "Silver",
+    "categoryDate": "2018-10-07",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2015KANY01",
+    "name": "Yikuan Kan (阚亦宽)",
+    "category": "Silver",
+    "categoryDate": "2018-10-13",
+    "lastEvent": "Square-1"
+  },
+  {
+    "id": "2013LOYK01",
+    "name": "Nikita Loika",
+    "category": "Silver",
+    "categoryDate": "2018-10-14",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2007HUGH01",
+    "name": "Mike Hughey",
+    "category": "Gold",
+    "categoryDate": "2018-10-21",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2014LONG06",
+    "name": "Bertie Longden",
+    "category": "Silver",
+    "categoryDate": "2018-10-28",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2013FRON01",
+    "name": "Martin Fronescu",
+    "category": "Silver",
+    "categoryDate": "2018-11-10",
+    "lastEvent": "4x4 Blindfolded"
+  },
+  {
+    "id": "2017PRES02",
+    "name": "Peter Preston",
+    "category": "Silver",
+    "categoryDate": "2018-11-10",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2013TANG07",
+    "name": "Feilong Tang (唐飞龙)",
+    "category": "Silver",
+    "categoryDate": "2018-11-11",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2018FANG10",
+    "name": "Weijie Fang (方伟杰)",
+    "category": "Silver",
+    "categoryDate": "2018-11-11",
+    "lastEvent": "4x4 Blindfolded"
+  },
+  {
+    "id": "2014TAOW01",
+    "name": "William Tao",
+    "category": "Silver",
+    "categoryDate": "2018-11-11",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2017BRYA06",
+    "name": "Aedan Bryant",
+    "category": "Silver",
+    "categoryDate": "2018-11-17",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2018LIUL05",
+    "name": "Lichao Liu (刘立超)",
+    "category": "Silver",
+    "categoryDate": "2018-11-25",
+    "lastEvent": "3x3 Blindfolded"
+  },
+  {
+    "id": "2016XUWE02",
+    "name": "Sora Wenjie Xu (徐文杰)",
+    "category": "Gold",
+    "categoryDate": "2018-11-25",
+    "lastEvent": "7x7 Cube"
+  },
+  {
+    "id": "2014CAIJ02",
+    "name": "Jack Cai",
+    "category": "Bronze",
+    "categoryDate": "2018-12-09",
+    "lastEvent": "6x6 Cube"
+  },
+  {
+    "id": "2011KNOT01",
+    "name": "Wojciech Knott",
+    "category": "Silver",
+    "categoryDate": "2018-12-09",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2017LOUY01",
+    "name": "Yunhao Lou (娄云皓)",
+    "category": "Silver",
+    "categoryDate": "2018-12-09",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2015CLAU02",
+    "name": "Carson Claud",
+    "category": "Silver",
+    "categoryDate": "2018-12-16",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2005AKKE01",
+    "name": "Erik Akkersdijk",
+    "category": "Silver",
+    "categoryDate": "2018-12-16",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2014MAUR06",
+    "name": "Lorenzo Mauro",
+    "category": "Silver",
+    "categoryDate": "2018-12-16",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2007POLI01",
+    "name": "Lorenzo Vigani Poli",
+    "category": "Silver",
+    "categoryDate": "2018-12-16",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2015CITT01",
+    "name": "Marco Edoardo Cittar",
+    "category": "Bronze",
+    "categoryDate": "2018-12-16",
+    "lastEvent": "7x7 Cube"
+  },
+  {
+    "id": "2006OOKU01",
+    "name": "Takayuki Ookusa (大艸尊之)",
+    "category": "Silver",
+    "categoryDate": "2018-12-23",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2015ARYA03",
+    "name": "Aniketh Arya",
+    "category": "Silver",
+    "categoryDate": "2018-12-30",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2014ENDO01",
+    "name": "Jolo Endona",
+    "category": "Silver",
+    "categoryDate": "2018-12-30",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2012STRA02",
+    "name": "Roman Strakhov",
+    "category": "Platinum",
+    "categoryDate": "2019-01-06",
+    "lastEvent": "Megaminx"
+  },
+  {
+    "id": "2016TAYL02",
+    "name": "Paul Taylor",
+    "category": "Silver",
+    "categoryDate": "2019-01-13",
+    "lastEvent": "Clock"
+  },
+  {
+    "id": "2015HAMM01",
+    "name": "Billie Hammill",
+    "category": "Silver",
+    "categoryDate": "2019-01-20",
+    "lastEvent": "3x3 Fewest Moves"
+  },
+  {
+    "id": "2015JUNV01",
+    "name": "Victor Tang Yao Jun (湯曜駿)",
+    "category": "Bronze",
+    "categoryDate": "2019-01-26",
+    "lastEvent": "Skewb"
+  },
+  {
+    "id": "2015XION03",
+    "name": "Max Xiong (熊锐明)",
+    "category": "Silver",
+    "categoryDate": "2019-02-03",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2017KOLI01",
+    "name": "Mohammed Aiman Koli",
+    "category": "Silver",
+    "categoryDate": "2019-02-03",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2009SIEW02",
+    "name": "Eason Siew Ee Son (蕭奕晨)",
+    "category": "Silver",
+    "categoryDate": "2019-02-10",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2013MINT01",
+    "name": "Deni Mintsaev",
+    "category": "Silver",
+    "categoryDate": "2019-02-17",
+    "lastEvent": "7x7 Cube"
+  },
+  {
+    "id": "2016CARL02",
+    "name": "Jérôme Carlier",
+    "category": "Silver",
+    "categoryDate": "2019-02-17",
+    "lastEvent": "Clock"
+  },
+  {
+    "id": "2010CHAN20",
+    "name": "Nevins Chan Pak Hoong (陈百鸿)",
+    "category": "Platinum",
+    "categoryDate": "2019-02-17",
+    "lastEvent": "Square-1"
+  },
+  {
+    "id": "2012GRAY01",
+    "name": "Enoch Gray",
+    "category": "Silver",
+    "categoryDate": "2019-03-10",
+    "lastEvent": "Clock"
+  },
+  {
+    "id": "2009LIUE01",
+    "name": "Evan Liu",
+    "category": "Palladium",
+    "categoryDate": "2019-03-10",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2016JOHN30",
+    "name": "Keenan Johnson",
+    "category": "Silver",
+    "categoryDate": "2019-03-10",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2018SHEN07",
+    "name": "Mengfei Shen (沈梦非)",
+    "category": "Gold",
+    "categoryDate": "2019-03-10",
+    "lastEvent": "Clock"
+  },
+  {
+    "id": "2016THOR08",
+    "name": "Elvin Thorsen",
+    "category": "Silver",
+    "categoryDate": "2019-03-17",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2016HOLZ01",
+    "name": "Laura Holzhauer",
+    "category": "Silver",
+    "categoryDate": "2019-03-17",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2016PRES04",
+    "name": "Matt Prestwich",
+    "category": "Silver",
+    "categoryDate": "2019-03-17",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2007OOBA01",
+    "name": "Kou Oobatake (大畠功)",
+    "category": "Silver",
+    "categoryDate": "2019-03-31",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2019GUOY04",
+    "name": "Yutao Guo (郭宇韬)",
+    "category": "Silver",
+    "categoryDate": "2019-04-07",
+    "lastEvent": "3x3 Multi-Blind"
+  },
+  {
+    "id": "2015MIKH04",
+    "name": "Farid Mikhailov",
+    "category": "Silver",
+    "categoryDate": "2019-04-14",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2016TIDS01",
+    "name": "Daniel Tidsey",
+    "category": "Silver",
+    "categoryDate": "2019-04-21",
+    "lastEvent": "7x7 Cube"
+  },
+  {
+    "id": "2016CHEJ04",
+    "name": "Jianxu Chen (陈建旭)",
+    "category": "Silver",
+    "categoryDate": "2019-04-21",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2016OCON02",
+    "name": "Lucas O'Connell",
+    "category": "Silver",
+    "categoryDate": "2019-04-21",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2017WANY29",
+    "name": "Yifan Wang (王逸帆)",
+    "category": "Gold",
+    "categoryDate": "2019-04-21",
+    "lastEvent": "4x4 Blindfolded"
+  },
+  {
+    "id": "2010HONG01",
+    "name": "Chi-Lun Hung (洪啟倫)",
+    "category": "Silver",
+    "categoryDate": "2019-04-28",
+    "lastEvent": "5x5 Cube"
+  },
+  {
+    "id": "2017AGGA01",
+    "name": "Sameer Aggarwal",
+    "category": "Silver",
+    "categoryDate": "2019-04-28",
+    "lastEvent": "3x3 Multi-Blind"
+  },
+  {
+    "id": "2012BUBE01",
+    "name": "Reto Bubendorf",
+    "category": "Silver",
+    "categoryDate": "2019-05-04",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2014BULU01",
+    "name": "Sergio Bulux",
+    "category": "Silver",
+    "categoryDate": "2019-05-19",
+    "lastEvent": "Square-1"
+  },
+  {
+    "id": "2018SOLN01",
+    "name": "Andrei Solntsev",
+    "category": "Bronze",
+    "categoryDate": "2019-05-26",
+    "lastEvent": "7x7 Cube"
+  },
+  {
+    "id": "2017MINA04",
+    "name": "Hannah Minas",
+    "category": "Silver",
+    "categoryDate": "2019-05-26",
+    "lastEvent": "4x4 Blindfolded"
+  },
+  {
+    "id": "2013WALL03",
+    "name": "Daniel Wallin",
+    "category": "Palladium",
+    "categoryDate": "2019-06-02",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2017XUAN03",
+    "name": "Shawn Lee Zhi Xuan (李致轩)",
+    "category": "Silver",
+    "categoryDate": "2019-06-16",
+    "lastEvent": "4x4 Blindfolded"
+  },
+  {
+    "id": "2017XIAO09",
+    "name": "Bowen Xiao (肖博文)",
+    "category": "Silver",
+    "categoryDate": "2019-06-23",
+    "lastEvent": "Megaminx"
+  },
+  {
+    "id": "2008SAMP01",
+    "name": "Bradley Sampson",
+    "category": "Silver",
+    "categoryDate": "2019-06-23",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2011ALVI01",
+    "name": "Wilson Alvis (陈智胜)",
+    "category": "Silver",
+    "categoryDate": "2019-06-24",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2013CONA01",
+    "name": "Michael Conard",
+    "category": "Silver",
+    "categoryDate": "2019-07-06",
+    "lastEvent": "6x6 Cube"
+  },
+  {
+    "id": "2015CAMP17",
+    "name": "Alexandre Henrique Afonso Campos",
+    "category": "Bronze",
+    "categoryDate": "2019-07-07",
+    "lastEvent": "7x7 Cube"
+  },
+  {
+    "id": "2016AQUI02",
+    "name": "Jose Polorhenzo Aquino",
+    "category": "Silver",
+    "categoryDate": "2019-07-07",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2016CHAP04",
+    "name": "Stanley Chapel",
+    "category": "Palladium",
+    "categoryDate": "2019-07-14",
+    "lastEvent": "4x4 Blindfolded"
+  },
+  {
+    "id": "2012HALE01",
+    "name": "Callum Hales-Jepp",
+    "category": "Gold",
+    "categoryDate": "2019-07-28",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2016CAST31",
+    "name": "Samuel Hernandez Castro",
+    "category": "Silver",
+    "categoryDate": "2019-07-28",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2016CARA04",
+    "name": "Kristian Gil Caragan",
+    "category": "Silver",
+    "categoryDate": "2019-08-04",
+    "lastEvent": "7x7 Cube"
+  },
+  {
+    "id": "2011WELC01",
+    "name": "Walker Welch",
+    "category": "Palladium",
+    "categoryDate": "2019-08-04",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2016MART29",
+    "name": "Artyom Martirosov",
+    "category": "Gold",
+    "categoryDate": "2019-08-11",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2016MOBE01",
+    "name": "Marcus Moberg",
+    "category": "Silver",
+    "categoryDate": "2019-08-11",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2011HAMI01",
+    "name": "Ahsanul Insan Hamid",
+    "category": "Silver",
+    "categoryDate": "2019-08-25",
+    "lastEvent": "6x6 Cube"
+  },
+  {
+    "id": "2017OPRE02",
+    "name": "Mara Oprea",
+    "category": "Silver",
+    "categoryDate": "2019-08-25",
+    "lastEvent": "Clock"
+  },
+  {
+    "id": "2015BELO03",
+    "name": "Will Belote",
+    "category": "Silver",
+    "categoryDate": "2019-08-31",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2015RIBI01",
+    "name": "Vilius Ribinskas",
+    "category": "Silver",
+    "categoryDate": "2019-09-15",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2016CHEH02",
+    "name": "Haoyang Chen (陈浩杨)",
+    "category": "Silver",
+    "categoryDate": "2019-11-03",
+    "lastEvent": "5x5 Cube"
+  },
+  {
+    "id": "2011FERA01",
+    "name": "Joshua Feran",
+    "category": "Gold",
+    "categoryDate": "2019-11-03",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2017OSOV01",
+    "name": "Ivan Osovik",
+    "category": "Silver",
+    "categoryDate": "2019-11-10",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2015GUNN01",
+    "name": "Jakob Gunnarsson",
+    "category": "Silver",
+    "categoryDate": "2019-11-17",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2015VOON01",
+    "name": "Liew Yee Voon (劉倚文)",
+    "category": "Silver",
+    "categoryDate": "2019-11-17",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2014HANJ02",
+    "name": "Jiachi Han (韩佳池)",
+    "category": "Gold",
+    "categoryDate": "2019-11-24",
+    "lastEvent": "7x7 Cube"
+  },
+  {
+    "id": "2014PRID01",
+    "name": "Ethan Pride",
+    "category": "Silver",
+    "categoryDate": "2019-12-01",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2015NICH04",
+    "name": "AJ Nicholls",
+    "category": "Silver",
+    "categoryDate": "2019-12-15",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2018LINB02",
+    "name": "Bo-Yu Lin (林柏佑)",
+    "category": "Silver",
+    "categoryDate": "2019-12-15",
+    "lastEvent": "3x3 Multi-Blind"
+  },
+  {
+    "id": "2015MATT05",
+    "name": "Enzo Mattos",
+    "category": "Silver",
+    "categoryDate": "2019-12-15",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2013NELS01",
+    "name": "Tom Nelson",
+    "category": "Platinum",
+    "categoryDate": "2019-12-15",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2018CREE01",
+    "name": "Kerry Creech",
+    "category": "Silver",
+    "categoryDate": "2019-12-22",
+    "lastEvent": "3x3 Multi-Blind"
+  },
+  {
+    "id": "2017SIAU02",
+    "name": "Max Siauw",
+    "category": "Platinum",
+    "categoryDate": "2019-12-28",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2017FENG10",
+    "name": "Hill Pong Yong Feng",
+    "category": "Platinum",
+    "categoryDate": "2019-12-29",
+    "lastEvent": "7x7 Cube"
+  },
+  {
+    "id": "2015QUAN03",
+    "name": "Ng Jia Quan (黄佳铨)",
+    "category": "Gold",
+    "categoryDate": "2019-12-29",
+    "lastEvent": "4x4 Blindfolded"
+  },
+  {
+    "id": "2017MEYS02",
+    "name": "Cedric Meysing",
+    "category": "Gold",
+    "categoryDate": "2020-01-05",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2008CASI01",
+    "name": "Gabriel Alejandro Orozco Casillas",
+    "category": "Platinum",
+    "categoryDate": "2020-02-09",
+    "lastEvent": "Square-1"
+  },
+  {
+    "id": "2015HUAN48",
+    "name": "Cary Huang",
+    "category": "Gold",
+    "categoryDate": "2020-03-14",
+    "lastEvent": "3x3 Fewest Moves"
+  },
+  {
+    "id": "2003HARD01",
+    "name": "Chris Hardwick",
+    "category": "Platinum",
+    "categoryDate": "2020-03-15",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2017PODZ01",
+    "name": "Modest Podzolkin",
+    "category": "Silver",
+    "categoryDate": "2020-08-16",
+    "lastEvent": "Square-1"
+  },
+  {
+    "id": "2013EGDA02",
+    "name": "Martin Vædele Egdal",
+    "category": "Palladium",
+    "categoryDate": "2020-09-06",
+    "lastEvent": "4x4 Blindfolded"
+  },
+  {
+    "id": "2015EWER01",
+    "name": "Helmer Ewert",
+    "category": "Palladium",
+    "categoryDate": "2020-09-27",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2016DURA09",
+    "name": "Paweł Duraj",
+    "category": "Gold",
+    "categoryDate": "2021-09-12",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2012NICO02",
+    "name": "Alessandro Nicolì",
+    "category": "Silver",
+    "categoryDate": "2021-11-01",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2018AHMA02",
+    "name": "Adam Ahmad",
+    "category": "Bronze",
+    "categoryDate": "2021-11-20",
+    "lastEvent": "6x6 Cube"
+  },
+  {
+    "id": "2015BROW03",
+    "name": "Elijah Brown",
+    "category": "Silver",
+    "categoryDate": "2021-11-28",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2016KELL10",
+    "name": "Adam Marcellus Kelly",
+    "category": "Silver",
+    "categoryDate": "2021-12-05",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2016QUIN01",
+    "name": "James Quinn",
+    "category": "Silver",
+    "categoryDate": "2022-01-15",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2018SPIL01",
+    "name": "Aaron Spiller",
+    "category": "Silver",
+    "categoryDate": "2022-01-23",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2016DEXT01",
+    "name": "Riley Dexter",
+    "category": "Silver",
+    "categoryDate": "2022-02-13",
+    "lastEvent": "4x4 Blindfolded"
+  },
+  {
+    "id": "2018AMSB02",
+    "name": "Stone Amsbaugh",
+    "category": "Silver",
+    "categoryDate": "2022-03-05",
+    "lastEvent": "3x3 Multi-Blind"
+  },
+  {
+    "id": "2017HUGH04",
+    "name": "Lennon Hughes",
+    "category": "Gold",
+    "categoryDate": "2022-03-06",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2016JENS09",
+    "name": "William Jensen",
+    "category": "Silver",
+    "categoryDate": "2022-03-06",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2009MCWI01",
+    "name": "Zachary McWilliams",
+    "category": "Bronze",
+    "categoryDate": "2022-03-12",
+    "lastEvent": "Clock"
+  },
+  {
+    "id": "2018KHAN26",
+    "name": "Hassan Khanani",
+    "category": "Silver",
+    "categoryDate": "2022-03-13",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2014ZARA01",
+    "name": "Rodrigo Zarate",
+    "category": "Silver",
+    "categoryDate": "2022-03-13",
+    "lastEvent": "Square-1"
+  },
+  {
+    "id": "2021TRIP01",
+    "name": "Michael Tripodi",
+    "category": "Gold",
+    "categoryDate": "2022-03-27",
+    "lastEvent": "4x4 Blindfolded"
+  },
+  {
+    "id": "2017RICH02",
+    "name": "Braden Richards",
+    "category": "Silver",
+    "categoryDate": "2022-04-16",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2018MADR02",
+    "name": "Maxime Madrzyk",
+    "category": "Silver",
+    "categoryDate": "2022-05-15",
+    "lastEvent": "7x7 Cube"
+  },
+  {
+    "id": "2012ACHA01",
+    "name": "Carlos Pedro Casado de Achával",
+    "category": "Silver",
+    "categoryDate": "2022-05-22",
+    "lastEvent": "Skewb"
+  },
+  {
+    "id": "2014GLYR01",
+    "name": "Victor Valentin Glyrskov",
+    "category": "Silver",
+    "categoryDate": "2022-05-28",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2016ZHEN09",
+    "name": "Ang Chin Zhen (洪靖程)",
+    "category": "Silver",
+    "categoryDate": "2022-06-04",
+    "lastEvent": "4x4 Blindfolded"
+  },
+  {
+    "id": "2005KOCZ01",
+    "name": "István Kocza",
+    "category": "Platinum",
+    "categoryDate": "2022-06-05",
+    "lastEvent": "7x7 Cube"
+  },
+  {
+    "id": "2017LEMB02",
+    "name": "Mikus Lembergs",
+    "category": "Silver",
+    "categoryDate": "2022-06-05",
+    "lastEvent": "7x7 Cube"
+  },
+  {
+    "id": "2013DIPI01",
+    "name": "Guido Dipietro",
+    "category": "Silver",
+    "categoryDate": "2022-06-11",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2017GUTM01",
+    "name": "Manuel Gutman",
+    "category": "Platinum",
+    "categoryDate": "2022-06-11",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2017CHAN47",
+    "name": "Vianne Chang",
+    "category": "Silver",
+    "categoryDate": "2022-06-11",
+    "lastEvent": "7x7 Cube"
+  },
+  {
+    "id": "2014SCHW02",
+    "name": "Fabio Schwandt",
+    "category": "Silver",
+    "categoryDate": "2022-06-12",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2019SMIT36",
+    "name": "Amy Smith",
+    "category": "Silver",
+    "categoryDate": "2022-06-19",
+    "lastEvent": "3x3 Multi-Blind"
+  },
+  {
+    "id": "2009ROTA01",
+    "name": "Marco Rota",
+    "category": "Silver",
+    "categoryDate": "2022-06-26",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2017LAWR04",
+    "name": "Timothy Lawrance",
+    "category": "Silver",
+    "categoryDate": "2022-07-03",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2020MOCO01",
+    "name": "Conan Mo",
+    "category": "Platinum",
+    "categoryDate": "2022-07-24",
+    "lastEvent": "4x4 Blindfolded"
+  },
+  {
+    "id": "2014WENW01",
+    "name": "Wong Chong Wen (黄崇文)",
+    "category": "Palladium",
+    "categoryDate": "2022-07-24",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2016DICK03",
+    "name": "Eng Dickson (黄迪胜)",
+    "category": "Silver",
+    "categoryDate": "2022-07-31",
+    "lastEvent": "Clock"
+  },
+  {
+    "id": "2015CHER07",
+    "name": "Tommy Cherry",
+    "category": "Platinum",
+    "categoryDate": "2022-07-31",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2018CONN04",
+    "name": "Edward Connell",
+    "category": "Bronze",
+    "categoryDate": "2022-08-07",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2017ASMU01",
+    "name": "Thor Muto Asmund",
+    "category": "Gold",
+    "categoryDate": "2022-08-07",
+    "lastEvent": "Square-1"
+  },
+  {
+    "id": "2014DETU01",
+    "name": "Eddy Deturche",
+    "category": "Gold",
+    "categoryDate": "2022-10-09",
+    "lastEvent": "4x4 Blindfolded"
+  },
+  {
+    "id": "2017DEBS01",
+    "name": "Adrian Dębski",
+    "category": "Platinum",
+    "categoryDate": "2022-10-16",
+    "lastEvent": "7x7 Cube"
+  },
+  {
+    "id": "2015KEAR01",
+    "name": "Steven Kearns",
+    "category": "Silver",
+    "categoryDate": "2022-10-16",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2017SASA03",
+    "name": "Akifumi Sasaki (佐々木彰史)",
+    "category": "Silver",
+    "categoryDate": "2022-10-22",
+    "lastEvent": "3x3 Fewest Moves"
+  },
+  {
+    "id": "2019SHEN10",
+    "name": "Jeremy Sheng",
+    "category": "Silver",
+    "categoryDate": "2022-10-22",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2017PARK05",
+    "name": "DongSoo Park (박동수)",
+    "category": "Silver",
+    "categoryDate": "2022-10-23",
+    "lastEvent": "3x3 Multi-Blind"
+  },
+  {
+    "id": "2019CUTT01",
+    "name": "Elizabeth Cutting",
+    "category": "Silver",
+    "categoryDate": "2022-11-05",
+    "lastEvent": "Clock"
+  },
+  {
+    "id": "2017AIPK01",
+    "name": "Igor Aipkin",
+    "category": "Silver",
+    "categoryDate": "2022-11-06",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2018GONZ30",
+    "name": "Julian Alejandro Forero Gonzalez",
+    "category": "Gold",
+    "categoryDate": "2022-11-07",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2015CECC01",
+    "name": "Vicenzo Guerino Cecchini",
+    "category": "Silver",
+    "categoryDate": "2022-11-20",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2016ACUN04",
+    "name": "Brian Acuña",
+    "category": "Silver",
+    "categoryDate": "2022-11-26",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2019RIED01",
+    "name": "Jan Riedl",
+    "category": "Silver",
+    "categoryDate": "2022-11-27",
+    "lastEvent": "7x7 Cube"
+  },
+  {
+    "id": "2017DUMM01",
+    "name": "Matteo Dummar",
+    "category": "Silver",
+    "categoryDate": "2022-11-27",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2019WAWR01",
+    "name": "Igor Wojciech Wawrzynski",
+    "category": "Silver",
+    "categoryDate": "2022-12-10",
+    "lastEvent": "7x7 Cube"
+  },
+  {
+    "id": "2013VASI02",
+    "name": "Vasile Dan",
+    "category": "Silver",
+    "categoryDate": "2022-12-10",
+    "lastEvent": "3x3 Fewest Moves"
+  },
+  {
+    "id": "2019BANG01",
+    "name": "Andrew Tan Jing Bang",
+    "category": "Silver",
+    "categoryDate": "2022-12-11",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2015SALO01",
+    "name": "Álvaro Aguilar Salobreña",
+    "category": "Gold",
+    "categoryDate": "2022-12-11",
+    "lastEvent": "7x7 Cube"
+  },
+  {
+    "id": "2016HUNG08",
+    "name": "Lim Hung (林弘)",
+    "category": "Silver",
+    "categoryDate": "2022-12-18",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2010UTOM01",
+    "name": "Vincent Hartanto Utomo",
+    "category": "Gold",
+    "categoryDate": "2022-12-18",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2016ZENK01",
+    "name": "Viktor Zenk",
+    "category": "Gold",
+    "categoryDate": "2022-12-29",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2016PRZY01",
+    "name": "Kamil Przybylski",
+    "category": "Platinum",
+    "categoryDate": "2022-12-31",
+    "lastEvent": "Megaminx"
+  },
+  {
+    "id": "2018RIAB01",
+    "name": "Yurii Riabov (Юрій Рябов)",
+    "category": "Silver",
+    "categoryDate": "2023-01-14",
+    "lastEvent": "7x7 Cube"
+  },
+  {
+    "id": "2017MAND13",
+    "name": "Francisco Moraes Mandalozzo",
+    "category": "Gold",
+    "categoryDate": "2023-01-22",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2016PFEI01",
+    "name": "Jack Pfeifer",
+    "category": "Silver",
+    "categoryDate": "2023-01-28",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2022SLOA01",
+    "name": "Jaye Sloan",
+    "category": "Silver",
+    "categoryDate": "2023-01-29",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2019ENGE02",
+    "name": "Achia Engel",
+    "category": "Silver",
+    "categoryDate": "2023-02-03",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2018SUNC02",
+    "name": "Chenhao Sun (孙晨皓)",
+    "category": "Silver",
+    "categoryDate": "2023-02-12",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2018FANG03",
+    "name": "Lichi Fang (方力驰)",
+    "category": "Silver",
+    "categoryDate": "2023-02-12",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2016JARM01",
+    "name": "Myles Jarman",
+    "category": "Silver",
+    "categoryDate": "2023-02-12",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2019ECKE02",
+    "name": "Ryan Eckersley",
+    "category": "Platinum",
+    "categoryDate": "2023-02-12",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2015WRIG07",
+    "name": "William Wright",
+    "category": "Silver",
+    "categoryDate": "2023-02-12",
+    "lastEvent": "Square-1"
+  },
+  {
+    "id": "2011YUBE01",
+    "name": "Ben Yu",
+    "category": "Silver",
+    "categoryDate": "2023-02-19",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2016CAST48",
+    "name": "Timothy Castle",
+    "category": "Silver",
+    "categoryDate": "2023-02-19",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2014WILD03",
+    "name": "Damian Wilding",
+    "category": "Silver",
+    "categoryDate": "2023-02-25",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2014KIMJ02",
+    "name": "Jungwoo Kim (김정우)",
+    "category": "Silver",
+    "categoryDate": "2023-02-25",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2018ZYNE01",
+    "name": "Arkadiusz Żynel",
+    "category": "Gold",
+    "categoryDate": "2023-02-26",
+    "lastEvent": "Skewb"
+  },
+  {
+    "id": "2016SALA18",
+    "name": "Mikołaj Salamon",
+    "category": "Silver",
+    "categoryDate": "2023-02-26",
+    "lastEvent": "7x7 Cube"
+  },
+  {
+    "id": "2018SCHW02",
+    "name": "Philippe Schwartz",
+    "category": "Silver",
+    "categoryDate": "2023-02-26",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2017OWEN01",
+    "name": "Harry Owen",
+    "category": "Silver",
+    "categoryDate": "2023-03-05",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2015MACK06",
+    "name": "Zeke Mackay",
+    "category": "Gold",
+    "categoryDate": "2023-03-05",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2021OTAI01",
+    "name": "Zakarya Otair",
+    "category": "Silver",
+    "categoryDate": "2023-03-11",
+    "lastEvent": "3x3 Fewest Moves"
+  },
+  {
+    "id": "2016RUCI01",
+    "name": "Marcel Ručigaj",
+    "category": "Silver",
+    "categoryDate": "2023-03-19",
+    "lastEvent": "Clock"
+  },
+  {
+    "id": "2019CAMP10",
+    "name": "Guilherme Santana Campos",
+    "category": "Bronze",
+    "categoryDate": "2023-03-25",
+    "lastEvent": "3x3 Fewest Moves"
+  },
+  {
+    "id": "2022SUIJ01",
+    "name": "Justin Sui",
+    "category": "Silver",
+    "categoryDate": "2023-03-25",
+    "lastEvent": "5x5 Cube"
+  },
+  {
+    "id": "2018WEYE01",
+    "name": "Peter Weyers",
+    "category": "Silver",
+    "categoryDate": "2023-03-25",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2019FONG04",
+    "name": "Ryan Fong",
+    "category": "Silver",
+    "categoryDate": "2023-03-25",
+    "lastEvent": "6x6 Cube"
+  },
+  {
+    "id": "2011BANS02",
+    "name": "Shivam Bansal",
+    "category": "Platinum",
+    "categoryDate": "2023-03-26",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2018TING05",
+    "name": "Ming Dao Ting",
+    "category": "Silver",
+    "categoryDate": "2023-04-02",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2018YUAN02",
+    "name": "Anqi Yu",
+    "category": "Silver",
+    "categoryDate": "2023-04-09",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2019WARE01",
+    "name": "Faiz Wareh",
+    "category": "Silver",
+    "categoryDate": "2023-04-09",
+    "lastEvent": "Square-1"
+  },
+  {
+    "id": "2019BORO03",
+    "name": "Šimon Borovský",
+    "category": "Silver",
+    "categoryDate": "2023-04-15",
+    "lastEvent": "4x4 Blindfolded"
+  },
+  {
+    "id": "2011REED01",
+    "name": "Austin Reed",
+    "category": "Silver",
+    "categoryDate": "2023-04-16",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2022WADH02",
+    "name": "Ashwyn Wadhawan",
+    "category": "Gold",
+    "categoryDate": "2023-04-30",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2022PART02",
+    "name": "Daniel Partridge",
+    "category": "Silver",
+    "categoryDate": "2023-04-30",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2015HIGH01",
+    "name": "Liam Highducheck",
+    "category": "Silver",
+    "categoryDate": "2023-04-30",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2018CAST08",
+    "name": "Oliver Castledine",
+    "category": "Silver",
+    "categoryDate": "2023-04-30",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2018BRUU01",
+    "name": "Jacob Oliver Bruun",
+    "category": "Silver",
+    "categoryDate": "2023-05-07",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2017CUES02",
+    "name": "Luis Fernando Aldás Cuestas",
+    "category": "Silver",
+    "categoryDate": "2023-05-07",
+    "lastEvent": "Clock"
+  },
+  {
+    "id": "2013DICK01",
+    "name": "Matthew Dickman",
+    "category": "Gold",
+    "categoryDate": "2023-05-21",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2012SEET01",
+    "name": "Nathan Seeto",
+    "category": "Bronze",
+    "categoryDate": "2023-05-21",
+    "lastEvent": "Megaminx"
+  },
+  {
+    "id": "2016MULL04",
+    "name": "Daniel Mullen",
+    "category": "Silver",
+    "categoryDate": "2023-05-27",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2021ZHUR04",
+    "name": "Diasbek Zhuraev (Диасбек Жураев)",
+    "category": "Silver",
+    "categoryDate": "2023-05-28",
+    "lastEvent": "3x3 Multi-Blind"
+  },
+  {
+    "id": "2021WALK02",
+    "name": "Mats Walker",
+    "category": "Silver",
+    "categoryDate": "2023-05-28",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2022YUSU01",
+    "name": "Bekzodjon Yusupov",
+    "category": "Bronze",
+    "categoryDate": "2023-06-04",
+    "lastEvent": "Square-1"
+  },
+  {
+    "id": "2021PRAS02",
+    "name": "Simon Praschl",
+    "category": "Silver",
+    "categoryDate": "2023-06-04",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2013LANG03",
+    "name": "Mason Langenderfer",
+    "category": "Gold",
+    "categoryDate": "2023-06-11",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2016PATT02",
+    "name": "Nicholas Patterson",
+    "category": "Silver",
+    "categoryDate": "2023-06-17",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2017SWAR03",
+    "name": "Dylan Swarts",
+    "category": "Silver",
+    "categoryDate": "2023-06-18",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2018JIME14",
+    "name": "Emilio Alberto Rodríguez Jiménez",
+    "category": "Silver",
+    "categoryDate": "2023-06-18",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2015GROB02",
+    "name": "Ruben Grobler",
+    "category": "Silver",
+    "categoryDate": "2023-06-18",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2017SUNC02",
+    "name": "Christopher Sun",
+    "category": "Gold",
+    "categoryDate": "2023-06-19",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2017TRAN25",
+    "name": "Celine Tran",
+    "category": "Silver",
+    "categoryDate": "2023-06-25",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2018TURR01",
+    "name": "Jacob Turrubiartes",
+    "category": "Silver",
+    "categoryDate": "2023-06-25",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2019MORE28",
+    "name": "Tommy Moreno",
+    "category": "Silver",
+    "categoryDate": "2023-06-25",
+    "lastEvent": "7x7 Cube"
+  },
+  {
+    "id": "2015BAKK01",
+    "name": "Brendan Bakker (貝庭笙)",
+    "category": "Bronze",
+    "categoryDate": "2023-06-30",
+    "lastEvent": "Square-1"
+  },
+  {
+    "id": "2016BAIR01",
+    "name": "Samuel Baird",
+    "category": "Silver",
+    "categoryDate": "2023-06-30",
+    "lastEvent": "Megaminx"
+  },
+  {
+    "id": "2020MADD02",
+    "name": "Jack Maddigan",
+    "category": "Silver",
+    "categoryDate": "2023-07-09",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2021HUGO01",
+    "name": "Peter Hugosson-Miller",
+    "category": "Silver",
+    "categoryDate": "2023-07-09",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2016BARO04",
+    "name": "Ben Baron",
+    "category": "Silver",
+    "categoryDate": "2023-07-14",
+    "lastEvent": "4x4 Blindfolded"
+  },
+  {
+    "id": "2021FOST01",
+    "name": "Jaxon Foster",
+    "category": "Silver",
+    "categoryDate": "2023-07-16",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2018BLOC01",
+    "name": "Jonathan Blöcher",
+    "category": "Gold",
+    "categoryDate": "2023-07-16",
+    "lastEvent": "3x3 Fewest Moves"
+  },
+  {
+    "id": "2021DAMM01",
+    "name": "Jonathan Dammann",
+    "category": "Silver",
+    "categoryDate": "2023-07-16",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2016MESZ01",
+    "name": "Luke Meszar",
+    "category": "Silver",
+    "categoryDate": "2023-07-16",
+    "lastEvent": "3x3 Multi-Blind"
+  },
+  {
+    "id": "2018FORS03",
+    "name": "Timo Forsthofer",
+    "category": "Silver",
+    "categoryDate": "2023-07-16",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2018MULL07",
+    "name": "Hannes Müller",
+    "category": "Silver",
+    "categoryDate": "2023-07-23",
+    "lastEvent": "Clock"
+  },
+  {
+    "id": "2016SIGG01",
+    "name": "Graham Siggins",
+    "category": "Platinum",
+    "categoryDate": "2023-07-30",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2018DEVE02",
+    "name": "Adam Devere",
+    "category": "Silver",
+    "categoryDate": "2023-08-06",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2019CSEN01",
+    "name": "Bálint Csengő",
+    "category": "Gold",
+    "categoryDate": "2023-08-06",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2015SANC18",
+    "name": "Josete Sánchez",
+    "category": "Gold",
+    "categoryDate": "2023-08-06",
+    "lastEvent": "4x4 Blindfolded"
+  },
+  {
+    "id": "2022HANT01",
+    "name": "Thiago Han",
+    "category": "Silver",
+    "categoryDate": "2023-08-20",
+    "lastEvent": "3x3 Fewest Moves"
+  },
+  {
+    "id": "2017MCNE01",
+    "name": "Dallas McNeil",
+    "category": "Silver",
+    "categoryDate": "2023-08-26",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2019HIRS01",
+    "name": "Ezra Hirschi",
+    "category": "Platinum",
+    "categoryDate": "2023-08-27",
+    "lastEvent": "3x3 Fewest Moves"
+  },
+  {
+    "id": "2019ARAU07",
+    "name": "Luan Gomes de Almeida Araújo",
+    "category": "Silver",
+    "categoryDate": "2023-08-27",
+    "lastEvent": "4x4 Blindfolded"
+  },
+  {
+    "id": "2019GUNT04",
+    "name": "Timo Günthardt",
+    "category": "Silver",
+    "categoryDate": "2023-08-27",
+    "lastEvent": "3x3 Multi-Blind"
+  },
+  {
+    "id": "2019HLAV02",
+    "name": "Adam Hlavín",
+    "category": "Silver",
+    "categoryDate": "2023-09-03",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2016AMBE02",
+    "name": "Dieter Amberger",
+    "category": "Gold",
+    "categoryDate": "2023-09-03",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2017GOLU01",
+    "name": "Theo Goluboff",
+    "category": "Silver",
+    "categoryDate": "2023-09-03",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2013SING12",
+    "name": "Abhimanyu Singhal (अभिमन्यु सिंघल)",
+    "category": "Silver",
+    "categoryDate": "2023-09-10",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2019GRIE05",
+    "name": "Jens Grieme",
+    "category": "Silver",
+    "categoryDate": "2023-09-10",
+    "lastEvent": "7x7 Cube"
+  },
+  {
+    "id": "2019KOBE03",
+    "name": "Elliott Kobelansky",
+    "category": "Platinum",
+    "categoryDate": "2023-09-17",
+    "lastEvent": "7x7 Cube"
+  },
+  {
+    "id": "2013GHOD01",
+    "name": "Abhijeet Ghodgaonkar (अभिजीत घोडगावकर)",
+    "category": "Gold",
+    "categoryDate": "2023-09-24",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2017MILL12",
+    "name": "Alistair Miller",
+    "category": "Silver",
+    "categoryDate": "2023-09-24",
+    "lastEvent": "Megaminx"
+  },
+  {
+    "id": "2019POUL02",
+    "name": "Brandon Poulton",
+    "category": "Silver",
+    "categoryDate": "2023-09-24",
+    "lastEvent": "3x3 Multi-Blind"
+  },
+  {
+    "id": "2018CENT02",
+    "name": "Giovanni Centili",
+    "category": "Silver",
+    "categoryDate": "2023-09-24",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2020GUAR01",
+    "name": "Marco Guarasci",
+    "category": "Silver",
+    "categoryDate": "2023-09-24",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2014PATT02",
+    "name": "Thomas Patterson",
+    "category": "Silver",
+    "categoryDate": "2023-09-24",
+    "lastEvent": "3x3 Multi-Blind"
+  },
+  {
+    "id": "2014JIAN10",
+    "name": "Leia Jiang",
+    "category": "Silver",
+    "categoryDate": "2023-10-01",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2014LEZA02",
+    "name": "Bruno Lezama",
+    "category": "Gold",
+    "categoryDate": "2023-10-08",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2022CAMP02",
+    "name": "Nicolas Campanario",
+    "category": "Silver",
+    "categoryDate": "2023-10-08",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2021LEBO01",
+    "name": "Maxence Leboeuf",
+    "category": "Silver",
+    "categoryDate": "2023-10-15",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2022MEEU02",
+    "name": "Jorian Meeuse",
+    "category": "Silver",
+    "categoryDate": "2023-10-22",
+    "lastEvent": "Clock"
+  },
+  {
+    "id": "2018VANS03",
+    "name": "Layne VanSiegel",
+    "category": "Silver",
+    "categoryDate": "2023-10-22",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2017KLOS01",
+    "name": "Willem Klose",
+    "category": "Gold",
+    "categoryDate": "2023-10-22",
+    "lastEvent": "4x4 Blindfolded"
+  },
+  {
+    "id": "2017SANT12",
+    "name": "Renan da Cunha Santos",
+    "category": "Silver",
+    "categoryDate": "2023-10-28",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2018DUTH01",
+    "name": "Manu Dutheil",
+    "category": "Silver",
+    "categoryDate": "2023-10-29",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2019IGNA02",
+    "name": "Alexandru Ignat",
+    "category": "Silver",
+    "categoryDate": "2023-11-05",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2021BLAK01",
+    "name": "Jonah Blakeley",
+    "category": "Silver",
+    "categoryDate": "2023-11-05",
+    "lastEvent": "4x4 Blindfolded"
+  },
+  {
+    "id": "2020DWOR01",
+    "name": "Kacper Paweł Dworak",
+    "category": "Gold",
+    "categoryDate": "2023-11-05",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2014ZAKR01",
+    "name": "Karol Zakrzewski",
+    "category": "Silver",
+    "categoryDate": "2023-11-05",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2022BROO02",
+    "name": "CJ Brooke",
+    "category": "Silver",
+    "categoryDate": "2023-11-11",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2016BRIJ01",
+    "name": "Abner Brijesh",
+    "category": "Gold",
+    "categoryDate": "2023-11-17",
+    "lastEvent": "Clock"
+  },
+  {
+    "id": "2016SOON01",
+    "name": "Jareth Soong Ying Rui (宋颖锐)",
+    "category": "Gold",
+    "categoryDate": "2023-11-19",
+    "lastEvent": "4x4 Blindfolded"
+  },
+  {
+    "id": "2015BART01",
+    "name": "Luboš Bartík",
+    "category": "Silver",
+    "categoryDate": "2023-11-19",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2017FONS04",
+    "name": "Jan Fonš",
+    "category": "Gold",
+    "categoryDate": "2023-11-26",
+    "lastEvent": "3x3 Fewest Moves"
+  },
+  {
+    "id": "2022STRA10",
+    "name": "Thomas Strasser",
+    "category": "Gold",
+    "categoryDate": "2023-11-26",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2017QUER02",
+    "name": "Aria Querubin",
+    "category": "Silver",
+    "categoryDate": "2023-11-27",
+    "lastEvent": "3x3 Multi-Blind"
+  },
+  {
+    "id": "2017OSTD02",
+    "name": "Jason Ostdiek",
+    "category": "Silver",
+    "categoryDate": "2023-11-27",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2023CHAI02",
+    "name": "Anawin Chaichana (อนาวิล ชัยชนะ)",
+    "category": "Silver",
+    "categoryDate": "2023-12-02",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2011MAHT02",
+    "name": "Natthaphat Mahtani (ณัฐภัทร จี มาทานี)",
+    "category": "Silver",
+    "categoryDate": "2023-12-02",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2023GAOJ02",
+    "name": "Joshua Gao",
+    "category": "Silver",
+    "categoryDate": "2023-12-03",
+    "lastEvent": "Pyraminx"
+  },
+  {
+    "id": "2018BIDW02",
+    "name": "Matthew Bidwell",
+    "category": "Silver",
+    "categoryDate": "2023-12-03",
+    "lastEvent": "3x3 Multi-Blind"
+  },
+  {
+    "id": "2018ADAM06",
+    "name": "Brayden Adams",
+    "category": "Silver",
+    "categoryDate": "2023-12-09",
+    "lastEvent": "3x3 Multi-Blind"
+  },
+  {
+    "id": "2013GOOD01",
+    "name": "Daniel Goodman",
+    "category": "Gold",
+    "categoryDate": "2023-12-09",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2013BOTZ01",
+    "name": "Alexander Botz",
+    "category": "Silver",
+    "categoryDate": "2023-12-10",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2019YANG94",
+    "name": "Cian-Jyun Yang (楊謙君)",
+    "category": "Silver",
+    "categoryDate": "2023-12-10",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2017LUND06",
+    "name": "Joel Lundström",
+    "category": "Silver",
+    "categoryDate": "2023-12-10",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2015WANG09",
+    "name": "Kai-Wen Wang (王楷文)",
+    "category": "Silver",
+    "categoryDate": "2023-12-10",
+    "lastEvent": "4x4 Blindfolded"
+  },
+  {
+    "id": "2016KRAF01",
+    "name": "Noah Kraft",
+    "category": "Gold",
+    "categoryDate": "2023-12-10",
+    "lastEvent": "4x4 Blindfolded"
+  },
+  {
+    "id": "2018AUBR01",
+    "name": "Étienne Aubry",
+    "category": "Silver",
+    "categoryDate": "2023-12-10",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2021BLAN02",
+    "name": "Jared Blanco",
+    "category": "Silver",
+    "categoryDate": "2023-12-16",
+    "lastEvent": "7x7 Cube"
+  },
+  {
+    "id": "2022GORL02",
+    "name": "Azaro Gorloo",
+    "category": "Silver",
+    "categoryDate": "2023-12-17",
+    "lastEvent": "4x4 Blindfolded"
+  },
+  {
+    "id": "2019STOU02",
+    "name": "Ivo Stoutjesdijk",
+    "category": "Silver",
+    "categoryDate": "2023-12-17",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2016HART02",
+    "name": "Sean Hartman",
+    "category": "Gold",
+    "categoryDate": "2023-12-17",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2017MART94",
+    "name": "Víctor Adán Solis Martinez",
+    "category": "Silver",
+    "categoryDate": "2023-12-17",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2023XUZI01",
+    "name": "Ziyi Xu (徐梓翼)",
+    "category": "Gold",
+    "categoryDate": "2023-12-17",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2019GIOR02",
+    "name": "Marco Giordano",
+    "category": "Silver",
+    "categoryDate": "2023-12-31",
+    "lastEvent": "3x3 Multi-Blind"
+  },
+  {
+    "id": "2018MCCA02",
+    "name": "Colm McCarthy",
+    "category": "Silver",
+    "categoryDate": "2024-01-06",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2022REID01",
+    "name": "Christopher Reid",
+    "category": "Bronze",
+    "categoryDate": "2024-01-07",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2007COMP01",
+    "name": "Emile Compion",
+    "category": "Silver",
+    "categoryDate": "2024-01-13",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2022HONG01",
+    "name": "Jinsol Hong",
+    "category": "Silver",
+    "categoryDate": "2024-01-21",
+    "lastEvent": "Square-1"
+  },
+  {
+    "id": "2008VIRO01",
+    "name": "Philippe Virouleau",
+    "category": "Silver",
+    "categoryDate": "2024-01-21",
+    "lastEvent": "3x3 One-Handed"
+  },
+  {
+    "id": "2012SILV22",
+    "name": "Israel Fraga da Silva",
+    "category": "Silver",
+    "categoryDate": "2024-01-28",
+    "lastEvent": "Clock"
+  },
+  {
+    "id": "2015BOLT01",
+    "name": "Matej Bolta",
+    "category": "Gold",
+    "categoryDate": "2024-01-28",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2022HELL03",
+    "name": "Håvard Elias Helland",
+    "category": "Silver",
+    "categoryDate": "2024-02-04",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2011GJER02",
+    "name": "Ole Nikolai Gjerset",
+    "category": "Silver",
+    "categoryDate": "2024-02-04",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2015KUCA01",
+    "name": "Carter Kucala",
+    "category": "Palladium",
+    "categoryDate": "2024-02-11",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2017MOLI05",
+    "name": "Samuel Moliver",
+    "category": "Silver",
+    "categoryDate": "2024-02-11",
+    "lastEvent": "7x7 Cube"
+  },
+  {
+    "id": "2016TARA04",
+    "name": "Igor Tarasov",
+    "category": "Silver",
+    "categoryDate": "2024-02-18",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2020BROW01",
+    "name": "Jake Brown",
+    "category": "Silver",
+    "categoryDate": "2024-02-18",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2014HOLU01",
+    "name": "Lev Golub (Лев Голуб)",
+    "category": "Silver",
+    "categoryDate": "2024-02-18",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2021HEIS01",
+    "name": "Jindřich Heissiger",
+    "category": "Silver",
+    "categoryDate": "2024-02-24",
+    "lastEvent": "Megaminx"
+  },
+  {
+    "id": "2021BRUD01",
+    "name": "Enzo Bruder-Jeannot",
+    "category": "Silver",
+    "categoryDate": "2024-02-25",
+    "lastEvent": "4x4 Blindfolded"
+  },
+  {
+    "id": "2022MACC01",
+    "name": "Evan Maccagnan",
+    "category": "Silver",
+    "categoryDate": "2024-02-25",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2016BENI05",
+    "name": "Jeremy Benik",
+    "category": "Gold",
+    "categoryDate": "2024-02-25",
+    "lastEvent": "4x4 Blindfolded"
+  },
+  {
+    "id": "2017LARS03",
+    "name": "Michael Larsen",
+    "category": "Silver",
+    "categoryDate": "2024-02-25",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2022HUHA01",
+    "name": "Haotian Hu (胡皓天)",
+    "category": "Bronze",
+    "categoryDate": "2024-03-03",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2020KARA01",
+    "name": "David Karalli (داود قراعلي)",
+    "category": "Silver",
+    "categoryDate": "2024-03-10",
+    "lastEvent": "6x6 Cube"
+  },
+  {
+    "id": "2023TOLL02",
+    "name": "Benton Tolley",
+    "category": "Bronze",
+    "categoryDate": "2024-03-16",
+    "lastEvent": "3x3 Fewest Moves"
+  },
+  {
+    "id": "2016JONE04",
+    "name": "Jode Brewster",
+    "category": "Silver",
+    "categoryDate": "2024-03-17",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2018CAST11",
+    "name": "Raúl Cuevas Castillo",
+    "category": "Silver",
+    "categoryDate": "2024-03-17",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2017ECHE04",
+    "name": "Alejandro Restrepo Echeverri",
+    "category": "Silver",
+    "categoryDate": "2024-03-23",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2015RAME01",
+    "name": "Zach Ramer",
+    "category": "Silver",
+    "categoryDate": "2024-03-23",
+    "lastEvent": "Megaminx"
+  },
+  {
+    "id": "2016JEON02",
+    "name": "Jaehyun Jeong (정재현)",
+    "category": "Gold",
+    "categoryDate": "2024-03-30",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2022WEIS03",
+    "name": "Yoad Yahalom Weiss",
+    "category": "Silver",
+    "categoryDate": "2024-04-05",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2015SETT01",
+    "name": "Fabian Settelen",
+    "category": "Gold",
+    "categoryDate": "2024-04-07",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2018ARNE04",
+    "name": "Davide Arnesano",
+    "category": "Silver",
+    "categoryDate": "2024-04-14",
+    "lastEvent": "4x4 Blindfolded"
+  },
+  {
+    "id": "2018ZHEN45",
+    "name": "Frederick Zheng",
+    "category": "Bronze",
+    "categoryDate": "2024-04-14",
+    "lastEvent": "3x3 Multi-Blind"
+  },
+  {
+    "id": "2014LALI01",
+    "name": "Ishaan Lal",
+    "category": "Silver",
+    "categoryDate": "2024-04-14",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2023LIUK02",
+    "name": "Kevin Liu",
+    "category": "Gold",
+    "categoryDate": "2024-04-14",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2017SRIV11",
+    "name": "Lakshmi Sai Srivatsa",
+    "category": "Silver",
+    "categoryDate": "2024-04-14",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2022GREC01",
+    "name": "Miles Greco",
+    "category": "Silver",
+    "categoryDate": "2024-04-14",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2021ELIA01",
+    "name": "Niklas Aasen Eliasson",
+    "category": "Platinum",
+    "categoryDate": "2024-04-14",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2015FAUG01",
+    "name": "Marike Faught",
+    "category": "Silver",
+    "categoryDate": "2024-04-21",
+    "lastEvent": "Clock"
+  },
+  {
+    "id": "2016PILA03",
+    "name": "Ryan Pilat",
+    "category": "Palladium",
+    "categoryDate": "2024-04-27",
+    "lastEvent": "4x4 Blindfolded"
+  },
+  {
+    "id": "2022CSON01",
+    "name": "János Csontos",
+    "category": "Gold",
+    "categoryDate": "2024-05-04",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2018GRAH05",
+    "name": "Kate Grahame",
+    "category": "Gold",
+    "categoryDate": "2024-05-04",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2018MACI02",
+    "name": "Logan Maciejewski",
+    "category": "Silver",
+    "categoryDate": "2024-05-04",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2014WHEE01",
+    "name": "Alexander Wheeler",
+    "category": "Silver",
+    "categoryDate": "2024-05-05",
+    "lastEvent": "3x3 Fewest Moves"
+  },
+  {
+    "id": "2023BARW01",
+    "name": "Wesley Barwinski",
+    "category": "Silver",
+    "categoryDate": "2024-05-11",
+    "lastEvent": "3x3 Fewest Moves"
+  },
+  {
+    "id": "2021SPIE01",
+    "name": "Achim Spies",
+    "category": "Silver",
+    "categoryDate": "2024-05-12",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2018HAUB01",
+    "name": "Alex Hauben",
+    "category": "Silver",
+    "categoryDate": "2024-05-12",
+    "lastEvent": "Skewb"
+  },
+  {
+    "id": "2021SREC01",
+    "name": "Jakov Srečković",
+    "category": "Silver",
+    "categoryDate": "2024-05-12",
+    "lastEvent": "7x7 Cube"
+  },
+  {
+    "id": "2022CARP05",
+    "name": "Owl Carpenter",
+    "category": "Silver",
+    "categoryDate": "2024-05-12",
+    "lastEvent": "3x3 Multi-Blind"
+  },
+  {
+    "id": "2021LOFT01",
+    "name": "Enda Loftus",
+    "category": "Silver",
+    "categoryDate": "2024-05-19",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2022RICH02",
+    "name": "Oliver Richards",
+    "category": "Silver",
+    "categoryDate": "2024-05-19",
+    "lastEvent": "3x3 Multi-Blind"
+  },
+  {
+    "id": "2019WANZ21",
+    "name": "Zhe Wang (王哲)",
+    "category": "Gold",
+    "categoryDate": "2024-06-01",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2022WANG06",
+    "name": "Daniel Wang",
+    "category": "Silver",
+    "categoryDate": "2024-06-02",
+    "lastEvent": "3x3 Fewest Moves"
+  },
+  {
+    "id": "2017KELL08",
+    "name": "Simon Kelly",
+    "category": "Silver",
+    "categoryDate": "2024-06-02",
+    "lastEvent": "Megaminx"
+  },
+  {
+    "id": "2019YEUN01",
+    "name": "Alvin Cheng Hiu Yeung (鄭曉洋)",
+    "category": "Silver",
+    "categoryDate": "2024-06-03",
+    "lastEvent": "3x3 One-Handed"
+  },
+  {
+    "id": "2022WIJE01",
+    "name": "Hirosh Nividu",
+    "category": "Silver",
+    "categoryDate": "2024-06-09",
+    "lastEvent": "4x4 Blindfolded"
+  },
+  {
+    "id": "2015ROBI04",
+    "name": "Tyler Robinson",
+    "category": "Silver",
+    "categoryDate": "2024-06-09",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2022MELE01",
+    "name": "Angelo Melera",
+    "category": "Gold",
+    "categoryDate": "2024-06-16",
+    "lastEvent": "Clock"
+  },
+  {
+    "id": "2020SCHL01",
+    "name": "Katharina Schlomberg",
+    "category": "Gold",
+    "categoryDate": "2024-06-16",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2017CAST41",
+    "name": "Raymos Castillo",
+    "category": "Gold",
+    "categoryDate": "2024-06-22",
+    "lastEvent": "4x4 Blindfolded"
+  },
+  {
+    "id": "2019VILL03",
+    "name": "Brandon Villadolid",
+    "category": "Silver",
+    "categoryDate": "2024-06-23",
+    "lastEvent": "3x3 Multi-Blind"
+  },
+  {
+    "id": "2022ROSE07",
+    "name": "Tyler Rose",
+    "category": "Silver",
+    "categoryDate": "2024-06-28",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2022WILL06",
+    "name": "Gabriel Williams V",
+    "category": "Silver",
+    "categoryDate": "2024-06-30",
+    "lastEvent": "6x6 Cube"
+  },
+  {
+    "id": "2020BERM02",
+    "name": "Adam Bermingham",
+    "category": "Silver",
+    "categoryDate": "2024-07-07",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2020BURN06",
+    "name": "Luke Burns",
+    "category": "Silver",
+    "categoryDate": "2024-07-07",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2016MORA24",
+    "name": "Sean Moran",
+    "category": "Silver",
+    "categoryDate": "2024-07-07",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2023WILL26",
+    "name": "Felix Williams",
+    "category": "Silver",
+    "categoryDate": "2024-07-14",
+    "lastEvent": "6x6 Cube"
+  },
+  {
+    "id": "2017CHEN16",
+    "name": "Li Chengyu",
+    "category": "Silver",
+    "categoryDate": "2024-07-14",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2024ALHA03",
+    "name": "Khaled Al-Hathlool (خالد الهذلول)",
+    "category": "Silver",
+    "categoryDate": "2024-07-19",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2023FROH01",
+    "name": "Martin Fröhlich",
+    "category": "Silver",
+    "categoryDate": "2024-07-21",
+    "lastEvent": "Square-1"
+  },
+  {
+    "id": "2022PURS01",
+    "name": "Maxim Pürstinger",
+    "category": "Silver",
+    "categoryDate": "2024-07-21",
+    "lastEvent": "7x7 Cube"
+  },
+  {
+    "id": "2017TIMM01",
+    "name": "Ben Timmons",
+    "category": "Silver",
+    "categoryDate": "2024-08-03",
+    "lastEvent": "4x4 Blindfolded"
+  },
+  {
+    "id": "2021BUTE03",
+    "name": "Alex Butera",
+    "category": "Silver",
+    "categoryDate": "2024-08-04",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2012LAUR02",
+    "name": "Anthony Lauro",
+    "category": "Bronze",
+    "categoryDate": "2024-08-04",
+    "lastEvent": "Clock"
+  },
+  {
+    "id": "2016PERS01",
+    "name": "Ordway Persyn",
+    "category": "Silver",
+    "categoryDate": "2024-08-04",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2012IONE01",
+    "name": "Andrei Răzvan Ionel",
+    "category": "Gold",
+    "categoryDate": "2024-08-10",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2023DANG01",
+    "name": "Nhâm Nguyễn Hải Đăng",
+    "category": "Bronze",
+    "categoryDate": "2024-08-10",
+    "lastEvent": "3x3 Multi-Blind"
+  },
+  {
+    "id": "2017TRAN21",
+    "name": "Kenneth Tran",
+    "category": "Silver",
+    "categoryDate": "2024-08-11",
+    "lastEvent": "4x4 Blindfolded"
+  },
+  {
+    "id": "2022ESWA01",
+    "name": "Komahal Eswaran",
+    "category": "Silver",
+    "categoryDate": "2024-08-11",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2022NIEL06",
+    "name": "Marius Bergo Nielsen",
+    "category": "Silver",
+    "categoryDate": "2024-08-11",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2022RIPO01",
+    "name": "Riccardo Ripoldi",
+    "category": "Bronze",
+    "categoryDate": "2024-08-11",
+    "lastEvent": "3x3 Fewest Moves"
+  },
+  {
+    "id": "2013ZHAN41",
+    "name": "Lanshi Zhang (张岚石)",
+    "category": "Silver",
+    "categoryDate": "2024-08-17",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2019SUNY09",
+    "name": "Yuhang Sun (孙煜航)",
+    "category": "Silver",
+    "categoryDate": "2024-08-17",
+    "lastEvent": "3x3 Multi-Blind"
+  },
+  {
+    "id": "2022MUNT02",
+    "name": "Eskil Munthe",
+    "category": "Silver",
+    "categoryDate": "2024-08-18",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2018BOND06",
+    "name": "Lage Bonde",
+    "category": "Silver",
+    "categoryDate": "2024-08-18",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2015VANL01",
+    "name": "Luke Van Laningham",
+    "category": "Silver",
+    "categoryDate": "2024-08-18",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2021DIMP01",
+    "name": "Simon Dimpker",
+    "category": "Silver",
+    "categoryDate": "2024-08-18",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2019BENG02",
+    "name": "Liav Bengayev",
+    "category": "Bronze",
+    "categoryDate": "2024-08-21",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2022SHIM03",
+    "name": "Yedidya Nisim Shimoni",
+    "category": "Silver",
+    "categoryDate": "2024-08-21",
+    "lastEvent": "Clock"
+  },
+  {
+    "id": "2016HORV04",
+    "name": "Mihály Horváth",
+    "category": "Gold",
+    "categoryDate": "2024-08-24",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2016RUIZ05",
+    "name": "Iker Carrasco Ruiz",
+    "category": "Bronze",
+    "categoryDate": "2024-08-25",
+    "lastEvent": "3x3 Fewest Moves"
+  },
+  {
+    "id": "2013ZIRN01",
+    "name": "Jānis Zirnis",
+    "category": "Silver",
+    "categoryDate": "2024-08-25",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2014MARQ02",
+    "name": "Marlon de V. Marques",
+    "category": "Silver",
+    "categoryDate": "2024-08-25",
+    "lastEvent": "7x7 Cube"
+  },
+  {
+    "id": "2008BERG04",
+    "name": "Mats Bergsten",
+    "category": "Bronze",
+    "categoryDate": "2024-08-27",
+    "lastEvent": "Pyraminx"
+  },
+  {
+    "id": "2018ZHAH02",
+    "name": "Hongjie Zhang (张鸿杰)",
+    "category": "Bronze",
+    "categoryDate": "2024-08-31",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2017XUYO01",
+    "name": "Yonghao Xu (徐永浩)",
+    "category": "Gold",
+    "categoryDate": "2024-08-31",
+    "lastEvent": "4x4 Blindfolded"
+  },
+  {
+    "id": "2014GOME07",
+    "name": "António Gomes",
+    "category": "Silver",
+    "categoryDate": "2024-09-01",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2018WILS11",
+    "name": "Currin Wilson",
+    "category": "Silver",
+    "categoryDate": "2024-09-01",
+    "lastEvent": "7x7 Cube"
+  },
+  {
+    "id": "2019HOIN01",
+    "name": "Preston Hoing",
+    "category": "Silver",
+    "categoryDate": "2024-09-01",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2018PARA15",
+    "name": "Richard Anthony Parada",
+    "category": "Bronze",
+    "categoryDate": "2024-09-01",
+    "lastEvent": "Square-1"
+  },
+  {
+    "id": "2023SAND02",
+    "name": "Mark Sander",
+    "category": "Silver",
+    "categoryDate": "2024-09-06",
+    "lastEvent": "3x3 Multi-Blind"
+  },
+  {
+    "id": "2019RIBE11",
+    "name": "Bárbara Guerra",
+    "category": "Silver",
+    "categoryDate": "2024-09-07",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2018TANJ05",
+    "name": "Jacob Miko Tan (陈在元)",
+    "category": "Silver",
+    "categoryDate": "2024-09-14",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2007SHIR01",
+    "name": "Takuma Shirahase (白波瀬拓磨)",
+    "category": "Gold",
+    "categoryDate": "2024-09-14",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2015YOSH01",
+    "name": "Yuji Yoshida",
+    "category": "Silver",
+    "categoryDate": "2024-09-14",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2021LAMP01",
+    "name": "Elias Lampert",
+    "category": "Gold",
+    "categoryDate": "2024-09-15",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2018YART01",
+    "name": "Mykhailo Yartsun (Михайло Ярцун)",
+    "category": "Silver",
+    "categoryDate": "2024-09-15",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2017SOLE01",
+    "name": "Aaron Soley",
+    "category": "Gold",
+    "categoryDate": "2024-09-21",
+    "lastEvent": "4x4 Blindfolded"
+  },
+  {
+    "id": "2018AKAM01",
+    "name": "David Akamine",
+    "category": "Silver",
+    "categoryDate": "2024-09-22",
+    "lastEvent": "7x7 Cube"
+  },
+  {
+    "id": "2017KIRA01",
+    "name": "Kalyani H. Kiran",
+    "category": "Silver",
+    "categoryDate": "2024-09-22",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2018SACH03",
+    "name": "Christian Sachgau",
+    "category": "Silver",
+    "categoryDate": "2024-09-29",
+    "lastEvent": "Megaminx"
+  },
+  {
+    "id": "2020TONG02",
+    "name": "Draco Tong",
+    "category": "Gold",
+    "categoryDate": "2024-09-29",
+    "lastEvent": "5x5 Cube"
+  },
+  {
+    "id": "2022BERN01",
+    "name": "Beatriz Hernandes Bernardes",
+    "category": "Silver",
+    "categoryDate": "2024-10-05",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2022BLAC01",
+    "name": "Adam Black",
+    "category": "Silver",
+    "categoryDate": "2024-10-12",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2015FUSH01",
+    "name": "Firstian Fushada (符逢城)",
+    "category": "Palladium",
+    "categoryDate": "2024-10-13",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2014BACC01",
+    "name": "Gabriele Bacchieri",
+    "category": "Silver",
+    "categoryDate": "2024-10-13",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2018LINH02",
+    "name": "Hans Lin",
+    "category": "Silver",
+    "categoryDate": "2024-10-13",
+    "lastEvent": "7x7 Cube"
+  },
+  {
+    "id": "2021LIJI02",
+    "name": "Jinge Li (李金戈)",
+    "category": "Silver",
+    "categoryDate": "2024-10-13",
+    "lastEvent": "7x7 Cube"
+  },
+  {
+    "id": "2014GARC27",
+    "name": "Arthur Garcin",
+    "category": "Gold",
+    "categoryDate": "2024-10-20",
+    "lastEvent": "Square-1"
+  },
+  {
+    "id": "2017HARR08",
+    "name": "Charlie Harrison",
+    "category": "Silver",
+    "categoryDate": "2024-10-20",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2022RUIZ03",
+    "name": "Felipe Santamaría Ruiz",
+    "category": "Bronze",
+    "categoryDate": "2024-10-20",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2018XIEB01",
+    "name": "Bowen Xie",
+    "category": "Silver",
+    "categoryDate": "2024-10-26",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2017BACH09",
+    "name": "Gaurav Bachani",
+    "category": "Silver",
+    "categoryDate": "2024-10-27",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2017KUMA30",
+    "name": "Sukesh Kumar",
+    "category": "Gold",
+    "categoryDate": "2024-10-27",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2022THOM14",
+    "name": "Brayden Thompson",
+    "category": "Silver",
+    "categoryDate": "2024-11-03",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2022SELL05",
+    "name": "Luke Selle",
+    "category": "Silver",
+    "categoryDate": "2024-11-03",
+    "lastEvent": "3x3 Fewest Moves"
+  },
+  {
+    "id": "2022ALEU01",
+    "name": "Ot Caminals Aleu",
+    "category": "Silver",
+    "categoryDate": "2024-11-03",
+    "lastEvent": "3x3 Multi-Blind"
+  },
+  {
+    "id": "2007GOHO01",
+    "name": "Choi Goho (최고호)",
+    "category": "Silver",
+    "categoryDate": "2024-11-09",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2017CHOI07",
+    "name": "Kyeongmin Choi (최경민)",
+    "category": "Gold",
+    "categoryDate": "2024-11-09",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2016PARK10",
+    "name": "Yeon Kyun Park (박연균)",
+    "category": "Gold",
+    "categoryDate": "2024-11-09",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2011SBAH01",
+    "name": "Rami Sbahi",
+    "category": "Silver",
+    "categoryDate": "2024-11-10",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2016KOND04",
+    "name": "Bernabe Kondrak",
+    "category": "Silver",
+    "categoryDate": "2024-11-16",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2020MALI02",
+    "name": "Numair Malik",
+    "category": "Bronze",
+    "categoryDate": "2024-11-16",
+    "lastEvent": "3x3 Multi-Blind"
+  },
+  {
+    "id": "2007HESS01",
+    "name": "Rowe Hessler",
+    "category": "Platinum",
+    "categoryDate": "2024-11-16",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2015BERG10",
+    "name": "Ben Bergen",
+    "category": "Silver",
+    "categoryDate": "2024-11-17",
+    "lastEvent": "7x7 Cube"
+  },
+  {
+    "id": "2018STOK01",
+    "name": "Ben Stokes",
+    "category": "Silver",
+    "categoryDate": "2024-11-17",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2017CHAM09",
+    "name": "Cham J. Chambers",
+    "category": "Silver",
+    "categoryDate": "2024-11-17",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2022STRE03",
+    "name": "Jáchym Střelec",
+    "category": "Gold",
+    "categoryDate": "2024-11-17",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2014YUNO01",
+    "name": "Lucas Ichiro Yunomae",
+    "category": "Silver",
+    "categoryDate": "2024-11-17",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2018SAMK01",
+    "name": "Max Kwok U Sam (郭愉琛)",
+    "category": "Silver",
+    "categoryDate": "2024-11-17",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2017VILL30",
+    "name": "Carlos Villanueva",
+    "category": "Silver",
+    "categoryDate": "2024-11-18",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2014SALA15",
+    "name": "Luis Sinhue Medina Salas",
+    "category": "Silver",
+    "categoryDate": "2024-11-18",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2017RAKS01",
+    "name": "Aris Raksamani (อริศม์ รักษมณี)",
+    "category": "Silver",
+    "categoryDate": "2024-11-23",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2015RUSN01",
+    "name": "Ethan Rusnak",
+    "category": "Silver",
+    "categoryDate": "2024-11-23",
+    "lastEvent": "3x3 Fewest Moves"
+  },
+  {
+    "id": "2023ABAR02",
+    "name": "Karl Liam L. Abarquez",
+    "category": "Silver",
+    "categoryDate": "2024-11-24",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2016LEON04",
+    "name": "Moisés Alberto Rojas León",
+    "category": "Bronze",
+    "categoryDate": "2024-11-24",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2022BENS01",
+    "name": "Nathan Benson",
+    "category": "Gold",
+    "categoryDate": "2024-11-24",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2014LOPE04",
+    "name": "Antonio López",
+    "category": "Silver",
+    "categoryDate": "2024-12-01",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2015RAMI14",
+    "name": "Samuel Cuellar Ramirez",
+    "category": "Bronze",
+    "categoryDate": "2024-12-01",
+    "lastEvent": "4x4 Blindfolded"
+  },
+  {
+    "id": "2023LOPE09",
+    "name": "Jordi Lleixà López",
+    "category": "Gold",
+    "categoryDate": "2024-12-07",
+    "lastEvent": "7x7 Cube"
+  },
+  {
+    "id": "2021YAMA01",
+    "name": "Kai Yamamoto (山本快)",
+    "category": "Silver",
+    "categoryDate": "2024-12-07",
+    "lastEvent": "2x2 Cube"
+  },
+  {
+    "id": "2014FRIT02",
+    "name": "Oliver Fritz",
+    "category": "Gold",
+    "categoryDate": "2024-12-07",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2007YOUN04",
+    "name": "Ko Youngjin (고영진)",
+    "category": "Gold",
+    "categoryDate": "2024-12-08",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2018WROT01",
+    "name": "Brayden Wroten",
+    "category": "Gold",
+    "categoryDate": "2024-12-14",
+    "lastEvent": "4x4 Blindfolded"
+  },
+  {
+    "id": "2022WINT09",
+    "name": "Daniel Winterberg",
+    "category": "Silver",
+    "categoryDate": "2024-12-14",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2016CHAN25",
+    "name": "Theodore Chan",
+    "category": "Gold",
+    "categoryDate": "2024-12-14",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2016HOUG01",
+    "name": "Levin Houghton",
+    "category": "Silver",
+    "categoryDate": "2024-12-15",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2023KLYM02",
+    "name": "Valerii Klymenko",
+    "category": "Silver",
+    "categoryDate": "2024-12-15",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2018NOCI01",
+    "name": "Marcos Plaza Nocito",
+    "category": "Silver",
+    "categoryDate": "2024-12-28",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2016MAIT02",
+    "name": "Joey Mait",
+    "category": "Silver",
+    "categoryDate": "2024-12-29",
+    "lastEvent": "7x7 Cube"
+  },
+  {
+    "id": "2017GARR05",
+    "name": "Luke Garrett",
+    "category": "Palladium",
+    "categoryDate": "2024-12-29",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2022VRAB01",
+    "name": "Oana-Simona Vrabie",
+    "category": "Silver",
+    "categoryDate": "2024-12-29",
+    "lastEvent": "Square-1"
+  },
+  {
+    "id": "2016NAGU02",
+    "name": "Christian Naguio",
+    "category": "Silver",
+    "categoryDate": "2025-01-05",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2022HILA02",
+    "name": "Gabriel Angelo V. Hilado",
+    "category": "Silver",
+    "categoryDate": "2025-01-05",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2014RUIZ10",
+    "name": "Kevin Arturo Huamán Ruiz",
+    "category": "Silver",
+    "categoryDate": "2025-01-05",
+    "lastEvent": "Megaminx"
+  },
+  {
+    "id": "2022STON03",
+    "name": "Tuval Stone",
+    "category": "Silver",
+    "categoryDate": "2025-01-10",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2015LEHM01",
+    "name": "Alex Lehman",
+    "category": "Silver",
+    "categoryDate": "2025-01-19",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2022YAGI03",
+    "name": "Aiki Yaginuma (柳沼愛輝)",
+    "category": "Bronze",
+    "categoryDate": "2025-01-26",
+    "lastEvent": "7x7 Cube"
+  },
+  {
+    "id": "2017BUSC03",
+    "name": "Danny Buschert",
+    "category": "Gold",
+    "categoryDate": "2025-01-26",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2020MCDO01",
+    "name": "Jack McDougall",
+    "category": "Gold",
+    "categoryDate": "2025-01-26",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2016MOOR07",
+    "name": "James Moore",
+    "category": "Silver",
+    "categoryDate": "2025-01-26",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2021CHIL02",
+    "name": "Oscar Childs",
+    "category": "Silver",
+    "categoryDate": "2025-01-26",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2008BAOY01",
+    "name": "Ting Sheng Bao Yang",
+    "category": "Silver",
+    "categoryDate": "2025-01-26",
+    "lastEvent": "4x4 Blindfolded"
+  },
+  {
+    "id": "2015RUSS03",
+    "name": "Will Russo",
+    "category": "Gold",
+    "categoryDate": "2025-01-26",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2015HERN17",
+    "name": "Artur Miralles Hernàndez",
+    "category": "Silver",
+    "categoryDate": "2025-02-02",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2014BEGU01",
+    "name": "Elian Beguec",
+    "category": "Silver",
+    "categoryDate": "2025-02-02",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2014MAGA04",
+    "name": "Luis Gabriel Magadia",
+    "category": "Gold",
+    "categoryDate": "2025-02-02",
+    "lastEvent": "7x7 Cube"
+  },
+  {
+    "id": "2018NEVE02",
+    "name": "Adrien Neveu",
+    "category": "Silver",
+    "categoryDate": "2025-02-16",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2022SAND19",
+    "name": "Angel David Alvarado Sandoval",
+    "category": "Silver",
+    "categoryDate": "2025-02-16",
+    "lastEvent": "3x3 Fewest Moves"
+  },
+  {
+    "id": "2021PISK01",
+    "name": "Karol Piskorek",
+    "category": "Gold",
+    "categoryDate": "2025-02-16",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2021YEPU01",
+    "name": "Putian Ye (叶溥天)",
+    "category": "Silver",
+    "categoryDate": "2025-02-16",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2019SANC20",
+    "name": "Samuel Martinez Sanchez",
+    "category": "Silver",
+    "categoryDate": "2025-02-16",
+    "lastEvent": "3x3 Fewest Moves"
+  },
+  {
+    "id": "2016PYWI01",
+    "name": "Wilfrid Py",
+    "category": "Gold",
+    "categoryDate": "2025-02-16",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2021SUNG02",
+    "name": "Reid James Sungy",
+    "category": "Silver",
+    "categoryDate": "2025-02-22",
+    "lastEvent": "3x3 Multi-Blind"
+  },
+  {
+    "id": "2019MARI16",
+    "name": "Sebastián Morón Mariscal",
+    "category": "Silver",
+    "categoryDate": "2025-02-22",
+    "lastEvent": "7x7 Cube"
+  },
+  {
+    "id": "2019CELE01",
+    "name": "Earl Bien D. Celestino",
+    "category": "Silver",
+    "categoryDate": "2025-02-23",
+    "lastEvent": "7x7 Cube"
+  },
+  {
+    "id": "2010VERE01",
+    "name": "Manu Vereecken",
+    "category": "Gold",
+    "categoryDate": "2025-02-23",
+    "lastEvent": "Square-1"
+  },
+  {
+    "id": "2015JAIN21",
+    "name": "Saiyam Jain",
+    "category": "Silver",
+    "categoryDate": "2025-03-01",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2017TUNG13",
+    "name": "Anto Kam (甘浩東)",
+    "category": "Gold",
+    "categoryDate": "2025-03-02",
+    "lastEvent": "Megaminx"
+  },
+  {
+    "id": "2023OCAR01",
+    "name": "Rodrigo Ángeles Montes de Oca",
+    "category": "Silver",
+    "categoryDate": "2025-03-02",
+    "lastEvent": "6x6 Cube"
+  },
+  {
+    "id": "2008VASC01",
+    "name": "Vasco Vasconcelos",
+    "category": "Silver",
+    "categoryDate": "2025-03-08",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2015WITM01",
+    "name": "Mattheo de Wit",
+    "category": "Silver",
+    "categoryDate": "2025-03-09",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2022IDZE01",
+    "name": "Renske Idzenga",
+    "category": "Silver",
+    "categoryDate": "2025-03-09",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2021RAME01",
+    "name": "Saisabari Ramesh",
+    "category": "Silver",
+    "categoryDate": "2025-03-15",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2022LIPP01",
+    "name": "Lucas Lippman-Bruno",
+    "category": "Silver",
+    "categoryDate": "2025-03-16",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2024NASC01",
+    "name": "Mikael Ribeiro do Nascimento",
+    "category": "Bronze",
+    "categoryDate": "2025-03-16",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2022JOHA08",
+    "name": "Leo Johansson",
+    "category": "Silver",
+    "categoryDate": "2025-03-22",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2021PAND01",
+    "name": "Alessio Pandin",
+    "category": "Gold",
+    "categoryDate": "2025-03-23",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2023LANG03",
+    "name": "Alex Rosado Saez de Langarica",
+    "category": "Silver",
+    "categoryDate": "2025-03-30",
+    "lastEvent": "7x7 Cube"
+  },
+  {
+    "id": "2016KELL12",
+    "name": "Simon Kellum",
+    "category": "Silver",
+    "categoryDate": "2025-03-30",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2019LIJI25",
+    "name": "Jingcai Li (李经才)",
+    "category": "Gold",
+    "categoryDate": "2025-04-05",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2019HEID03",
+    "name": "Thomas Heiden",
+    "category": "Silver",
+    "categoryDate": "2025-04-06",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2014HAMM01",
+    "name": "Jason Hammerman",
+    "category": "Silver",
+    "categoryDate": "2025-04-13",
+    "lastEvent": "Megaminx"
+  },
+  {
+    "id": "2018WUYU03",
+    "name": "Yuheng Wu (吴雨衡)",
+    "category": "Silver",
+    "categoryDate": "2025-04-13",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2023ROSA05",
+    "name": "Braulio Lael Hernández Rosas",
+    "category": "Bronze",
+    "categoryDate": "2025-04-20",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2018BALL01",
+    "name": "James Ballantine",
+    "category": "Silver",
+    "categoryDate": "2025-04-20",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2017LOTZ01",
+    "name": "Moritz Lotz",
+    "category": "Silver",
+    "categoryDate": "2025-04-20",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2011MASS01",
+    "name": "Nikolai Masson (Николай Массон)",
+    "category": "Silver",
+    "categoryDate": "2025-04-20",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2014OHLE01",
+    "name": "Simone Bentlage",
+    "category": "Gold",
+    "categoryDate": "2025-04-20",
+    "lastEvent": "4x4 Blindfolded"
+  },
+  {
+    "id": "2017TEIC01",
+    "name": "Cyril Teichmann",
+    "category": "Silver",
+    "categoryDate": "2025-04-27",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2018GONZ21",
+    "name": "Saul Emmanuel Ramirez Gonzalez",
+    "category": "Silver",
+    "categoryDate": "2025-04-27",
+    "lastEvent": "6x6 Cube"
+  },
+  {
+    "id": "2018BOND03",
+    "name": "Pavlo Bondar (Павло Бондар)",
+    "category": "Gold",
+    "categoryDate": "2025-05-01",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2016HOBB01",
+    "name": "Emmet Hobbs",
+    "category": "Silver",
+    "categoryDate": "2025-05-04",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2021FORB01",
+    "name": "Harry Forbes",
+    "category": "Silver",
+    "categoryDate": "2025-05-04",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2023ESPI07",
+    "name": "Jerónimo Espinosa",
+    "category": "Silver",
+    "categoryDate": "2025-05-04",
+    "lastEvent": "3x3 Multi-Blind"
+  },
+  {
+    "id": "2017TOYS01",
+    "name": "Azael Toysehua",
+    "category": "Silver",
+    "categoryDate": "2025-05-10",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2014CHIC01",
+    "name": "Christopher Chi",
+    "category": "Platinum",
+    "categoryDate": "2025-05-10",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2022ROGE05",
+    "name": "Eli Rogers",
+    "category": "Silver",
+    "categoryDate": "2025-05-10",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2014TANA01",
+    "name": "Takayuki Tanaka (田中隆喜)",
+    "category": "Gold",
+    "categoryDate": "2025-05-10",
+    "lastEvent": "4x4 Blindfolded"
+  },
+  {
+    "id": "2012YANA01",
+    "name": "Taku Yanai (矢内拓)",
+    "category": "Platinum",
+    "categoryDate": "2025-05-10",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2018DATE01",
+    "name": "Yuto Date (伊達優人)",
+    "category": "Silver",
+    "categoryDate": "2025-05-10",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2019KONI03",
+    "name": "Flurin König",
+    "category": "Silver",
+    "categoryDate": "2025-05-11",
+    "lastEvent": "7x7 Cube"
+  },
+  {
+    "id": "2020DECI01",
+    "name": "Remo Decio",
+    "category": "Silver",
+    "categoryDate": "2025-05-11",
+    "lastEvent": "4x4 Blindfolded"
+  },
+  {
+    "id": "2017MCLE03",
+    "name": "David McLean",
+    "category": "Gold",
+    "categoryDate": "2025-05-17",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2018TRAN09",
+    "name": "Tien Tran",
+    "category": "Gold",
+    "categoryDate": "2025-05-17",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2016GALA04",
+    "name": "Andrés Rodríguez Galán",
+    "category": "Silver",
+    "categoryDate": "2025-05-18",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2022AHLS01",
+    "name": "Arvid Ahlstrand",
+    "category": "Silver",
+    "categoryDate": "2025-05-18",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2023HIMM02",
+    "name": "Dylan Himmelfarb",
+    "category": "Silver",
+    "categoryDate": "2025-05-18",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2017BEVA01",
+    "name": "Thomas Bevan",
+    "category": "Silver",
+    "categoryDate": "2025-05-18",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2022HOLT03",
+    "name": "Maria Holton",
+    "category": "Silver",
+    "categoryDate": "2025-05-24",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2023JIWA01",
+    "name": "An JiWan (안지완)",
+    "category": "Silver",
+    "categoryDate": "2025-05-25",
+    "lastEvent": "Square-1"
+  },
+  {
+    "id": "2019SPEI01",
+    "name": "Cyrill Speiser",
+    "category": "Silver",
+    "categoryDate": "2025-05-25",
+    "lastEvent": "7x7 Cube"
+  },
+  {
+    "id": "2017TUMI02",
+    "name": "Joel Mamani Tumiri",
+    "category": "Silver",
+    "categoryDate": "2025-05-25",
+    "lastEvent": "Clock"
+  },
+  {
+    "id": "2024KOIK01",
+    "name": "Akito Koike",
+    "category": "Bronze",
+    "categoryDate": "2025-06-01",
+    "lastEvent": "3x3 Fewest Moves"
+  },
+  {
+    "id": "2024MANA05",
+    "name": "Juan Miguel C. Manalo",
+    "category": "Silver",
+    "categoryDate": "2025-06-01",
+    "lastEvent": "3x3 Multi-Blind"
+  },
+  {
+    "id": "2018LYON01",
+    "name": "Connor Lyons",
+    "category": "Silver",
+    "categoryDate": "2025-06-08",
+    "lastEvent": "Clock"
+  },
+  {
+    "id": "2015ONOF01",
+    "name": "Anuar Miguel Abib Onofre",
+    "category": "Platinum",
+    "categoryDate": "2025-06-15",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2022CUIA01",
+    "name": "Auric Cui",
+    "category": "Silver",
+    "categoryDate": "2025-06-15",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2017HICK04",
+    "name": "Daniel Hicklin",
+    "category": "Silver",
+    "categoryDate": "2025-06-15",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2012CHAJ01",
+    "name": "Joon Cha (차준혁)",
+    "category": "Silver",
+    "categoryDate": "2025-06-15",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2023FLEM01",
+    "name": "Jude Fleming",
+    "category": "Silver",
+    "categoryDate": "2025-06-15",
+    "lastEvent": "3x3 Multi-Blind"
+  },
+  {
+    "id": "2017SWOR01",
+    "name": "Noah Swor",
+    "category": "Gold",
+    "categoryDate": "2025-06-15",
+    "lastEvent": "4x4 Blindfolded"
+  },
+  {
+    "id": "2019CHAU12",
+    "name": "Zayd Chaudhry",
+    "category": "Silver",
+    "categoryDate": "2025-06-15",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2008NIEL01",
+    "name": "Lars Vennike Nielsson",
+    "category": "Silver",
+    "categoryDate": "2025-06-21",
+    "lastEvent": "Clock"
+  },
+  {
+    "id": "2015DIAZ02",
+    "name": "Miguel Diaz",
+    "category": "Silver",
+    "categoryDate": "2025-06-25",
+    "lastEvent": "7x7 Cube"
+  },
+  {
+    "id": "2017PIWA01",
+    "name": "Wayne Pi",
+    "category": "Gold",
+    "categoryDate": "2025-06-27",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2011NARA02",
+    "name": "Bhargav Narasimhan",
+    "category": "Silver",
+    "categoryDate": "2025-06-29",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2018CAMP15",
+    "name": "Cole Campbell",
+    "category": "Silver",
+    "categoryDate": "2025-07-13",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2017PYLY01",
+    "name": "Bohdan Pylypchak (Богдан Пилипчак)",
+    "category": "Silver",
+    "categoryDate": "2025-07-20",
+    "lastEvent": "3x3 Multi-Blind"
+  },
+  {
+    "id": "2022TICK01",
+    "name": "Pierce Tickle",
+    "category": "Silver",
+    "categoryDate": "2025-07-26",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2019BONN05",
+    "name": "Chris Bonnello",
+    "category": "Silver",
+    "categoryDate": "2025-07-27",
+    "lastEvent": "Square-1"
+  },
+  {
+    "id": "2018BEAU06",
+    "name": "Cyrille Beauchesne",
+    "category": "Bronze",
+    "categoryDate": "2025-07-27",
+    "lastEvent": "Square-1"
+  },
+  {
+    "id": "2013SATO01",
+    "name": "Shiori Yanai (矢内詩織)",
+    "category": "Gold",
+    "categoryDate": "2025-07-27",
+    "lastEvent": "3x3 Fewest Moves"
+  },
+  {
+    "id": "2021SMIG01",
+    "name": "Adam Śmigaj",
+    "category": "Bronze",
+    "categoryDate": "2025-08-03",
+    "lastEvent": "7x7 Cube"
+  },
+  {
+    "id": "2022OFER01",
+    "name": "Eitan Ofer",
+    "category": "Silver",
+    "categoryDate": "2025-08-03",
+    "lastEvent": "7x7 Cube"
+  },
+  {
+    "id": "2023TORO02",
+    "name": "Fabián Sánchez Del Toro",
+    "category": "Bronze",
+    "categoryDate": "2025-08-03",
+    "lastEvent": "7x7 Cube"
+  },
+  {
+    "id": "2013BOBE01",
+    "name": "Krzysztof Bober",
+    "category": "Silver",
+    "categoryDate": "2025-08-03",
+    "lastEvent": "7x7 Cube"
+  },
+  {
+    "id": "2023FADL01",
+    "name": "Martin Fádlik",
+    "category": "Bronze",
+    "categoryDate": "2025-08-03",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2021MORA01",
+    "name": "Mikołaj Morawski",
+    "category": "Silver",
+    "categoryDate": "2025-08-03",
+    "lastEvent": "7x7 Cube"
+  },
+  {
+    "id": "2022BARU03",
+    "name": "Ognian Baruh",
+    "category": "Silver",
+    "categoryDate": "2025-08-03",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2014MILE01",
+    "name": "Patryk Milewczyk",
+    "category": "Gold",
+    "categoryDate": "2025-08-03",
+    "lastEvent": "5x5 Cube"
+  },
+  {
+    "id": "2024GESH01",
+    "name": "Ge Shi (石歌)",
+    "category": "Bronze",
+    "categoryDate": "2025-08-09",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2023JAIN31",
+    "name": "Akash Jain (ジェン明志)",
+    "category": "Silver",
+    "categoryDate": "2025-08-10",
+    "lastEvent": "4x4 Blindfolded"
+  },
+  {
+    "id": "2018AKER01",
+    "name": "David Akerboom",
+    "category": "Silver",
+    "categoryDate": "2025-08-10",
+    "lastEvent": "7x7 Cube"
+  },
+  {
+    "id": "2023SULT02",
+    "name": "Rafael Sultanaliev",
+    "category": "Silver",
+    "categoryDate": "2025-08-10",
+    "lastEvent": "3x3 Multi-Blind"
+  },
+  {
+    "id": "2023LALI01",
+    "name": "Caleb Lalik",
+    "category": "Silver",
+    "categoryDate": "2025-08-17",
+    "lastEvent": "4x4 Blindfolded"
+  },
+  {
+    "id": "2014MUNJ02",
+    "name": "Jihu Mun (문지후)",
+    "category": "Silver",
+    "categoryDate": "2025-08-17",
+    "lastEvent": "Square-1"
+  },
+  {
+    "id": "2021DOHE02",
+    "name": "Kalin Doherty",
+    "category": "Silver",
+    "categoryDate": "2025-08-17",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2016NGAN02",
+    "name": "Michael Ngan (顏律言)",
+    "category": "Gold",
+    "categoryDate": "2025-08-17",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2020ROUY01",
+    "name": "Rodolphe Rouyrre",
+    "category": "Gold",
+    "categoryDate": "2025-08-17",
+    "lastEvent": "Square-1"
+  },
+  {
+    "id": "2023GALL30",
+    "name": "Valérie Le Gall",
+    "category": "Silver",
+    "categoryDate": "2025-08-17",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2015PHOM01",
+    "name": "William Phommaha",
+    "category": "Silver",
+    "categoryDate": "2025-08-17",
+    "lastEvent": "Clock"
+  },
+  {
+    "id": "2023XING02",
+    "name": "Jacob Keh Zheng Xing (郭正兴)",
+    "category": "Bronze",
+    "categoryDate": "2025-08-24",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2013GARC08",
+    "name": "Jesús Lindo García",
+    "category": "Silver",
+    "categoryDate": "2025-08-24",
+    "lastEvent": "6x6 Cube"
+  },
+  {
+    "id": "2017PETR02",
+    "name": "Mihail Petrochenkov",
+    "category": "Silver",
+    "categoryDate": "2025-08-24",
+    "lastEvent": "Clock"
+  },
+  {
+    "id": "2016NANK01",
+    "name": "Chris Nankervis",
+    "category": "Bronze",
+    "categoryDate": "2025-08-30",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2014PAUL05",
+    "name": "Benjamin Paul",
+    "category": "Bronze",
+    "categoryDate": "2025-08-31",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2019EGGI02",
+    "name": "Charlie Eggins",
+    "category": "Platinum",
+    "categoryDate": "2025-08-31",
+    "lastEvent": "4x4 Blindfolded"
+  },
+  {
+    "id": "2017KITA03",
+    "name": "Haruka Kitamura (北村晴香)",
+    "category": "Silver",
+    "categoryDate": "2025-08-31",
+    "lastEvent": "6x6 Cube"
+  },
+  {
+    "id": "2022BURN09",
+    "name": "Joseph Burnett",
+    "category": "Silver",
+    "categoryDate": "2025-08-31",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2018PERK01",
+    "name": "Elliott Perkins",
+    "category": "Silver",
+    "categoryDate": "2025-09-07",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2014WOLL01",
+    "name": "Ethan Woll",
+    "category": "Silver",
+    "categoryDate": "2025-09-07",
+    "lastEvent": "Square-1"
+  },
+  {
+    "id": "2011TRON02",
+    "name": "Sebastiano Tronto",
+    "category": "Platinum",
+    "categoryDate": "2025-09-07",
+    "lastEvent": "5x5 Blindfolded"
+  },
+  {
+    "id": "2017CHAN44",
+    "name": "Vincent Chan",
+    "category": "Silver",
+    "categoryDate": "2025-09-07",
+    "lastEvent": "5x5 Blindfolded"
+  }
+]

@@ -1,11 +1,12 @@
 import os
-import time
+import sys
 import json
+import time
+from functools import lru_cache
+
 import requests
 from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
-import threading
-import sys
 
 # --- Import Blueprints and Preload Functions ---
 from competitors import competitors_bp, preload_wca_data as preload_competitors_data
@@ -20,14 +21,6 @@ app.register_blueprint(competitors_bp, url_prefix='/api')
 app.register_blueprint(specialist_bp, url_prefix='/api')
 app.register_blueprint(comparison_bp, url_prefix='/api')
 CORS(app)
-
-# ----------------- Data Preloading -----------------
-print("Starting data preloads in background...", file=sys.stdout)
-sys.stdout.flush()
-threading.Thread(target=preload_specialist_data, daemon=True).start()
-threading.Thread(target=preload_completionist_data, daemon=True).start()
-threading.Thread(target=preload_competitors_data, daemon=True).start()
-threading.Thread(target=preload_comparison_data, daemon=True).start()
 
 # ----------------- Frontend Routes -----------------
 @app.route("/")
@@ -54,31 +47,19 @@ def serve_comparison_page():
 @app.route("/api/completionists", defaults={"category": "all"})
 @app.route("/api/completionists/<category>")
 def completionists(category):
-    data = get_completionists()
-    return jsonify(data)
+    return jsonify(get_completionists())
 
 # ----------------- Helper Functions -----------------
 WCA_API_BASE_URL = "https://www.worldcubeassociation.org/api/v0"
 WCA_RANK_DATA_BASE_URL = "https://raw.githubusercontent.com/robiningelbrecht/wca-rest-api/master/api/rank"
 
-def fetch_data_with_retry(url, max_retries=5, backoff_factor=0.5):
-    for i in range(max_retries):
-        try:
-            response = requests.get(url, timeout=5)
-            response.raise_for_status()
-            return response.json()
-        except (requests.exceptions.RequestException, json.JSONDecodeError) as e:
-            if i < max_retries - 1:
-                time.sleep(backoff_factor * (2 ** i))
-            else:
-                raise
-    return None
-
+@lru_cache(maxsize=1024)
 def fetch_person(wca_id):
-    url = f"{WCA_API_BASE_URL}/persons/{wca_id}"
+    """Fetch WCA person data with simple caching to reduce requests."""
     try:
-        data = fetch_data_with_retry(url)
-        person = data.get("person", {})
+        resp = requests.get(f"{WCA_API_BASE_URL}/persons/{wca_id}", timeout=5)
+        resp.raise_for_status()
+        person = resp.json().get("person", {})
         return {
             "wcaId": wca_id,
             "name": person.get("name", "Unknown"),
@@ -86,7 +67,18 @@ def fetch_person(wca_id):
         }
     except Exception as e:
         print(f"Error fetching person {wca_id}: {e}", file=sys.stderr)
-        return None
+        return {"wcaId": wca_id, "name": "Unknown", "countryIso2": "N/A"}
+
+def fetch_json(url, timeout=5):
+    """Simple JSON fetch with retry and backoff."""
+    for i in range(3):
+        try:
+            resp = requests.get(url, timeout=timeout)
+            resp.raise_for_status()
+            return resp.json()
+        except Exception:
+            time.sleep(0.5 * (2 ** i))
+    return None
 
 # ----------------- Competitor Search API -----------------
 @app.route("/api/search-competitor", methods=["GET"])
@@ -96,50 +88,38 @@ def search_competitor():
         return jsonify({"error": "Competitor name cannot be empty"}), 400
 
     if len(query) == 9 and query.isdigit():
-        person = fetch_person(query)
-        return jsonify([person]) if person else (jsonify([]), 200)
+        return jsonify([fetch_person(query)])
 
-    url = f"{WCA_API_BASE_URL}/search/users?q={query}"
-    try:
-        data = fetch_data_with_retry(url)
-        matches = data.get("result", [])
-        found = [
-            {
-                "wcaId": m["wca_id"],
-                "name": m.get("name", "Unknown"),
-                "countryIso2": m.get("country_iso2", "N/A"),
-            }
-            for m in matches if "wca_id" in m and m["wca_id"]
-        ]
-        return jsonify(found[:50])
-    except Exception as e:
-        print(f"Error during search: {e}", file=sys.stderr)
-        return jsonify([]), 200
+    data = fetch_json(f"{WCA_API_BASE_URL}/search/users?q={query}") or {}
+    matches = data.get("result", [])
+    found = [
+        {
+            "wcaId": m["wca_id"],
+            "name": m.get("name", "Unknown"),
+            "countryIso2": m.get("country_iso2", "N/A"),
+        }
+        for m in matches if "wca_id" in m
+    ]
+    return jsonify(found[:50])
 
 # ----------------- Rankings API -----------------
 @app.route("/api/rankings/<wca_id>", methods=["GET"])
 def get_rankings(wca_id):
     if not wca_id:
         return jsonify({"error": "WCA ID cannot be empty"}), 400
-
-    rankings_url = f"https://wca-rest-api.robiningelbrecht.be/persons/{wca_id}/rankings"
     try:
-        response = requests.get(rankings_url, timeout=5)
-        response.raise_for_status()
-        return jsonify(response.json()), 200
-    except requests.exceptions.RequestException as e:
-        status = getattr(e.response, "status_code", 500)
-        return jsonify({"error": f"Failed to fetch rankings: {str(e)}"}), status
-    except json.JSONDecodeError:
-        return jsonify({"error": "Failed to decode WCA API response."}), 500
+        resp = requests.get(f"https://wca-rest-api.robiningelbeck.be/persons/{wca_id}/rankings", timeout=5)
+        resp.raise_for_status()
+        return jsonify(resp.json()), 200
+    except Exception as e:
+        return jsonify({"error": f"Failed to fetch rankings: {str(e)}"}), 500
 
-# ----------------- Global Rankings API (query params) -----------------
+# ----------------- Global Rankings API -----------------
 @app.route("/api/global-rankings", methods=["GET"])
 def get_global_rankings():
     region = request.args.get("region", "world")
     type_param = request.args.get("type", "single")
     event = request.args.get("eventId", "333")
-
     try:
         requested_rank = int(request.args.get("rank", "0"))
         if requested_rank <= 0:
@@ -147,55 +127,39 @@ def get_global_rankings():
     except ValueError:
         return jsonify({"error": "rank must be a positive integer."}), 400
 
-    rankings_url = f"{WCA_RANK_DATA_BASE_URL}/{region}/{type_param}/{event}.json"
+    rankings_data = fetch_json(f"{WCA_RANK_DATA_BASE_URL}/{region}/{type_param}/{event}.json")
+    if not rankings_data:
+        return jsonify({"items": [], "total": 0, "error": "Failed to fetch rankings data."}), 500
 
-    try:
-        response = requests.get(rankings_url, timeout=5)
-        response.raise_for_status()
-        rankings_data = response.json()
-        items = rankings_data.get("items", [])
+    items = rankings_data.get("items", [])
+    rank_key = "world" if region == "world" else (
+        "continent" if region in ["europe","north_america","asia","south_america","africa","oceania"] else "country"
+    )
 
-        # Determine which rank field to check
-        rank_key = "world" if region == "world" else \
-                   "continent" if region in ["europe","north_america","asia","south_america","africa","oceania"] else "country"
+    filtered_items = []
+    for item in items:
+        if item.get("rank", {}).get(rank_key) == requested_rank:
+            person_id = item.get("personId")
+            filtered_items.append({
+                "personId": person_id,
+                "eventId": item.get("eventId"),
+                "rankType": item.get("rankType"),
+                "worldRank": item.get("worldRank"),
+                "result": item.get("best"),
+                "person": fetch_person(person_id),
+                "rank": item.get("rank", {}),
+                "note": item.get("note", None),
+            })
+            break
 
-        filtered_items = []
-        for item in items:
-            rank_to_check = item.get("rank", {}).get(rank_key)
-            if rank_to_check == requested_rank:
-                person_id = item.get("personId")
-                person_obj = fetch_person(person_id) or {
-                    "name": f"Unknown (WCA ID: {person_id})",
-                    "countryIso2": "N/A",
-                    "wcaId": person_id
-                }
-                filtered_items.append({
-                    "personId": person_id,
-                    "eventId": item.get("eventId"),
-                    "rankType": item.get("rankType"),
-                    "worldRank": item.get("worldRank"),
-                    "result": item.get("best"),
-                    "person": person_obj,
-                    "rank": item.get("rank", {}),
-                    "note": item.get("note", None),
-                })
-                break
+    if not filtered_items:
+        return jsonify({
+            "items": [],
+            "total": 0,
+            "error": f"No competitor found at rank #{requested_rank} for {event} ({type_param}) in {region}."
+        }), 404
 
-        if not filtered_items:
-            return jsonify({
-                "items": [],
-                "total": 0,
-                "error": f"No competitor found at rank #{requested_rank} for {event} ({type_param}) in {region}."
-            }), 404
-
-        return jsonify({"items": filtered_items, "total": len(filtered_items)}), 200
-
-    except requests.exceptions.RequestException as e:
-        status = getattr(e.response, "status_code", 500)
-        return jsonify({"error": f"Failed to fetch global rankings: {str(e)}"}), status
-    except json.JSONDecodeError:
-        return jsonify({"error": "Failed to decode rankings response."}), 500
-
+    return jsonify({"items": filtered_items, "total": len(filtered_items)}), 200
 
 # ----------------- Custom Error Handler -----------------
 @app.errorhandler(404)
@@ -206,5 +170,14 @@ def resource_not_found(e):
 
 # ----------------- Run Flask -----------------
 if __name__ == "__main__":
+    print("Starting data preloads...", file=sys.stdout)
+    sys.stdout.flush()
+    preload_specialist_data()
+    preload_completionist_data()
+    preload_competitors_data()
+    preload_comparison_data()
+    print("Data preloading complete.", file=sys.stdout)
+    sys.stdout.flush()
+
     port = int(os.environ.get('PORT', 5000))
-    app.run(debug=True, host='0.0.0.0', port=port)
+    app.run(host='0.0.0.0', port=port)

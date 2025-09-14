@@ -1,0 +1,22 @@
+# Byte-compiled files
+__pycache__/
+*.pyc
+
+# Virtual environment
+.venv
+venv/
+env/
+/bin/
+/lib/
+/include/
+
+# IDE files
+.idea/
+.vscode/
+
+# Logs and databases
+*.log
+*.sqlite3
+cache/*.mp
+cache/*.msgpack
+wca_precomputed_data.msgpack

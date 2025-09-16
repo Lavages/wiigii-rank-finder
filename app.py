@@ -3,6 +3,7 @@ import sys
 import json
 import time
 from functools import lru_cache
+from threading import Thread
 
 import requests
 from flask import Flask, request, jsonify, render_template
@@ -21,6 +22,9 @@ app.register_blueprint(competitors_bp, url_prefix='/api')
 app.register_blueprint(specialist_bp, url_prefix='/api')
 app.register_blueprint(comparison_bp, url_prefix='/api')
 CORS(app)
+
+# A global flag to indicate if data loading is in progress
+DATA_LOADING_IN_PROGRESS = False
 
 # ----------------- Frontend Routes -----------------
 @app.route("/")
@@ -169,15 +173,19 @@ def resource_not_found(e):
     return render_template("404.html"), 404
 
 # ----------------- Run Flask -----------------
-if __name__ == "__main__":
-    print("Starting data preloads...", file=sys.stdout)
-    sys.stdout.flush()
-    preload_specialist_data()
-    preload_completionist_data()
-    preload_competitors_data()
-    preload_comparison_data()
-    print("Data preloading complete.", file=sys.stdout)
-    sys.stdout.flush()
+def start_preload_in_background():
+    """Starts all preload functions in separate threads."""
+    global DATA_LOADING_IN_PROGRESS
+    if not DATA_LOADING_IN_PROGRESS:
+        DATA_LOADING_IN_PROGRESS = True
+        Thread(target=preload_specialist_data, daemon=True).start()
+        Thread(target=preload_completionist_data, daemon=True).start()
+        Thread(target=preload_competitors_data, daemon=True).start()
+        Thread(target=preload_comparison_data, daemon=True).start()
+        print("Background data preloading threads started.", file=sys.stdout)
+        sys.stdout.flush()
 
+if __name__ == "__main__":
+    start_preload_in_background()
     port = int(os.environ.get('PORT', 5000))
-    app.run(host='0.0.0.0', port=port)
+    app.run(host='0.0.0.0', port=port, debug=False)

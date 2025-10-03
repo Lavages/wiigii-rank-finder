@@ -5,14 +5,13 @@ import os
 import msgpack
 import tempfile
 import time
-from threading import Lock, Thread
+from threading import Lock
 from flask import Blueprint, jsonify, request, render_template
 import heapq
 import logging
 
 # --- Logging ---
 logger = logging.getLogger(__name__)
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 # --- Blueprint ---
 comparison_bp = Blueprint("comparison_bp", __name__)
@@ -72,14 +71,12 @@ def extract_time_for_comparison(event_id, result):
 
 # ---------------- Async Fetch ----------------
 async def _fetch_page(session, page_number):
-    # This URL is the correct, working API endpoint.
-    url = f"https://www.worldcubeassociation.org/api/v0/persons?page={page_number}"
-    
+    url = f"https://raw.githubusercontent.com/robiningelbrecht/wca-rest-api/master/api/persons-page-{page_number}.json"
     for attempt in range(RETRY_ATTEMPTS):
         try:
             async with session.get(url, timeout=15) as resp:
                 resp.raise_for_status()
-                data = await resp.json()
+                data = await resp.json(content_type=None)
                 persons = data.get("items", []) if isinstance(data, dict) else data
                 page_data = []
                 for p in persons:
@@ -113,7 +110,7 @@ async def _fetch_all_pages_async():
     logger.info(f"Async fetch complete, {len(temp_list)} competitors loaded.")
     return temp_list
 
-# ---------------- Cache Handling & Background Loading ----------------
+# ---------------- Cache Handling ----------------
 def _load_data_from_cache():
     if os.path.exists(CACHE_FILE):
         try:
@@ -124,7 +121,6 @@ def _load_data_from_cache():
                 return data
             else:
                 os.remove(CACHE_FILE)
-                logger.info("Cache expired, will reload data.")
         except Exception as e:
             logger.warning(f"Error loading cache: {e}")
             if os.path.exists(CACHE_FILE):
@@ -141,39 +137,26 @@ def _save_data_to_cache(data):
 
 def preload_comparison_data():
     global COMPETITOR_DATA, DATA_LOADED
-    
     with DATA_LOADING_LOCK:
         if DATA_LOADED:
-            return True
-        
+            return
         cached = _load_data_from_cache()
         if cached:
             COMPETITOR_DATA = cached
             DATA_LOADED = True
             return True
-        
-        logger.info("Cache not found or expired. Starting full data fetch.")
         loop = asyncio.new_event_loop()
         asyncio.set_event_loop(loop)
         COMPETITOR_DATA = loop.run_until_complete(_fetch_all_pages_async())
         loop.close()
-        
         if COMPETITOR_DATA:
             _save_data_to_cache(COMPETITOR_DATA)
             DATA_LOADED = True
             return True
     return False
 
-def start_background_loader():
-    """Starts the data loading process in a separate thread."""
-    if not DATA_LOADED and not DATA_LOADING_LOCK.locked():
-        loader_thread = Thread(target=preload_comparison_data, daemon=True)
-        loader_thread.start()
-        logger.info("Background data loader started.")
-
 # ---------------- Core Logic ----------------
 def find_fastest_comparisons(event1, event2):
-    # This logic remains untouched as requested.
     if not DATA_LOADED:
         preload_comparison_data()
     top_results = []
@@ -207,10 +190,6 @@ def comparison_home():
 
 @comparison_bp.route('/compare_events', methods=['GET'])
 def api_compare_events():
-    # Return a 503 Service Unavailable if data is still loading
-    if not DATA_LOADED:
-        return jsonify({"error": "Data is still loading, please try again in a moment."}), 503
-
     event1_id = request.args.get('event1')
     event2_id = request.args.get('event2')
     
@@ -234,7 +213,3 @@ def api_compare_events():
     } for r in results]
     
     return jsonify({"data": formatted, "message": f"Competitors with faster {event1_name} than {event2_name}"})
-
-# ---------------- Initialization ----------------
-# This call starts the background thread when the module is loaded.
-start_background_loader()

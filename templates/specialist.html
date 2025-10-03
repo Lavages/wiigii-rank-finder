@@ -46,18 +46,18 @@
 
   <!-- Navbar -->
   <nav
-    class="w-full max-w-4xl mx-auto bg-gray-950 bg-opacity-80 rounded-t-2xl sm:rounded-t-3xl shadow-lg border border-purple-800 border-b-0 p-3 sm:p-4 flex flex-wrap justify-center gap-2 sm:gap-8 sticky top-0 z-10">
+    class="w-full max-w-4xl mx-auto bg-gray-950 bg-opacity-80 rounded-t-2xl sm:rounded-t-3xl shadow-lg border border-purple-800 border-b-0 p-3 sm:p-4 flex justify-center gap-4 sm:gap-8 sticky top-0 z-10">
     <a href="/"
-      class="text-xs sm:text-sm md:text-lg text-gray-300 hover:text-purple-400 transition-colors duration-200 font-semibold px-2 sm:px-4">Rank
+      class="text-sm sm:text-lg text-gray-300 hover:text-purple-400 transition-colors duration-200 font-semibold px-2 sm:px-4">Rank
       Finder</a>
     <a href="/competitors"
-      class="text-xs sm:text-sm md:text-lg text-gray-300 hover:text-purple-400 transition-colors duration-200 font-semibold px-2 sm:px-4">Competitors</a>
+      class="text-sm sm:text-lg text-gray-300 hover:text-purple-400 transition-colors duration-200 font-semibold px-2 sm:px-4">Competitors</a>
     <a href="/specialist"
-      class="text-xs sm:text-sm md:text-lg text-gray-300 hover:text-purple-400 transition-colors duration-200 font-semibold px-2 sm:px-4">Specialist</a>
+      class="text-sm sm:text-lg text-gray-300 hover:text-purple-400 transition-colors duration-200 font-semibold px-2 sm:px-4">Specialist</a>
     <a href="/completionist"
-      class="text-xs sm:text-sm md:text-lg text-gray-300 hover:text-purple-400 transition-colors duration-200 font-semibold px-2 sm:px-4">Completionist</a>
+      class="text-sm sm:text-lg text-gray-300 hover:text-purple-400 transition-colors duration-200 font-semibold px-2 sm:px-4">Completionist</a>
     <a href="/comparison"
-      class="text-xs sm:text-sm md:text-lg text-gray-300 hover:text-purple-400 transition-colors duration-200 font-semibold px-2 sm:px-4">Comparison</a>
+      class="text-sm sm:text-lg text-gray-300 hover:text-purple-400 transition-colors duration-200 font-semibold px-2 sm:px-4">Comparison</a>
   </nav>
 
 
@@ -75,14 +75,12 @@
     <div id="event-selector" class="flex flex-wrap justify-center gap-2 sm:gap-3"></div>
 
     <!-- Find Button -->
-    <div class="flex flex-col items-center mt-6 space-y-2">
+    <div class="flex justify-center mt-6">
       <button id="find-btn"
         class="bg-purple-600 hover:bg-purple-500 text-white font-bold py-2 px-6 rounded-full shadow-md transition">
         Find Specialists
       </button>
-      <p id="no-events-selected-message" class="text-yellow-400 text-sm hidden">Please select one or more events.</p>
     </div>
-
 
     <!-- Loading Spinner -->
     <div id="loading-spinner" class="hidden flex justify-center items-center py-6 sm:py-10">
@@ -95,7 +93,7 @@
 
     <!-- Results -->
     <div id="results-container"
-      class="overflow-x-auto custom-scrollbar rounded-xl border border-gray-700 shadow-xl min-h-[200px] flex flex-col items-center justify-center text-sm sm:text-base p-4">
+      class="overflow-x-auto custom-scrollbar rounded-xl border border-gray-700 shadow-xl min-h-[200px] flex flex-col items-center justify-center text-sm sm:text-base">
       <p id="error-message" class="text-red-400 hidden"></p>
       <p id="no-data-message" class="text-gray-500 hidden text-center">No specialists found for this selection.</p>
     </div>
@@ -134,21 +132,11 @@
     };
 
     let selectedEvents = [];
-    const excludedEvents = ["magic", "mmagic", "333ft", "333mbo"];
-
-    // Get DOM elements
-    const eventSelector = document.getElementById("event-selector");
-    const findBtn = document.getElementById("find-btn");
-    const container = document.getElementById("results-container");
-    const spinner = document.getElementById("loading-spinner");
-    const errorMsg = document.getElementById("error-message");
-    const noData = document.getElementById("no-data-message");
-    const noEventsMsg = document.getElementById("no-events-selected-message");
-
 
     // Render event buttons
+    const eventSelector = document.getElementById("event-selector");
     Object.entries(EVENT_ICONS)
-      .filter(([id, _]) => !excludedEvents.includes(id))
+      .filter(([id, _]) => !["magic", "mmagic", "333ft", "333mbo"].includes(id))
       .forEach(([id, icon]) => {
         const btn = document.createElement("button");
         btn.className = "event-btn bg-gray-800 hover:bg-purple-700 text-gray-100 rounded-lg px-3 py-2 shadow transition";
@@ -157,11 +145,8 @@
         btn.addEventListener("click", () => {
           btn.classList.toggle("ring-2");
           btn.classList.toggle("ring-purple-400");
-          if (selectedEvents.includes(id)) {
-            selectedEvents = selectedEvents.filter(e => e !== id);
-          } else {
-            selectedEvents.push(id);
-          }
+          if (selectedEvents.includes(id)) selectedEvents = selectedEvents.filter(e => e !== id);
+          else selectedEvents.push(id);
         });
         eventSelector.appendChild(btn);
       });
@@ -171,40 +156,30 @@
       return podiums.map(p => {
         const icon = EVENT_ICONS[p.eventId] || p.eventId;
         return `
-                        <div class="event-wrapper" title="${p.count} podiums in ${p.eventId}">
-                            ${icon}
-                            <span class="counter-badge">${p.count || 1}</span>
-                        </div>
-                    `;
+          <div class="event-wrapper">
+            ${icon}
+            <span class="counter-badge">${p.count || 1}</span>
+          </div>
+        `;
       }).join("");
     }
 
-    // Fetch specialists on button click
-    findBtn.addEventListener("click", async () => {
-      // Check if any events are selected
-      if (selectedEvents.length === 0) {
-        noEventsMsg.classList.remove("hidden");
-        return;
-      }
-      noEventsMsg.classList.add("hidden");
+    // Fetch specialists
+    document.getElementById("find-btn").addEventListener("click", async () => {
+      const container = document.getElementById("results-container");
+      const spinner = document.getElementById("loading-spinner");
+      const errorMsg = document.getElementById("error-message");
+      const noData = document.getElementById("no-data-message");
 
-      // Clear previous results and show loading spinner
-      container.querySelectorAll(".specialist-table, .specialist-card").forEach(el => el.remove());
+      spinner.classList.remove("hidden");
       errorMsg.classList.add("hidden");
       noData.classList.add("hidden");
-      spinner.classList.remove("hidden");
+
+      container.querySelectorAll(".specialist-row, .specialist-card").forEach(el => el.remove());
 
       try {
         const res = await fetch(`${API_BASE_URL}/specialists?events=${selectedEvents.join(",")}`);
-
-        if (res.status === 503) {
-          throw new Error("Data is still loading, please try again in a moment.");
-        }
-
-        if (!res.ok) {
-          throw new Error("Failed to fetch specialists. Please try again later.");
-        }
-
+        if (!res.ok) throw new Error("Failed to fetch specialists");
         const specialists = await res.json();
 
         if (!Array.isArray(specialists) || specialists.length === 0) {
@@ -212,49 +187,49 @@
           return;
         }
 
-        // Desktop table layout
+        // Desktop table
         const tableHtml = `
-                        <div class="hidden sm:block w-full specialist-table">
-                            <table class="w-full text-left text-gray-300">
-                                <thead class="bg-gray-800 text-gray-100 uppercase text-xs sm:text-sm tracking-wider">
-                                    <tr>
-                                        <th class="px-4 py-3">Name</th>
-                                        <th class="px-4 py-3">WCA ID</th>
-                                        <th class="px-4 py-3">Country</th>
-                                        <th class="px-4 py-3">Podiumed Events</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    ${specialists.map(c => `
-                                        <tr class="bg-gray-900 border-b border-gray-800 hover:bg-gray-700 transition-colors duration-200">
-                                            <td class="px-4 py-3 font-medium text-gray-50">${c.personName}</td>
-                                            <td class="px-4 py-3">
-                                                <a href="https://www.worldcubeassociation.org/persons/${c.personId}" target="_blank" class="text-purple-400 hover:text-purple-300 hover:underline break-all">${c.personId}</a>
-                                            </td>
-                                            <td class="px-4 py-3">${c.personCountryId}</td>
-                                            <td class="px-4 py-3 flex flex-wrap gap-1">
-                                                ${renderPodiums(c.podiums)}
-                                            </td>
-                                        </tr>
-                                    `).join("")}
-                                </tbody>
-                            </table>
-                        </div>`;
+          <div class="hidden sm:block w-full specialist-row">
+            <table class="w-full text-left text-gray-300">
+              <thead class="bg-gray-800 text-gray-100 uppercase text-xs sm:text-sm tracking-wider">
+                <tr>
+                  <th class="px-4 py-3">Name</th>
+                  <th class="px-4 py-3">WCA ID</th>
+                  <th class="px-4 py-3">Country</th>
+                  <th class="px-4 py-3">Podiumed Events</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${specialists.map(c => `
+                  <tr class="bg-gray-900 border-b border-gray-800 hover:bg-gray-700 transition-colors duration-200">
+                    <td class="px-4 py-3 font-medium text-gray-50">${c.personName}</td>
+                    <td class="px-4 py-3">
+                      <a href="https://www.worldcubeassociation.org/persons/${c.personId}" target="_blank" class="text-purple-400 hover:text-purple-300 hover:underline break-all">${c.personId}</a>
+                    </td>
+                    <td class="px-4 py-3">${c.personCountryId}</td>
+                    <td class="px-4 py-3 flex flex-wrap gap-1">
+                      ${renderPodiums(c.podiums)}
+                    </td>
+                  </tr>
+                `).join("")}
+              </tbody>
+            </table>
+          </div>`;
 
-        // Mobile card layout
+        // Mobile cards
         const cardsHtml = `
-                        <div class="sm:hidden flex flex-col gap-3 w-full specialist-card">
-                            ${specialists.map(c => `
-                                <div class="bg-gray-900 border border-gray-800 rounded-xl p-4 shadow-md">
-                                    <p class="text-lg font-semibold text-gray-50">${c.personName}</p>
-                                    <p><a href="https://www.worldcubeassociation.org/persons/${c.personId}" target="_blank" class="text-purple-400 hover:text-purple-300 hover:underline break-all">${c.personId}</a></p>
-                                    <p class="mt-1 text-sm text-gray-400">Country: <span class="font-medium">${c.personCountryId}</span></p>
-                                    <div class="mt-2 flex flex-wrap gap-2">
-                                        ${renderPodiums(c.podiums)}
-                                    </div>
-                                </div>
-                            `).join("")}
-                        </div>`;
+          <div class="sm:hidden flex flex-col gap-3 w-full p-4 specialist-card">
+            ${specialists.map(c => `
+              <div class="bg-gray-900 border border-gray-800 rounded-xl p-4 shadow-md">
+                <p class="text-lg font-semibold text-gray-50">${c.personName}</p>
+                <p><a href="https://www.worldcubeassociation.org/persons/${c.personId}" target="_blank" class="text-purple-400 hover:text-purple-300 hover:underline break-all">${c.personId}</a></p>
+                <p class="mt-1 text-sm text-gray-400">Country: <span class="font-medium">${c.personCountryId}</span></p>
+                <div class="mt-2 flex flex-wrap gap-2">
+                  ${renderPodiums(c.podiums)}
+                </div>
+              </div>
+            `).join("")}
+          </div>`;
 
         container.insertAdjacentHTML("beforeend", tableHtml + cardsHtml);
       } catch (err) {
@@ -265,6 +240,7 @@
       }
     });
   </script>
+
 </body>
 
 </html>

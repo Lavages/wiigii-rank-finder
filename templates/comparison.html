@@ -14,17 +14,6 @@
             font-family: 'Inter', sans-serif;
         }
 
-        /* Custom scrollbar-hide utility for the nav bar */
-        .scrollbar-hide::-webkit-scrollbar {
-            display: none;
-        }
-
-        .scrollbar-hide {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-
-        /* Custom spinner animation */
         .spinner {
             animation: spin 1s linear infinite;
         }
@@ -41,123 +30,109 @@
     </style>
 </head>
 
-<body
-    class="min-h-screen flex flex-col items-center justify-center p-4 sm:p-6 bg-gradient-to-br from-gray-950 to-black text-gray-100">
+<body class="min-h-screen bg-gradient-to-br from-gray-900 to-black text-gray-100 p-4 flex flex-col items-center">
 
-    <!-- Unified Main Container for improved layout and styling -->
-    <main
-        class="w-full max-w-7xl rounded-3xl overflow-hidden shadow-2xl border border-purple-800 bg-gray-950 bg-opacity-70 backdrop-blur-md">
+    <nav
+        class="w-full max-w-6xl mx-auto bg-gray-950 bg-opacity-80 rounded-t-2xl sm:rounded-t-3xl shadow-lg border border-purple-800 border-b-0 p-3 sm:p-4 flex justify-center gap-4 sm:gap-8 sticky top-0 z-10">
+        <a href="/"
+            class="text-sm sm:text-lg text-gray-300 hover:text-purple-400 transition-colors duration-200 font-semibold px-2 sm:px-4">Rank
+            Finder</a>
+        <a href="/competitors"
+            class="text-sm sm:text-lg text-gray-300 hover:text-purple-400 transition-colors duration-200 font-semibold px-2 sm:px-4">Competitors</a>
+        <a href="/specialist"
+            class="text-sm sm:text-lg text-gray-300 hover:text-purple-400 transition-colors duration-200 font-semibold px-2 sm:px-4">Specialist</a>
+        <a href="/completionist"
+            class="text-sm sm:text-lg text-gray-300 hover:text-purple-400 transition-colors duration-200 font-semibold px-2 sm:px-4">Completionist</a>
+        <a href="/comparison"
+            class="text-sm sm:text-lg text-gray-300 hover:text-purple-400 transition-colors duration-200 font-semibold px-2 sm:px-4">Comparison</a>
+    </nav>
 
-        <!-- Navigation Bar -->
-        <nav class="w-full bg-gray-950 bg-opacity-90 border-b border-purple-700 px-3 sm:px-6 py-4">
-            <div
-                class="flex overflow-x-auto sm:overflow-visible justify-start sm:justify-center gap-4 sm:gap-10 scrollbar-hide">
-                <a href="/"
-                    class="nav-link text-sm sm:text-base md:text-lg font-semibold whitespace-nowrap text-gray-300 hover:text-purple-400 transition">Rank
-                    Finder</a>
-                <a href="/competitors"
-                    class="nav-link text-sm sm:text-base md:text-lg font-semibold whitespace-nowrap text-gray-300 hover:text-purple-400 transition">Competitors</a>
-                <a href="/specialist"
-                    class="nav-link text-sm sm:text-base md:text-lg font-semibold whitespace-nowrap text-gray-300 hover:text-purple-400 transition">Specialist</a>
-                <a href="/completionist"
-                    class="nav-link text-sm sm:text-base md:text-lg font-semibold whitespace-nowrap text-gray-300 hover:text-purple-400 transition">Completionist</a>
-                <a href="/comparison"
-                    class="nav-link text-sm sm:text-base md:text-lg font-semibold whitespace-nowrap text-purple-400">Comparison</a>
-            </div>
-        </nav>
+    <div
+        class="max-w-6xl w-full mx-auto bg-gray-950 bg-opacity-70 rounded-b-3xl shadow-[0_20px_50px_rgba(168,85,247,0.3)] p-4 sm:p-10 space-y-10 backdrop-blur-md border border-purple-800 border-t-0">
+        <header class="text-center">
+            <h1
+                class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-purple-400 drop-shadow-[0_2px_2px_rgba(0,0,0,0.5)]">
+                WCA Event Comparison
+            </h1>
+            <p class="text-xl text-gray-400 mt-2">Find competitors who are faster at one event than another.</p>
+        </header>
 
-        <!-- Main Content Section with generous padding -->
-        <section class="p-6 sm:p-10 lg:p-16 space-y-8 md:space-y-10">
-
-            <!-- Header -->
-            <header class="text-center">
-                <h1
-                    class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-purple-400 drop-shadow-[0_2px_2px_rgba(0,0,0,0.5)]">
-                    WCA Event Comparison
-                </h1>
-                <p class="text-lg sm:text-xl text-gray-400 mt-2">Find competitors who are faster at one event than
-                    another.</p>
-            </header>
-
-            <!-- Dropdown and Button Section -->
-            <section class="bg-gray-900 bg-opacity-70 p-6 rounded-2xl shadow-xl border border-purple-700 space-y-6">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
-                    <div>
-                        <label for="event1-select" class="block text-sm font-semibold text-gray-300 mb-2">Select Event
-                            1</label>
+        <main class="space-y-8">
+            <div class="bg-gray-800 bg-opacity-50 p-6 rounded-xl shadow-lg border border-gray-700">
+                <div class="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-4">
+                    <div class="w-full md:w-1/2">
+                        <label for="event1-select" class="block text-sm font-medium text-gray-300 mb-1">Select Event
+                            1:</label>
                         <select id="event1-select"
-                            class="w-full p-3 rounded-xl border border-gray-700 bg-gray-800 text-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-600 transition cursor-pointer appearance-none bg-[url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns="
+                            class="w-full p-3 rounded-xl border border-gray-700 bg-gray-800 text-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-600 transition duration-200 ease-in-out cursor-pointer appearance-none bg-[url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns="
                             http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="white" %3e%3cpath fill-rule="evenodd"
                             d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
                             clip-rule="evenodd" /%3e%3c/svg%3e')] bg-[length:1.5rem_1.5rem] bg-[right_1rem_center]
                             bg-no-repeat">
-                            <!-- Options will be populated by JavaScript -->
                         </select>
                     </div>
-                    <div>
-                        <label for="event2-select" class="block text-sm font-semibold text-gray-300 mb-2">Select Event
-                            2</label>
+                    <div class="w-full md:w-1/2">
+                        <label for="event2-select" class="block text-sm font-medium text-gray-300 mb-1">Select Event
+                            2:</label>
                         <select id="event2-select"
-                            class="w-full p-3 rounded-xl border border-gray-700 bg-gray-800 text-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-600 transition cursor-pointer appearance-none bg-[url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns="
+                            class="w-full p-3 rounded-xl border border-gray-700 bg-gray-800 text-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-600 transition duration-200 ease-in-out cursor-pointer appearance-none bg-[url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns="
                             http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="white" %3e%3cpath fill-rule="evenodd"
                             d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
                             clip-rule="evenodd" /%3e%3c/svg%3e')] bg-[length:1.5rem_1.5rem] bg-[right_1rem_center]
                             bg-no-repeat">
-                            <!-- Options will be populated by JavaScript -->
                         </select>
                     </div>
                 </div>
-                <div class="flex justify-center">
+                <div class="flex justify-center mt-6">
                     <button id="compare-button"
-                        class="w-full md:w-auto bg-purple-700 hover:bg-purple-800 active:bg-purple-900 text-white font-bold py-3 px-10 rounded-xl shadow-lg hover:shadow-purple-800/40 transition transform hover:scale-105">
+                        class="w-full bg-purple-700 hover:bg-purple-800 active:bg-purple-900 text-white font-bold py-4 px-8 rounded-xl shadow-lg hover:shadow-xl transition duration-300 ease-in-out transform hover:scale-105">
                         Compare
                     </button>
                 </div>
-            </section>
-
-            <!-- Loading Spinner -->
-            <div id="loading-spinner" class="hidden flex justify-center items-center h-40">
-                <div class="spinner rounded-full h-16 w-16 border-t-4 border-b-4 border-purple-500"></div>
             </div>
 
-            <!-- Results Table Section -->
-            <section id="results-container"
-                class="hidden bg-gray-900 bg-opacity-80 rounded-2xl shadow-xl border border-purple-700 p-4 sm:p-6 overflow-x-auto">
-                <h2 id="results-title" class="text-2xl font-bold text-purple-300 mb-4">Results</h2>
-                <table class="min-w-full divide-y divide-gray-700">
-                    <thead class="bg-gray-800">
-                        <tr>
-                            <th scope="col"
-                                class="px-3 sm:px-6 py-2 sm:py-3 text-left text-xs sm:text-sm font-bold text-purple-300 uppercase tracking-wider">
-                                Name (WCA ID)</th>
-                            <th scope="col"
-                                class="px-3 sm:px-6 py-2 sm:py-3 text-left text-xs sm:text-sm font-bold text-purple-300 uppercase tracking-wider">
-                                Country</th>
-                            <th id="event1-header" scope="col"
-                                class="px-3 sm:px-6 py-2 sm:py-3 text-left text-xs sm:text-sm font-bold text-purple-300 uppercase tracking-wider">
-                                Event 1 Time</th>
-                            <th id="event2-header" scope="col"
-                                class="px-3 sm:px-6 py-2 sm:py-3 text-left text-xs sm:text-sm font-bold text-purple-300 uppercase tracking-wider">
-                                Event 2 Time</th>
-                            <th id="difference-header" scope="col"
-                                class="px-3 sm:px-6 py-2 sm:py-3 text-left text-xs sm:text-sm font-bold text-purple-300 uppercase tracking-wider">
-                                Difference (s)</th>
-                        </tr>
-                    </thead>
-                    <tbody id="results-table-body" class="bg-gray-900 divide-y divide-gray-700">
-                        <!-- Table rows will be inserted here by JavaScript -->
-                    </tbody>
-                </table>
-            </section>
+            <div id="loading-spinner" class="hidden flex justify-center items-center h-40">
+                <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-purple-500"></div>
+            </div>
 
-            <!-- Messages Section -->
+            <div id="results-container"
+                class="hidden bg-gray-950 bg-opacity-70 p-6 rounded-xl shadow-[0_20px_50px_rgba(168,85,247,0.3)] overflow-x-auto border border-purple-800">
+                <h2 id="results-title" class="text-2xl font-bold text-purple-300 mb-4">Results</h2>
+                <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-xl">
+                    <table class="min-w-full divide-y divide-gray-700">
+                        <thead class="bg-gray-800">
+                            <tr>
+                                <th scope="col"
+                                    class="px-6 py-3 text-left text-xs font-bold text-purple-300 uppercase tracking-wider">
+                                    Name (WCA ID)</th>
+                                <th scope="col"
+                                    class="px-6 py-3 text-left text-xs font-bold text-purple-300 uppercase tracking-wider">
+                                    Country</th>
+                                <th id="event1-header" scope="col"
+                                    class="px-6 py-3 text-left text-xs font-bold text-purple-300 uppercase tracking-wider">
+                                    Event 1 Time</th>
+                                <th id="event2-header" scope="col"
+                                    class="px-6 py-3 text-left text-xs font-bold text-purple-300 uppercase tracking-wider">
+                                    Event 2 Time</th>
+                                <th id="difference-header" scope="col"
+                                    class="px-6 py-3 text-left text-xs font-bold text-purple-300 uppercase tracking-wider">
+                                    Difference (s)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="results-table-body" class="bg-gray-900 divide-y divide-gray-700">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
             <div id="no-results-message" class="hidden text-center text-gray-300 mt-8">
                 <p>No results found for the selected events.</p>
             </div>
+
             <div id="error-message" class="hidden text-center text-red-400 mt-8">
                 <p>An error occurred while fetching data. Please try again.</p>
             </div>
-    </main>
+        </main>
     </div>
 
     <script>
@@ -178,21 +153,14 @@
         const resultsTableBody = document.getElementById('results-table-body');
         const event1Header = document.getElementById('event1-header');
         const event2Header = document.getElementById('event2-header');
+        const differenceHeader = document.getElementById('difference-header');
         const noResultsMessage = document.getElementById('no-results-message');
         const errorMessage = document.getElementById('error-message');
 
-        /**
-         * Finds the human-readable event name from its WCA ID.
-         * @param {string} id The WCA event ID.
-         * @returns {string} The human-readable event name.
-         */
         function getEventName(id) {
             return Object.keys(eventMap).find(key => eventMap[key] === id);
         }
 
-        /**
-         * Populates the event dropdown menus with options from the eventMap.
-         */
         function populateEventDropdowns() {
             for (const name in eventMap) {
                 const id = eventMap[name];
@@ -208,19 +176,22 @@
             }
         }
 
-        /**
-         * Fetches and renders comparison data based on selected events.
-         */
         async function fetchAndRenderData() {
             const event1Id = eventSelect1.value;
             const event2Id = eventSelect2.value;
 
-            // Clear previous results and show loading spinner
+            // Clear previous results
             resultsTableBody.innerHTML = '';
             resultsContainer.classList.add('hidden');
             noResultsMessage.classList.add('hidden');
             errorMessage.classList.add('hidden');
             loadingSpinner.classList.remove('hidden');
+
+            // Determine the header text based on event types
+            const isFMC = event1Id === '333fm' || event2Id === '333fm';
+
+            event1Header.textContent = `Event 1 Result`;
+            event2Header.textContent = `Event 2 Result`;
 
             try {
                 const response = await fetch(`/api/compare_events?event1=${event1Id}&event2=${event2Id}`);
@@ -232,18 +203,24 @@
                 loadingSpinner.classList.add('hidden');
 
                 if (data.data && data.data.length > 0) {
-                    const verb = (event1Id === '333fm' || event2Id === '333fm') ? 'better' : 'faster';
-                    resultsTitle.textContent = `Competitors who are ${verb} at ${getEventName(event1Id)} than ${getEventName(event2Id)}`;
+                    let messageVerb = 'faster';
+                    if (isFMC) {
+                        messageVerb = 'better';
+                    }
+
+                    const event1Name = getEventName(event1Id);
+                    const event2Name = getEventName(event2Id);
+
+                    resultsTitle.textContent = `Competitors who are ${messageVerb} at ${event1Name} than ${event2Name}`;
 
                     data.data.forEach(competitor => {
                         const row = document.createElement('tr');
-                        row.classList.add("hover:bg-gray-800", "transition");
                         row.innerHTML = `
-                            <td class="px-3 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm font-medium text-gray-200">${competitor.name} (${competitor.wca_id})</td>
-                            <td class="px-3 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm text-gray-400">${competitor.country}</td>
-                            <td class="px-3 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm text-gray-300">${competitor.event1_time}</td>
-                            <td class="px-3 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm text-gray-300">${competitor.event2_time}</td>
-                            <td class="px-3 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm font-bold text-purple-300">${competitor.time_difference_s.toFixed(2)}s</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-200">${competitor.name} (${competitor.wca_id})</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-400">${competitor.country}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-400">${competitor.event1_time}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-400">${competitor.event2_time}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-200">${competitor.time_difference_s.toFixed(2)}s</td>
                         `;
                         resultsTableBody.appendChild(row);
                     });

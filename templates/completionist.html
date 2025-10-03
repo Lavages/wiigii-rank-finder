@@ -65,20 +65,19 @@
   class="min-h-screen bg-gradient-to-br from-gray-900 to-black text-gray-100 p-2 sm:p-4 flex flex-col items-center justify-center font-[Inter]">
 
   <nav
-    class="w-full max-w-4xl mx-auto bg-gray-950 bg-opacity-80 rounded-t-2xl sm:rounded-t-3xl shadow-lg border border-purple-800 border-b-0 p-3 sm:p-4 flex flex-wrap justify-center gap-2 sm:gap-8 sticky top-0 z-10">
+    class="w-full max-w-4xl mx-auto bg-gray-950 bg-opacity-80 rounded-t-2xl sm:rounded-t-3xl shadow-lg border border-purple-800 border-b-0 p-3 sm:p-4 flex justify-center gap-4 sm:gap-8 sticky top-0 z-10">
     <a href="/"
-      class="text-xs sm:text-sm md:text-lg text-gray-300 hover:text-purple-400 transition-colors duration-200 font-semibold px-2 sm:px-4">Rank
+      class="text-sm sm:text-lg text-gray-300 hover:text-purple-400 transition-colors duration-200 font-semibold px-2 sm:px-4">Rank
       Finder</a>
     <a href="/competitors"
-      class="text-xs sm:text-sm md:text-lg text-gray-300 hover:text-purple-400 transition-colors duration-200 font-semibold px-2 sm:px-4">Competitors</a>
+      class="text-sm sm:text-lg text-gray-300 hover:text-purple-400 transition-colors duration-200 font-semibold px-2 sm:px-4">Competitors</a>
     <a href="/specialist"
-      class="text-xs sm:text-sm md:text-lg text-gray-300 hover:text-purple-400 transition-colors duration-200 font-semibold px-2 sm:px-4">Specialist</a>
+      class="text-sm sm:text-lg text-gray-300 hover:text-purple-400 transition-colors duration-200 font-semibold px-2 sm:px-4">Specialist</a>
     <a href="/completionist"
-      class="text-xs sm:text-sm md:text-lg text-gray-300 hover:text-purple-400 transition-colors duration-200 font-semibold px-2 sm:px-4">Completionist</a>
+      class="text-sm sm:text-lg text-gray-300 hover:text-purple-400 transition-colors duration-200 font-semibold px-2 sm:px-4">Completionist</a>
     <a href="/comparison"
-      class="text-xs sm:text-sm md:text-lg text-gray-300 hover:text-purple-400 transition-colors duration-200 font-semibold px-2 sm:px-4">Comparison</a>
+      class="text-sm sm:text-lg text-gray-300 hover:text-purple-400 transition-colors duration-200 font-semibold px-2 sm:px-4">Comparison</a>
   </nav>
-
 
   <main
     class="max-w-4xl w-full mx-auto bg-gray-950 bg-opacity-70 rounded-b-2xl sm:rounded-b-3xl shadow-xl p-4 sm:p-8 space-y-6 sm:space-y-10 backdrop-blur-md border border-purple-800 border-t-0 flex-grow">
@@ -173,7 +172,7 @@
       silver: `<span class="font-semibold text-gray-300">🥈 Silver:</span> Must have <strong>all singles</strong> and <strong>all averages</strong>, except for <strong>FMC</strong> and <strong>Blindfolded events</strong>.`,
       gold: `<span class="font-semibold text-yellow-300">🥇 Gold:</span> Must have <strong>all singles</strong> and <strong>all averages</strong>, including <strong>FMC</strong> and <strong>Blindfolded means</strong>.`,
       platinum: `<span class="font-semibold text-indigo-400">🌌 Platinum:</span> Must have <strong>all singles</strong> and <strong>all averages</strong>, including <strong>FMC </strong> and <strong>Blindfolded means</strong>, plus either a <strong>World Record</strong> or a <strong>World Championship podium</strong>.`,
-      palladium: `<span class="font-semibold text-gray-400">💎 Palladium:</span> Must have all Platinum criteria plus have held a World Record in at least three different events.`
+      palladium: `<span class="font-semibold text-gray-400">💎 Palladium:</span> Must satisfy all Platinum criteria <strong>and</strong> have won a Gold Medal in all 17 official WCA events (at any WCA competition).`
     };
 
     function updateCriteria(category) {

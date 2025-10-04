@@ -26,11 +26,23 @@ RETRY_ATTEMPTS = 3
 RETRY_DELAY = 2  # seconds
 
 EVENT_MAP = {
-    "3x3": "333", "2x2": "222", "4x4": "444", "5x5": "555",
-    "6x6": "666", "7x7": "777", "3bld": "333bf", "oh": "333oh",
-    "fmc": "333fm", "clock": "clock", "mega": "minx", "pyra": "pyram",
-    "sq1": "sq1", "skewb": "skewb", "4bld": "444bf", "5bld": "555bf",
-    "mbld": "333mbf"
+    "3x3": "333",
+    "2x2": "222",
+    "4x4": "444",
+    "5x5": "555",
+    "6x6": "666",
+    "7x7": "777",
+    "3BLD": "333bf",
+    "4BLD": "444bf",
+    "5BLD": "555bf",
+    "MBLD": "333mbf", 
+    "OH": "333oh",
+    "FMC": "333fm",
+    "Clock": "clock",
+    "Megaminx": "minx",
+    "Pyraminx": "pyram",
+    "Square-1": "sq1",
+    "Skewb": "skewb",
 }
 
 # --- Global Data ---

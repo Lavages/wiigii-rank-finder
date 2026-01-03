@@ -243,15 +243,23 @@ def find_specialists(selected_events, max_results=MAX_RESULTS):
 # --- WCA Events (No change) ---
 def get_all_wca_events():
     return {
-        "333": "3x3 Cube", "222": "2x2 Cube", "444": "4x4 Cube",
-        "555": "5x5 Cube", "666": "6x6 Cube", "777": "7x7 Cube",
-        "333oh": "3x3 One-Handed", "333bf": "3x3 Blindfolded",
-        "333fm": "Fewest Moves", "clock": "Clock", "minx": "Megaminx",
-        "pyram": "Pyraminx", "skewb": "Skewb", "sq1": "Square-1",
-        "444bf": "4x4 Blindfolded", "555bf": "5x5 Blindfolded",
-        "333mbf": "3x3 Multi-Blind",
-        "magic": "Magic Cube", "mmagic": "Mini Magic Cube",
-        "333mbo": "3x3 Multi Blind Old", "333ft": "3x3 with Feet"
+        "3x3 Cube": "333",
+    "2x2 Cube": "222",
+    "4x4 Cube": "444",
+    "5x5 Cube": "555",
+    "6x6 Cube": "666",
+    "7x7 Cube": "777",
+    "3x3 One-Handed": "333oh",
+    "3x3 Blindfolded": "333bf",
+    "3x3 Fewest Moves": "333fm",
+    "Clock": "clock",
+    "Megaminx": "minx",
+    "Pyraminx": "pyram",
+    "Skewb": "skewb",
+    "Square-1": "sq1",
+    "4x4 Blindfolded": "444bf",
+    "5x5 Blindfolded": "555bf",
+    "3x3 Multi-Blind": "333mbf"
     }
 
 # --- Flask Routes (No change) ---

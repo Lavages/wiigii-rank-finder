@@ -12,74 +12,76 @@ logger = logging.getLogger(__name__)
 comparison_bp = Blueprint('comparison', __name__)
 
 # Constants
-TOTAL_PAGES = 268
-CACHE_FILE = os.path.join(tempfile.gettempdir(), "wca_master_data.msgpack")
-CACHE_EXPIRY = 86400 # 24 Hours
+# We use dynamic checking now, but keep a fallback
+CACHE_FILE = os.path.join(tempfile.gettempdir(), "wca_mini_comparison.msgpack")
+CACHE_EXPIRY = 86400 
 
-# Shared Internal State
+# SHARED STATE - Optimized to save RAM
+# Structure: { "WCAID": {"n": "Name", "c": "Country", "s": {"333": 1000, ...}} }
 _all_persons = {}
 _is_loaded = False
 _lock = threading.Lock()
 
-# Mapping Frontend Display Names to WCA API Event IDs
 EVENT_MAP = {
-    "3x3 Cube": "333",
-    "2x2 Cube": "222",
-    "4x4 Cube": "444",
-    "5x5 Cube": "555",
-    "6x6 Cube": "666",
-    "7x7 Cube": "777",
-    "3x3 One-Handed": "333oh",
-    "3x3 Blindfolded": "333bf",
-    "3x3 Fewest Moves": "333fm",
-    "Clock": "clock",
-    "Megaminx": "minx",
-    "Pyraminx": "pyram",
-    "Skewb": "skewb",
-    "Square-1": "sq1",
-    "4x4 Blindfolded": "444bf",
-    "5x5 Blindfolded": "555bf",
-    "3x3 Multi-Blind": "333mbf"
+    "3x3 Cube": "333", "2x2 Cube": "222", "444": "444", "555": "555",
+    "666": "666", "777": "777", "3x3 One-Handed": "333oh",
+    "3x3 Blindfolded": "333bf", "3x3 Fewest Moves": "333fm",
+    "Clock": "clock", "Megaminx": "minx", "Pyraminx": "pyram",
+    "Skewb": "skewb", "Square-1": "sq1", "4x4 Blindfolded": "444bf",
+    "5x5 Blindfolded": "555bf", "3x3 Multi-Blind": "333mbf"
 }
 
-# --- Data Loading Logic ---
-
 def preload_comparison_data(shared_session=None):
-    """Loads WCA person data into memory, using cache if available."""
     global _all_persons, _is_loaded
-    
-    if _is_loaded:
-        return
+    if _is_loaded: return
 
-    # 1. Check Disk Cache
+    # 1. Load from Disk Cache (Optimized)
     if os.path.exists(CACHE_FILE) and (time.time() - os.path.getmtime(CACHE_FILE) < CACHE_EXPIRY):
         try:
             with open(CACHE_FILE, "rb") as f:
-                loaded_data = msgpack.unpackb(f.read(), raw=False)
-                with _lock:
-                    _all_persons = loaded_data
-                    _is_loaded = True
-            logger.info("Comparison data loaded from Disk Cache.")
+                _all_persons = msgpack.unpackb(f.read(), raw=False)
+                _is_loaded = True
+            logger.info("RAM-Optimized Comparison data loaded from Disk.")
             return
         except Exception as e:
-            logger.error(f"Failed to load comparison cache: {e}")
+            logger.error(f"Cache load failed: {e}")
 
-    # 2. Fetch from GitHub
-    logger.info("Fetching fresh WCA data for comparison...")
+    # 2. RAM-Optimized Fetch
+    logger.info("Starting memory-efficient fetch for Render...")
     temp_store = {}
     session = shared_session if shared_session else requests.Session()
-
-    for p in range(1, TOTAL_PAGES + 1):
-        url = f"https://raw.githubusercontent.com/robiningelbrecht/wca-rest-api/master/api/persons-page-{p}.json"
+    
+    page = 1
+    while True:
+        url = f"https://raw.githubusercontent.com/robiningelbrecht/wca-rest-api/master/api/persons-page-{page}.json"
         try:
             r = session.get(url, timeout=10)
+            if r.status_code == 404: break
             r.raise_for_status()
             data = r.json()
-            items = data.get("items", [])
-            for person in items:
-                temp_store[person['id']] = person
+            
+            # Handle List vs Dict
+            items = data.get("items", []) if isinstance(data, dict) else data
+            
+            for p in items:
+                # STRIP DATA: Only keep name, country, and singles ranks
+                # We rename keys to 1-letter to save even more RAM
+                singles_list = p.get("rank", {}).get("singles", [])
+                mini_singles = {s["eventId"]: s["best"] for s in singles_list if isinstance(s, dict)}
+                
+                if mini_singles:
+                    temp_store[p['id']] = {
+                        "n": p.get("name"),
+                        "c": p.get("country"),
+                        "s": mini_singles
+                    }
+            
+            if page % 50 == 0:
+                logger.info(f"Processed {page} pages...")
+            page += 1
         except Exception as e:
-            logger.error(f"Error fetching page {p}: {e}")
+            logger.error(f"Error on page {page}: {e}")
+            break
 
     with _lock:
         _all_persons = temp_store
@@ -89,96 +91,68 @@ def preload_comparison_data(shared_session=None):
     try:
         with open(CACHE_FILE, "wb") as f:
             f.write(msgpack.packb(temp_store, use_bin_type=True))
-        logger.info("Comparison data cached to disk.")
     except Exception as e:
-        logger.error(f"Failed to save comparison cache: {e}")
+        logger.error(f"Cache save failed: {e}")
 
-# --- Logic Helpers ---
+# --- Helper Functions ---
 
 def extract_time_for_comparison(event_id, result):
-    """Standardizes WCA results for comparison (centiseconds)."""
-    if not result or result <= 0:
-        return float("inf")
-    
-    # 3x3 Multi-Blind (MBLD)
+    if not result or result <= 0: return float("inf")
     if event_id == "333mbf":
-        value_str = str(result).rjust(10, "0")
-        time_sec = int(value_str[3:8]) if value_str.startswith("0") else int(value_str[5:10])
+        v = str(result).rjust(10, "0")
+        time_sec = int(v[3:8]) if v.startswith("0") else int(v[5:10])
         return time_sec * 100 
-    
-    # 3x3 Fewest Moves (FMC)
-    if event_id == "333fm":
-        return result * 100
-        
+    if event_id == "333fm": return result * 100
     return result
 
 def format_result(event_id, result):
-    """Converts WCA integers into standard competition format strings."""
-    if not result or result <= 0:
-        return "DNF"
-    
-    if event_id == "333fm":
-        return f"{result} moves"
-    
+    if not result or result <= 0: return "DNF"
+    if event_id == "333fm": return f"{result} moves"
     if event_id == "333mbf":
-        value_str = str(result).rjust(10, "0")
-        diff = 99 - int(value_str[0:2])
-        missed = int(value_str[8:10])
-        solved = diff + missed
-        attempted = solved + missed
-        time_sec = int(value_str[3:8]) if value_str.startswith("0") else int(value_str[5:10])
-        return f"{solved}/{attempted} {time_sec // 60}:{time_sec % 60:02d}"
-
-    total_seconds = result / 100.0
-    if total_seconds < 60:
-        return f"{total_seconds:.2f}"
+        v = str(result).rjust(10, "0")
+        solved = (99 - int(v[0:2])) + int(v[8:10])
+        att = solved + int(v[8:10])
+        ts = int(v[3:8]) if v.startswith("0") else int(v[5:10])
+        return f"{solved}/{att} {ts // 60}:{ts % 60:02d}"
     
-    minutes = int(total_seconds // 60)
-    seconds = total_seconds % 60
-    return f"{minutes}:{seconds:05.2f}"
+    sec = result / 100.0
+    return f"{sec:.2f}" if sec < 60 else f"{int(sec // 60)}:{sec % 60:05.2f}"
 
 # --- Routes ---
 
 @comparison_bp.route('/compare_events', methods=['GET'])
 def compare_events():
     if not _is_loaded:
-        return jsonify({"error": "Still loading WCA database..."}), 503
+        return jsonify({"error": "Loading..."}), 503
 
     e1_display = request.args.get('event1', '').strip()
     e2_display = request.args.get('event2', '').strip()
-    
-    e1_id = EVENT_MAP.get(e1_display)
-    e2_id = EVENT_MAP.get(e2_display)
+    e1_id, e2_id = EVENT_MAP.get(e1_display), EVENT_MAP.get(e2_display)
 
     if not e1_id or not e2_id:
-        return jsonify({"error": "Invalid events selected"}), 400
+        return jsonify({"error": "Invalid events"}), 400
 
     matches = []
-    with _lock:
-        for p_id, p_data in _all_persons.items():
-            ranks = p_data.get("rank", {}).get("singles", [])
-            singles = {r["eventId"]: r["best"] for r in ranks}
+    # No lock needed for read-only access to dictionary after loading
+    for p_id, p_data in _all_persons.items():
+        singles = p_data["s"]
+        if e1_id in singles and e2_id in singles:
+            raw1, raw2 = singles[e1_id], singles[e2_id]
+            t1 = extract_time_for_comparison(e1_id, raw1)
+            t2 = extract_time_for_comparison(e2_id, raw2)
             
-            if e1_id in singles and e2_id in singles:
-                raw1, raw2 = singles[e1_id], singles[e2_id]
-                
-                t1 = extract_time_for_comparison(e1_id, raw1)
-                t2 = extract_time_for_comparison(e2_id, raw2)
-                
-                if t1 < t2:
-                    matches.append({
-                        "name": p_data['name'],
-                        "wca_id": p_id,
-                        "country": p_data['country'],
-                        "diff": (t2 - t1) / 100.0,
-                        "best1": format_result(e1_id, raw1),
-                        "best2": format_result(e2_id, raw2)
-                    })
+            if t1 < t2:
+                matches.append({
+                    "name": p_data['n'],
+                    "wca_id": p_id,
+                    "country": p_data['c'],
+                    "diff": (t2 - t1) / 100.0,
+                    "best1": format_result(e1_id, raw1),
+                    "best2": format_result(e2_id, raw2)
+                })
 
-    top_100 = heapq.nlargest(100, matches, key=lambda x: x['diff'])
-    
     return jsonify({
-        "data": top_100,
+        "data": heapq.nlargest(100, matches, key=lambda x: x['diff']),
         "event1": e1_display,
         "event2": e2_display
     })

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WCA Event Comparison</title>
+    <title>WCA Event Comparison | Rank Finder</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,229 +14,251 @@
             font-family: 'Inter', sans-serif;
         }
 
-        .spinner {
-            animation: spin 1s linear infinite;
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 8px;
         }
 
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
 
-            100% {
-                transform: rotate(360deg);
-            }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #7e22ce;
+            border-radius: 10px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #9333ea;
         }
     </style>
 </head>
 
-<body class="min-h-screen bg-gradient-to-br from-gray-900 to-black text-gray-100 p-4 flex flex-col items-center">
+<body
+    class="min-h-screen bg-gradient-to-br from-gray-900 to-black text-gray-100 p-4 flex flex-col items-center custom-scrollbar">
 
     <nav
-        class="w-full max-w-6xl mx-auto bg-gray-950 bg-opacity-80 rounded-t-2xl sm:rounded-t-3xl shadow-lg border border-purple-800 border-b-0 p-3 sm:p-4 flex justify-center gap-4 sm:gap-8 sticky top-0 z-10">
+        class="w-full max-w-6xl mx-auto bg-gray-950 bg-opacity-80 rounded-t-2xl sm:rounded-t-3xl shadow-lg border border-purple-800 border-b-0 p-3 sm:p-4 flex justify-center gap-4 sm:gap-8 sticky top-0 z-10 backdrop-blur-md">
         <a href="/"
-            class="text-sm sm:text-lg text-gray-300 hover:text-purple-400 transition-colors duration-200 font-semibold px-2 sm:px-4">Rank
+            class="text-xs sm:text-base text-gray-300 hover:text-purple-400 transition-colors duration-200 font-semibold px-2">Rank
             Finder</a>
         <a href="/competitors"
-            class="text-sm sm:text-lg text-gray-300 hover:text-purple-400 transition-colors duration-200 font-semibold px-2 sm:px-4">Competitors</a>
+            class="text-xs sm:text-base text-gray-300 hover:text-purple-400 transition-colors duration-200 font-semibold px-2">Competitors</a>
         <a href="/specialist"
-            class="text-sm sm:text-lg text-gray-300 hover:text-purple-400 transition-colors duration-200 font-semibold px-2 sm:px-4">Specialist</a>
+            class="text-xs sm:text-base text-gray-300 hover:text-purple-400 transition-colors duration-200 font-semibold px-2">Specialist</a>
         <a href="/completionist"
-            class="text-sm sm:text-lg text-gray-300 hover:text-purple-400 transition-colors duration-200 font-semibold px-2 sm:px-4">Completionist</a>
+            class="text-xs sm:text-base text-gray-300 hover:text-purple-400 transition-colors duration-200 font-semibold px-2">Completionist</a>
         <a href="/comparison"
-            class="text-sm sm:text-lg text-gray-300 hover:text-purple-400 transition-colors duration-200 font-semibold px-2 sm:px-4">Comparison</a>
+            class="text-xs sm:text-base text-purple-400 border-b-2 border-purple-500 transition-colors duration-200 font-semibold px-2">Comparison</a>
     </nav>
 
     <div
-        class="max-w-6xl w-full mx-auto bg-gray-950 bg-opacity-70 rounded-b-3xl shadow-[0_20px_50px_rgba(168,85,247,0.3)] p-4 sm:p-10 space-y-10 backdrop-blur-md border border-purple-800 border-t-0">
+        class="max-w-6xl w-full mx-auto bg-gray-950 bg-opacity-70 rounded-b-3xl shadow-[0_20px_50px_rgba(168,85,247,0.2)] p-4 sm:p-10 space-y-10 backdrop-blur-md border border-purple-800 border-t-0">
+
         <header class="text-center">
             <h1
-                class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-purple-400 drop-shadow-[0_2px_2px_rgba(0,0,0,0.5)]">
+                class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500 drop-shadow-sm">
                 WCA Event Comparison
             </h1>
-            <p class="text-xl text-gray-400 mt-2">Find competitors who are faster at one event than another.</p>
+            <p class="text-lg text-gray-400 mt-4">Discover cubers with "imbalanced" rankings across different events.
+            </p>
         </header>
 
         <main class="space-y-8">
-            <div class="bg-gray-800 bg-opacity-50 p-6 rounded-xl shadow-lg border border-gray-700">
-                <div class="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-4">
-                    <div class="w-full md:w-1/2">
-                        <label for="event1-select" class="block text-sm font-medium text-gray-300 mb-1">Select Event
-                            1:</label>
+            <div class="bg-gray-800 bg-opacity-40 p-6 rounded-2xl shadow-inner border border-gray-700">
+                <div class="flex flex-col md:flex-row items-center justify-center gap-4">
+
+                    <div class="w-full md:w-5/12">
+                        <label class="block text-xs font-bold text-purple-300 uppercase tracking-widest mb-2">Better
+                            At:</label>
                         <select id="event1-select"
-                            class="w-full p-3 rounded-xl border border-gray-700 bg-gray-800 text-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-600 transition duration-200 ease-in-out cursor-pointer appearance-none bg-[url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns="
-                            http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="white" %3e%3cpath fill-rule="evenodd"
-                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                            clip-rule="evenodd" /%3e%3c/svg%3e')] bg-[length:1.5rem_1.5rem] bg-[right_1rem_center]
-                            bg-no-repeat">
-                        </select>
+                            class="w-full p-4 rounded-xl border border-gray-700 bg-gray-900 text-gray-100 focus:ring-2 focus:ring-purple-600 outline-none cursor-pointer appearance-none transition-all"></select>
                     </div>
-                    <div class="w-full md:w-1/2">
-                        <label for="event2-select" class="block text-sm font-medium text-gray-300 mb-1">Select Event
-                            2:</label>
+
+                    <div class="flex items-center justify-center pt-6">
+                        <button id="swap-btn"
+                            class="p-3 rounded-full bg-gray-700 hover:bg-purple-600 text-white transition-all transform hover:rotate-180"
+                            title="Swap Events">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+                            </svg>
+                        </button>
+                    </div>
+
+                    <div class="w-full md:w-5/12">
+                        <label class="block text-xs font-bold text-purple-300 uppercase tracking-widest mb-2">Than
+                            At:</label>
                         <select id="event2-select"
-                            class="w-full p-3 rounded-xl border border-gray-700 bg-gray-800 text-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-600 transition duration-200 ease-in-out cursor-pointer appearance-none bg-[url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns="
-                            http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="white" %3e%3cpath fill-rule="evenodd"
-                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                            clip-rule="evenodd" /%3e%3c/svg%3e')] bg-[length:1.5rem_1.5rem] bg-[right_1rem_center]
-                            bg-no-repeat">
-                        </select>
+                            class="w-full p-4 rounded-xl border border-gray-700 bg-gray-900 text-gray-100 focus:ring-2 focus:ring-purple-600 outline-none cursor-pointer appearance-none transition-all"></select>
                     </div>
                 </div>
-                <div class="flex justify-center mt-6">
-                    <button id="compare-button"
-                        class="w-full bg-purple-700 hover:bg-purple-800 active:bg-purple-900 text-white font-bold py-4 px-8 rounded-xl shadow-lg hover:shadow-xl transition duration-300 ease-in-out transform hover:scale-105">
-                        Compare
-                    </button>
-                </div>
+
+                <button id="compare-button"
+                    class="w-full mt-8 bg-gradient-to-r from-purple-600 to-purple-800 hover:from-purple-500 hover:to-purple-700 text-white font-bold py-4 rounded-xl shadow-lg transition-all transform hover:scale-[1.01] active:scale-95 uppercase tracking-widest">
+                    Run Analysis
+                </button>
             </div>
 
-            <div id="loading-spinner" class="hidden flex justify-center items-center h-40">
+            <div id="loading-spinner" class="hidden flex flex-col justify-center items-center py-20 space-y-4">
                 <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-purple-500"></div>
+                <p class="text-purple-400 animate-pulse font-medium">Scanning 268 pages of WCA data...</p>
             </div>
 
-            <div id="results-container"
-                class="hidden bg-gray-950 bg-opacity-70 p-6 rounded-xl shadow-[0_20px_50px_rgba(168,85,247,0.3)] overflow-x-auto border border-purple-800">
-                <h2 id="results-title" class="text-2xl font-bold text-purple-300 mb-4">Results</h2>
-                <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-xl">
-                    <table class="min-w-full divide-y divide-gray-700">
-                        <thead class="bg-gray-800">
-                            <tr>
-                                <th scope="col"
-                                    class="px-6 py-3 text-left text-xs font-bold text-purple-300 uppercase tracking-wider">
-                                    Name (WCA ID)</th>
-                                <th scope="col"
-                                    class="px-6 py-3 text-left text-xs font-bold text-purple-300 uppercase tracking-wider">
-                                    Country</th>
-                                <th id="event1-header" scope="col"
-                                    class="px-6 py-3 text-left text-xs font-bold text-purple-300 uppercase tracking-wider">
-                                    Event 1 Time</th>
-                                <th id="event2-header" scope="col"
-                                    class="px-6 py-3 text-left text-xs font-bold text-purple-300 uppercase tracking-wider">
-                                    Event 2 Time</th>
-                                <th id="difference-header" scope="col"
-                                    class="px-6 py-3 text-left text-xs font-bold text-purple-300 uppercase tracking-wider">
-                                    Difference (s)</th>
-                            </tr>
-                        </thead>
-                        <tbody id="results-table-body" class="bg-gray-900 divide-y divide-gray-700">
-                        </tbody>
-                    </table>
+            <div id="results-container" class="hidden animate-fadeIn">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 id="results-title"
+                        class="text-xl sm:text-2xl font-bold text-gray-100 border-l-4 border-purple-500 pl-4">Results
+                    </h2>
+                    <span class="text-xs text-gray-500 bg-gray-800 px-3 py-1 rounded-full">Top 100 Gaps</span>
+                </div>
+
+                <div
+                    class="overflow-hidden rounded-2xl border border-purple-900 border-opacity-50 bg-gray-900 bg-opacity-50 backdrop-blur-sm">
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-800">
+                            <thead class="bg-gray-800 bg-opacity-90">
+                                <tr>
+                                    <th
+                                        class="px-6 py-4 text-left text-xs font-bold text-purple-300 uppercase tracking-wider">
+                                        Competitor</th>
+                                    <th
+                                        class="px-6 py-4 text-left text-xs font-bold text-purple-300 uppercase tracking-wider">
+                                        Region</th>
+                                    <th id="event1-header"
+                                        class="px-6 py-4 text-left text-xs font-bold text-purple-300 uppercase tracking-wider">
+                                        Event 1</th>
+                                    <th id="event2-header"
+                                        class="px-6 py-4 text-left text-xs font-bold text-purple-300 uppercase tracking-wider">
+                                        Event 2</th>
+                                    <th
+                                        class="px-6 py-4 text-left text-xs font-bold text-purple-300 uppercase tracking-wider">
+                                        Margin</th>
+                                </tr>
+                            </thead>
+                            <tbody id="results-table-body" class="divide-y divide-gray-800"></tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 
-            <div id="no-results-message" class="hidden text-center text-gray-300 mt-8">
-                <p>No results found for the selected events.</p>
+            <div id="no-results-message"
+                class="hidden text-center py-20 bg-gray-900 rounded-3xl border border-dashed border-gray-700">
+                <p class="text-gray-400 text-lg italic">No competitors found who fit this specific criteria.</p>
             </div>
 
-            <div id="error-message" class="hidden text-center text-red-400 mt-8">
-                <p>An error occurred while fetching data. Please try again.</p>
+            <div id="error-message"
+                class="hidden text-center py-10 bg-red-950 bg-opacity-20 rounded-2xl border border-red-900 text-red-400">
+                <p class="font-semibold">Error: <span id="error-text">Failed to fetch data.</span></p>
             </div>
         </main>
     </div>
 
+    <footer class="mt-10 mb-6 text-gray-500 text-sm">
+        Data sourced from WCA REST API
+    </footer>
+
     <script>
+        // Must exactly match the keys in comparison.py EVENT_MAP
         const eventMap = {
-            "3x3": "333",
-            "2x2": "222",
-            "4x4": "444",
-            "5x5": "555",
-            "6x6": "666",
-            "7x7": "777",
-
-            // Blindfolded
-            "3BLD": "333bf",    // 3x3x3 Blindfolded
-            "4BLD": "444bf",    // 4x4x4 Blindfolded
-            "5BLD": "555bf",    // 5x5x5 Blindfolded
-            "MBLD": "333mbf",   // Multiple Blindfolded
-
-            // Other Events
-            "OH": "333oh",
-            "FMC": "333fm",
+            "3x3 Cube": "333",
+            "2x2 Cube": "222",
+            "4x4 Cube": "444",
+            "5x5 Cube": "555",
+            "6x6 Cube": "666",
+            "7x7 Cube": "777",
+            "3x3 One-Handed": "333oh",
+            "3x3 Blindfolded": "333bf",
+            "3x3 Fewest Moves": "333fm",
             "Clock": "clock",
             "Megaminx": "minx",
             "Pyraminx": "pyram",
-            "Square-1": "sq1",
             "Skewb": "skewb",
+            "Square-1": "sq1",
+            "4x4 Blindfolded": "444bf",
+            "5x5 Blindfolded": "555bf",
+            "3x3 Multi-Blind": "333mbf"
         };
 
         const eventSelect1 = document.getElementById('event1-select');
         const eventSelect2 = document.getElementById('event2-select');
         const compareButton = document.getElementById('compare-button');
+        const swapButton = document.getElementById('swap-btn');
         const loadingSpinner = document.getElementById('loading-spinner');
         const resultsContainer = document.getElementById('results-container');
         const resultsTitle = document.getElementById('results-title');
         const resultsTableBody = document.getElementById('results-table-body');
         const event1Header = document.getElementById('event1-header');
         const event2Header = document.getElementById('event2-header');
-        const differenceHeader = document.getElementById('difference-header');
         const noResultsMessage = document.getElementById('no-results-message');
         const errorMessage = document.getElementById('error-message');
-
-        function getEventName(id) {
-            return Object.keys(eventMap).find(key => eventMap[key] === id);
-        }
+        const errorText = document.getElementById('error-text');
 
         function populateEventDropdowns() {
-            for (const name in eventMap) {
-                const id = eventMap[name];
-                const option1 = document.createElement('option');
-                option1.value = id;
-                option1.textContent = name;
-                eventSelect1.appendChild(option1);
-
-                const option2 = document.createElement('option');
-                option2.value = id;
-                option2.textContent = name;
-                eventSelect2.appendChild(option2);
-            }
+            Object.keys(eventMap).forEach((name, index) => {
+                const opt1 = new Option(name, name);
+                const opt2 = new Option(name, name);
+                eventSelect1.add(opt1);
+                eventSelect2.add(opt2);
+            });
+            // Default selections
+            eventSelect1.selectedIndex = 2; // 4x4
+            eventSelect2.selectedIndex = 0; // 3x3
         }
 
-        async function fetchAndRenderData() {
-            const event1Id = eventSelect1.value;
-            const event2Id = eventSelect2.value;
+        swapButton.onclick = () => {
+            const temp = eventSelect1.value;
+            eventSelect1.value = eventSelect2.value;
+            eventSelect2.value = temp;
+        };
 
-            // Clear previous results
+        async function fetchAndRenderData() {
+            const e1Name = eventSelect1.value;
+            const e2Name = eventSelect2.value;
+
+            // Reset UI
             resultsTableBody.innerHTML = '';
             resultsContainer.classList.add('hidden');
             noResultsMessage.classList.add('hidden');
             errorMessage.classList.add('hidden');
             loadingSpinner.classList.remove('hidden');
 
-            // Determine the header text based on event types
-            const isFMC = event1Id === '333fm' || event2Id === '333fm';
-
-            event1Header.textContent = `Event 1 Result`;
-            event2Header.textContent = `Event 2 Result`;
+            // Update Headers
+            event1Header.textContent = e1Name;
+            event2Header.textContent = e2Name;
 
             try {
-                const response = await fetch(`/api/compare_events?event1=${event1Id}&event2=${event2Id}`);
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                const data = await response.json();
+                // Ensure endpoint matches your Flask registration (default /api/compare_events)
+                const response = await fetch(`/api/compare_events?event1=${encodeURIComponent(e1Name)}&event2=${encodeURIComponent(e2Name)}`);
 
+                if (!response.ok) {
+                    const err = await response.json();
+                    throw new Error(err.error || 'Server error');
+                }
+
+                const json = await response.json();
                 loadingSpinner.classList.add('hidden');
 
-                if (data.data && data.data.length > 0) {
-                    let messageVerb = 'faster';
-                    if (isFMC) {
-                        messageVerb = 'better';
-                    }
+                if (json.data && json.data.length > 0) {
+                    const verb = e1Name.includes('Fewest Moves') ? 'better' : 'faster';
+                    resultsTitle.textContent = `${e1Name} Specialists (${verb} than ${e2Name})`;
 
-                    const event1Name = getEventName(event1Id);
-                    const event2Name = getEventName(event2Id);
-
-                    resultsTitle.textContent = `Competitors who are ${messageVerb} at ${event1Name} than ${event2Name}`;
-
-                    data.data.forEach(competitor => {
+                    json.data.forEach(comp => {
                         const row = document.createElement('tr');
+                        row.className = "hover:bg-purple-900 hover:bg-opacity-10 transition-colors";
                         row.innerHTML = `
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-200">${competitor.name} (${competitor.wca_id})</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-400">${competitor.country}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-400">${competitor.event1_time}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-400">${competitor.event2_time}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-200">${competitor.time_difference_s.toFixed(2)}s</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-sm font-bold text-gray-100">${comp.name}</div>
+                                <div class="text-xs text-purple-400 font-mono">${comp.wca_id}</div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-400">${comp.country}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold text-gray-300">${comp.best1}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${comp.best2}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="px-2 py-1 text-xs font-bold rounded-md bg-purple-900 bg-opacity-30 text-purple-300">
+                                    ${comp.diff.toFixed(2)}s lead
+                                </span>
+                            </td>
                         `;
                         resultsTableBody.appendChild(row);
                     });
@@ -245,16 +267,15 @@
                     noResultsMessage.classList.remove('hidden');
                 }
 
-            } catch (error) {
-                console.error('Error fetching comparison data:', error);
+            } catch (err) {
                 loadingSpinner.classList.add('hidden');
+                errorText.textContent = err.message;
                 errorMessage.classList.remove('hidden');
             }
         }
 
-        // Initialize dropdowns and add event listener
         populateEventDropdowns();
-        compareButton.addEventListener('click', fetchAndRenderData);
+        compareButton.onclick = fetchAndRenderData;
     </script>
 </body>
 

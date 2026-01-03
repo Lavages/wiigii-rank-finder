@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Competitors Compass</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Cubing.net Icons -->
+  <link rel="stylesheet" href="https://cdn.cubing.net/v0/css/@cubing/icons/css">
+  <style>
+    .event-icon {
+      font-size: 2.4rem;
+      vertical-align: middle;
+    }
+  </style>
+</head>
+
+<body
+  class="min-h-screen bg-gradient-to-br from-gray-900 to-black text-gray-100 p-2 sm:p-4 flex flex-col items-center justify-center font-[Inter]">
+
+  <!-- Navbar -->
+  <nav
+    class="w-full max-w-4xl mx-auto bg-gray-950 bg-opacity-80 rounded-t-2xl sm:rounded-t-3xl shadow-lg border border-purple-800 border-b-0 p-3 sm:p-4 flex justify-center gap-4 sm:gap-8 sticky top-0 z-10">
+    <a href="/"
+      class="text-sm sm:text-lg text-gray-300 hover:text-purple-400 transition-colors duration-200 font-semibold px-2 sm:px-4">Rank
+      Finder</a>
+    <a href="/competitors"
+      class="text-sm sm:text-lg text-gray-300 hover:text-purple-400 transition-colors duration-200 font-semibold px-2 sm:px-4">Competitors</a>
+    <a href="/specialist"
+      class="text-sm sm:text-lg text-gray-300 hover:text-purple-400 transition-colors duration-200 font-semibold px-2 sm:px-4">Specialist</a>
+    <a href="/completionist"
+      class="text-sm sm:text-lg text-gray-300 hover:text-purple-400 transition-colors duration-200 font-semibold px-2 sm:px-4">Completionist</a>
+    <a href="/comparison"
+      class="text-sm sm:text-lg text-gray-300 hover:text-purple-400 transition-colors duration-200 font-semibold px-2 sm:px-4">Comparison</a>
+  </nav>
+
+
+
+  <!-- Main -->
+  <main
+    class="max-w-4xl w-full mx-auto bg-gray-950 bg-opacity-70 rounded-b-2xl sm:rounded-b-3xl shadow-xl p-4 sm:p-8 space-y-6 sm:space-y-10 backdrop-blur-md border border-purple-800 border-t-0 flex-grow">
+
+    <!-- Title -->
+    <h1
+      class="text-3xl sm:text-5xl font-extrabold text-center text-purple-400 drop-shadow-md mb-4 sm:mb-8 leading-tight">
+      Competitors Compass 🧭
+    </h1>
+
+    <!-- Event Selector -->
+    <div id="event-selector" class="flex flex-wrap justify-center gap-2 sm:gap-3"></div>
+
+    <!-- Find Button -->
+    <div class="flex justify-center mt-6">
+      <button id="find-btn"
+        class="bg-purple-600 hover:bg-purple-500 text-white font-bold py-2 px-6 rounded-full shadow-md transition">
+        Find Competitors
+      </button>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div id="loading-spinner" class="hidden flex justify-center items-center py-6 sm:py-10">
+      <svg class="animate-spin h-10 w-10 sm:h-12 sm:w-12 text-purple-400" xmlns="http://www.w3.org/2000/svg" fill="none"
+        viewBox="0 0 24 24">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 00-8 8h4z"></path>
+      </svg>
+    </div>
+
+    <!-- Results -->
+    <div id="results-container"
+      class="overflow-x-auto custom-scrollbar rounded-xl border border-gray-700 shadow-xl min-h-[200px] flex flex-col items-center justify-center text-sm sm:text-base">
+      <p id="error-message" class="text-red-400 hidden"></p>
+      <p id="no-data-message" class="text-gray-500 hidden text-center">No competitors found for this selection.</p>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="w-full max-w-4xl mx-auto text-center text-gray-500 text-xs sm:text-sm mt-6 sm:mt-8 pb-4">
+    <p>© 2025 Wiigii's WCA Rankings. All rights reserved.</p>
+  </footer>
+
+  <script>
+    const API_BASE_URL = '/api';
+
+    const EVENT_ICONS = {
+      "333": '<span class="cubing-icon event-333 event-icon"></span>',
+      "222": '<span class="cubing-icon event-222 event-icon"></span>',
+      "444": '<span class="cubing-icon event-444 event-icon"></span>',
+      "555": '<span class="cubing-icon event-555 event-icon"></span>',
+      "666": '<span class="cubing-icon event-666 event-icon"></span>',
+      "777": '<span class="cubing-icon event-777 event-icon"></span>',
+      "333oh": '<span class="cubing-icon event-333oh event-icon"></span>',
+      "333bf": '<span class="cubing-icon event-333bf event-icon"></span>',
+      "333fm": '<span class="cubing-icon event-333fm event-icon"></span>',
+      "clock": '<span class="cubing-icon event-clock event-icon"></span>',
+      "minx": '<span class="cubing-icon event-minx event-icon"></span>',
+      "pyram": '<span class="cubing-icon event-pyram event-icon"></span>',
+      "skewb": '<span class="cubing-icon event-skewb event-icon"></span>',
+      "sq1": '<span class="cubing-icon event-sq1 event-icon"></span>',
+      "444bf": '<span class="cubing-icon event-444bf event-icon"></span>',
+      "555bf": '<span class="cubing-icon event-555bf event-icon"></span>',
+      "333mbf": '<span class="cubing-icon event-333mbf event-icon"></span>',
+
+      // Extra events (emoji)
+      "magic": '<span class="cubing-icon event-magic event-icon"></span>',
+      "mmagic": '<span class="cubing-icon event-mmagic event-icon"></span>',
+      "333ft": '<span class="cubing-icon event-333ft event-icon"></span>',
+      "333mbo": '<span class="cubing-icon event-333mbo event-icon"></span>'
+    };
+
+    let selectedEvents = [];
+
+    // Render event buttons (exclude extra events)
+    const eventSelector = document.getElementById("event-selector");
+    Object.entries(EVENT_ICONS)
+      .filter(([id, _]) => !["magic", "mmagic", "333ft", "333mbo"].includes(id))
+      .forEach(([id, icon]) => {
+        const btn = document.createElement("button");
+        btn.className = "event-btn bg-gray-800 hover:bg-purple-700 text-gray-100 rounded-lg px-3 py-2 shadow transition";
+        btn.innerHTML = icon;
+        btn.dataset.event = id;
+        btn.addEventListener("click", () => {
+          btn.classList.toggle("ring-2");
+          btn.classList.toggle("ring-purple-400");
+          if (selectedEvents.includes(id)) selectedEvents = selectedEvents.filter(e => e !== id);
+          else selectedEvents.push(id);
+        });
+        eventSelector.appendChild(btn);
+      });
+
+    // Fetch competitors
+    document.getElementById("find-btn").addEventListener("click", async () => {
+      const container = document.getElementById("results-container");
+      const spinner = document.getElementById("loading-spinner");
+      const errorMsg = document.getElementById("error-message");
+      const noData = document.getElementById("no-data-message");
+
+      spinner.classList.remove("hidden");
+      errorMsg.classList.add("hidden");
+      noData.classList.add("hidden");
+
+      container.querySelectorAll(".specialist-row, .specialist-card").forEach(el => el.remove());
+
+      try {
+        const res = await fetch(`${API_BASE_URL}/competitors?events=${selectedEvents.join(",")}`);
+        if (!res.ok) throw new Error("Failed to fetch competitors");
+        const competitors = await res.json();
+
+        if (!competitors.length) {
+          noData.classList.remove("hidden");
+          return;
+        }
+
+        // Desktop table
+        const tableHtml = `
+          <div class="hidden sm:block w-full specialist-row">
+            <table class="w-full text-left text-gray-300">
+              <thead class="bg-gray-800 text-gray-100 uppercase text-xs sm:text-sm tracking-wider">
+                <tr>
+                  <th class="px-4 py-3">Name</th>
+                  <th class="px-4 py-3">WCA ID</th>
+                  <th class="px-4 py-3">Country</th>
+                  <th class="px-4 py-3">Completed Events</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${competitors.map(c => `
+                  <tr class="bg-gray-900 border-b border-gray-800 hover:bg-gray-700 transition-colors duration-200">
+                    <td class="px-4 py-3 font-medium text-gray-50">${c.personName}</td>
+                    <td class="px-4 py-3">
+                      <a href="https://www.worldcubeassociation.org/persons/${c.personId}" target="_blank" class="text-purple-400 hover:text-purple-300 hover:underline break-all">${c.personId}</a>
+                    </td>
+                    <td class="px-4 py-3">${c.personCountryId}</td>
+                    <td class="px-4 py-3">${c.completed_events.map(e => EVENT_ICONS[e] || e).join(" ")}</td>
+                  </tr>
+                `).join("")}
+              </tbody>
+            </table>
+          </div>`;
+
+        // Mobile cards
+        const cardsHtml = `
+          <div class="sm:hidden flex flex-col gap-3 w-full p-4 specialist-card">
+            ${competitors.map(c => `
+              <div class="bg-gray-900 border border-gray-800 rounded-xl p-4 shadow-md">
+                <p class="text-lg font-semibold text-gray-50">${c.personName}</p>
+                <p><a href="https://www.worldcubeassociation.org/persons/${c.personId}" target="_blank" class="text-purple-400 hover:text-purple-300 hover:underline break-all">${c.personId}</a></p>
+                <p class="mt-1 text-sm text-gray-400">Country: <span class="font-medium">${c.personCountryId}</span></p>
+                <p class="mt-1 text-sm text-gray-400">Events: <span class="font-medium">${c.completed_events.map(e => EVENT_ICONS[e] || e).join(" ")}</span></p>
+              </div>
+            `).join("")}
+          </div>`;
+
+        container.insertAdjacentHTML("beforeend", tableHtml + cardsHtml);
+      } catch (err) {
+        errorMsg.textContent = err.message;
+        errorMsg.classList.remove("hidden");
+      } finally {
+        spinner.classList.add("hidden");
+      }
+    });
+  </script>
+
+</body>
+
+</html>

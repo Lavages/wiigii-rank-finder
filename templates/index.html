@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wiigii's RankFinder</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .spinner {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body
+    class="min-h-screen bg-gradient-to-br from-gray-900 to-black text-gray-100 p-4 flex flex-col items-center justify-center">
+
+    <nav
+        class="w-full max-w-4xl mx-auto bg-gray-950 bg-opacity-80 rounded-t-2xl sm:rounded-t-3xl shadow-lg border border-purple-800 border-b-0 p-3 sm:p-4 flex justify-center gap-4 sm:gap-8 sticky top-0 z-10">
+        <a href="/"
+            class="text-sm sm:text-lg text-gray-300 hover:text-purple-400 transition-colors duration-200 font-semibold px-2 sm:px-4">Rank
+            Finder</a>
+        <a href="/competitors"
+            class="text-sm sm:text-lg text-gray-300 hover:text-purple-400 transition-colors duration-200 font-semibold px-2 sm:px-4">Competitors</a>
+        <a href="/specialist"
+            class="text-sm sm:text-lg text-gray-300 hover:text-purple-400 transition-colors duration-200 font-semibold px-2 sm:px-4">Specialist</a>
+        <a href="/completionist"
+            class="text-sm sm:text-lg text-gray-300 hover:text-purple-400 transition-colors duration-200 font-semibold px-2 sm:px-4">Completionist</a>
+        <a href="/comparison"
+            class="text-sm sm:text-lg text-gray-300 hover:text-purple-400 transition-colors duration-200 font-semibold px-2 sm:px-4">Comparison</a>
+    </nav>
+
+
+    <div
+        class="max-w-4xl w-full mx-auto bg-gray-950 bg-opacity-70 rounded-b-3xl shadow-[0_20px_50px_rgba(168,85,247,0.3)] p-4 sm:p-10 space-y-10 backdrop-blur-md border border-purple-800 border-t-0">
+        <h1
+            class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-center text-purple-400 drop-shadow-[0_2px_2px_rgba(0,0,0,0.5)] mb-8">
+            Wiigii's RankFinder 🔎
+        </h1>
+
+        <div id="main-content" class="space-y-8">
+            <p class="text-center text-xl text-purple-400 animate-pulse">Loading WCA Data, please wait...</p>
+        </div>
+    </div>
+    <script>
+        // Base URL for your Flask backend
+        const API_BASE_URL = '/api';
+        const WCA_DATA_API_BASE_URL = 'https://raw.githubusercontent.com/robiningelbrecht/wca-rest-api/master/api';
+
+        // State variables (mimicking React state with global variables)
+        let selectedRegion = 'world';
+        let selectedEvent = '333';
+        let selectedRankingType = 'singles';
+        let rankNumber = '1'; // Rank number is now mandatory, default to 1
+        // MODIFIED: globalRankings now stores the full response object from the backend, 
+        // which contains the array of tied competitors under the 'competitors' key.
+        let globalRankingsData = null;
+        let selectedCompetitor = null;
+        let individualRankings = null;
+        let loading = false;
+        let error = null;
+        let viewMode = 'global_search_form'; // 'global_search_form', 'single_rank_result', 'individual_competitor_rankings'
+
+        // DOM elements
+        const mainContentDiv = document.getElementById('main-content');
+
+        // Predefined lists for dropdowns - will be augmented with fetched countries
+        let regions = [
+            { value: 'world', label: 'World' },
+            { value: 'europe', label: 'Europe' },
+            { value: 'north-america', label: 'North America' },
+            { value: 'asia', label: 'Asia' },
+            { value: 'south-america', label: 'South America' },
+            { value: 'africa', label: 'Africa' },
+            { value: 'oceania', label: 'Oceania' },
+        ];
+
+        const events = [
+            { value: '333', label: '3x3x3 Cube' },
+            { value: '222', label: '2x2x2 Cube' },
+            { value: '444', label: '4x4x4 Cube' },
+            { value: '555', label: '5x5x5 Cube' },
+            { value: '666', label: '6x6x6 Cube' },
+            { value: '777', label: '7x7x7 Cube' },
+            { value: '333bf', label: '3x3x3 Blindfolded' },
+            { value: '333fm', label: '3x3x3 Fewest Moves' },
+            { value: '333oh', label: '3x3x3 One-Handed' },
+            { value: 'clock', label: 'Rubik\'s Clock' },
+            { value: 'minx', label: 'Megaminx' },
+            { value: 'pyram', label: 'Pyraminx' },
+            { value: 'sq1', label: 'Square-1' },
+            { value: 'skewb', label: 'Skewb' },
+            { value: '444bf', label: '4x4x4 Blindfolded' },
+            { value: '555bf', label: '5x5x5 Blindfolded' },
+            { value: '333mbf', label: '3x3x3 Multi-Blind' },
+            { value: 'fto', label: 'FTO (Face-Turning Octahedron)' },
+        ];
+
+        /**
+         * Converts a result in centiseconds to a formatted time string (M:SS.ss or S.ss).
+         * @param {number} centiseconds The result in hundredths of a second.
+         * @returns {string} The formatted time string, DNF, DNS, or 'No Result'.
+         */
+        function formatTime(centiseconds) {
+            if (centiseconds === -1) {
+                return 'DNF';
+            }
+            if (centiseconds === -2) {
+                return 'DNS';
+            }
+            if (centiseconds === 0 || centiseconds === null) {
+                return 'No Result';
+            }
+
+            const totalSeconds = centiseconds / 100;
+            const minutes = Math.floor(totalSeconds / 60);
+            const seconds = Math.floor(totalSeconds % 60);
+            const hundredths = Math.floor((totalSeconds * 100) % 100);
+
+            const formattedMinutes = minutes > 0 ? `${minutes}:` : '';
+            const formattedSeconds = minutes > 0 && seconds < 10 ? `0${seconds}` : seconds.toString();
+            const formattedHundredths = hundredths < 10 ? `0${hundredths}` : hundredths.toString();
+
+            if (minutes > 0) {
+                return `${formattedMinutes}${formattedSeconds}.${formattedHundredths}`;
+            } else {
+                return `${seconds}.${formattedHundredths}s`;
+            }
+        }
+
+        /**
+         * Formats a WCA Multi-Blind result.
+         * @param {number} result The integer result from the WCA API.
+         * @returns {string} The formatted multi-blind result.
+         */
+        function formatMultiBlind(result) {
+            if (result < 0) {
+                return 'DNF';
+            }
+            if (result === 0) {
+                return 'No Result';
+            }
+
+            const valueStr = String(result).padStart(10, '0');
+
+            if (valueStr.startsWith('0')) { // New format: 0DDTTTTTMM
+                const difference = 99 - parseInt(valueStr.substring(1, 3), 10);
+                const timeInSeconds = parseInt(valueStr.substring(3, 8), 10);
+                const missedCubes = parseInt(valueStr.substring(8, 10), 10);
+
+                const solvedCubes = difference + missedCubes;
+                const attemptedCubes = solvedCubes + missedCubes;
+
+                const minutes = Math.floor(timeInSeconds / 60);
+                const seconds = timeInSeconds % 60;
+                const formattedTime = `${minutes}:${String(seconds).padStart(2, '0')}`;
+
+                return `${solvedCubes}/${attemptedCubes} in ${formattedTime}`;
+            } else { // Old format: 1SSAATTTTT
+                const solved = 99 - parseInt(valueStr.substring(1, 3), 10);
+                const attempted = parseInt(valueStr.substring(3, 5), 10);
+                const timeInSeconds = parseInt(valueStr.substring(5, 10), 10);
+
+                const minutes = Math.floor(timeInSeconds / 60);
+                const seconds = timeInSeconds % 60;
+                const formattedTime = `${minutes}:${String(seconds).padStart(2, '0')}`;
+
+                return `${solved}/${attempted} in ${formattedTime}`;
+            }
+        }
+
+        /**
+         * Helper function to format the best result based on event.
+         * @param {Object} competitor The competitor object.
+         * @returns {string} The formatted result string.
+         */
+        function getFormattedResult(competitor) {
+            const result = competitor.result;
+            if (competitor.eventId === '333fm' && competitor.rankType === 'single') {
+                return `${result} moves`;
+            }
+            if (competitor.eventId === '333fm' && competitor.rankType === 'average') {
+                const roundedResult = (result / 100).toFixed(2);
+                return `${roundedResult} moves`;
+            }
+            if (competitor.eventId === '333mbf' && competitor.rankType === 'single') {
+                return formatMultiBlind(result);
+            }
+            return formatTime(result);
+        }
+
+        /**
+         * Fetches country data and populates the regions array.
+         */
+        async function fetchCountries() {
+            try {
+                const response = await fetch(`${WCA_DATA_API_BASE_URL}/countries.json`);
+                if (!response.ok) {
+                    throw new Error('Failed to fetch country data.');
+                }
+                const data = await response.json();
+                const countryItems = data.items;
+
+                // Add countries to the regions array, sorted alphabetically
+                const countryOptions = countryItems
+                    .map(country => ({ value: country.iso2Code.toLowerCase(), label: country.name }))
+                    .sort((a, b) => a.label.localeCompare(b.label));
+
+                regions = [...regions, ...countryOptions];
+            } catch (err) {
+                console.error("Error fetching countries:", err.message);
+                // Optionally display an error to the user about country loading failure
+            }
+        }
+
+        /**
+         * Renders the current view based on the `viewMode` state.
+         * This function acts like React's render method, updating the DOM.
+         */
+        function renderUI() {
+            mainContentDiv.innerHTML = ''; // Clear previous content
+
+            if (loading) { // This `loading` state is for the search button specifically
+                mainContentDiv.innerHTML = `
+                    <p class="text-center text-xl text-purple-400 animate-pulse">Loading...</p>
+                `;
+                return;
+            }
+
+            if (error) {
+                mainContentDiv.innerHTML = `
+                    <div class="bg-red-900 bg-opacity-50 text-white p-6 rounded-xl flex items-center gap-4 shadow-inner border border-red-700">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <p class="font-medium text-lg">${error}</p>
+                    </div>
+                    <button onclick="handleBackToSearchForm()" class="w-full bg-purple-700 hover:bg-purple-800 active:bg-purple-900 text-white font-bold py-4 px-8 rounded-xl shadow-lg hover:shadow-xl transition duration-300 ease-in-out transform hover:scale-105 mt-6">
+                        Back to Search Form
+                    </button>
+                `;
+                return;
+            }
+
+            if (viewMode === 'global_search_form') {
+                mainContentDiv.innerHTML = `
+                    <div class="space-y-8">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                            <div class="flex flex-col">
+                                <label for="region-select" class="text-gray-300 text-sm font-medium mb-2">Region:</label>
+                                <select id="region-select" class="p-4 rounded-xl border border-gray-700 bg-gray-800 text-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-600 transition duration-200 ease-in-out cursor-pointer appearance-none bg-[url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="white"%3e%3cpath fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /%3e%3c/svg%3e')] bg-[length:1.5rem_1.5rem] bg-[right_1rem_center] bg-no-repeat">
+                                        ${regions.map(region => `<option value="${region.value}" ${selectedRegion === region.value ? 'selected' : ''}>${region.label}</option>`).join('')}
+                                </select>
+                            </div>
+                            
+                            <div class="flex flex-col">
+                                <label for="event-select" class="text-gray-300 text-sm font-medium mb-2">Event:</label>
+                                <select id="event-select" class="p-4 rounded-xl border border-gray-700 bg-gray-800 text-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-600 transition duration-200 ease-in-out cursor-pointer appearance-none bg-[url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="white"%3e%3cpath fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /%3e%3c/svg%3e')] bg-[length:1.5rem_1.5rem] bg-[right_1rem_center] bg-no-repeat">
+                                        ${events.map(event => `<option value="${event.value}" ${selectedEvent === event.value ? 'selected' : ''}>${event.label}</option>`).join('')}
+                                </select>
+                            </div>
+
+                            <div class="flex flex-col">
+                                <label for="ranking-type-select" class="text-gray-300 text-sm font-medium mb-2">Ranking Type:</label>
+                                <select id="ranking-type-select" class="p-4 rounded-xl border border-gray-700 bg-gray-800 text-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-600 transition duration-200 ease-in-out cursor-pointer appearance-none bg-[url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="white"%3e%3cpath fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /%3e%3c/svg%3e')] bg-[length:1.5rem_1.5rem] bg-[right_1rem_center] bg-no-repeat">
+                                        <option value="singles" ${selectedRankingType === 'singles' ? 'selected' : ''}>Single Rank</option>
+                                        <option value="averages" ${selectedRankingType === 'averages' ? 'selected' : ''}>Average Rank</option>
+                                </select>
+                            </div>
+                            
+                            <div class="flex flex-col">
+                                <label for="rank-number-input" class="text-gray-300 text-sm font-medium mb-2">Specific Rank Number:</label>
+                                <input type="number" id="rank-number-input" placeholder="e.g., 1, 50, 100" value="${rankNumber}" required
+                                    class="p-4 rounded-xl border border-gray-700 bg-gray-800 text-gray-200 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-600 transition duration-200 ease-in-out" />
+                            </div>
+                        </div>
+
+                        <button id="search-button" onclick="handleFetchGlobalRankings()" class="w-full bg-purple-700 hover:bg-purple-800 active:bg-purple-900 text-white font-bold py-4 px-8 rounded-xl shadow-lg hover:shadow-xl transition duration-300 ease-in-out transform hover:scale-105 flex items-center justify-center space-x-2">
+                            <span id="button-text">Search Rankings</span>
+                            <div id="button-spinner" class="hidden spinner">
+                                <svg class="h-5 w-5 text-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12 4.75V6.25" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                    <path d="M17.1266 6.87343L16.0659 7.93409" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                    <path d="M19.25 12L17.75 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                    <path d="M17.1266 17.1266L16.0659 16.0659" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                    <path d="M12 17.75V19.25" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                    <path d="M7.9341 16.0659L6.87344 17.1266" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                    <path d="M6.25 12L4.75 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                    <path d="M7.9341 7.93409L6.87344 6.87343" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                </svg>
+                            </div>
+                        </button>
+                    </div>
+                `;
+                // Add event listeners AFTER elements are in DOM
+                document.getElementById('region-select').onchange = (e) => { selectedRegion = e.target.value; };
+                document.getElementById('event-select').onchange = (e) => { selectedEvent = e.target.value; };
+                document.getElementById('ranking-type-select').onchange = (e) => { selectedRankingType = e.target.value; };
+                document.getElementById('rank-number-input').oninput = (e) => { rankNumber = e.target.value; };
+
+            } else if (viewMode === 'single_rank_result') {
+                const eventLabel = events.find(e => e.value === selectedEvent)?.label || selectedEvent;
+                const regionLabel = regions.find(r => r.value === selectedRegion)?.label || selectedRegion;
+
+                // NEW: Get the array of competitors from the full response object
+                const competitors = globalRankingsData?.competitors || [];
+                const actualRank = globalRankingsData?.actualRank;
+                const requestedRank = globalRankingsData?.requestedRank;
+
+                // Create HTML for all tied competitors
+                const competitorsHTML = competitors.map(competitor => {
+                    const resultValue = getFormattedResult(competitor);
+
+                    return `
+                        <div class="bg-gray-800 p-8 rounded-xl shadow-xl border border-gray-700 transform transition duration-300 ease-in-out hover:scale-[1.01]">
+                            <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+                                <div class="mb-4 md:mb-0">
+                                    <p class="font-extrabold text-2xl text-gray-50">
+                                        ${competitor.person.name}
+                                    </p>
+                                    <p class="text-sm text-gray-400 mt-1">
+                                        WCA ID: <span class="text-purple-300">${competitor.person.wcaId}</span> | Country: ${competitor.person.countryIso2}
+                                    </p>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-sm text-gray-300">Best Result:</p>
+                                    <p class="font-black text-4xl text-purple-400">
+                                        ${resultValue}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="mt-6 border-t border-gray-700 pt-4">
+                                <a href="https://www.worldcubeassociation.org/persons/${competitor.person.wcaId}" target="_blank"
+                                    class="block text-center w-full bg-purple-600 hover:bg-purple-700 active:bg-purple-800 text-white font-bold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
+                                    View Full Profile
+                                </a>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+
+                mainContentDiv.innerHTML = `
+                    <button onclick="handleBackToSearchForm()" class="flex items-center gap-2 text-purple-400 hover:text-purple-300 transition duration-200 group font-semibold">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 group-hover:-translate-x-1 transition duration-200" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+                        </svg>
+                        Back to New Search
+                    </button>
+
+                    <h2 class="text-4xl font-bold text-purple-300 text-center drop-shadow-md">
+                        ${regionLabel} ${selectedRankingType.charAt(0).toUpperCase() + selectedRankingType.slice(1)} Ranking
+                    </h2>
+                    <p class="text-center text-xl text-gray-400 font-medium">
+                        Rank # ${actualRank} for ${eventLabel}
+                        ${requestedRank !== actualRank ? `<span class="text-red-400 text-base block mt-1">(Original Rank #${requestedRank} was unavailable, showing nearest available rank)</span>` : ''}
+                        ${competitors.length > 1 ? `<span class="text-yellow-400 text-base block mt-1">(${competitors.length} competitors tied for this rank)</span>` : ''}
+                    </p>
+
+
+                    <div class="space-y-6">
+                        ${competitorsHTML}
+                    </div>
+                `;
+            } else if (viewMode === 'individual_competitor_rankings') {
+                // This view is no longer needed since the button redirects.
+            }
+        }
+
+        /**
+         * Toggles the loading state of the search button.
+         * @param {boolean} isLoading
+         */
+        function setButtonLoadingState(isLoading) {
+            const button = document.getElementById('search-button');
+            const buttonText = document.getElementById('button-text');
+            const buttonSpinner = document.getElementById('button-spinner');
+            if (!button || !buttonText || !buttonSpinner) return;
+
+            button.disabled = isLoading;
+            if (isLoading) {
+                buttonText.textContent = 'Searching...';
+                buttonSpinner.classList.remove('hidden');
+                button.classList.add('cursor-not-allowed', 'opacity-70');
+            } else {
+                buttonText.textContent = 'Search Rankings';
+                buttonSpinner.classList.add('hidden');
+                button.classList.remove('cursor-not-allowed', 'opacity-70');
+            }
+        }
+
+        async function handleFetchGlobalRankings() {
+            setButtonLoadingState(true);
+            loading = true;
+            error = null;
+            globalRankingsData = null; // MODIFIED: Clear the entire data object
+            selectedCompetitor = null;
+            individualRankings = null;
+            renderUI(); // Show loading state
+
+            // Validate rank number on the client side before sending to backend
+            const currentRankNumber = parseInt(rankNumber);
+            if (isNaN(currentRankNumber) || currentRankNumber <= 0) {
+                error = "Please enter a valid positive rank number.";
+                loading = false;
+                setButtonLoadingState(false);
+                renderUI();
+                return;
+            }
+
+            try {
+                // Convert frontend's 'singles'/'averages' to backend's 'single'/'average'
+                const typeParamMap = { singles: "single", averages: "average" };
+                const backendType = typeParamMap[selectedRankingType] || "single";
+
+                const url = `/api/global-rankings/${selectedRegion}/${backendType}/${selectedEvent}?rankNumber=${rankNumber}`;
+
+                const response = await fetch(url);
+
+                if (!response.ok) {
+                    let errorData;
+                    try {
+                        errorData = await response.json();
+                    } catch (e) {
+                        throw new Error(`HTTP ${response.status}: Failed to parse error message.`);
+                    }
+                    throw new Error(`HTTP ${response.status}: ${errorData.error || 'An unknown error occurred.'}`);
+                }
+
+                const data = await response.json();
+
+                // MODIFIED: Check for the 'competitors' array which is the new structure
+                if (data && data.competitors && data.competitors.length > 0) {
+                    globalRankingsData = data; // Store the entire response object
+                    viewMode = 'single_rank_result';
+                } else {
+                    error = data.error || `No competitor found at rank #${rankNumber} for ${events.find(e => e.value === selectedEvent)?.label} (${selectedRankingType}) in ${regions.find(r => r.value === selectedRegion)?.label}.`;
+                    viewMode = 'global_search_form';
+                }
+
+
+            } catch (err) {
+                error = err.message;
+                globalRankingsData = null;
+                viewMode = 'global_search_form';
+            } finally {
+                loading = false;
+                setButtonLoadingState(false);
+                renderUI(); // Update UI with results or error
+            }
+        }
+
+
+        function handleBackToSearchForm() {
+            viewMode = 'global_search_form';
+            globalRankingsData = null;
+            selectedCompetitor = null;
+            individualRankings = null;
+            error = null;
+            renderUI();
+        }
+
+        // Initial setup when the page loads
+        document.addEventListener('DOMContentLoaded', async () => {
+            await fetchCountries();
+            renderUI();
+        });
+    </script>
+
+</body>
+
+</html>

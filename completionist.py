@@ -6,18 +6,18 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from threading import Lock
 import sys
 import re
-import tempfile
 from flask import Blueprint, jsonify
 
+# --- Blueprint for API ---
 completionists_bp = Blueprint("completionists", __name__)
 
-# --- Optimized Constants ---
-CACHE_FILE = os.path.join(tempfile.gettempdir(), "completionists_cache.json")
+# --- Global Caching ---
+CACHE_FILE = os.path.join(os.path.dirname(__file__), "completionists_cache.json")
 COMPLETIONIST_LOADING_LOCK = Lock()
 COMPLETIONIST_DATA_LOADED = False
 ALL_COMPLETIONISTS_DATA = []
 
-# Event Sets
+# --- Event Definitions ---
 SINGLE_EVENTS = {"333", "222", "444", "555", "666", "777", "333oh", "333bf", "333fm",
                  "clock", "minx", "pyram", "skewb", "sq1", "444bf", "555bf", "333mbf"}
 AVERAGE_EVENTS_SILVER = {"333", "222", "444", "555", "666", "777", "333oh",
@@ -32,154 +32,180 @@ EVENT_NAMES = {
     "333fm": "3x3 Fewest Moves", "clock": "Clock", "minx": "Megaminx",
     "pyram": "Pyraminx", "skewb": "Skewb", "sq1": "Square-1",
     "444bf": "4x4 Blindfolded", "555bf": "5x5 Blindfolded",
-    "333mbf": "3x3 Multi-Blind"
+    "333mbf": "3x3 Multi-Blind",
+    "wcpodium": "Worlds Podium", "wr": "World Record",
 }
 
+TOTAL_PERSON_PAGES = 267
+TOTAL_COMPETITION_PAGES = 16
+
 session = requests.Session()
-competitions_data = {} # Structure: {id: date_till}
+competitions_data = {}
 
-# ----------------- Dynamic Fetchers -----------------
+# ----------------- API ROUTES -----------------
+@completionists_bp.route("/completionists", methods=["GET"])
+def api_get_completionists():
+    """API endpoint to fetch all completionists."""
+    return jsonify(get_completionists())
 
-def fetch_competitions():
-    """Dynamically fetches all competition dates to help with timing."""
+# ----------------- Helper Functions -----------------
+def fetch_person_page(page):
+    url = f"https://raw.githubusercontent.com/robiningelbrecht/wca-rest-api/master/api/persons-page-{page}.json"
+    try:
+        resp = session.get(url, timeout=15)
+        resp.raise_for_status()
+        return resp.json().get("items", [])
+    except requests.exceptions.RequestException as e:
+        print(f"Error fetching person page {page}: {e}", file=sys.stderr)
+        return []
+
+def fetch_competition_pages():
     global competitions_data
-    page = 1
-    while True:
-        url = f"https://raw.githubusercontent.com/robiningelbrecht/wca-rest-api/master/api/competitions-page-{page}.json"
-        try:
-            resp = session.get(url, timeout=10)
-            if resp.status_code == 404: break
-            data = resp.json(content_type=None)
-            items = data.get("items", []) if isinstance(data, dict) else data
-            
-            for comp in items:
-                # RAM Save: Only store the 'till' date
-                competitions_data[comp["id"]] = comp.get("date", {}).get("till")
-            page += 1
-        except: break
-    print(f"✅ Fetched {len(competitions_data)} competitions.", file=sys.stderr)
+    try:
+        with ThreadPoolExecutor(max_workers=10) as executor:
+            futures = [executor.submit(_fetch_single_competition_page, p) for p in range(1, TOTAL_COMPETITION_PAGES + 1)]
+            for future in as_completed(futures):
+                for comp in future.result():
+                    competitions_data[comp["id"]] = comp
+        print(f"✅ Finished fetching {len(competitions_data)} competitions.", file=sys.stdout)
+    except Exception as e:
+        print(f"Error fetching competition pages: {e}", file=sys.stderr)
 
-# ----------------- Logic -----------------
+def _fetch_single_competition_page(page):
+    url = f"https://raw.githubusercontent.com/robiningelbrecht/wca-rest-api/master/api/competitions-page-{page}.json"
+    resp = session.get(url, timeout=15)
+    resp.raise_for_status()
+    return resp.json().get("items", [])
 
 def has_wr(person):
     records = person.get("records", {})
-    for r_type in ["single", "average"]:
-        recs = records.get(r_type, [])
-        if isinstance(recs, dict) and recs.get("WR", 0) > 0: return True
-        if isinstance(recs, list) and any(r.get("type") == "WR" for r in recs): return True
+    singles, averages = records.get("single", []), records.get("average", [])
+    if isinstance(singles, dict) and singles.get("WR", 0) > 0: return True
+    if isinstance(averages, dict) and averages.get("WR", 0) > 0: return True
+    if isinstance(singles, list) and any(r.get("type") == "WR" for r in singles): return True
+    if isinstance(averages, list) and any(r.get("type") == "WR" for r in averages): return True
     return False
 
 def has_wc_podium(person):
-    for comp_id, events in person.get("results", {}).items():
-        if comp_id.startswith("WC"): # Simplified regex
+    results = person.get("results", {})
+    for comp_id, events in results.items():
+        if re.match(r"WC\d+", comp_id):
             for event_results in events.values():
-                if any(r.get("round") == "Final" and r.get("position") in (1, 2, 3) for r in event_results):
-                    return True
+                for r in event_results:
+                    if r.get("round") == "Final" and r.get("position") in (1, 2, 3):
+                        return True
     return False
 
+def events_won(person):
+    """Return set of eventIds where competitor has 1st place in a Final round"""
+    won = set()
+    for comp_id, events in person.get("results", {}).items():
+        for ev, ev_results in events.items():
+            if ev in EXCLUDED_EVENTS:
+                continue
+            for r in ev_results:
+                if r.get("round") == "Final" and r.get("position") == 1:
+                    won.add(ev)
+    return won
+
 def determine_category(person):
-    # Quick filter: do they have all singles?
     singles = {r.get("eventId") for r in person.get("rank", {}).get("singles", []) if r.get("eventId")}
     if not SINGLE_EVENTS.issubset(singles): return None
 
     averages = {r.get("eventId") for r in person.get("rank", {}).get("averages", []) if r.get("eventId")}
     
+    # Determine basic category
     category, required_averages = "Bronze", set()
     if AVERAGE_EVENTS_GOLD.issubset(averages):
-        category, required_averages = "Gold", AVERAGE_EVENTS_GOLD
+        category, required_averages = "Gold", AVERAGE_EVENTS_GOLD.copy()
     elif AVERAGE_EVENTS_SILVER.issubset(averages):
-        category, required_averages = "Silver", AVERAGE_EVENTS_SILVER
+        category, required_averages = "Silver", AVERAGE_EVENTS_SILVER.copy()
 
+    # Apply Platinum and Palladium logic
     if category == "Gold":
-        if has_wr(person) or has_wc_podium(person):
+        is_platinum_candidate = has_wr(person) or has_wc_podium(person)
+        if is_platinum_candidate:
             category = "Platinum"
-            # Palladium check: Win every single event at least once
-            won_events = set()
-            for comp_id, events in person.get("results", {}).items():
-                for ev, results in events.items():
-                    if any(r.get("round") == "Final" and r.get("position") == 1 for r in results):
-                        won_events.add(ev)
-            if SINGLE_EVENTS.issubset(won_events):
+            if SINGLE_EVENTS.issubset(events_won(person)):
                 category = "Palladium"
 
-    # Calculate completion date
-    timeline = []
-    for comp_id, events in person.get("results", {}).items():
-        comp_date = competitions_data.get(comp_id)
-        if not comp_date: continue
-        for ev_id, ev_res in events.items():
-            if ev_id in EXCLUDED_EVENTS: continue
-            for r in ev_res:
-                timeline.append({"id": ev_id, "d": comp_date, "b": r.get("best"), "a": r.get("average")})
+    competitions_participated = []
+    for comp_id, events_in_comp in person.get("results", {}).items():
+        for event_id, event_results in events_in_comp.items():
+            if event_id in EXCLUDED_EVENTS: continue
+            for result_entry in event_results:
+                comp_detail = competitions_data.get(comp_id, {})
+                date_till = comp_detail.get("date", {}).get("till")
+                if date_till:
+                    competitions_participated.append({
+                        "competitionId": comp_id, "eventId": event_id,
+                        "date": date_till, "best": result_entry.get("best"),
+                        "average": result_entry.get("average")
+                    })
 
-    timeline.sort(key=lambda x: x["d"])
-    got_s, got_a = set(), set()
-    cat_date, last_ev = "N/A", "N/A"
+    competitions_participated.sort(key=lambda x: x["date"])
+    current_completed_singles, current_completed_averages = set(), set()
+    category_date, last_event_id = "N/A", "N/A"
 
-    for entry in timeline:
-        eid, d, b, a = entry["id"], entry["d"], entry["b"], entry["a"]
-        if eid in SINGLE_EVENTS and b and b > 0: got_s.add(eid)
-        if eid in required_averages and a and a > 0: got_a.add(eid)
-        
-        if got_s.issuperset(SINGLE_EVENTS) and got_a.issuperset(required_averages):
-            cat_date, last_ev = d, eid
+    for comp in competitions_participated:
+        ev, date, best, avg = comp["eventId"], comp["date"], comp.get("best"), comp.get("average")
+        if ev in SINGLE_EVENTS and best not in (0, -1, -2): current_completed_singles.add(ev)
+        if ev in required_averages and avg not in (0, -1, -2): current_completed_averages.add(ev)
+        if current_completed_singles.issuperset(SINGLE_EVENTS) and current_completed_averages.issuperset(required_averages):
+            category_date, last_event_id = date, ev
             break
 
     return {
-        "id": person.get("id"), "name": person.get("name"),
-        "category": category, "categoryDate": cat_date,
-        "lastEvent": EVENT_NAMES.get(last_ev, last_ev)
+        "id": person.get("id"), "name": person.get("name", "Unknown"),
+        "category": category, "categoryDate": category_date,
+        "lastEvent": EVENT_NAMES.get(last_event_id, last_event_id)
     }
 
-# ----------------- Data Preload -----------------
-
+# ----------------- Preload + Getter -----------------
 def preload_completionist_data():
     global COMPLETIONIST_DATA_LOADED, ALL_COMPLETIONISTS_DATA
     with COMPLETIONIST_LOADING_LOCK:
         if COMPLETIONIST_DATA_LOADED: return
-        
-        # Load Cache
         if os.path.exists(CACHE_FILE):
             try:
                 with open(CACHE_FILE, "r", encoding="utf-8") as f:
                     ALL_COMPLETIONISTS_DATA = json.load(f)
                 COMPLETIONIST_DATA_LOADED = True
+                print(f"✅ Loaded {len(ALL_COMPLETIONISTS_DATA)} completionists from cache.", file=sys.stdout)
                 return
-            except: pass
+            except Exception as e:
+                print(f"Cache load error: {e}. Regenerating...", file=sys.stderr)
 
-        fetch_competitions()
-        all_results = []
-        page = 1
-        
-        # Sequentially process pages to save RAM on Render
-        while True:
-            url = f"https://raw.githubusercontent.com/robiningelbrecht/wca-rest-api/master/api/persons-page-{page}.json"
-            resp = session.get(url, timeout=10)
-            if resp.status_code == 404: break
-            
-            data = resp.json(content_type=None)
-            items = data.get("items", []) if isinstance(data, dict) else data
-            
-            for person in items:
-                res = determine_category(person)
-                if res: all_results.append(res)
-            
-            if page % 50 == 0: print(f"Processing page {page}...", file=sys.stderr)
-            page += 1
+        print("⚡ Generating completionists data...", file=sys.stdout)
+        all_persons = []
+        with ThreadPoolExecutor(max_workers=os.cpu_count() * 2 if os.cpu_count() else 8) as executor:
+            futures = [executor.submit(fetch_person_page, p) for p in range(1, TOTAL_PERSON_PAGES + 1)]
+            for f in as_completed(futures):
+                try: all_persons.extend(f.result())
+                except Exception as e: print(f"Error fetching person page: {e}", file=sys.stderr)
 
-        all_results.sort(key=lambda x: (x["categoryDate"] if x["categoryDate"] != "N/A" else "9999", x["name"]))
-        
-        # Save Cache
+        if not competitions_data: fetch_competition_pages()
+        results = []
+        with ThreadPoolExecutor(max_workers=os.cpu_count() * 2 if os.cpu_count() else 8) as executor:
+            futures = [executor.submit(determine_category, person) for person in all_persons]
+            for f in as_completed(futures):
+                try:
+                    res = f.result()
+                    if res: results.append(res)
+                except Exception as e: print(f"Error determining category: {e}", file=sys.stderr)
+
+        completionists = [c for c in results if c and c["category"] is not None]
+        completionists.sort(key=lambda x: (x["categoryDate"] if x["categoryDate"] != "N/A" else "9999-12-31", x["name"]))
+
         try:
-            with open(CACHE_FILE, "w", encoding="utf-8") as f:
-                json.dump(all_results, f)
-        except: pass
+            with open(CACHE_FILE, "w", encoding="utf-8") as f: json.dump(completionists, f, ensure_ascii=False, indent=2)
+            print(f"✅ Cache generated with {len(completionists)} completionists.", file=sys.stdout)
+        except Exception as e:
+            print(f"Error writing cache: {e}", file=sys.stderr)
 
-        ALL_COMPLETIONISTS_DATA = all_results
-        COMPLETIONIST_DATA_LOADED = True
+        ALL_COMPLETIONISTS_DATA, COMPLETIONIST_DATA_LOADED = completionists, True
 
-@completionists_bp.route("/completionists", methods=["GET"])
-def api_get_completionists():
-    if not COMPLETIONIST_DATA_LOADED:
-        preload_completionist_data()
-    return jsonify(ALL_COMPLETIONISTS_DATA)
+def get_completionists():
+    global COMPLETIONIST_DATA_LOADED, ALL_COMPLETIONISTS_DATA
+    if not COMPLETIONIST_DATA_LOADED: preload_completionist_data()
+    return ALL_COMPLETIONISTS_DATA

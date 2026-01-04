@@ -13,6 +13,8 @@ from competitors import competitors_bp, preload_wca_data as preload_competitors_
 from specialist import specialist_bp, preload_wca_data as preload_specialist_data
 from completionist import completionists_bp, preload_completionist_data
 from comparison import comparison_bp, preload_comparison_data
+# FIXED: Importing load_cache as preload_competition_data to match your file structure
+from competitions import competitions_bp, load_cache as preload_competition_data
 
 # --- Logging Setup ---
 logging.basicConfig(
@@ -25,7 +27,7 @@ logger = logging.getLogger(__name__)
 app = Flask(__name__, template_folder='templates')
 CORS(app)
 
-# Use a session for better performance (TCP reuse)
+# Shared session for all requests (TCP reuse)
 session = requests.Session()
 
 # --- Register Blueprints ---
@@ -33,6 +35,7 @@ app.register_blueprint(competitors_bp, url_prefix='/api')
 app.register_blueprint(specialist_bp, url_prefix='/api')
 app.register_blueprint(completionists_bp, url_prefix='/api')
 app.register_blueprint(comparison_bp, url_prefix='/api')
+app.register_blueprint(competitions_bp)  # Competitions handles its own /api prefixes
 
 # ----------------- Track Data Preloading -----------------
 data_loaded = {
@@ -40,23 +43,28 @@ data_loaded = {
     "specialist": False,
     "completionist": False,
     "comparison": False,
+    "competitions": False,
 }
 
 def preload_all():
+    """Background task to load all data sources into memory at startup."""
     tasks = [
         ("specialist", preload_specialist_data),
         ("competitors", preload_competitors_data),
         ("completionist", preload_completionist_data),
         ("comparison", preload_comparison_data),
+        ("competitions", preload_competition_data), 
     ]
     for key, preload_func in tasks:
         try:
+            logger.info(f"Starting preload for {key}...")
             preload_func()
             data_loaded[key] = True
             logger.info(f"{key.capitalize()} data preloaded successfully.")
         except Exception as e:
             logger.error(f"Failed to preload {key} data: {e}")
 
+# Start the background preloading thread
 threading.Thread(target=preload_all, daemon=True).start()
 
 # ----------------- Status Endpoint -----------------
@@ -81,22 +89,27 @@ def serve_competitors_page(): return render_template("competitors.html")
 @app.route("/comparison")
 def serve_comparison_page(): return render_template("comparison.html")
 
-# ----------------- Helper Functions -----------------
+# Note: The /competitions route is handled inside competitions.py blueprint
+
+# ----------------- Helper Functions & Rankings -----------------
 WCA_API_BASE_URL = "https://www.worldcubeassociation.org/api/v0"
 WCA_RANK_DATA_BASE_URL = "https://raw.githubusercontent.com/robiningelbrecht/wca-rest-api/master/api/rank"
 
+# Updated to strictly official events - FTO EXCLUDED
 EVENT_NAME_TO_ID = {
-    "3x3x3 Cube": "333", "4x4x4 Cube": "444", "5x5x5 Cube": "555",
-    "6x6x6 Cube": "666", "7x7x7 Cube": "777", "3x3x3 One-Handed": "333oh",
-    "3x3x3 Blindfolded": "333bf", "Megaminx": "minx", "Pyraminx": "pyram",
-    "Skewb": "skewb", "Square-1": "sq1", "Clock": "clock",
-    "3x3x3 Fewest Moves": "333fm", "Multi-Blind": "333mbf", "Feet": "333ft"
+    "3x3x3 Cube": "333", "2x2x2 Cube": "222", "4x4x4 Cube": "444", 
+    "5x5x5 Cube": "555", "6x6x6 Cube": "666", "7x7x7 Cube": "777", 
+    "3x3x3 One-Handed": "333oh", "3x3x3 Blindfolded": "333bf", 
+    "Megaminx": "minx", "Pyraminx": "pyram", "Skewb": "skewb", 
+    "Square-1": "sq1", "Clock": "clock", "3x3x3 Fewest Moves": "333fm", 
+    "4x4x4 Blindfolded": "444bf", "5x5x5 Blindfolded": "555bf",
+    "Multi-Blind": "333mbf"
 }
 
 def fetch_data_with_retry(url: str, max_retries: int = 3):
     for attempt in range(max_retries):
         try:
-            response = session.get(url, timeout=5)
+            response = session.get(url, timeout=15)
             response.raise_for_status()
             return response.json()
         except Exception as e:
@@ -105,7 +118,7 @@ def fetch_data_with_retry(url: str, max_retries: int = 3):
     return None
 
 def fetch_person(wca_id: str):
-    url = f"{WCA_API_BASE_URL}/persons/{wca_id}.json"
+    url = f"{WCA_API_BASE_URL}/persons/{wca_id}"
     try:
         data = fetch_data_with_retry(url)
         person = data.get("person", {}) if data else {}
@@ -124,7 +137,6 @@ def get_rank_key(region: str):
     if r in continent_regions: return "continent"
     return "country"
 
-# ----------------- Global Rankings API -----------------
 @app.route("/api/global-rankings/<region>/<type_param>/<event>", methods=["GET"])
 def get_global_rankings(region: str, type_param: str, event: str):
     if type_param not in ["single", "average"]:
@@ -138,7 +150,6 @@ def get_global_rankings(region: str, type_param: str, event: str):
     except ValueError:
         return jsonify({"error": "Invalid rankNumber"}), 400
 
-    # FIX: Continents must be lowercase, Countries MUST be uppercase
     continent_regions = {"world", "europe", "north-america", "south-america", "asia", "africa", "oceania"}
     region_path = region.lower() if region.lower() in continent_regions else region.upper()
 
@@ -150,7 +161,6 @@ def get_global_rankings(region: str, type_param: str, event: str):
         if not items:
             return jsonify({"error": "No data available"}), 404
         
-        # Determine actual target rank
         max_rank = items[-1].get("rank", {}).get(rank_key) or len(items)
         target_rank = min(requested_rank, max_rank)
 
@@ -167,7 +177,7 @@ def get_global_rankings(region: str, type_param: str, event: str):
                     "person": p_data,
                     "actualRank": target_rank
                 })
-            elif tied_competitors: break # Exit loop once tie-group is processed
+            elif tied_competitors: break 
                  
         return jsonify({
             "requestedRank": requested_rank,
@@ -176,7 +186,6 @@ def get_global_rankings(region: str, type_param: str, event: str):
             "event": event,
             "competitors": tied_competitors
         })
-        
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 

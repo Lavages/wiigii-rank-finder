@@ -23,8 +23,8 @@ _is_loaded = False
 _lock = threading.Lock()
 
 EVENT_MAP = {
-    "3x3 Cube": "333", "2x2 Cube": "222", "444": "444", "555": "555",
-    "666": "666", "777": "777", "3x3 One-Handed": "333oh",
+    "3x3 Cube": "333", "2x2 Cube": "222", "4x4 Cube": "444", "5x5 Cube": "555",
+    "6x6 Cube": "666", "7x7 Cube": "777", "3x3 One-Handed": "333oh",
     "3x3 Blindfolded": "333bf", "3x3 Fewest Moves": "333fm",
     "Clock": "clock", "Megaminx": "minx", "Pyraminx": "pyram",
     "Skewb": "skewb", "Square-1": "sq1", "4x4 Blindfolded": "444bf",

@@ -4,81 +4,107 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WCA Event Comparison | Rank Finder</title>
+    <title>Event Comparison • Wiigii's WCA</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800;900&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', sans-serif;
+            background-color: #000000;
         }
 
-        .custom-scrollbar::-webkit-scrollbar {
+        .nav-active {
+            color: #ec4899 !important;
+            border-bottom: 3px solid #ec4899;
+        }
+
+        .brand-logo {
+            font-weight: 900;
+            font-size: 2.5rem;
+            letter-spacing: -1px;
+        }
+
+        .brand-tag {
+            background-color: #ec4899;
+            color: black;
+            padding: 2px 8px;
+            border-radius: 4px;
+            margin-left: 2px;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
             width: 8px;
         }
 
-        .custom-scrollbar::-webkit-scrollbar-track {
-            background: #0f172a;
+        ::-webkit-scrollbar-track {
+            background: #000;
         }
 
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: #7e22ce;
+        ::-webkit-scrollbar-thumb {
+            background: #ec4899;
             border-radius: 10px;
         }
 
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-            background: #9333ea;
+        .select-custom {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23ec4899'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1.5em;
         }
     </style>
 </head>
 
-<body
-    class="min-h-screen bg-gradient-to-br from-gray-900 to-black text-gray-100 p-4 flex flex-col items-center custom-scrollbar">
+<body class="min-h-screen text-gray-100 p-2 sm:p-4 flex flex-col items-center">
 
     <nav
-        class="w-full max-w-6xl mx-auto bg-gray-950 bg-opacity-80 rounded-t-2xl sm:rounded-t-3xl shadow-lg border border-purple-800 border-b-0 p-3 sm:p-4 flex flex-wrap justify-center items-center gap-x-2 gap-y-2 sm:gap-x-6 sticky top-0 z-50 backdrop-blur-md">
+        class="w-full max-w-5xl mx-auto bg-[#1b1b1b] rounded-t-2xl p-3 sm:p-4 flex flex-wrap justify-center items-center gap-2 sm:gap-5 sticky top-0 z-50 border-b border-gray-800 backdrop-blur-md">
         <a href="/"
-            class="text-xs sm:text-base text-gray-300 hover:text-purple-400 transition-colors duration-200 font-semibold px-2 sm:px-3">Rank
+            class="text-xs sm:text-sm text-gray-300 hover:text-pink-500 font-black px-2 uppercase tracking-tighter transition-colors">Rank
             Finder</a>
         <a href="/competitors"
-            class="text-xs sm:text-base text-gray-300 hover:text-purple-400 transition-colors duration-200 font-semibold px-2 sm:px-3">Competitors</a>
+            class="text-xs sm:text-sm text-gray-300 hover:text-pink-500 font-black px-2 uppercase tracking-tighter transition-colors">Competitors</a>
         <a href="/specialist"
-            class="text-xs sm:text-base text-gray-300 hover:text-purple-400 transition-colors duration-200 font-semibold px-2 sm:px-3">Specialist</a>
+            class="text-xs sm:text-sm text-gray-300 hover:text-pink-500 font-black px-2 uppercase tracking-tighter transition-colors">Specialist</a>
         <a href="/completionist"
-            class="text-xs sm:text-base text-gray-300 hover:text-purple-400 transition-colors duration-200 font-semibold px-2 sm:px-3">Completionist</a>
+            class="text-xs sm:text-sm text-gray-300 hover:text-pink-500 font-black px-2 uppercase tracking-tighter transition-colors">Completionist</a>
+        <a href="/events"
+            class="text-xs sm:text-sm text-gray-300 hover:text-pink-500 font-black px-2 uppercase tracking-tighter transition-colors">Events</a>
         <a href="/comparison"
-            class="text-xs sm:text-base text-purple-400 transition-colors duration-200 font-semibold px-2 sm:px-3">Comparison</a>
+            class="text-xs sm:text-sm font-black px-2 nav-active uppercase tracking-tighter transition-colors">Comparison</a>
         <a href="/competitions"
-            class="text-xs sm:text-base text-gray-300 hover:text-purple-400 transition-colors duration-200 font-semibold px-2 sm:px-3">Competitions</a>
+            class="text-xs sm:text-sm text-gray-300 hover:text-pink-500 font-black px-2 uppercase tracking-tighter transition-colors">Competitions</a>
     </nav>
 
     <div
-        class="max-w-6xl w-full mx-auto bg-gray-950 bg-opacity-70 rounded-b-3xl shadow-[0_20px_50px_rgba(168,85,247,0.2)] p-4 sm:p-10 space-y-10 backdrop-blur-md border border-purple-800 border-t-0">
+        class="max-w-6xl w-full mx-auto bg-[#1b1b1b] rounded-b-2xl shadow-2xl p-4 sm:p-10 space-y-10 flex-grow border-x border-b border-gray-800">
 
         <header class="text-center">
-            <h1
-                class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500 drop-shadow-sm">
-                WCA Event Comparison
+            <h1 class="brand-logo text-white mb-2">
+                Event<span class="brand-tag">Comparison</span>
             </h1>
-            <p class="text-lg text-gray-400 mt-4">Discover cubers with "imbalanced" rankings across different events.
-            </p>
+            <p class="text-gray-400 text-sm font-bold uppercase tracking-widest italic">Identify imbalanced rankings
+                across official events</p>
         </header>
 
         <main class="space-y-8">
-            <div class="bg-gray-800 bg-opacity-40 p-6 rounded-2xl shadow-inner border border-gray-700">
+            <div class="bg-black p-6 rounded-2xl border border-gray-800 shadow-inner">
                 <div class="flex flex-col md:flex-row items-center justify-center gap-4">
 
                     <div class="w-full md:w-5/12">
-                        <label class="block text-xs font-bold text-purple-300 uppercase tracking-widest mb-2">Better
+                        <label
+                            class="block text-[10px] font-black text-pink-500 uppercase tracking-[0.2em] mb-2 ml-1">Better
                             At:</label>
                         <select id="event1-select"
-                            class="w-full p-4 rounded-xl border border-gray-700 bg-gray-900 text-gray-100 focus:ring-2 focus:ring-purple-600 outline-none cursor-pointer appearance-none transition-all"></select>
+                            class="select-custom w-full p-4 rounded-xl border border-gray-800 bg-[#1b1b1b] text-gray-100 focus:ring-2 focus:ring-pink-500 outline-none cursor-pointer font-bold transition-all"></select>
                     </div>
 
                     <div class="flex items-center justify-center pt-6">
                         <button id="swap-btn"
-                            class="p-3 rounded-full bg-gray-700 hover:bg-purple-600 text-white transition-all transform hover:rotate-180"
+                            class="p-3 rounded-xl bg-gray-900 border border-gray-800 hover:border-pink-500 text-pink-500 transition-all transform hover:rotate-180"
                             title="Swap Events">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                                 stroke="currentColor">
@@ -89,79 +115,82 @@
                     </div>
 
                     <div class="w-full md:w-5/12">
-                        <label class="block text-xs font-bold text-purple-300 uppercase tracking-widest mb-2">Than
+                        <label
+                            class="block text-[10px] font-black text-pink-500 uppercase tracking-[0.2em] mb-2 ml-1">Than
                             At:</label>
                         <select id="event2-select"
-                            class="w-full p-4 rounded-xl border border-gray-700 bg-gray-900 text-gray-100 focus:ring-2 focus:ring-purple-600 outline-none cursor-pointer appearance-none transition-all"></select>
+                            class="select-custom w-full p-4 rounded-xl border border-gray-800 bg-[#1b1b1b] text-gray-100 focus:ring-2 focus:ring-pink-500 outline-none cursor-pointer font-bold transition-all"></select>
                     </div>
                 </div>
 
                 <button id="compare-button"
-                    class="w-full mt-8 bg-gradient-to-r from-purple-600 to-purple-800 hover:from-purple-500 hover:to-purple-700 text-white font-bold py-4 rounded-xl shadow-lg transition-all transform hover:scale-[1.01] active:scale-95 uppercase tracking-widest">
+                    class="w-full mt-8 bg-pink-600 hover:bg-pink-500 text-black font-black py-4 rounded-xl shadow-lg transition-all transform active:scale-95 uppercase tracking-tighter text-lg">
                     Run Analysis
                 </button>
             </div>
 
             <div id="loading-spinner" class="hidden flex flex-col justify-center items-center py-20 space-y-4">
-                <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-purple-500"></div>
-                <p class="text-purple-400 animate-pulse font-medium">Scanning 268 pages of WCA data...</p>
+                <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-pink-500 border-r-transparent"></div>
+                <p class="text-pink-500 font-black uppercase tracking-widest text-xs animate-pulse">Scanning WCA
+                    Database...</p>
             </div>
 
-            <div id="results-container" class="hidden animate-fadeIn">
+            <div id="results-container" class="hidden">
                 <div class="flex items-center justify-between mb-6">
                     <h2 id="results-title"
-                        class="text-xl sm:text-2xl font-bold text-gray-100 border-l-4 border-purple-500 pl-4">Results
-                    </h2>
-                    <span class="text-xs text-gray-500 bg-gray-800 px-3 py-1 rounded-full">Top 100 Gaps</span>
+                        class="text-xl font-black text-white uppercase tracking-tighter border-l-4 border-pink-500 pl-4">
+                        Analysis Results</h2>
+                    <span
+                        class="text-[10px] font-black text-gray-500 bg-black border border-gray-800 px-3 py-1 rounded-full uppercase tracking-widest">Top
+                        100 Gaps</span>
                 </div>
 
-                <div
-                    class="overflow-hidden rounded-2xl border border-purple-900 border-opacity-50 bg-gray-900 bg-opacity-50 backdrop-blur-sm">
+                <div class="overflow-hidden rounded-2xl border border-gray-800 bg-black">
                     <div class="overflow-x-auto">
-                        <table class="min-w-full divide-y divide-gray-800">
-                            <thead class="bg-gray-800 bg-opacity-90">
+                        <table class="min-w-full">
+                            <thead class="bg-[#1b1b1b] border-b border-gray-800">
                                 <tr>
                                     <th
-                                        class="px-6 py-4 text-left text-xs font-bold text-purple-300 uppercase tracking-wider">
+                                        class="px-6 py-4 text-left text-[10px] font-black text-gray-500 uppercase tracking-widest">
                                         Competitor</th>
                                     <th
-                                        class="px-6 py-4 text-left text-xs font-bold text-purple-300 uppercase tracking-wider">
+                                        class="px-6 py-4 text-left text-[10px] font-black text-gray-500 uppercase tracking-widest">
                                         Region</th>
                                     <th id="event1-header"
-                                        class="px-6 py-4 text-left text-xs font-bold text-purple-300 uppercase tracking-wider">
+                                        class="px-6 py-4 text-left text-[10px] font-black text-pink-500 uppercase tracking-widest">
                                         Event 1</th>
                                     <th id="event2-header"
-                                        class="px-6 py-4 text-left text-xs font-bold text-purple-300 uppercase tracking-wider">
+                                        class="px-6 py-4 text-left text-[10px] font-black text-gray-500 uppercase tracking-widest">
                                         Event 2</th>
                                     <th
-                                        class="px-6 py-4 text-left text-xs font-bold text-purple-300 uppercase tracking-wider">
+                                        class="px-6 py-4 text-left text-[10px] font-black text-pink-500 uppercase tracking-widest">
                                         Margin</th>
                                 </tr>
                             </thead>
-                            <tbody id="results-table-body" class="divide-y divide-gray-800"></tbody>
+                            <tbody id="results-table-body" class="divide-y divide-gray-900"></tbody>
                         </table>
                     </div>
                 </div>
             </div>
 
             <div id="no-results-message"
-                class="hidden text-center py-20 bg-gray-900 rounded-3xl border border-dashed border-gray-700">
-                <p class="text-gray-400 text-lg italic">No competitors found who fit this specific criteria.</p>
+                class="hidden text-center py-20 bg-black rounded-3xl border border-dashed border-gray-800">
+                <p class="text-gray-600 font-black uppercase tracking-widest text-sm">No significant gaps found for this
+                    pair.</p>
             </div>
 
             <div id="error-message"
-                class="hidden text-center py-10 bg-red-950 bg-opacity-20 rounded-2xl border border-red-900 text-red-400">
-                <p class="font-semibold">Error: <span id="error-text">Failed to fetch data.</span></p>
+                class="hidden text-center py-10 bg-red-950/20 rounded-2xl border border-red-900/50 text-red-500 font-black uppercase text-xs tracking-widest">
+                <p>Error: <span id="error-text">Failed to fetch data.</span></p>
             </div>
         </main>
     </div>
 
-    <footer class="mt-10 mb-6 text-gray-500 text-sm">
-        Data sourced from WCA REST API
+    <footer class="w-full max-w-6xl mx-auto text-center text-gray-600 text-xs sm:text-sm mt-8 pb-8 font-bold">
+        <p>© 2026 Wiigii's WCA Tools • <span class="text-pink-500 uppercase">Live REST API Sync</span></p>
     </footer>
 
     <script>
-        // Must exactly match the keys in comparison.py EVENT_MAP
         const eventMap = {
             "3x3 Cube": "333",
             "2x2 Cube": "222",
@@ -197,13 +226,12 @@
         const errorText = document.getElementById('error-text');
 
         function populateEventDropdowns() {
-            Object.keys(eventMap).forEach((name, index) => {
+            Object.keys(eventMap).forEach((name) => {
                 const opt1 = new Option(name, name);
                 const opt2 = new Option(name, name);
                 eventSelect1.add(opt1);
                 eventSelect2.add(opt2);
             });
-            // Default selections
             eventSelect1.selectedIndex = 2; // 4x4
             eventSelect2.selectedIndex = 0; // 3x3
         }
@@ -218,19 +246,16 @@
             const e1Name = eventSelect1.value;
             const e2Name = eventSelect2.value;
 
-            // Reset UI
             resultsTableBody.innerHTML = '';
             resultsContainer.classList.add('hidden');
             noResultsMessage.classList.add('hidden');
             errorMessage.classList.add('hidden');
             loadingSpinner.classList.remove('hidden');
 
-            // Update Headers
             event1Header.textContent = e1Name;
             event2Header.textContent = e2Name;
 
             try {
-                // Ensure endpoint matches your Flask registration (default /api/compare_events)
                 const response = await fetch(`/api/compare_events?event1=${encodeURIComponent(e1Name)}&event2=${encodeURIComponent(e2Name)}`);
 
                 if (!response.ok) {
@@ -242,22 +267,22 @@
                 loadingSpinner.classList.add('hidden');
 
                 if (json.data && json.data.length > 0) {
-                    const verb = e1Name.includes('Fewest Moves') ? 'better' : 'faster';
+                    const verb = e1Name.includes('Fewest Moves') ? 'Better' : 'Faster';
                     resultsTitle.textContent = `${e1Name} Specialists (${verb} than ${e2Name})`;
 
                     json.data.forEach(comp => {
                         const row = document.createElement('tr');
-                        row.className = "hover:bg-purple-900 hover:bg-opacity-10 transition-colors";
+                        row.className = "hover:bg-pink-900/5 transition-colors";
                         row.innerHTML = `
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm font-bold text-gray-100">${comp.name}</div>
-                                <div class="text-xs text-purple-400 font-mono">${comp.wca_id}</div>
+                                <div class="text-sm font-black text-white uppercase tracking-tighter">${comp.name}</div>
+                                <div class="text-[10px] text-pink-500 font-bold underline decoration-pink-500/20">${comp.wca_id}</div>
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-400">${comp.country}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold text-gray-300">${comp.best1}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${comp.best2}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-xs font-bold text-gray-500 uppercase">${comp.country}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-black text-white">${comp.best1}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-600">${comp.best2}</td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <span class="px-2 py-1 text-xs font-bold rounded-md bg-purple-900 bg-opacity-30 text-purple-300">
+                                <span class="px-2 py-1 text-[10px] font-black rounded bg-pink-500 text-black uppercase">
                                     ${comp.diff.toFixed(2)}s lead
                                 </span>
                             </td>

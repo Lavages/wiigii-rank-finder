@@ -4,144 +4,169 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wiigii's Competition Explorer</title>
+    <title>Competition Explorer • Wiigii's WCA</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.cubing.net/v0/css/@cubing/icons/css">
 
     <style>
         body {
             font-family: 'Inter', sans-serif;
+            background-color: #000000;
         }
 
-        /* ICON SIZE: Medium balance */
+        .nav-active {
+            color: #ec4899 !important;
+            border-bottom: 3px solid #ec4899;
+        }
+
+        .brand-logo {
+            font-weight: 900;
+            font-size: 2.5rem;
+            letter-spacing: -1px;
+        }
+
+        .brand-tag {
+            background-color: #ec4899;
+            color: black;
+            padding: 2px 8px;
+            border-radius: 4px;
+            margin-left: 2px;
+        }
+
+        /* ICON SIZE: Precise balance for the pink theme */
         .event-icon {
-            font-size: 2rem;
+            font-size: 1.8rem;
             vertical-align: middle;
             display: inline-block;
-            margin-right: 3px;
+            margin-right: 4px;
+            filter: drop-shadow(0 0 2px rgba(236, 72, 153, 0.2));
         }
 
         @media (min-width: 640px) {
             .event-icon {
-                font-size: 2.4rem;
+                font-size: 2.2rem;
             }
         }
 
         /* Custom scrollbar */
-        .custom-scrollbar::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
         }
 
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-            background-color: #6d28d9;
+        ::-webkit-scrollbar-track {
+            background: #000;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #ec4899;
             border-radius: 10px;
         }
 
-        .custom-scrollbar::-webkit-scrollbar-track {
-            background-color: #111827;
-        }
-
-        /* Scrollable events list in table */
         .scrollable-events {
             max-width: 320px;
             overflow-x: auto;
             white-space: nowrap;
-            padding: 6px 0;
+            padding: 8px 0;
         }
 
         #match-mode-toggle:checked+.block+.dot {
             transform: translateX(1.5rem);
-            background-color: #a78bfa;
+            background-color: #ec4899;
         }
 
-        .nav-active {
-            color: #a78bfa !important;
-            border-bottom: 2px solid #a78bfa;
+        .event-btn-active {
+            border-color: #ec4899 !important;
+            background-color: rgba(236, 72, 153, 0.1) !important;
+            box-shadow: 0 0 15px rgba(236, 72, 153, 0.2);
         }
     </style>
 </head>
 
-<body class="min-h-screen bg-gradient-to-br from-gray-900 to-black text-gray-100 p-2 sm:p-4 flex flex-col items-center">
+<body class="min-h-screen text-gray-100 p-2 sm:p-4 flex flex-col items-center">
 
     <nav
-        class="w-full max-w-5xl mx-auto bg-gray-950 bg-opacity-80 rounded-t-2xl sm:rounded-t-3xl shadow-lg border border-purple-800 border-b-0 p-3 sm:p-4 flex justify-center flex-wrap gap-2 sm:gap-6 sticky top-0 z-50 backdrop-blur-md">
+        class="w-full max-w-5xl mx-auto bg-[#1b1b1b] rounded-t-2xl p-3 sm:p-4 flex flex-wrap justify-center items-center gap-2 sm:gap-5 sticky top-0 z-50 border-b border-gray-800 backdrop-blur-md">
         <a href="/"
-            class="text-xs sm:text-base text-gray-300 hover:text-purple-400 transition-colors duration-200 font-semibold px-2 sm:px-3">Rank
+            class="text-xs sm:text-sm text-gray-300 hover:text-pink-500 font-black px-2 uppercase tracking-tighter transition-colors">Rank
             Finder</a>
         <a href="/competitors"
-            class="text-xs sm:text-base text-gray-300 hover:text-purple-400 transition-colors duration-200 font-semibold px-2 sm:px-3">Competitors</a>
+            class="text-xs sm:text-sm text-gray-300 hover:text-pink-500 font-black px-2 uppercase tracking-tighter transition-colors">Competitors</a>
         <a href="/specialist"
-            class="text-xs sm:text-base text-gray-300 hover:text-purple-400 transition-colors duration-200 font-semibold px-2 sm:px-3">Specialist</a>
+            class="text-xs sm:text-sm text-gray-300 hover:text-pink-500 font-black px-2 uppercase tracking-tighter transition-colors">Specialist</a>
         <a href="/completionist"
-            class="text-xs sm:text-base text-gray-300 hover:text-purple-400 transition-colors duration-200 font-semibold px-2 sm:px-3">Completionist</a>
+            class="text-xs sm:text-sm text-gray-300 hover:text-pink-500 font-black px-2 uppercase tracking-tighter transition-colors">Completionist</a>
+        <a href="/events"
+            class="text-xs sm:text-sm text-gray-300 hover:text-pink-500 font-black px-2 uppercase tracking-tighter transition-colors">Events</a>
         <a href="/comparison"
-            class="text-xs sm:text-base text-gray-300 hover:text-purple-400 transition-colors duration-200 font-semibold px-2 sm:px-3">Comparison</a>
-        <a href="/competitions" class="text-xs sm:text-base font-semibold px-2 sm:px-3 nav-active">Competitions</a>
+            class="text-xs sm:text-sm text-gray-300 hover:text-pink-500 font-black px-2 uppercase tracking-tighter transition-colors">Comparison</a>
+        <a href="/competitions"
+            class="text-xs sm:text-sm font-black px-2 nav-active uppercase tracking-tighter transition-colors">Competitions</a>
     </nav>
 
     <main
-        class="max-w-5xl w-full mx-auto bg-gray-950 bg-opacity-70 rounded-b-2xl sm:rounded-b-3xl shadow-[0_20px_50px_rgba(168,85,247,0.2)] p-4 sm:p-10 space-y-6 sm:space-y-10 backdrop-blur-md border border-purple-800 border-t-0 flex-grow">
+        class="max-w-5xl w-full mx-auto bg-[#1b1b1b] rounded-b-2xl shadow-2xl p-4 sm:p-10 space-y-10 flex-grow border-x border-b border-gray-800">
 
-        <header class="text-center space-y-2">
-            <h1 class="text-3xl sm:text-5xl font-extrabold text-purple-400 drop-shadow-md leading-tight">
-                Competition Explorer 🌍
+        <header class="text-center">
+            <h1 class="brand-logo text-white mb-2">
+                Comp<span class="brand-tag">Explorer</span>
             </h1>
-            <p class="text-gray-400 text-sm sm:text-base italic">Find WCA competitions by specific event combinations
-            </p>
+            <p class="text-gray-400 text-sm font-bold uppercase tracking-widest italic">Locate competitions by specific
+                event combos</p>
         </header>
 
-        <div class="space-y-4">
-            <h3 class="text-center text-sm font-semibold uppercase tracking-widest text-gray-500">Select Events</h3>
+        <div class="space-y-6">
+            <h3 class="text-center text-[10px] font-black uppercase tracking-[0.3em] text-gray-500">Select Target Events
+            </h3>
             <div id="event-selector" class="flex flex-wrap justify-center gap-2 sm:gap-3"></div>
         </div>
 
         <div
-            class="flex flex-col items-center justify-center gap-6 bg-gray-900 bg-opacity-40 p-6 rounded-2xl border border-gray-800">
+            class="flex flex-col items-center justify-center gap-8 bg-black p-8 rounded-2xl border border-gray-800 shadow-inner">
             <label for="match-mode-toggle" class="flex items-center cursor-pointer group">
                 <div class="relative">
                     <input type="checkbox" id="match-mode-toggle" class="sr-only">
-                    <div class="block bg-gray-700 w-14 h-8 rounded-full border border-gray-600"></div>
+                    <div class="block bg-gray-900 w-14 h-8 rounded-full border border-gray-700"></div>
                     <div
-                        class="dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition transform translate-x-0">
+                        class="dot absolute left-1 top-1 bg-gray-600 w-6 h-6 rounded-full transition transform translate-x-0">
                     </div>
                 </div>
                 <div class="ml-4">
                     <span id="match-mode-label"
-                        class="font-medium text-gray-300 select-none group-hover:text-purple-300 transition-colors">Inclusive
-                        Match (Default)</span>
+                        class="font-black text-xs uppercase tracking-widest text-gray-500 select-none group-hover:text-pink-500 transition-colors">
+                        Inclusive Match (Default)
+                    </span>
                 </div>
             </label>
 
             <button id="find-btn"
-                class="bg-purple-700 hover:bg-purple-600 active:scale-95 text-white font-bold py-3 px-10 rounded-xl shadow-lg transition-all w-full sm:w-auto flex items-center justify-center gap-2">
-                <span>Find Competitions</span>
+                class="w-full sm:w-auto bg-pink-600 hover:bg-pink-500 active:scale-95 text-black font-black py-4 px-12 rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 uppercase tracking-tighter text-lg">
+                Find Competitions
             </button>
         </div>
 
         <div id="loading-spinner" class="hidden flex flex-col items-center py-10 gap-4">
-            <svg class="animate-spin h-10 w-10 text-purple-400" xmlns="http://www.w3.org/2000/svg" fill="none"
-                viewBox="0 0 24 24">
-                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 00-8 8h4z"></path>
-            </svg>
-            <p class="text-purple-300 animate-pulse font-medium">Searching WCA database...</p>
+            <div class="animate-spin rounded-full h-12 w-12 border-t-4 border-pink-500 border-r-transparent"></div>
+            <p class="text-pink-500 font-black uppercase tracking-widest text-[10px] animate-pulse">Querying WCA
+                Database...</p>
         </div>
 
         <div id="results-container" class="min-h-[100px] flex flex-col items-center">
             <p id="error-message"
-                class="text-red-400 hidden p-6 text-center bg-red-900 bg-opacity-20 rounded-xl border border-red-800 w-full">
+                class="text-red-500 font-black uppercase text-xs tracking-widest hidden p-6 text-center bg-red-950/20 rounded-xl border border-red-900/50 w-full">
             </p>
-            <div id="no-data-message" class="hidden text-center py-12">
-                <p class="text-gray-500 text-lg">No competitions found for this selection.</p>
+            <div id="no-data-message"
+                class="hidden text-center py-20 bg-black rounded-3xl border border-dashed border-gray-800 w-full">
+                <p class="text-gray-600 font-black uppercase tracking-widest text-sm">No matches found for this
+                    selection.</p>
             </div>
         </div>
     </main>
 
-    <footer class="w-full max-w-5xl mx-auto text-center text-gray-600 text-xs sm:text-sm mt-8 pb-8">
-        <p>© 2026 Wiigii's WCA Tools • Data from World Cube Association</p>
+    <footer class="w-full max-w-5xl mx-auto text-center text-gray-600 text-xs sm:text-sm mt-8 pb-8 font-bold">
+        <p>© 2026 Wiigii's WCA Tools • <span class="text-pink-500 uppercase">Live Database Sync</span></p>
     </footer>
 
     <script>
@@ -178,33 +203,32 @@
         function getFormattedDate(competition) {
             const startDate = competition.date ? competition.date.from : null;
             const endDate = competition.date ? competition.date.till : null;
-            if (!startDate) return "Date TBA";
+            if (!startDate) return "DATE TBA";
             try {
                 const start = new Date(startDate + 'T00:00:00');
                 const end = endDate ? new Date(endDate + 'T00:00:00') : start;
                 const options = { month: 'short', day: 'numeric', year: 'numeric' };
-                if (start.getTime() === end.getTime()) return start.toLocaleDateString('en-US', options);
-                return `${new Date(startDate + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} - ${new Date(endDate + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}`;
+                if (start.getTime() === end.getTime()) return start.toLocaleDateString('en-US', options).toUpperCase();
+                return `${new Date(startDate + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} - ${new Date(endDate + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}`.toUpperCase();
             } catch (e) { return startDate; }
         }
 
         function getFormattedLocation(competition) {
-            return (competition.city && competition.country) ? `${competition.city}, ${competition.country}` : (competition.country || "TBA");
+            const loc = (competition.city && competition.country) ? `${competition.city}, ${competition.country}` : (competition.country || "TBA");
+            return loc.toUpperCase();
         }
 
         matchModeToggle.addEventListener("change", () => {
-            matchModeLabel.textContent = matchModeToggle.checked ? "Exact Match (Only selected events)" : "Inclusive Match (Default)";
-            matchModeLabel.classList.toggle("text-purple-400", matchModeToggle.checked);
+            matchModeLabel.textContent = matchModeToggle.checked ? "Exact Match (Required Only)" : "Inclusive Match (Default)";
+            matchModeLabel.classList.toggle("text-pink-500", matchModeToggle.checked);
         });
 
         Object.entries(EVENT_ICONS).forEach(([id, icon]) => {
             const btn = document.createElement("button");
-            btn.className = "bg-gray-800 hover:bg-gray-700 text-gray-100 rounded-xl p-2 sm:p-3 border border-gray-700 shadow-sm transition-all active:scale-90 flex items-center justify-center";
+            btn.className = "bg-black hover:border-gray-500 text-gray-100 rounded-xl p-3 border border-gray-800 shadow-sm transition-all active:scale-90 flex items-center justify-center";
             btn.innerHTML = icon;
             btn.addEventListener("click", () => {
-                btn.classList.toggle("ring-2");
-                btn.classList.toggle("ring-purple-500");
-                btn.classList.toggle("bg-purple-900");
+                btn.classList.toggle("event-btn-active");
                 if (selectedEvents.includes(id)) selectedEvents = selectedEvents.filter(e => e !== id);
                 else selectedEvents.push(id);
             });
@@ -218,7 +242,7 @@
             resultsContainer.querySelectorAll(".dynamic-result").forEach(el => el.remove());
 
             if (selectedEvents.length === 0) {
-                errorMsg.textContent = "Please select at least one event.";
+                errorMsg.textContent = "SELECT AT LEAST ONE EVENT.";
                 errorMsg.classList.remove("hidden");
                 spinner.classList.add("hidden");
                 return;
@@ -237,24 +261,24 @@
                 }
 
                 const tableHtml = `
-                    <div class="hidden sm:block w-full dynamic-result border border-gray-800 rounded-xl overflow-hidden mt-4">
-                        <table class="w-full text-left text-gray-300">
-                            <thead class="bg-gray-900 text-purple-300 uppercase text-xs tracking-wider">
+                    <div class="hidden sm:block w-full dynamic-result border border-gray-800 rounded-xl overflow-hidden mt-6 bg-black">
+                        <table class="w-full text-left">
+                            <thead class="bg-[#1b1b1b] border-b border-gray-800">
                                 <tr>
-                                    <th class="px-6 py-4">Competition</th>
-                                    <th class="px-6 py-4">Location</th>
-                                    <th class="px-6 py-4">Date</th>
-                                    <th class="px-6 py-4">Events</th>
+                                    <th class="px-6 py-4 text-[10px] font-black text-gray-500 uppercase tracking-widest">Competition</th>
+                                    <th class="px-6 py-4 text-[10px] font-black text-gray-500 uppercase tracking-widest">Location</th>
+                                    <th class="px-6 py-4 text-[10px] font-black text-gray-500 uppercase tracking-widest">Date</th>
+                                    <th class="px-6 py-4 text-[10px] font-black text-pink-500 uppercase tracking-widest">Events</th>
                                 </tr>
                             </thead>
-                            <tbody class="divide-y divide-gray-800">
+                            <tbody class="divide-y divide-gray-900">
                                 ${data.map(c => `
-                                    <tr class="bg-gray-950 bg-opacity-40 hover:bg-gray-800 transition-colors">
-                                        <td class="px-6 py-5 font-bold text-gray-100">
-                                            <a href="https://www.worldcubeassociation.org/competitions/${c.id}" target="_blank" class="hover:text-purple-400 transition-colors leading-tight block">${c.name}</a>
+                                    <tr class="hover:bg-pink-900/5 transition-colors">
+                                        <td class="px-6 py-5">
+                                            <a href="https://www.worldcubeassociation.org/competitions/${c.id}" target="_blank" class="font-black text-white uppercase tracking-tighter hover:text-pink-500 transition-colors block">${c.name}</a>
                                         </td>
-                                        <td class="px-6 py-5 text-sm text-gray-400">${getFormattedLocation(c)}</td>
-                                        <td class="px-6 py-5 text-sm whitespace-nowrap text-gray-400">${getFormattedDate(c)}</td>
+                                        <td class="px-6 py-5 text-xs font-bold text-gray-500">${getFormattedLocation(c)}</td>
+                                        <td class="px-6 py-5 text-xs font-bold text-gray-400 whitespace-nowrap">${getFormattedDate(c)}</td>
                                         <td class="px-6 py-5">
                                             <div class="scrollable-events custom-scrollbar">${c.events.map(e => EVENT_ICONS[e] || e).join("")}</div>
                                         </td>
@@ -265,15 +289,15 @@
                     </div>`;
 
                 const cardsHtml = `
-                    <div class="sm:hidden flex flex-col gap-4 w-full dynamic-result">
+                    <div class="sm:hidden flex flex-col gap-4 w-full dynamic-result mt-6">
                         ${data.map(c => `
-                            <div class="bg-gray-900 border border-gray-800 rounded-2xl p-5 shadow-lg">
-                                <a href="https://www.worldcubeassociation.org/competitions/${c.id}" target="_blank" class="text-lg font-bold text-purple-400 leading-tight block mb-2">${c.name}</a>
-                                <div class="space-y-1 text-sm text-gray-400 mb-4">
+                            <div class="bg-black border border-gray-800 rounded-2xl p-6 shadow-xl">
+                                <a href="https://www.worldcubeassociation.org/competitions/${c.id}" target="_blank" class="text-xl font-black text-pink-500 uppercase tracking-tighter block mb-3">${c.name}</a>
+                                <div class="space-y-2 text-[10px] font-black text-gray-500 uppercase tracking-widest mb-6">
                                     <p class="flex items-center gap-2">📍 ${getFormattedLocation(c)}</p>
                                     <p class="flex items-center gap-2">📅 ${getFormattedDate(c)}</p>
                                 </div>
-                                <div class="pt-4 border-t border-gray-800">
+                                <div class="pt-4 border-t border-gray-900">
                                     <div class="flex flex-wrap items-center gap-1">${c.events.map(e => EVENT_ICONS[e] || e).join("")}</div>
                                 </div>
                             </div>
@@ -282,7 +306,7 @@
 
                 resultsContainer.insertAdjacentHTML("beforeend", tableHtml + cardsHtml);
             } catch (err) {
-                errorMsg.textContent = "Data retrieval failed.";
+                errorMsg.textContent = "DATA RETRIEVAL FAILED.";
                 errorMsg.classList.remove("hidden");
             } finally {
                 spinner.classList.add("hidden");

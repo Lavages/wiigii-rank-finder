@@ -124,3 +124,9 @@ def get_competitions_api():
 def reload_cache_route():
     threading.Thread(target=load_cache, args=(True,), daemon=True).start()
     return jsonify({"message": "Background refresh initiated."})
+
+def get_cached_data():
+    """Returns the current state of the cache without triggering a refresh."""
+    global _competitions_cache
+    with _cache_lock:
+        return _competitions_cache.copy()

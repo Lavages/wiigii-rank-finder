@@ -23,7 +23,9 @@ SINGLE_EVENTS = {"333", "222", "444", "555", "666", "777", "333oh", "333bf", "33
 AVERAGE_EVENTS_SILVER = {"333", "222", "444", "555", "666", "777", "333oh",
                          "minx", "pyram", "skewb", "sq1", "clock"}
 AVERAGE_EVENTS_GOLD = AVERAGE_EVENTS_SILVER | {"333bf", "333fm", "444bf", "555bf"}
-EXCLUDED_EVENTS = {"333mbo", "magic", "mmagic", "333ft"}
+
+# Constraint: Don't include FTO or historical events
+EXCLUDED_EVENTS = {"333mbo", "magic", "mmagic", "333ft", "fto"}
 
 EVENT_NAMES = {
     "333": "3x3 Cube", "222": "2x2 Cube", "444": "4x4 Cube",
@@ -36,46 +38,41 @@ EVENT_NAMES = {
     "wcpodium": "Worlds Podium", "wr": "World Record",
 }
 
-TOTAL_PERSON_PAGES = 267
-TOTAL_COMPETITION_PAGES = 16
+TOTAL_PERSON_PAGES = 268 
+TOTAL_COMPETITION_PAGES = 18
 
 session = requests.Session()
 competitions_data = {}
 
-# ----------------- API ROUTES -----------------
-@completionists_bp.route("/completionists", methods=["GET"])
-def api_get_completionists():
-    """API endpoint to fetch all completionists."""
-    return jsonify(get_completionists())
-
 # ----------------- Helper Functions -----------------
+
 def fetch_person_page(page):
     url = f"https://raw.githubusercontent.com/robiningelbrecht/wca-rest-api/master/api/persons-page-{page}.json"
     try:
         resp = session.get(url, timeout=15)
         resp.raise_for_status()
         return resp.json().get("items", [])
-    except requests.exceptions.RequestException as e:
-        print(f"Error fetching person page {page}: {e}", file=sys.stderr)
+    except Exception:
+        return []
+
+def _fetch_single_competition_page(page):
+    url = f"https://raw.githubusercontent.com/robiningelbrecht/wca-rest-api/master/api/competitions-page-{page}.json"
+    try:
+        resp = session.get(url, timeout=15)
+        resp.raise_for_status()
+        return resp.json().get("items", [])
+    except Exception:
         return []
 
 def fetch_competition_pages():
     global competitions_data
-    try:
-        with ThreadPoolExecutor(max_workers=10) as executor:
-            futures = [executor.submit(_fetch_single_competition_page, p) for p in range(1, TOTAL_COMPETITION_PAGES + 1)]
-            for future in as_completed(futures):
-                for comp in future.result():
-                    competitions_data[comp["id"]] = comp
-        print(f"✅ Finished fetching {len(competitions_data)} competitions.", file=sys.stdout)
-    except Exception as e:
-        print(f"Error fetching competition pages: {e}", file=sys.stderr)
-
-def _fetch_single_competition_page(page):
-    url = f"https://raw.githubusercontent.com/robiningelbrecht/wca-rest-api/master/api/competitions-page-{page}.json"
-    resp = session.get(url, timeout=15)
-    resp.raise_for_status()
-    return resp.json().get("items", [])
+    if competitions_data: return
+    print("⚡ Fetching competition dates...", file=sys.stdout)
+    with ThreadPoolExecutor(max_workers=10) as executor:
+        futures = [executor.submit(_fetch_single_competition_page, p) for p in range(1, TOTAL_COMPETITION_PAGES + 1)]
+        for future in as_completed(futures):
+            for comp in future.result():
+                competitions_data[comp["id"]] = comp
 
 def has_wr(person):
     records = person.get("records", {})
@@ -96,116 +93,153 @@ def has_wc_podium(person):
                         return True
     return False
 
+def get_podium_coverage(person):
+    """Returns a map of eventId -> set of achieved positions {1, 2, 3}"""
+    coverage = {}
+    for comp_id, events in person.get("results", {}).items():
+        for ev, ev_results in events.items():
+            if ev in EXCLUDED_EVENTS: continue
+            if ev not in coverage: coverage[ev] = set()
+            for r in ev_results:
+                if r.get("round") == "Final":
+                    pos = r.get("position")
+                    if pos in (1, 2, 3):
+                        coverage[ev].add(pos)
+    return coverage
+
 def events_won(person):
-    """Return set of eventIds where competitor has 1st place in a Final round"""
     won = set()
     for comp_id, events in person.get("results", {}).items():
         for ev, ev_results in events.items():
-            if ev in EXCLUDED_EVENTS:
-                continue
+            if ev in EXCLUDED_EVENTS: continue
             for r in ev_results:
                 if r.get("round") == "Final" and r.get("position") == 1:
                     won.add(ev)
     return won
 
 def determine_category(person):
-    singles = {r.get("eventId") for r in person.get("rank", {}).get("singles", []) if r.get("eventId")}
-    if not SINGLE_EVENTS.issubset(singles): return None
+    # 1. Eligibility Check
+    singles_ranks = {r.get("eventId") for r in person.get("rank", {}).get("singles", []) if r.get("eventId")}
+    if not SINGLE_EVENTS.issubset(singles_ranks): return None
 
-    averages = {r.get("eventId") for r in person.get("rank", {}).get("averages", []) if r.get("eventId")}
+    averages_ranks = {r.get("eventId") for r in person.get("rank", {}).get("averages", []) if r.get("eventId")}
     
-    # Determine basic category
     category, required_averages = "Bronze", set()
-    if AVERAGE_EVENTS_GOLD.issubset(averages):
+    if AVERAGE_EVENTS_GOLD.issubset(averages_ranks):
         category, required_averages = "Gold", AVERAGE_EVENTS_GOLD.copy()
-    elif AVERAGE_EVENTS_SILVER.issubset(averages):
+    elif AVERAGE_EVENTS_SILVER.issubset(averages_ranks):
         category, required_averages = "Silver", AVERAGE_EVENTS_SILVER.copy()
 
-    # Apply Platinum and Palladium logic
+    # 2. Tier Upgrades (Platinum -> Palladium -> Iridium)
     if category == "Gold":
-        is_platinum_candidate = has_wr(person) or has_wc_podium(person)
-        if is_platinum_candidate:
+        if has_wr(person) or has_wc_podium(person):
             category = "Platinum"
-            if SINGLE_EVENTS.issubset(events_won(person)):
+            
+            # Check for wins (1st place) in every event
+            podium_data = get_podium_coverage(person)
+            won_all = all(1 in podium_data.get(ev, set()) for ev in SINGLE_EVENTS)
+            
+            if won_all:
                 category = "Palladium"
+                
+                # NEW IRIDIUM LOGIC: Must have 1, 2, AND 3 in every event
+                iridium_qualified = True
+                for ev in SINGLE_EVENTS:
+                    if not {1, 2, 3}.issubset(podium_data.get(ev, set())):
+                        iridium_qualified = False
+                        break
+                if iridium_qualified:
+                    category = "Iridium"
 
-    competitions_participated = []
+    # 3. Date Trace
+    history = []
     for comp_id, events_in_comp in person.get("results", {}).items():
+        comp_detail = competitions_data.get(comp_id)
+        if not comp_detail: continue 
+        date_till = comp_detail.get("date", {}).get("till")
+        if not date_till: continue
+
         for event_id, event_results in events_in_comp.items():
             if event_id in EXCLUDED_EVENTS: continue
-            for result_entry in event_results:
-                comp_detail = competitions_data.get(comp_id, {})
-                date_till = comp_detail.get("date", {}).get("till")
-                if date_till:
-                    competitions_participated.append({
-                        "competitionId": comp_id, "eventId": event_id,
-                        "date": date_till, "best": result_entry.get("best"),
-                        "average": result_entry.get("average")
-                    })
+            for res in event_results:
+                history.append({
+                    "date": date_till,
+                    "eventId": event_id,
+                    "hasSingle": res.get("best", -1) > 0,
+                    "hasAverage": res.get("average", -1) > 0
+                })
 
-    competitions_participated.sort(key=lambda x: x["date"])
-    current_completed_singles, current_completed_averages = set(), set()
-    category_date, last_event_id = "N/A", "N/A"
+    history.sort(key=lambda x: x["date"])
+    
+    done_singles, done_averages = set(), set()
+    cat_date, last_ev = "N/A", "N/A"
 
-    for comp in competitions_participated:
-        ev, date, best, avg = comp["eventId"], comp["date"], comp.get("best"), comp.get("average")
-        if ev in SINGLE_EVENTS and best not in (0, -1, -2): current_completed_singles.add(ev)
-        if ev in required_averages and avg not in (0, -1, -2): current_completed_averages.add(ev)
-        if current_completed_singles.issuperset(SINGLE_EVENTS) and current_completed_averages.issuperset(required_averages):
-            category_date, last_event_id = date, ev
+    for entry in history:
+        ev = entry["eventId"]
+        if ev in SINGLE_EVENTS and entry["hasSingle"]: done_singles.add(ev)
+        if ev in required_averages and entry["hasAverage"]: done_averages.add(ev)
+        
+        if done_singles.issuperset(SINGLE_EVENTS) and done_averages.issuperset(required_averages):
+            cat_date, last_ev = entry["date"], ev
             break
 
     return {
-        "id": person.get("id"), "name": person.get("name", "Unknown"),
-        "category": category, "categoryDate": category_date,
-        "lastEvent": EVENT_NAMES.get(last_event_id, last_event_id)
+        "id": person.get("id"), 
+        "name": person.get("name", "Unknown"),
+        "category": category, 
+        "categoryDate": cat_date,
+        "lastEvent": EVENT_NAMES.get(last_ev, last_ev)
     }
 
-# ----------------- Preload + Getter -----------------
+# ----------------- Preload + Cache Logic -----------------
+
 def preload_completionist_data():
     global COMPLETIONIST_DATA_LOADED, ALL_COMPLETIONISTS_DATA
     with COMPLETIONIST_LOADING_LOCK:
         if COMPLETIONIST_DATA_LOADED: return
+        
         if os.path.exists(CACHE_FILE):
             try:
                 with open(CACHE_FILE, "r", encoding="utf-8") as f:
                     ALL_COMPLETIONISTS_DATA = json.load(f)
                 COMPLETIONIST_DATA_LOADED = True
-                print(f"✅ Loaded {len(ALL_COMPLETIONISTS_DATA)} completionists from cache.", file=sys.stdout)
+                print(f"✅ Loaded {len(ALL_COMPLETIONISTS_DATA)} completionists from cache.")
                 return
-            except Exception as e:
-                print(f"Cache load error: {e}. Regenerating...", file=sys.stderr)
+            except Exception: pass
 
-        print("⚡ Generating completionists data...", file=sys.stdout)
+        fetch_competition_pages()
+
+        print("⚡ Fetching person data...", file=sys.stdout)
         all_persons = []
-        with ThreadPoolExecutor(max_workers=os.cpu_count() * 2 if os.cpu_count() else 8) as executor:
+        with ThreadPoolExecutor(max_workers=15) as executor:
             futures = [executor.submit(fetch_person_page, p) for p in range(1, TOTAL_PERSON_PAGES + 1)]
             for f in as_completed(futures):
-                try: all_persons.extend(f.result())
-                except Exception as e: print(f"Error fetching person page: {e}", file=sys.stderr)
+                all_persons.extend(f.result())
 
-        if not competitions_data: fetch_competition_pages()
+        print("⚡ Calculating completion tiers...", file=sys.stdout)
         results = []
-        with ThreadPoolExecutor(max_workers=os.cpu_count() * 2 if os.cpu_count() else 8) as executor:
-            futures = [executor.submit(determine_category, person) for person in all_persons]
+        with ThreadPoolExecutor(max_workers=10) as executor:
+            futures = [executor.submit(determine_category, p) for p in all_persons]
             for f in as_completed(futures):
-                try:
-                    res = f.result()
-                    if res: results.append(res)
-                except Exception as e: print(f"Error determining category: {e}", file=sys.stderr)
+                res = f.result()
+                if res: results.append(res)
 
-        completionists = [c for c in results if c and c["category"] is not None]
-        completionists.sort(key=lambda x: (x["categoryDate"] if x["categoryDate"] != "N/A" else "9999-12-31", x["name"]))
+        results.sort(key=lambda x: (x["categoryDate"] if x["categoryDate"] != "N/A" else "9999-12-31", x["name"]))
 
         try:
-            with open(CACHE_FILE, "w", encoding="utf-8") as f: json.dump(completionists, f, ensure_ascii=False, indent=2)
-            print(f"✅ Cache generated with {len(completionists)} completionists.", file=sys.stdout)
+            with open(CACHE_FILE, "w", encoding="utf-8") as f:
+                json.dump(results, f, indent=2)
         except Exception as e:
-            print(f"Error writing cache: {e}", file=sys.stderr)
+            print(f"Cache write error: {e}")
 
-        ALL_COMPLETIONISTS_DATA, COMPLETIONIST_DATA_LOADED = completionists, True
+        ALL_COMPLETIONISTS_DATA = results
+        COMPLETIONIST_DATA_LOADED = True
 
 def get_completionists():
-    global COMPLETIONIST_DATA_LOADED, ALL_COMPLETIONISTS_DATA
-    if not COMPLETIONIST_DATA_LOADED: preload_completionist_data()
+    if not COMPLETIONIST_DATA_LOADED:
+        preload_completionist_data()
     return ALL_COMPLETIONISTS_DATA
+
+@completionists_bp.route("/completionists", methods=["GET"])
+def api_get_completionists():
+    return jsonify(get_completionists())

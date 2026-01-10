@@ -3,7 +3,7 @@ import threading
 import logging
 import asyncio
 import aiohttp
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify, render_template, redirect
 from flask_cors import CORS
 
 # --- 1. Import Blueprints ---
@@ -207,6 +207,10 @@ EVENT_NAME_TO_ID = {
     "skewb": "skewb", "sq1": "sq1", "444bf": "444bf", "555bf": "555bf", 
     "333mbf": "333mbf"
 }
+@app.route('/redirect-to-hub')
+def duck_dns_bridge():
+    # This sends anyone from DuckDNS to your secure Cloudflare link
+    return redirect("https://four-sustainability-pulse-musical.trycloudflare.com", code=302)
 
 @app.route("/api/global-rankings/<region>/<type_param>/<event>")
 def get_global_rankings(region, type_param, event):
@@ -263,4 +267,5 @@ def serve_comparison_page(): return render_template("comparison.html")
 def serve_events_page(): return render_template("events.html")
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)), debug=False)
+    # Change debug to True for development
+    app.run(host='0.0.0.0', port=5000, debug=True)

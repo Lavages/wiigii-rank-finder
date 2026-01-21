@@ -94,7 +94,6 @@ def has_wc_podium(person):
     return False
 
 def get_podium_coverage(person):
-    """Returns a map of eventId -> set of achieved positions {1, 2, 3}"""
     coverage = {}
     for comp_id, events in person.get("results", {}).items():
         for ev, ev_results in events.items():
@@ -106,16 +105,6 @@ def get_podium_coverage(person):
                     if pos in (1, 2, 3):
                         coverage[ev].add(pos)
     return coverage
-
-def events_won(person):
-    won = set()
-    for comp_id, events in person.get("results", {}).items():
-        for ev, ev_results in events.items():
-            if ev in EXCLUDED_EVENTS: continue
-            for r in ev_results:
-                if r.get("round") == "Final" and r.get("position") == 1:
-                    won.add(ev)
-    return won
 
 def determine_category(person):
     # 1. Eligibility Check
@@ -132,23 +121,23 @@ def determine_category(person):
 
     # 2. Tier Upgrades (Platinum -> Palladium -> Iridium)
     if category == "Gold":
-        if has_wr(person) or has_wc_podium(person):
+        is_wr = has_wr(person)
+        is_wc = has_wc_podium(person)
+        podium_data = get_podium_coverage(person)
+        
+        # Platinum Requirement: WR OR Worlds Podium
+        if is_wr or is_wc:
             category = "Platinum"
             
-            # Check for wins (1st place) in every event
-            podium_data = get_podium_coverage(person)
-            won_all = all(1 in podium_data.get(ev, set()) for ev in SINGLE_EVENTS)
+            # Palladium Requirement: At least one {1, 2, or 3} in EVERY event
+            any_podium_coverage = all(bool({1, 2, 3} & podium_data.get(ev, set())) for ev in SINGLE_EVENTS)
             
-            if won_all:
+            if any_podium_coverage:
                 category = "Palladium"
                 
-                # NEW IRIDIUM LOGIC: Must have 1, 2, AND 3 in every event
-                iridium_qualified = True
-                for ev in SINGLE_EVENTS:
-                    if not {1, 2, 3}.issubset(podium_data.get(ev, set())):
-                        iridium_qualified = False
-                        break
-                if iridium_qualified:
+                # Iridium Requirement: WR AND Worlds Podium AND {1, 2, and 3} in EVERY event
+                full_podium_coverage = all({1, 2, 3}.issubset(podium_data.get(ev, set())) for ev in SINGLE_EVENTS)
+                if is_wr and is_wc and full_podium_coverage:
                     category = "Iridium"
 
     # 3. Date Trace
@@ -170,7 +159,6 @@ def determine_category(person):
                 })
 
     history.sort(key=lambda x: x["date"])
-    
     done_singles, done_averages = set(), set()
     cat_date, last_ev = "N/A", "N/A"
 

@@ -11,6 +11,7 @@
         body {
             font-family: 'Inter', Arial, sans-serif;
             background-color: #000000;
+            background-image: radial-gradient(circle at 50% -20%, #3b0764 0%, #000000 70%);
         }
 
         .spinner {
@@ -28,27 +29,41 @@
         }
 
         .nav-active {
-            color: #ec4899 !important;
-            border-bottom: 3px solid #ec4899;
+            color: #ff007f !important;
+            border-bottom: 3px solid #ff007f;
+            text-shadow: 0 0 10px rgba(255, 0, 127, 0.5);
         }
 
         .brand-logo {
             font-weight: 900;
             font-size: 2.5rem;
-            letter-spacing: -1px;
+            letter-spacing: -2px;
+            background: linear-gradient(to right, #ff007f, #7b2ff7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .brand-tag {
-            background-color: #ec4899;
-            color: black;
-            padding: 2px 8px;
+            background: linear-gradient(135deg, #ff007f, #7b2ff7);
+            color: white;
+            padding: 2px 10px;
             border-radius: 4px;
-            margin-left: 2px;
+            margin-left: 4px;
+            -webkit-text-fill-color: white;
+            /* Reset for the tag */
+            font-size: 1.5rem;
+            vertical-align: middle;
         }
 
-        /* Custom scrollbar for a cleaner dark look */
+        .glass-card {
+            background: rgba(15, 15, 15, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 0, 127, 0.1);
+        }
+
+        /* Custom scrollbar */
         ::-webkit-scrollbar {
-            width: 8px;
+            width: 6px;
         }
 
         ::-webkit-scrollbar-track {
@@ -56,8 +71,13 @@
         }
 
         ::-webkit-scrollbar-thumb {
-            background: #ec4899;
+            background: linear-gradient(#ff007f, #7b2ff7);
             border-radius: 10px;
+        }
+
+        .pink-glow-hover:hover {
+            box-shadow: 0 0 20px rgba(255, 0, 127, 0.3);
+            border-color: #ff007f;
         }
     </style>
 </head>
@@ -65,43 +85,43 @@
 <body class="min-h-screen text-gray-100 p-2 sm:p-4 flex flex-col items-center">
 
     <nav
-        class="w-full max-w-5xl mx-auto bg-[#1b1b1b] rounded-t-2xl p-3 sm:p-4 flex flex-wrap justify-center items-center gap-2 sm:gap-5 sticky top-0 z-50 border-b border-gray-800 backdrop-blur-md">
+        class="w-full max-w-5xl mx-auto bg-[#111111]/90 rounded-t-2xl p-3 sm:p-4 flex flex-wrap justify-center items-center gap-2 sm:gap-5 sticky top-0 z-50 border-b border-pink-500/20 backdrop-blur-md">
         <a href="/"
             class="text-xs sm:text-sm font-black px-2 nav-active uppercase tracking-tighter transition-colors">Rank
             Finder</a>
         <a href="/competitors"
-            class="text-xs sm:text-sm text-gray-300 hover:text-pink-500 font-black px-2 uppercase tracking-tighter transition-colors">Competitors</a>
+            class="text-xs sm:text-sm text-gray-400 hover:text-[#ff007f] font-black px-2 uppercase tracking-tighter transition-colors">Competitors</a>
         <a href="/specialist"
-            class="text-xs sm:text-sm text-gray-300 hover:text-pink-500 font-black px-2 uppercase tracking-tighter transition-colors">Specialist</a>
+            class="text-xs sm:text-sm text-gray-400 hover:text-[#ff007f] font-black px-2 uppercase tracking-tighter transition-colors">Specialist</a>
         <a href="/completionist"
-            class="text-xs sm:text-sm text-gray-300 hover:text-pink-500 font-black px-2 uppercase tracking-tighter transition-colors">Completionist</a>
+            class="text-xs sm:text-sm text-gray-400 hover:text-[#ff007f] font-black px-2 uppercase tracking-tighter transition-colors">Completionist</a>
         <a href="/events"
-            class="text-xs sm:text-sm text-gray-300 hover:text-pink-500 font-black px-2 uppercase tracking-tighter transition-colors">Events</a>
+            class="text-xs sm:text-sm text-gray-400 hover:text-[#ff007f] font-black px-2 uppercase tracking-tighter transition-colors">Events</a>
         <a href="/comparison"
-            class="text-xs sm:text-sm text-gray-300 hover:text-pink-500 font-black px-2 uppercase tracking-tighter transition-colors">Comparison</a>
+            class="text-xs sm:text-sm text-gray-400 hover:text-[#ff007f] font-black px-2 uppercase tracking-tighter transition-colors">Comparison</a>
         <a href="/competitions"
-            class="text-xs sm:text-sm text-gray-300 hover:text-pink-500 font-black px-2 uppercase tracking-tighter transition-colors">Competitions</a>
+            class="text-xs sm:text-sm text-gray-400 hover:text-[#ff007f] font-black px-2 uppercase tracking-tighter transition-colors">Competitions</a>
     </nav>
 
     <div
-        class="max-w-5xl w-full mx-auto bg-[#1b1b1b] rounded-b-2xl shadow-2xl p-4 sm:p-10 space-y-10 flex-grow border-x border-b border-gray-800">
+        class="max-w-5xl w-full mx-auto glass-card rounded-b-2xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] p-4 sm:p-10 space-y-10 flex-grow border-x border-b border-pink-500/10">
 
         <header class="text-center">
-            <h1 class="brand-logo text-white mb-2">
-                Rank<span class="brand-tag">Finder</span>
-            </h1>
-            <p class="text-gray-400 text-sm font-bold uppercase tracking-widest">Global WCA Database Access</p>
+            <h1 class="brand-logo mb-2">Rank<span class="brand-tag">Finder</span></h1>
+            <p class="text-purple-400/60 text-[10px] font-black uppercase tracking-[0.4em]">Nexus Data Stream // 2026
+            </p>
         </header>
 
         <div id="main-content" class="space-y-8">
             <div class="flex flex-col items-center justify-center py-20">
-                <p class="text-center text-xl text-pink-500 font-black animate-pulse uppercase">Syncing Database...</p>
+                <p class="text-center text-xl text-[#ff007f] font-black animate-pulse uppercase tracking-tighter">
+                    Syncing Database...</p>
                 <div class="mt-4 spinner">
-                    <svg class="h-8 w-8 text-pink-500" viewBox="0 0 24 24" fill="none"
+                    <svg class="h-8 w-8 text-[#7b2ff7]" viewBox="0 0 24 24" fill="none"
                         xmlns="http://www.w3.org/2000/svg">
-                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
+                        <circle class="opacity-20" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
                         </circle>
-                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 00-8 8h4z">
+                        <path class="opacity-100" fill="currentColor" d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 00-8 8h4z">
                         </path>
                     </svg>
                 </div>
@@ -109,8 +129,8 @@
         </div>
     </div>
 
-    <footer class="w-full max-w-5xl mx-auto text-center text-gray-500 text-xs sm:text-sm mt-8 pb-8 font-bold">
-        <p>© 2026 Wiigii's WCA Tools • <span class="text-pink-500">Premium Data Quality</span></p>
+    <footer class="w-full max-w-5xl mx-auto text-center text-gray-600 text-xs sm:text-sm mt-8 pb-8 font-bold">
+        <p>© 2026 Wiigii's WCA Tools • <span class="text-[#ff007f] shadow-pink-500">Premium Pink Edition</span></p>
     </footer>
 
     <script>
@@ -212,23 +232,23 @@
                 mainContentDiv.innerHTML = `
                     <div class="py-20 flex flex-col items-center gap-4">
                         <div class="spinner">
-                            <svg class="h-10 w-10 text-pink-500" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <svg class="h-10 w-10 text-[#ff007f]" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 00-8 8h4z"></path>
                             </svg>
                         </div>
-                        <p class="text-xl text-pink-500 font-black animate-pulse uppercase">Fetching Data...</p>
+                        <p class="text-xl text-[#ff007f] font-black animate-pulse uppercase tracking-tighter">Analyzing Stream...</p>
                     </div>`;
                 return;
             }
 
             if (error) {
                 mainContentDiv.innerHTML = `
-                    <div class="bg-red-950/30 text-white p-8 rounded-2xl border border-red-500/50 flex flex-col items-center gap-4">
-                        <p class="font-black uppercase text-red-500">Search Error</p>
-                        <p class="text-sm font-bold text-gray-300">${error}</p>
-                        <button onclick="handleBackToSearchForm()" class="mt-4 bg-white text-black font-black py-3 px-8 rounded-lg hover:bg-pink-500 transition-all uppercase text-xs">
-                            Try Again
+                    <div class="bg-red-950/20 text-white p-8 rounded-2xl border border-red-500/50 flex flex-col items-center gap-4">
+                        <p class="font-black uppercase text-red-500 tracking-widest">Access Denied</p>
+                        <p class="text-sm font-bold text-gray-400">${error}</p>
+                        <button onclick="handleBackToSearchForm()" class="mt-4 bg-white text-black font-black py-3 px-8 rounded-lg hover:bg-[#ff007f] hover:text-white transition-all uppercase text-xs">
+                            Re-Authorize
                         </button>
                     </div>`;
                 return;
@@ -239,30 +259,30 @@
                     <div class="space-y-8 animate-fade-in">
                         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                             <div class="flex flex-col">
-                                <label class="text-pink-500 text-[10px] font-black uppercase mb-2 ml-1 tracking-widest">Region</label>
-                                <select id="region-select" class="p-4 rounded-xl border border-gray-800 bg-black text-white focus:ring-2 focus:ring-pink-500 outline-none font-bold appearance-none cursor-pointer">
+                                <label class="text-[#7b2ff7] text-[10px] font-black uppercase mb-2 ml-1 tracking-[0.2em]">Region</label>
+                                <select id="region-select" class="p-4 rounded-xl border border-white/5 bg-black text-white focus:ring-2 focus:ring-[#ff007f] outline-none font-bold appearance-none cursor-pointer hover:bg-[#0a0a0a] transition-colors">
                                     ${regions.map(r => `<option value="${r.value}" ${selectedRegion === r.value ? 'selected' : ''}>${r.label}</option>`).join('')}
                                 </select>
                             </div>
                             <div class="flex flex-col">
-                                <label class="text-pink-500 text-[10px] font-black uppercase mb-2 ml-1 tracking-widest">Event</label>
-                                <select id="event-select" class="p-4 rounded-xl border border-gray-800 bg-black text-white focus:ring-2 focus:ring-pink-500 outline-none font-bold appearance-none cursor-pointer">
+                                <label class="text-[#7b2ff7] text-[10px] font-black uppercase mb-2 ml-1 tracking-[0.2em]">Event</label>
+                                <select id="event-select" class="p-4 rounded-xl border border-white/5 bg-black text-white focus:ring-2 focus:ring-[#ff007f] outline-none font-bold appearance-none cursor-pointer hover:bg-[#0a0a0a] transition-colors">
                                     ${events.map(e => `<option value="${e.value}" ${selectedEvent === e.value ? 'selected' : ''}>${e.label}</option>`).join('')}
                                 </select>
                             </div>
                             <div class="flex flex-col">
-                                <label class="text-pink-500 text-[10px] font-black uppercase mb-2 ml-1 tracking-widest">Result Type</label>
-                                <select id="ranking-type-select" class="p-4 rounded-xl border border-gray-800 bg-black text-white focus:ring-2 focus:ring-pink-500 outline-none font-bold cursor-pointer">
+                                <label class="text-[#7b2ff7] text-[10px] font-black uppercase mb-2 ml-1 tracking-[0.2em]">Metric</label>
+                                <select id="ranking-type-select" class="p-4 rounded-xl border border-white/5 bg-black text-white focus:ring-2 focus:ring-[#ff007f] outline-none font-bold cursor-pointer hover:bg-[#0a0a0a] transition-colors">
                                     <option value="singles" ${selectedRankingType === 'singles' ? 'selected' : ''}>Singles</option>
                                     <option value="averages" ${selectedRankingType === 'averages' ? 'selected' : ''}>Averages</option>
                                 </select>
                             </div>
                             <div class="flex flex-col">
-                                <label class="text-pink-500 text-[10px] font-black uppercase mb-2 ml-1 tracking-widest">Rank Position</label>
-                                <input type="number" id="rank-number-input" value="${rankNumber}" min="1" class="p-4 rounded-xl border border-gray-800 bg-black text-white focus:ring-2 focus:ring-pink-500 outline-none font-bold" />
+                                <label class="text-[#7b2ff7] text-[10px] font-black uppercase mb-2 ml-1 tracking-[0.2em]">Rank Position</label>
+                                <input type="number" id="rank-number-input" value="${rankNumber}" min="1" class="p-4 rounded-xl border border-white/5 bg-black text-white focus:ring-2 focus:ring-[#ff007f] outline-none font-bold hover:bg-[#0a0a0a] transition-colors" />
                             </div>
                         </div>
-                        <button id="search-button" onclick="handleFetchGlobalRankings()" class="w-full bg-pink-600 hover:bg-pink-500 text-black font-black text-xl py-5 rounded-2xl shadow-lg shadow-pink-600/20 transition-all active:scale-[0.98] uppercase tracking-tighter">
+                        <button id="search-button" onclick="handleFetchGlobalRankings()" class="w-full bg-[#ff007f] hover:bg-[#ff1a8c] text-white font-black text-xl py-5 rounded-2xl shadow-[0_0_30px_rgba(255,0,127,0.2)] transition-all active:scale-[0.98] uppercase tracking-tighter">
                             Analyze Rankings
                         </button>
                     </div>
@@ -275,36 +295,36 @@
                 const { competitors, actualRank } = globalRankingsData;
 
                 mainContentDiv.innerHTML = `
-                    <button onclick="handleBackToSearchForm()" class="text-pink-500 hover:text-white font-black uppercase mb-6 flex items-center gap-2 transition-colors text-xs tracking-widest">
+                    <button onclick="handleBackToSearchForm()" class="text-[#ff007f] hover:text-white font-black uppercase mb-6 flex items-center gap-2 transition-colors text-[10px] tracking-widest">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15 19l-7-7 7-7"></path></svg>
-                        Back to Finder
+                        Return to Search
                     </button>
                     <div class="text-center mb-10">
-                        <p class="text-[10px] font-black text-pink-500 uppercase tracking-[0.3em] mb-2">${regionLabel} Dataset</p>
-                        <h2 class="text-4xl font-black text-white uppercase tracking-tighter">Rank #${actualRank}</h2>
-                        <div class="inline-block bg-[#222] border border-gray-800 text-gray-400 rounded-lg px-4 py-1 mt-4 font-black text-xs uppercase">
-                            ${eventLabel} • ${selectedRankingType}
+                        <p class="text-[10px] font-black text-purple-500 uppercase tracking-[0.4em] mb-2">${regionLabel} Results</p>
+                        <h2 class="text-5xl font-black text-white uppercase tracking-tighter italic">RANK #${actualRank}</h2>
+                        <div class="inline-block bg-white/5 border border-white/10 text-[#ff007f] rounded-lg px-4 py-1 mt-4 font-black text-xs uppercase tracking-widest">
+                            ${eventLabel} // ${selectedRankingType}
                         </div>
                     </div>
-                    <div class="grid grid-cols-1 gap-4">
+                    <div class="grid grid-cols-1 gap-6">
                         ${competitors.map(c => `
-                            <div class="bg-black p-8 rounded-2xl border border-gray-800 hover:border-pink-500/50 transition-all group">
+                            <div class="bg-black/50 p-8 rounded-2xl border border-white/5 hover:border-[#ff007f]/50 transition-all group pink-glow-hover">
                                 <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
                                     <div>
-                                        <p class="font-black text-3xl text-white uppercase tracking-tighter group-hover:text-pink-500 transition-colors">${c.person.name}</p>
-                                        <div class="flex items-center gap-3 mt-2">
-                                            <span class="text-[10px] bg-pink-600 text-black px-2 py-0.5 rounded font-black uppercase tracking-widest">${c.person.wcaId}</span>
+                                        <p class="font-black text-4xl text-white uppercase tracking-tighter group-hover:text-[#ff007f] transition-colors">${c.person.name}</p>
+                                        <div class="flex items-center gap-3 mt-3">
+                                            <span class="text-[10px] bg-[#ff007f] text-white px-2 py-0.5 rounded font-black uppercase tracking-widest">${c.person.wcaId}</span>
                                             <span class="text-[10px] text-gray-500 font-black uppercase tracking-widest">${c.person.countryId}</span>
                                         </div>
                                     </div>
-                                    <div class="bg-[#0f0f0f] p-4 px-8 rounded-xl border border-gray-800 text-center">
-                                        <p class="text-[10px] text-gray-500 font-black uppercase tracking-widest mb-1">Time/Result</p>
-                                        <p class="font-black text-4xl text-white">${getFormattedResult(c)}</p>
+                                    <div class="bg-black p-4 px-10 rounded-xl border border-white/5 text-center shadow-inner">
+                                        <p class="text-[10px] text-[#7b2ff7] font-black uppercase tracking-widest mb-1">Time Result</p>
+                                        <p class="font-black text-4xl text-white tracking-tighter">${getFormattedResult(c)}</p>
                                     </div>
                                 </div>
                                 <a href="https://www.worldcubeassociation.org/persons/${c.person.wcaId}" target="_blank"
-                                   class="mt-8 block text-center w-full bg-pink-600/10 hover:bg-pink-600 text-pink-500 hover:text-black font-black py-4 rounded-xl transition-all uppercase text-xs tracking-widest border border-pink-600/20">
-                                    Official WCA Profile
+                                   class="mt-8 block text-center w-full bg-[#ff007f]/5 hover:bg-[#ff007f] text-[#ff007f] hover:text-white font-black py-4 rounded-xl transition-all uppercase text-[10px] tracking-[0.2em] border border-[#ff007f]/20">
+                                    Open WCA Intelligence Profile
                                 </a>
                             </div>
                         `).join('')}
@@ -353,7 +373,6 @@
         }
 
         document.addEventListener('DOMContentLoaded', async () => {
-            // Wait for countries but keep the loading state visible if needed
             await fetchCountries();
             renderUI();
         });

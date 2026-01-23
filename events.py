@@ -1,209 +1,146 @@
-import os
-import msgpack
 import logging
-import asyncio
-import aiohttp
-import threading
-import tempfile
 from flask import Blueprint, render_template, request
+from wca_data import wca_data
 
 events_bp = Blueprint('events', __name__)
 logger = logging.getLogger(__name__)
 
-# ---------------- CONFIG ----------------
-COMP_CACHE = os.path.join(tempfile.gettempdir(), "wca_events_comps.msgpack")
-PERS_CACHE = os.path.join(tempfile.gettempdir(), "wca_events_pers.msgpack")
-COUNTRY_CACHE = os.path.join(tempfile.gettempdir(), "wca_events_countries.msgpack")
-
-# FTO is excluded per instructions
+# Project-wide excluded events (FTO is handled at the Nexus level)
 EVENT_CODE_NAMES = {
     "222": "2x2 Cube", "333": "3x3 Cube", "444": "4x4 Cube", "555": "5x5 Cube",
     "666": "6x6 Cube", "777": "7x7 Cube", "333bf": "3x3 Blindfolded",
     "333oh": "3x3 One-Handed", "333fm": "3x3 Fewest Moves",
     "clock": "Rubik's Clock", "minx": "Megaminx", "pyram": "Pyraminx",
     "skewb": "Skewb", "sq1": "Square-1", "444bf": "4x4 Blindfolded",
-    "555bf": "5x5 Blindfolded", "333mbf": "3x3 Multi-Blind", "333mbo": "3x3 Multi-Blind Old Style",
-    "333ft": "3x3 With Feet", "magic": "Magic", "mmagic": "Master Magic"
+    "555bf": "5x5 Blindfolded", "333mbf": "3x3 Multi-Blind"
 }
 
-DATA_CACHE = {
-    "competitions": None,
-    "persons": None,
-    "countries": None,
-    "years": None,
-    "country_options": None
-}
-cache_lock = threading.Lock()
-
-# ---------------- ASYNC FETCHING ----------------
-
-async def fetch_page(session, url_template, page, semaphore, mode):
-    async with semaphore:
-        try:
-            async with session.get(url_template.format(page), timeout=30) as r:
-                if r.status == 200:
-                    data = await r.json(content_type=None)
-                    items = data.get("items", [])
-                    thinned = []
-                    for item in items:
-                        if mode == "comp":
-                            thinned.append({
-                                "id": item.get("id"),
-                                "country": item.get("country"),
-                                "date": item.get("date"),
-                                "events": item.get("events", [])
-                            })
-                        else:
-                            thinned.append({
-                                "id": item.get("id"),
-                                "country": item.get("country"),
-                                "results": item.get("results", {})
-                            })
-                    return thinned
-        except: pass
-    return []
-
-async def download_dataset(url_template, total_pages, mode):
-    semaphore = asyncio.Semaphore(20) # Lowered to avoid "Connection Pool Full" errors
-    connector = aiohttp.TCPConnector(limit=50)
-    async with aiohttp.ClientSession(connector=connector) as session:
-        tasks = [fetch_page(session, url_template, p, semaphore, mode) for p in range(1, total_pages + 1)]
-        results = await asyncio.gather(*tasks)
-    return [item for sublist in results if sublist for item in sublist]
-
-# ---------------- DATA LOADING ----------------
-
-def load_static_data():
-    global DATA_CACHE
-    if DATA_CACHE["competitions"] is not None: return
-
-    with cache_lock:
-        if DATA_CACHE["competitions"] is not None: return
-        
-        # Load Countries
-        if os.path.exists(COUNTRY_CACHE):
-            with open(COUNTRY_CACHE, "rb") as f: DATA_CACHE["countries"] = msgpack.unpackb(f.read())
-        else:
-            import requests
-            try:
-                r = requests.get("https://raw.githubusercontent.com/robiningelbrecht/wca-rest-api/master/api/countries.json").json()
-                DATA_CACHE["countries"] = {c["iso2Code"]: c["name"] for c in r.get("items", [])}
-                with open(COUNTRY_CACHE, "wb") as f: f.write(msgpack.packb(DATA_CACHE["countries"]))
-            except: DATA_CACHE["countries"] = {}
-
-        # Load Competitions
-        if os.path.exists(COMP_CACHE):
-            with open(COMP_CACHE, "rb") as f: DATA_CACHE["competitions"] = msgpack.unpackb(f.read())
-        else:
-            url = "https://raw.githubusercontent.com/robiningelbrecht/wca-rest-api/master/api/competitions-page-{}.json"
-            DATA_CACHE["competitions"] = asyncio.run(download_dataset(url, 25, "comp"))
-            with open(COMP_CACHE, "wb") as f: f.write(msgpack.packb(DATA_CACHE["competitions"]))
-
-        # Load Persons
-        if os.path.exists(PERS_CACHE):
-            with open(PERS_CACHE, "rb") as f: DATA_CACHE["persons"] = msgpack.unpackb(f.read())
-        else:
-            url = "https://raw.githubusercontent.com/robiningelbrecht/wca-rest-api/master/api/persons-page-{}.json"
-            DATA_CACHE["persons"] = asyncio.run(download_dataset(url, 280, "person"))
-            with open(PERS_CACHE, "wb") as f: f.write(msgpack.packb(DATA_CACHE["persons"]))
-
-        # Build Helpers
-        if DATA_CACHE["competitions"]:
-            DATA_CACHE["years"] = sorted({int(c["date"]["from"][:4]) for c in DATA_CACHE["competitions"] if "date" in c}, reverse=True)
-            c_dict = DATA_CACHE["countries"]
-            DATA_CACHE["country_options"] = sorted(
-                {(c.get("country"), c_dict.get(c.get("country"), c.get("country"))) for c in DATA_CACHE["competitions"] if c.get("country")},
-                key=lambda x: x[1]
-            )
-
-# ---------------- CORE LOGIC ----------------
+# --- Core Logic ---
 
 def get_event_metrics(year=None, country=None):
-    comps = DATA_CACHE.get("competitions")
-    pers = DATA_CACHE.get("persons")
-    if not comps or not pers: return []
+    """Calculates local vs international participation using the Nexus."""
+    # Safety Gate: Return early if Nexus isn't ready
+    if not wca_data.persons or not wca_data.competitions:
+        return []
 
     event_stats = {}
-    comp_map = {} 
+    valid_comp_map = {} 
     year_filter, country_filter = (year != "all"), (country != "all")
 
-    for c in comps:
+    # 1. Filter Competitions based on Year/Country
+    for c_id, c in wca_data.competitions.items():
         try:
-            c_year = int(c["date"]["from"][:4])
-            c_country = c["country"]
+            # Safely parse year
+            date_str = c.get("date", {}).get("from", "")
+            if not date_str: continue
+            
+            c_year = int(date_str[:4])
+            c_country = c.get("country")
+            
             if (not year_filter or c_year == year) and (not country_filter or c_country == country):
-                c_id = c["id"]
-                comp_map[c_id] = c_country
+                valid_comp_map[c_id] = c_country
                 for e in c.get("events", []):
-                    if e == "fto": continue
                     name = EVENT_CODE_NAMES.get(e, e)
                     if name not in event_stats:
                         event_stats[name] = {"locals": set(), "internationals": set(), "freq": 0}
                     event_stats[name]["freq"] += 1
-        except: continue
+        except (ValueError, KeyError, TypeError):
+            continue
 
-    if not comp_map: return []
-    target_comp_ids = set(comp_map.keys())
+    if not event_stats:
+        return []
+
+    # 2. Process Participation (Strictly checking for Dict types)
+    target_comp_ids = set(valid_comp_map.keys())
     
-    for p in pers:
+    for p in wca_data.persons:
         p_res = p.get("results", {})
-        p_comp_ids = set(p_res.keys()) if isinstance(p_res, dict) else set(p_res)
-        matches = target_comp_ids.intersection(p_comp_ids)
         
-        if not matches: continue
-        p_id, p_country = p["id"], p["country"]
+        # FIX: Ensure results is a dictionary before calling .keys()
+        if not isinstance(p_res, dict):
+            continue
+            
+        attended_matches = target_comp_ids.intersection(p_res.keys())
+        if not attended_matches:
+            continue
 
-        for c_id in matches:
-            host_country = comp_map[c_id]
+        p_id, p_country = p.get("id"), p.get("country")
+        if not p_id: continue
+
+        for c_id in attended_matches:
+            host_country = valid_comp_map.get(c_id)
             is_local = (p_country == host_country)
             
-            events_played = p_res[c_id]
-            event_list = events_played if isinstance(events_played, list) else events_played.keys()
+            comp_data = p_res.get(c_id, {})
+            # FIX: Ensure competition data is a dictionary before calling .keys()
+            events_played = comp_data.keys() if isinstance(comp_data, dict) else []
             
-            for e_code in event_list:
-                if e_code == "fto": continue
+            for e_code in events_played:
                 name = EVENT_CODE_NAMES.get(e_code, e_code)
                 if name in event_stats:
-                    if is_local: event_stats[name]["locals"].add(p_id)
-                    else: event_stats[name]["internationals"].add(p_id)
+                    if is_local:
+                        event_stats[name]["locals"].add(p_id)
+                    else:
+                        event_stats[name]["internationals"].add(p_id)
 
+    # 3. Final Scoring
     rows = []
     for name, d in event_stats.items():
         l, i = len(d["locals"]), len(d["internationals"])
         t = l + i
         if t > 0 or d["freq"] > 0:
-            rows.append({"event": name, "locals": l, "internationals": i, "total_p": t, "frequency": d["freq"]})
+            rows.append({
+                "event": name, 
+                "locals": l, 
+                "internationals": i, 
+                "total_p": t, 
+                "frequency": d["freq"]
+            })
 
-    if not rows: return []
-    max_p = max(r["total_p"] for r in rows) or 1
-    max_f = max(r["frequency"] for r in rows) or 1
+    if not rows:
+        return []
+    
+    # Use default=1 to prevent crash if rows is empty
+    max_p = max((r["total_p"] for r in rows), default=1)
+    max_f = max((r["frequency"] for r in rows), default=1)
+    
     for r in rows:
+        # Score calculation: 70% participation weight, 30% frequency weight
         r["score"] = round((r["total_p"] / max_p) * 70 + (r["frequency"] / max_f) * 30, 2)
 
     return sorted(rows, key=lambda x: x["score"], reverse=True)
 
-# ---------------- ROUTE ----------------
+# --- Routes ---
 
 @events_bp.route("/events", methods=["GET", "POST"])
 def events_page():
-    load_static_data()
-    
-    # Null-safe extraction for Jinja
-    years = DATA_CACHE.get("years") or []
-    countries = DATA_CACHE.get("country_options") or []
-    
-    year = request.values.get("year", "all")
-    country = request.values.get("country", "all")
-    processed_year = int(year) if year != "all" else "all"
+    # Final Safety: If Nexus empty, return empty template
+    if not wca_data.competitions:
+        return render_template("events.html", events=[], years=[], countries=[], 
+                               selected_year="all", selected_country="all", max_score=100)
 
-    events_data = get_event_metrics(year=processed_year, country=country)
+    # Fetch filters from nexus safely
+    years = sorted({int(c["date"]["from"][:4]) for c in wca_data.competitions.values() 
+                   if isinstance(c.get("date"), dict) and "from" in c["date"]}, reverse=True)
+    
+    country_options = sorted(
+        {(c.get("country"), c.get("country")) for c in wca_data.competitions.values() if c.get("country")},
+        key=lambda x: x[1]
+    )
+    
+    year_val = request.values.get("year", "all")
+    country_val = request.values.get("country", "all")
+    processed_year = int(year_val) if year_val != "all" else "all"
+
+    events_data = get_event_metrics(year=processed_year, country=country_val)
+    current_max_score = max((e["score"] for e in events_data), default=100)
 
     return render_template(
         "events.html",
         events=events_data,
         years=years,
-        countries=countries,
-        selected_year=year,
-        selected_country=country,
-        max_score=max((e["score"] for e in events_data), default=100)
+        countries=country_options,
+        selected_year=year_val,
+        selected_country=country_val,
+        max_score=current_max_score
     )

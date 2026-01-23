@@ -6,49 +6,65 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Popularity Hub • Wiigii's WCA</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800;900&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', sans-serif;
             background-color: #000000;
+            background-image: radial-gradient(circle at 50% -20%, #3b0764 0%, #000000 75%);
         }
 
         .nav-active {
-            color: #ec4899 !important;
-            border-bottom: 3px solid #ec4899;
+            color: #ff007f !important;
+            border-bottom: 3px solid #ff007f;
+            text-shadow: 0 0 10px rgba(255, 0, 127, 0.5);
         }
 
         .brand-logo {
             font-weight: 900;
             font-size: 2.5rem;
-            letter-spacing: -1px;
+            letter-spacing: -2px;
+            background: linear-gradient(to right, #ff007f, #7b2ff7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .brand-tag {
-            background-color: #ec4899;
-            color: black;
-            padding: 2px 8px;
+            background: linear-gradient(135deg, #ff007f, #7b2ff7);
+            color: white;
+            padding: 2px 10px;
             border-radius: 4px;
-            margin-left: 2px;
+            margin-left: 4px;
+            -webkit-text-fill-color: white;
+            font-size: 1.5rem;
+            vertical-align: middle;
+        }
+
+        .glass-card {
+            background: rgba(15, 15, 15, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 0, 127, 0.1);
         }
 
         .bar-wrap {
-            background: #0f0f0f;
-            height: 8px;
-            border-radius: 4px;
+            background: #0a0a0a;
+            height: 6px;
+            border-radius: 10px;
             overflow: hidden;
-            margin-top: 6px;
-            border: 1px solid #1f1f1f;
+            margin-top: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .bar-fill {
             height: 100%;
-            border-radius: 4px;
-            transition: width 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border-radius: 10px;
+            transition: width 1.5s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
         ::-webkit-scrollbar {
-            width: 8px;
+            width: 6px;
         }
 
         ::-webkit-scrollbar-track {
@@ -56,7 +72,7 @@
         }
 
         ::-webkit-scrollbar-thumb {
-            background: #ec4899;
+            background: linear-gradient(#ff007f, #7b2ff7);
             border-radius: 10px;
         }
 
@@ -77,13 +93,26 @@
         }
 
         select {
-            background-color: #1b1b1b !important;
-            border: 1px solid #2d2d2d !important;
+            background-color: #0a0a0a !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
             appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23ec4899'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23ff007f'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
             background-repeat: no-repeat;
             background-position: right 1rem center;
-            background-size: 1.2em;
+            background-size: 1.1em;
+        }
+
+        .analyze-btn {
+            background: #ff007f;
+            color: black;
+            box-shadow: 0 0 20px rgba(255, 0, 127, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .analyze-btn:hover {
+            background: #ff3399;
+            box-shadow: 0 0 30px rgba(255, 0, 127, 0.4);
+            transform: translateY(-1px);
         }
     </style>
 </head>
@@ -91,37 +120,39 @@
 <body class="min-h-screen text-gray-100 p-2 sm:p-4 flex flex-col items-center">
 
     <nav
-        class="w-full max-w-5xl mx-auto bg-[#1b1b1b] rounded-t-2xl p-3 sm:p-4 flex flex-wrap justify-center items-center gap-2 sm:gap-5 sticky top-0 z-50 border-b border-gray-800 backdrop-blur-md">
+        class="w-full max-w-5xl mx-auto bg-[#111111]/90 rounded-t-2xl p-3 sm:p-4 flex flex-wrap justify-center items-center gap-2 sm:gap-5 sticky top-0 z-50 border-b border-pink-500/20 backdrop-blur-md">
         <a href="/"
-            class="text-xs sm:text-sm text-gray-300 hover:text-pink-500 font-black px-2 uppercase tracking-tighter">Rank
+            class="text-xs sm:text-sm text-gray-400 hover:text-[#ff007f] font-black px-2 uppercase tracking-tighter transition-colors">Rank
             Finder</a>
         <a href="/competitors"
-            class="text-xs sm:text-sm text-gray-300 hover:text-pink-500 font-black px-2 uppercase tracking-tighter">Competitors</a>
+            class="text-xs sm:text-sm text-gray-400 hover:text-[#ff007f] font-black px-2 uppercase tracking-tighter transition-colors">Competitors</a>
         <a href="/specialist"
-            class="text-xs sm:text-sm text-gray-300 hover:text-pink-500 font-black px-2 uppercase tracking-tighter">Specialist</a>
+            class="text-xs sm:text-sm text-gray-400 hover:text-[#ff007f] font-black px-2 uppercase tracking-tighter transition-colors">Specialist</a>
         <a href="/completionist"
-            class="text-xs sm:text-sm text-gray-300 hover:text-pink-500 font-black px-2 uppercase tracking-tighter">Completionist</a>
-        <a href="/events" class="text-xs sm:text-sm font-black px-2 nav-active uppercase tracking-tighter">Events</a>
+            class="text-xs sm:text-sm text-gray-400 hover:text-[#ff007f] font-black px-2 uppercase tracking-tighter transition-colors">Completionist</a>
+        <a href="/events"
+            class="text-xs sm:text-sm font-black px-2 nav-active uppercase tracking-tighter transition-colors">Events</a>
         <a href="/comparison"
-            class="text-xs sm:text-sm text-gray-300 hover:text-pink-500 font-black px-2 uppercase tracking-tighter">Comparison</a>
+            class="text-xs sm:text-sm text-gray-400 hover:text-[#ff007f] font-black px-2 uppercase tracking-tighter transition-colors">Comparison</a>
         <a href="/competitions"
-            class="text-xs sm:text-sm text-gray-300 hover:text-pink-500 font-black px-2 uppercase tracking-tighter">Competitions</a>
+            class="text-xs sm:text-sm text-gray-400 hover:text-[#ff007f] font-black px-2 uppercase tracking-tighter transition-colors">Competitions</a>
     </nav>
 
     <main
-        class="max-w-5xl w-full mx-auto bg-[#1b1b1b] rounded-b-2xl shadow-2xl p-4 sm:p-10 space-y-10 border-x border-b border-gray-800 animate-fade-in">
+        class="max-w-5xl w-full mx-auto glass-card rounded-b-2xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] p-4 sm:p-10 space-y-10 border-x border-b border-pink-500/10 animate-fade-in">
         <header class="text-center">
             <h1 class="brand-logo text-white mb-2">Famous<span class="brand-tag">Events</span></h1>
-            <p class="text-gray-400 text-sm font-bold uppercase tracking-widest italic">Analyzing frequency and global
-                participation</p>
+            <p class="text-purple-400/60 text-[10px] font-black uppercase tracking-[0.4em] italic">Analyzing frequency
+                and global participation</p>
         </header>
 
-        <form class="bg-black p-6 rounded-2xl border border-gray-800 flex flex-col md:flex-row gap-4 items-end"
+        <form class="bg-black/40 p-6 rounded-2xl border border-white/5 flex flex-col md:flex-row gap-4 items-end"
             method="POST">
             <div class="w-full md:flex-1">
-                <label class="text-[10px] font-black text-pink-500 uppercase tracking-widest mb-2 block">Season
+                <label class="text-[9px] font-black text-[#ff007f] uppercase tracking-widest mb-2 block ml-1">Season
                     Year</label>
-                <select name="year" class="w-full text-gray-200 p-4 rounded-xl outline-none font-bold">
+                <select name="year"
+                    class="w-full text-gray-200 p-4 rounded-xl outline-none font-bold text-sm transition-all focus:ring-1 focus:ring-[#ff007f]">
                     <option value="all" {% if selected_year=='all' %}selected{% endif %}>GLOBAL ALL-TIME</option>
                     {% if not years %}<option disabled>LOADING...</option>{% endif %}
                     {% for y in years %}
@@ -131,9 +162,10 @@
                 </select>
             </div>
             <div class="w-full md:flex-[2]">
-                <label class="text-[10px] font-black text-pink-500 uppercase tracking-widest mb-2 block">Region /
+                <label class="text-[9px] font-black text-[#ff007f] uppercase tracking-widest mb-2 block ml-1">Region /
                     Country</label>
-                <select name="country" class="w-full text-gray-200 p-4 rounded-xl outline-none font-bold">
+                <select name="country"
+                    class="w-full text-gray-200 p-4 rounded-xl outline-none font-bold text-sm transition-all focus:ring-1 focus:ring-[#ff007f]">
                     <option value="all" {% if selected_country=='all' %}selected{% endif %}>WORLDWIDE (ALL REGIONS)
                     </option>
                     {% if not countries %}<option disabled>LOADING...</option>{% endif %}
@@ -144,70 +176,78 @@
                 </select>
             </div>
             <button type="submit"
-                class="bg-pink-600 hover:bg-pink-500 text-black font-black py-4 px-10 rounded-xl uppercase tracking-tighter text-lg transition-all">Analyze</button>
+                class="analyze-btn w-full md:w-auto px-12 py-4 rounded-xl font-black uppercase tracking-tighter text-lg active:scale-95">Analyze</button>
         </form>
 
-        <div class="overflow-x-auto rounded-2xl border border-gray-800 bg-black">
+        <div class="overflow-x-auto rounded-2xl border border-white/5 bg-black/20">
             <table class="w-full border-collapse text-left">
                 <thead>
-                    <tr class="bg-[#1b1b1b] border-b border-gray-800">
+                    <tr class="bg-white/5 border-b border-white/5">
                         <th class="p-5 text-[10px] font-black text-gray-500 uppercase tracking-widest">WCA Event</th>
                         <th class="p-5 text-[10px] font-black text-gray-500 uppercase tracking-widest">Locals</th>
                         <th class="p-5 text-[10px] font-black text-gray-500 uppercase tracking-widest">Internationals
                         </th>
                         <th class="p-5 text-[10px] font-black text-gray-500 uppercase tracking-widest text-center">Freq
                         </th>
-                        <th class="p-5 text-[10px] font-black text-pink-500 uppercase tracking-widest">Dominance Score
+                        <th class="p-5 text-[10px] font-black text-[#ff007f] uppercase tracking-widest">Dominance Score
                         </th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-gray-900">
+                <tbody class="divide-y divide-white/5">
                     {% if not years %}
                     <tr>
-                        <td colspan="5" class="p-20 text-center">
-                            <div class="animate-pulse">
-                                <p class="text-pink-500 font-black uppercase tracking-[0.3em] text-lg">System
+                        <td colspan="5" class="p-24 text-center">
+                            <div class="animate-pulse space-y-4">
+                                <p class="text-[#ff007f] font-black uppercase tracking-[0.4em] text-xl">System
                                     Initializing</p>
-                                <p class="text-gray-600 text-xs mt-2 italic">Downloading WCA Datasets... Please refresh
-                                    in 30 seconds.</p>
+                                <p class="text-gray-600 text-[10px] font-bold italic">Downloading WCA Datasets... Please
+                                    refresh shortly.</p>
                             </div>
                         </td>
                     </tr>
                     {% endif %}
 
                     {% for event in events %}
-                    <tr class="hover:bg-pink-900/5 transition-colors">
-                        <td class="p-5"><span class="text-sm font-black text-white uppercase tracking-tighter">{{
-                                event.event }}</span></td>
+                    <tr class="hover:bg-[#ff007f]/5 transition-colors group">
                         <td class="p-5">
-                            <span class="text-lg font-black text-pink-400">{{ "{:,}".format(event.locals) }}</span>
+                            <span
+                                class="text-sm font-black text-white uppercase tracking-tighter group-hover:text-[#ff007f] transition-colors">{{
+                                event.event }}</span>
+                        </td>
+                        <td class="p-5">
+                            <span class="text-lg font-black text-[#ff007f]/80">{{ "{:,}".format(event.locals) }}</span>
                             <div class="bar-wrap">
-                                <div class="bar-fill bg-pink-500/20"
-                                    style="width:{{ (event.locals / events[0].total_p * 100) if events[0].total_p > 0 else 0 }}%; border-right: 2px solid #ec4899;">
+                                <div class="bar-fill bg-[#ff007f]/20 border-r border-[#ff007f]"
+                                    style="width:{{ (event.locals / events[0].total_p * 100) if events[0].total_p > 0 else 0 }}%">
                                 </div>
                             </div>
                         </td>
                         <td class="p-5">
-                            <span class="text-lg font-black text-gray-100">{{ "{:,}".format(event.internationals)
-                                }}</span>
+                            <span class="text-lg font-black text-gray-400 group-hover:text-white transition-colors">{{
+                                "{:,}".format(event.internationals) }}</span>
                             <div class="bar-wrap">
-                                <div class="bar-fill bg-gray-600/30"
-                                    style="width:{{ (event.internationals / events[0].total_p * 100) if events[0].total_p > 0 else 0 }}%; border-right: 2px solid #4b5563;">
+                                <div class="bar-fill bg-gray-600/20 border-r border-gray-500"
+                                    style="width:{{ (event.internationals / events[0].total_p * 100) if events[0].total_p > 0 else 0 }}%">
                                 </div>
                             </div>
                         </td>
-                        <td class="p-5 text-center"><span
-                                class="bg-[#1b1b1b] border border-gray-800 px-3 py-1 rounded-md font-black text-[10px] text-pink-500">{{
-                                "{:,}".format(event.frequency) }}</span></td>
+                        <td class="p-5 text-center">
+                            <span
+                                class="bg-black/50 border border-white/10 px-4 py-1.5 rounded-lg font-black text-[10px] text-[#ff007f] shadow-sm">
+                                {{ "{:,}".format(event.frequency) }}
+                            </span>
+                        </td>
                         <td class="p-5">
-                            <div class="flex items-center gap-4">
+                            <div class="flex items-center gap-5">
                                 <div class="flex-grow">
-                                    <div class="bar-wrap h-2 bg-gray-900 border-none">
-                                        <div class="bar-fill bg-gradient-to-r from-pink-700 to-pink-400"
+                                    <div class="bar-wrap h-2.5 bg-black border-none">
+                                        <div class="bar-fill bg-gradient-to-r from-[#7b2ff7] to-[#ff007f]"
                                             style="width:{{ (event.score / max_score * 100) }}%"></div>
                                     </div>
                                 </div>
-                                <span class="text-xs font-black text-white">{{ event.score }}</span>
+                                <span
+                                    class="text-xs font-black text-white group-hover:text-[#ff007f] transition-colors">{{
+                                    event.score }}</span>
                             </div>
                         </td>
                     </tr>
@@ -218,7 +258,8 @@
     </main>
 
     <footer class="w-full max-w-5xl mx-auto text-center text-gray-600 text-xs sm:text-sm mt-8 pb-8 font-bold">
-        <p>© 2026 Wiigii's WCA Tools • <span class="text-pink-500 uppercase">Live Metrics Engine</span></p>
+        <p>© 2026 Wiigii's WCA Tools • <span class="text-[#ff007f] uppercase tracking-widest">Live Metrics Engine</span>
+        </p>
     </footer>
 </body>
 

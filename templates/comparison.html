@@ -13,29 +13,43 @@
         body {
             font-family: 'Inter', sans-serif;
             background-color: #000000;
+            background-image: radial-gradient(circle at 50% -20%, #3b0764 0%, #000000 75%);
         }
 
         .nav-active {
-            color: #ec4899 !important;
-            border-bottom: 3px solid #ec4899;
+            color: #ff007f !important;
+            border-bottom: 3px solid #ff007f;
+            text-shadow: 0 0 10px rgba(255, 0, 127, 0.5);
         }
 
         .brand-logo {
             font-weight: 900;
             font-size: 2.5rem;
-            letter-spacing: -1px;
+            letter-spacing: -2px;
+            background: linear-gradient(to right, #ff007f, #7b2ff7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .brand-tag {
-            background-color: #ec4899;
-            color: black;
-            padding: 2px 8px;
+            background: linear-gradient(135deg, #ff007f, #7b2ff7);
+            color: white;
+            padding: 2px 10px;
             border-radius: 4px;
-            margin-left: 2px;
+            margin-left: 4px;
+            -webkit-text-fill-color: white;
+            font-size: 1.5rem;
+            vertical-align: middle;
+        }
+
+        .glass-card {
+            background: rgba(15, 15, 15, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 0, 127, 0.1);
         }
 
         ::-webkit-scrollbar {
-            width: 8px;
+            width: 6px;
         }
 
         ::-webkit-scrollbar-track {
@@ -43,25 +57,43 @@
         }
 
         ::-webkit-scrollbar-thumb {
-            background: #ec4899;
+            background: linear-gradient(#ff007f, #7b2ff7);
             border-radius: 10px;
         }
 
         .select-custom {
             appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23ec4899'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23ff007f'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
             background-repeat: no-repeat;
             background-position: right 1rem center;
-            background-size: 1.5em;
+            background-size: 1.2em;
         }
 
         .toggle-active {
-            background-color: #ec4899 !important;
-            color: black !important;
+            background: linear-gradient(to right, #ff007f, #7b2ff7) !important;
+            color: white !important;
+            box-shadow: 0 0 15px rgba(255, 0, 127, 0.4);
+        }
+
+        .result-row {
+            transition: all 0.2s ease;
         }
 
         .result-row:hover {
-            background: linear-gradient(90deg, rgba(236, 72, 153, 0.08) 0%, rgba(0, 0, 0, 0) 100%);
+            background: linear-gradient(90deg, rgba(255, 0, 127, 0.1) 0%, rgba(0, 0, 0, 0) 100%);
+        }
+
+        .neon-button {
+            background: #ff007f;
+            color: black;
+            box-shadow: 0 0 20px rgba(255, 0, 127, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .neon-button:hover {
+            background: #ff3399;
+            box-shadow: 0 0 30px rgba(255, 0, 127, 0.5);
+            transform: translateY(-1px);
         }
     </style>
 </head>
@@ -69,59 +101,57 @@
 <body class="min-h-screen text-gray-100 p-2 sm:p-4 flex flex-col items-center">
 
     <nav
-        class="w-full max-w-5xl mx-auto bg-[#111] rounded-t-2xl p-3 sm:p-4 flex flex-wrap justify-center items-center gap-2 sm:gap-5 sticky top-0 z-50 border-b border-pink-500/20 backdrop-blur-md">
+        class="w-full max-w-5xl mx-auto bg-[#111111]/90 rounded-t-2xl p-3 sm:p-4 flex flex-wrap justify-center items-center gap-2 sm:gap-5 sticky top-0 z-50 border-b border-pink-500/20 backdrop-blur-md">
         <a href="/"
-            class="text-xs sm:text-sm text-gray-400 hover:text-pink-500 font-black px-2 uppercase tracking-tighter transition-colors">Rank
+            class="text-xs sm:text-sm text-gray-400 hover:text-[#ff007f] font-black px-2 uppercase tracking-tighter transition-colors">Rank
             Finder</a>
         <a href="/competitors"
-            class="text-xs sm:text-sm text-gray-400 hover:text-pink-500 font-black px-2 uppercase tracking-tighter transition-colors">Competitors</a>
+            class="text-xs sm:text-sm text-gray-400 hover:text-[#ff007f] font-black px-2 uppercase tracking-tighter transition-colors">Competitors</a>
         <a href="/specialist"
-            class="text-xs sm:text-sm text-gray-400 hover:text-pink-500 font-black px-2 uppercase tracking-tighter transition-colors">Specialist</a>
+            class="text-xs sm:text-sm text-gray-400 hover:text-[#ff007f] font-black px-2 uppercase tracking-tighter transition-colors">Specialist</a>
         <a href="/completionist"
-            class="text-xs sm:text-sm text-gray-400 hover:text-pink-500 font-black px-2 uppercase tracking-tighter transition-colors">Completionist</a>
+            class="text-xs sm:text-sm text-gray-400 hover:text-[#ff007f] font-black px-2 uppercase tracking-tighter transition-colors">Completionist</a>
         <a href="/events"
-            class="text-xs sm:text-sm text-gray-400 hover:text-pink-500 font-black px-2 uppercase tracking-tighter transition-colors">Events</a>
+            class="text-xs sm:text-sm text-gray-400 hover:text-[#ff007f] font-black px-2 uppercase tracking-tighter transition-colors">Events</a>
         <a href="/comparison"
             class="text-xs sm:text-sm font-black px-2 nav-active uppercase tracking-tighter transition-colors">Comparison</a>
         <a href="/competitions"
-            class="text-xs sm:text-sm text-gray-400 hover:text-pink-500 font-black px-2 uppercase tracking-tighter transition-colors">Competitions</a>
+            class="text-xs sm:text-sm text-gray-400 hover:text-[#ff007f] font-black px-2 uppercase tracking-tighter transition-colors">Competitions</a>
     </nav>
 
     <div
-        class="max-w-6xl w-full mx-auto bg-[#111111] rounded-b-2xl shadow-2xl p-4 sm:p-10 space-y-10 flex-grow border-x border-b border-pink-500/10">
+        class="max-w-6xl w-full mx-auto glass-card rounded-b-2xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] p-4 sm:p-10 space-y-10 flex-grow border-x border-b border-pink-500/10">
 
         <header class="text-center">
-            <h1 class="brand-logo text-white mb-2">
-                Event<span class="brand-tag">Comparison</span>
-            </h1>
-            <p class="text-pink-500/60 text-sm font-bold uppercase tracking-[0.3em] italic">Deep Analysis • Ranking
-                Imbalances</p>
+            <h1 class="brand-logo text-white mb-2">Event<span class="brand-tag">Comparison</span></h1>
+            <p class="text-purple-400/60 text-[10px] font-black uppercase tracking-[0.4em] italic">Deep Analysis •
+                Ranking Imbalances</p>
         </header>
 
         <main class="space-y-8">
-            <div class="bg-black p-6 rounded-2xl border border-pink-500/10 shadow-inner">
+            <div class="bg-black/40 border border-white/5 p-6 rounded-2xl shadow-inner">
                 <div class="flex justify-center mb-8">
-                    <div class="inline-flex p-1 bg-[#1b1b1b] rounded-xl border border-gray-800">
+                    <div class="inline-flex p-1 bg-[#151515] rounded-xl border border-white/5">
                         <button id="type-singles" onclick="setType('singles')"
-                            class="toggle-active px-6 py-2 rounded-lg text-xs font-black uppercase tracking-widest transition-all">Singles</button>
+                            class="toggle-active px-6 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all">Singles</button>
                         <button id="type-averages" onclick="setType('averages')"
-                            class="px-6 py-2 rounded-lg text-xs font-black uppercase tracking-widest transition-all text-gray-500 hover:text-pink-500">Averages</button>
+                            class="px-6 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all text-gray-500 hover:text-[#ff007f]">Averages</button>
                     </div>
                 </div>
 
                 <div class="flex flex-col md:flex-row items-center justify-center gap-4">
                     <div class="w-full md:w-5/12">
-                        <label class="block text-[10px] font-black text-pink-500 uppercase tracking-[0.2em] mb-2 ml-1">
-                            Focus Event (Higher Rank):
-                        </label>
+                        <label
+                            class="block text-[9px] font-black text-[#ff007f] uppercase tracking-[0.2em] mb-2 ml-1">Focus
+                            Event (Higher Rank):</label>
                         <select id="event1-select"
-                            class="select-custom w-full p-4 rounded-xl border border-gray-800 bg-[#1b1b1b] text-gray-100 focus:ring-2 focus:ring-pink-500 focus:border-pink-500 outline-none cursor-pointer font-bold transition-all"></select>
+                            class="select-custom w-full p-4 rounded-xl border border-white/10 bg-[#0a0a0a] text-gray-100 focus:ring-1 focus:ring-[#ff007f] outline-none cursor-pointer font-bold transition-all text-sm"></select>
                     </div>
 
                     <div class="flex items-center justify-center pt-6">
                         <button id="swap-btn"
-                            class="p-3 rounded-xl bg-gray-900 border border-gray-800 hover:border-pink-500 text-pink-500 transition-all transform hover:rotate-180">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                            class="p-3 rounded-full bg-[#151515] border border-white/10 hover:border-[#ff007f] text-[#ff007f] transition-all transform hover:rotate-180">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
                                 stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
@@ -130,42 +160,40 @@
                     </div>
 
                     <div class="w-full md:w-5/12">
-                        <label class="block text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] mb-2 ml-1">
-                            Benchmark Event:
-                        </label>
+                        <label
+                            class="block text-[9px] font-black text-gray-500 uppercase tracking-[0.2em] mb-2 ml-1">Benchmark
+                            Event:</label>
                         <select id="event2-select"
-                            class="select-custom w-full p-4 rounded-xl border border-gray-800 bg-[#1b1b1b] text-gray-100 focus:ring-2 focus:ring-pink-500 focus:border-pink-500 outline-none cursor-pointer font-bold transition-all"></select>
+                            class="select-custom w-full p-4 rounded-xl border border-white/10 bg-[#0a0a0a] text-gray-100 focus:ring-1 focus:ring-[#ff007f] outline-none cursor-pointer font-bold transition-all text-sm"></select>
                     </div>
                 </div>
 
                 <button id="compare-button"
-                    class="w-full mt-8 bg-pink-600 hover:bg-pink-500 text-black font-black py-4 rounded-xl shadow-[0_0_20px_rgba(236,72,153,0.3)] transition-all transform active:scale-95 uppercase tracking-tighter text-lg">
+                    class="neon-button w-full mt-8 font-black py-4 rounded-xl uppercase tracking-tighter text-lg active:scale-95">
                     Generate Imbalance Report
                 </button>
             </div>
 
             <div id="loading-spinner" class="hidden flex flex-col justify-center items-center py-20 space-y-4">
-                <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-pink-500 border-r-transparent"></div>
-                <p class="text-pink-500 font-black uppercase tracking-widest text-xs animate-pulse">Analyzing Global
+                <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-[#ff007f] border-r-transparent"></div>
+                <p class="text-[#ff007f] font-black uppercase tracking-widest text-[10px] animate-pulse">Scanning Global
                     Standings...</p>
             </div>
 
             <div id="results-container" class="hidden">
-                <div class="flex items-center justify-between mb-6">
+                <div class="flex items-center justify-between mb-6 px-2">
                     <h2 id="results-title"
-                        class="text-xl font-black text-white uppercase tracking-tighter border-l-4 border-pink-500 pl-4">
-                        Analysis Results
-                    </h2>
+                        class="text-lg font-black text-white uppercase tracking-tighter border-l-4 border-[#ff007f] pl-4">
+                        Analysis Results</h2>
                     <span id="result-count"
-                        class="text-[10px] font-black text-pink-500 bg-pink-500/10 border border-pink-500/20 px-3 py-1 rounded-full uppercase tracking-widest">
-                        0 Matches
-                    </span>
+                        class="text-[9px] font-black text-[#ff007f] bg-[#ff007f]/10 border border-[#ff007f]/20 px-4 py-1.5 rounded-full uppercase tracking-widest">0
+                        Matches</span>
                 </div>
 
-                <div class="overflow-hidden rounded-2xl border border-gray-800 bg-black">
+                <div class="overflow-hidden rounded-2xl border border-white/5 bg-black/20">
                     <div class="overflow-x-auto">
                         <table class="min-w-full">
-                            <thead class="bg-[#1b1b1b] border-b border-gray-800">
+                            <thead class="bg-white/5 border-b border-white/5">
                                 <tr>
                                     <th
                                         class="px-6 py-4 text-left text-[10px] font-black text-gray-500 uppercase tracking-widest">
@@ -174,40 +202,40 @@
                                         class="px-6 py-4 text-left text-[10px] font-black text-gray-500 uppercase tracking-widest">
                                         Competitor</th>
                                     <th id="event1-header"
-                                        class="px-6 py-4 text-left text-[10px] font-black text-pink-500 uppercase tracking-widest bg-pink-500/5">
+                                        class="px-6 py-4 text-left text-[10px] font-black text-[#ff007f] uppercase tracking-widest bg-[#ff007f]/5">
                                         Focus Result</th>
                                     <th id="event2-header"
                                         class="px-6 py-4 text-left text-[10px] font-black text-gray-500 uppercase tracking-widest">
                                         Benchmark Result</th>
                                 </tr>
                             </thead>
-                            <tbody id="results-table-body" class="divide-y divide-gray-900"></tbody>
+                            <tbody id="results-table-body" class="divide-y divide-white/5"></tbody>
                         </table>
                     </div>
                 </div>
             </div>
 
             <div id="no-results-message"
-                class="hidden text-center py-20 bg-black rounded-3xl border border-dashed border-pink-500/20">
-                <p class="text-gray-600 font-black uppercase tracking-widest text-sm">No statistical outliers found for
+                class="hidden text-center py-24 bg-black/40 rounded-3xl border border-dashed border-white/10">
+                <p class="text-gray-600 font-black uppercase tracking-widest text-xs">No statistical outliers found for
                     this pair.</p>
             </div>
 
             <div id="error-message"
-                class="hidden text-center py-10 bg-pink-950/10 rounded-2xl border border-pink-900/30 text-pink-500 font-black uppercase text-xs tracking-widest">
-                <p>Error: <span id="error-text">Failed to fetch data.</span></p>
+                class="hidden text-center py-10 bg-red-950/20 rounded-2xl border border-red-900/30 text-red-500 font-black uppercase text-[10px] tracking-widest">
+                <p>Telemetry Error: <span id="error-text">Failed to fetch data.</span></p>
             </div>
         </main>
     </div>
 
     <footer class="w-full max-w-6xl mx-auto text-center text-gray-600 text-xs sm:text-sm mt-8 pb-8 font-bold">
-        <p>© 2026 Wiigii's WCA Tools • <span class="text-pink-500 uppercase">Pink Edition</span></p>
+        <p>© 2026 Wiigii's WCA Tools • <span class="text-[#ff007f] uppercase tracking-widest">Pink Edition</span></p>
     </footer>
 
     <script>
         const eventMap = {
-            "3x3 Cube": "333", "2x2 Cube": "222", "4x4 Cube": "444", "5x5 Cube": "555",
-            "6x6 Cube": "666", "7x7 Cube": "777", "3x3 One-Handed": "333oh",
+            "3x3 Cube": "333", "2x2 Cube": "222", "4x4 Cube": "444", "555": "555",
+            "666": "666", "777": "777", "3x3 One-Handed": "333oh",
             "3x3 Blindfolded": "333bf", "3x3 Fewest Moves": "333fm", "Clock": "clock",
             "Megaminx": "minx", "Pyraminx": "pyram", "Skewb": "skewb",
             "Square-1": "sq1", "4x4 Blindfolded": "444bf", "5x5 Blindfolded": "555bf",
@@ -232,8 +260,11 @@
 
         function setType(type) {
             currentType = type;
-            document.getElementById('type-singles').className = type === 'singles' ? 'toggle-active px-6 py-2 rounded-lg text-xs font-black uppercase tracking-widest transition-all' : 'px-6 py-2 rounded-lg text-xs font-black uppercase tracking-widest transition-all text-gray-500 hover:text-pink-500';
-            document.getElementById('type-averages').className = type === 'averages' ? 'toggle-active px-6 py-2 rounded-lg text-xs font-black uppercase tracking-widest transition-all' : 'px-6 py-2 rounded-lg text-xs font-black uppercase tracking-widest transition-all text-gray-500 hover:text-pink-500';
+            const sBtn = document.getElementById('type-singles');
+            const aBtn = document.getElementById('type-averages');
+
+            sBtn.className = type === 'singles' ? 'toggle-active px-6 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all' : 'px-6 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all text-gray-500 hover:text-[#ff007f]';
+            aBtn.className = type === 'averages' ? 'toggle-active px-6 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all' : 'px-6 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all text-gray-500 hover:text-[#ff007f]';
         }
 
         function populateEventDropdowns() {
@@ -266,30 +297,30 @@
 
             try {
                 const response = await fetch(`/api/compare_events?event1=${encodeURIComponent(e1Name)}&event2=${encodeURIComponent(e2Name)}&type=${currentType}`);
-                if (!response.ok) throw new Error((await response.json()).error || 'Server error');
+                if (!response.ok) throw new Error((await response.json()).error || 'Server connection lost');
 
                 const json = await response.json();
                 loadingSpinner.classList.add('hidden');
 
                 if (json.data && json.data.length > 0) {
                     resultsTitle.textContent = `${e1Name} vs ${e2Name}`;
-                    resultCountSpan.textContent = `${json.count} Specialists`;
+                    resultCountSpan.textContent = `${json.count} Specialists Found`;
 
                     json.data.slice(0, 150).forEach((comp, index) => {
                         const row = document.createElement('tr');
-                        row.className = "result-row transition-colors border-b border-gray-900/50";
+                        row.className = "result-row group";
                         row.innerHTML = `
-                            <td class="px-6 py-4 whitespace-nowrap text-[10px] font-black text-pink-500/40">#${index + 1}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-[10px] font-black text-gray-600 group-hover:text-[#ff007f]/50 transition-colors">#${index + 1}</td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="flex flex-col">
-                                    <span class="text-sm font-black text-white uppercase tracking-tighter">${comp.name}</span>
+                                    <span class="text-sm font-black text-white uppercase tracking-tighter group-hover:text-[#ff007f] transition-colors">${comp.name}</span>
                                     <div class="flex items-center gap-2 mt-1">
-                                        <span class="text-[10px] text-gray-500 font-bold uppercase">${comp.country}</span>
-                                        <a href="https://www.worldcubeassociation.org/persons/${comp.wca_id}" target="_blank" class="text-[9px] text-pink-500/60 hover:text-pink-500 font-bold underline transition-colors">${comp.wca_id}</a>
+                                        <span class="text-[9px] text-gray-500 font-bold uppercase tracking-wider">${comp.country}</span>
+                                        <a href="https://www.worldcubeassociation.org/persons/${comp.wca_id}" target="_blank" class="text-[9px] text-[#ff007f]/50 hover:text-[#ff007f] font-bold underline transition-colors">${comp.wca_id}</a>
                                     </div>
                                 </div>
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-black text-pink-500 bg-pink-500/5 border-x border-pink-500/10 italic">${comp.best1}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-black text-[#ff007f] bg-[#ff007f]/5 italic">${comp.best1}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-500">${comp.best2}</td>
                         `;
                         resultsTableBody.appendChild(row);

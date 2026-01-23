@@ -1,21 +1,11 @@
 import os
-import time
 import json
-import requests
-from concurrent.futures import ThreadPoolExecutor, as_completed
-from threading import Lock
-import sys
 import re
 from flask import Blueprint, jsonify
+from wca_data import wca_data
 
-# --- Blueprint for API ---
+# --- Blueprint ---
 completionists_bp = Blueprint("completionists", __name__)
-
-# --- Global Caching ---
-CACHE_FILE = os.path.join(os.path.dirname(__file__), "completionists_cache.json")
-COMPLETIONIST_LOADING_LOCK = Lock()
-COMPLETIONIST_DATA_LOADED = False
-ALL_COMPLETIONISTS_DATA = []
 
 # --- Event Definitions ---
 SINGLE_EVENTS = {"333", "222", "444", "555", "666", "777", "333oh", "333bf", "333fm",
@@ -24,7 +14,6 @@ AVERAGE_EVENTS_SILVER = {"333", "222", "444", "555", "666", "777", "333oh",
                          "minx", "pyram", "skewb", "sq1", "clock"}
 AVERAGE_EVENTS_GOLD = AVERAGE_EVENTS_SILVER | {"333bf", "333fm", "444bf", "555bf"}
 
-# Constraint: Don't include FTO or historical events
 EXCLUDED_EVENTS = {"333mbo", "magic", "mmagic", "333ft", "fto"}
 
 EVENT_NAMES = {
@@ -34,68 +23,50 @@ EVENT_NAMES = {
     "333fm": "3x3 Fewest Moves", "clock": "Clock", "minx": "Megaminx",
     "pyram": "Pyraminx", "skewb": "Skewb", "sq1": "Square-1",
     "444bf": "4x4 Blindfolded", "555bf": "5x5 Blindfolded",
-    "333mbf": "3x3 Multi-Blind",
-    "wcpodium": "Worlds Podium", "wr": "World Record",
+    "333mbf": "3x3 Multi-Blind"
 }
-
-TOTAL_PERSON_PAGES = 268 
-TOTAL_COMPETITION_PAGES = 18
-
-session = requests.Session()
-competitions_data = {}
 
 # ----------------- Helper Functions -----------------
 
-def fetch_person_page(page):
-    url = f"https://raw.githubusercontent.com/robiningelbrecht/wca-rest-api/master/api/persons-page-{page}.json"
-    try:
-        resp = session.get(url, timeout=15)
-        resp.raise_for_status()
-        return resp.json().get("items", [])
-    except Exception:
-        return []
-
-def _fetch_single_competition_page(page):
-    url = f"https://raw.githubusercontent.com/robiningelbrecht/wca-rest-api/master/api/competitions-page-{page}.json"
-    try:
-        resp = session.get(url, timeout=15)
-        resp.raise_for_status()
-        return resp.json().get("items", [])
-    except Exception:
-        return []
-
-def fetch_competition_pages():
-    global competitions_data
-    if competitions_data: return
-    print("⚡ Fetching competition dates...", file=sys.stdout)
-    with ThreadPoolExecutor(max_workers=10) as executor:
-        futures = [executor.submit(_fetch_single_competition_page, p) for p in range(1, TOTAL_COMPETITION_PAGES + 1)]
-        for future in as_completed(futures):
-            for comp in future.result():
-                competitions_data[comp["id"]] = comp
-
 def has_wr(person):
+    """Robust WR check from old completionist logic."""
     records = person.get("records", {})
-    singles, averages = records.get("single", []), records.get("average", [])
+    singles = records.get("single", [])
+    averages = records.get("average", [])
+    
+    # Check dictionaries
     if isinstance(singles, dict) and singles.get("WR", 0) > 0: return True
     if isinstance(averages, dict) and averages.get("WR", 0) > 0: return True
+    
+    # Check lists
     if isinstance(singles, list) and any(r.get("type") == "WR" for r in singles): return True
     if isinstance(averages, list) and any(r.get("type") == "WR" for r in averages): return True
+    
+    # Check rank-based WR
+    for r_type in ["singles", "averages"]:
+        ranks = person.get("rank", {}).get(r_type, [])
+        if any(r.get("worldRank") == 1 for r in ranks):
+            return True
     return False
 
 def has_wc_podium(person):
+    """Checks for podiums in competitions matching WCXXXX."""
     results = person.get("results", {})
     for comp_id, events in results.items():
         if re.match(r"WC\d+", comp_id):
             for event_results in events.values():
                 for r in event_results:
+                    # position is 1, 2, or 3 in a Final
                     if r.get("round") == "Final" and r.get("position") in (1, 2, 3):
                         return True
     return False
 
 def get_podium_coverage(person):
+    """Calculates exactly which events have which podium positions."""
     coverage = {}
-    for comp_id, events in person.get("results", {}).items():
+    results = person.get("results", {})
+    for comp_id, events in results.items():
+        if not isinstance(events, dict): continue
         for ev, ev_results in events.items():
             if ev in EXCLUDED_EVENTS: continue
             if ev not in coverage: coverage[ev] = set()
@@ -107,6 +78,10 @@ def get_podium_coverage(person):
     return coverage
 
 def determine_category(person):
+    # 0. Initialize results early
+    results = person.get("results", {})
+    if not isinstance(results, dict): results = {}
+
     # 1. Eligibility Check
     singles_ranks = {r.get("eventId") for r in person.get("rank", {}).get("singles", []) if r.get("eventId")}
     if not SINGLE_EVENTS.issubset(singles_ranks): return None
@@ -142,8 +117,8 @@ def determine_category(person):
 
     # 3. Date Trace
     history = []
-    for comp_id, events_in_comp in person.get("results", {}).items():
-        comp_detail = competitions_data.get(comp_id)
+    for comp_id, events_in_comp in results.items():
+        comp_detail = wca_data.competitions.get(comp_id)
         if not comp_detail: continue 
         date_till = comp_detail.get("date", {}).get("till")
         if not date_till: continue
@@ -179,55 +154,18 @@ def determine_category(person):
         "lastEvent": EVENT_NAMES.get(last_ev, last_ev)
     }
 
-# ----------------- Preload + Cache Logic -----------------
+# --- Flask Routes ---
 
-def preload_completionist_data():
-    global COMPLETIONIST_DATA_LOADED, ALL_COMPLETIONISTS_DATA
-    with COMPLETIONIST_LOADING_LOCK:
-        if COMPLETIONIST_DATA_LOADED: return
-        
-        if os.path.exists(CACHE_FILE):
-            try:
-                with open(CACHE_FILE, "r", encoding="utf-8") as f:
-                    ALL_COMPLETIONISTS_DATA = json.load(f)
-                COMPLETIONIST_DATA_LOADED = True
-                print(f"✅ Loaded {len(ALL_COMPLETIONISTS_DATA)} completionists from cache.")
-                return
-            except Exception: pass
-
-        fetch_competition_pages()
-
-        print("⚡ Fetching person data...", file=sys.stdout)
-        all_persons = []
-        with ThreadPoolExecutor(max_workers=15) as executor:
-            futures = [executor.submit(fetch_person_page, p) for p in range(1, TOTAL_PERSON_PAGES + 1)]
-            for f in as_completed(futures):
-                all_persons.extend(f.result())
-
-        print("⚡ Calculating completion tiers...", file=sys.stdout)
-        results = []
-        with ThreadPoolExecutor(max_workers=10) as executor:
-            futures = [executor.submit(determine_category, p) for p in all_persons]
-            for f in as_completed(futures):
-                res = f.result()
-                if res: results.append(res)
-
-        results.sort(key=lambda x: (x["categoryDate"] if x["categoryDate"] != "N/A" else "9999-12-31", x["name"]))
-
-        try:
-            with open(CACHE_FILE, "w", encoding="utf-8") as f:
-                json.dump(results, f, indent=2)
-        except Exception as e:
-            print(f"Cache write error: {e}")
-
-        ALL_COMPLETIONISTS_DATA = results
-        COMPLETIONIST_DATA_LOADED = True
-
-def get_completionists():
-    if not COMPLETIONIST_DATA_LOADED:
-        preload_completionist_data()
-    return ALL_COMPLETIONISTS_DATA
-
-@completionists_bp.route("/completionists", methods=["GET"])
+@completionists_bp.route("/completionists")
 def api_get_completionists():
-    return jsonify(get_completionists())
+    if not wca_data.persons:
+        return jsonify({"error": "Data loading..."}), 503
+        
+    results = []
+    for p in wca_data.persons:
+        res = determine_category(p)
+        if res:
+            results.append(res)
+
+    results.sort(key=lambda x: (x["categoryDate"] if x["categoryDate"] != "N/A" else "9999-12-31", x["name"]))
+    return jsonify(results)

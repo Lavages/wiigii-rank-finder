@@ -14,25 +14,39 @@
     body {
       font-family: 'Inter', Arial, sans-serif;
       background-color: #000000;
+      background-image: radial-gradient(circle at 50% -20%, #3b0764 0%, #000000 70%);
     }
 
     .nav-active {
-      color: #ec4899 !important;
-      border-bottom: 3px solid #ec4899;
+      color: #ff007f !important;
+      border-bottom: 3px solid #ff007f;
+      text-shadow: 0 0 10px rgba(255, 0, 127, 0.5);
     }
 
     .brand-logo {
       font-weight: 900;
       font-size: 2.5rem;
-      letter-spacing: -1px;
+      letter-spacing: -2px;
+      background: linear-gradient(to right, #ff007f, #7b2ff7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
     .brand-tag {
-      background-color: #ec4899;
-      color: black;
-      padding: 2px 8px;
+      background: linear-gradient(135deg, #ff007f, #7b2ff7);
+      color: white;
+      padding: 2px 10px;
       border-radius: 4px;
-      margin-left: 2px;
+      margin-left: 4px;
+      -webkit-text-fill-color: white;
+      font-size: 1.5rem;
+      vertical-align: middle;
+    }
+
+    .glass-card {
+      background: rgba(15, 15, 15, 0.8);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 0, 127, 0.1);
     }
 
     .event-icon {
@@ -44,9 +58,9 @@
       font-size: 1.8rem;
     }
 
-    /* Custom scrollbar for pink aesthetic */
+    /* Custom scrollbar */
     ::-webkit-scrollbar {
-      width: 8px;
+      width: 6px;
     }
 
     ::-webkit-scrollbar-track {
@@ -54,16 +68,33 @@
     }
 
     ::-webkit-scrollbar-thumb {
-      background: #ec4899;
+      background: linear-gradient(#ff007f, #7b2ff7);
       border-radius: 10px;
     }
 
     /* Button Toggles */
+    .event-btn {
+      background: #000;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .event-btn:hover {
+      border-color: #ff007f;
+      box-shadow: 0 0 15px rgba(255, 0, 127, 0.2);
+    }
+
     .event-btn.active {
-      background-color: #ec4899;
-      color: black;
-      border-color: #ec4899;
-      transform: scale(1.05);
+      background: linear-gradient(135deg, #ff007f, #7b2ff7);
+      color: white;
+      border-color: transparent;
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4), 0 0 15px rgba(255, 0, 127, 0.4);
+    }
+
+    .pink-border-glow {
+      border: 1px solid rgba(255, 0, 127, 0.2);
+      box-shadow: inset 0 0 20px rgba(255, 0, 127, 0.05);
     }
   </style>
 </head>
@@ -71,64 +102,64 @@
 <body class="min-h-screen text-gray-100 p-2 sm:p-4 flex flex-col items-center">
 
   <nav
-    class="w-full max-w-5xl mx-auto bg-[#1b1b1b] rounded-t-2xl p-3 sm:p-4 flex flex-wrap justify-center items-center gap-2 sm:gap-5 sticky top-0 z-50 border-b border-gray-800 backdrop-blur-md">
+    class="w-full max-w-5xl mx-auto bg-[#111111]/90 rounded-t-2xl p-3 sm:p-4 flex flex-wrap justify-center items-center gap-2 sm:gap-5 sticky top-0 z-50 border-b border-pink-500/20 backdrop-blur-md">
     <a href="/"
-      class="text-xs sm:text-sm text-gray-300 hover:text-pink-500 font-black px-2 uppercase tracking-tighter transition-colors">Rank
+      class="text-xs sm:text-sm text-gray-400 hover:text-[#ff007f] font-black px-2 uppercase tracking-tighter transition-colors">Rank
       Finder</a>
     <a href="/competitors"
       class="text-xs sm:text-sm font-black px-2 nav-active uppercase tracking-tighter transition-colors">Competitors</a>
     <a href="/specialist"
-      class="text-xs sm:text-sm text-gray-300 hover:text-pink-500 font-black px-2 uppercase tracking-tighter transition-colors">Specialist</a>
+      class="text-xs sm:text-sm text-gray-400 hover:text-[#ff007f] font-black px-2 uppercase tracking-tighter transition-colors">Specialist</a>
     <a href="/completionist"
-      class="text-xs sm:text-sm text-gray-300 hover:text-pink-500 font-black px-2 uppercase tracking-tighter transition-colors">Completionist</a>
+      class="text-xs sm:text-sm text-gray-400 hover:text-[#ff007f] font-black px-2 uppercase tracking-tighter transition-colors">Completionist</a>
     <a href="/events"
-      class="text-xs sm:text-sm text-gray-300 hover:text-pink-500 font-black px-2 uppercase tracking-tighter transition-colors">Events</a>
+      class="text-xs sm:text-sm text-gray-400 hover:text-[#ff007f] font-black px-2 uppercase tracking-tighter transition-colors">Events</a>
     <a href="/comparison"
-      class="text-xs sm:text-sm text-gray-300 hover:text-pink-500 font-black px-2 uppercase tracking-tighter transition-colors">Comparison</a>
+      class="text-xs sm:text-sm text-gray-400 hover:text-[#ff007f] font-black px-2 uppercase tracking-tighter transition-colors">Comparison</a>
     <a href="/competitions"
-      class="text-xs sm:text-sm text-gray-300 hover:text-pink-500 font-black px-2 uppercase tracking-tighter transition-colors">Competitions</a>
+      class="text-xs sm:text-sm text-gray-400 hover:text-[#ff007f] font-black px-2 uppercase tracking-tighter transition-colors">Competitions</a>
   </nav>
 
   <main
-    class="max-w-5xl w-full mx-auto bg-[#1b1b1b] rounded-b-2xl shadow-2xl p-4 sm:p-10 space-y-10 flex-grow border-x border-b border-gray-800">
+    class="max-w-5xl w-full mx-auto glass-card rounded-b-2xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] p-4 sm:p-10 space-y-10 flex-grow border-x border-b border-pink-500/10">
 
     <header class="text-center">
-      <h1 class="brand-logo text-white mb-2">
-        Competitors<span class="brand-tag">Compass</span>
-      </h1>
-      <p class="text-gray-400 text-sm font-bold uppercase tracking-widest">Multi-Event Participation Discovery</p>
+      <h1 class="brand-logo mb-2">Competitors<span class="brand-tag">Compass</span></h1>
+      <p class="text-purple-400/60 text-[10px] font-black uppercase tracking-[0.4em]">Multi-Event Participation
+        Discovery</p>
     </header>
 
-    <div class="bg-black p-6 rounded-2xl border border-gray-800 space-y-8">
+    <div class="bg-black/40 pink-border-glow p-6 rounded-2xl space-y-8">
       <div id="event-selector" class="flex flex-wrap justify-center gap-3">
       </div>
 
       <div class="flex justify-center">
         <button id="find-btn"
-          class="bg-pink-600 hover:bg-pink-500 text-black font-black py-4 px-12 rounded-xl shadow-xl transition-all active:scale-95 uppercase tracking-tighter text-lg">
-          Find Competitors
+          class="bg-[#ff007f] hover:bg-[#ff1a8c] text-white font-black py-4 px-12 rounded-xl shadow-[0_0_30px_rgba(255,0,127,0.2)] transition-all active:scale-95 uppercase tracking-tighter text-lg">
+          Initialize Search
         </button>
       </div>
     </div>
 
-    <div id="loading-spinner" class="hidden flex justify-center items-center py-10">
-      <svg class="animate-spin h-12 w-12 text-pink-500" xmlns="http://www.w3.org/2000/svg" fill="none"
+    <div id="loading-spinner" class="hidden flex flex-col items-center justify-center py-10 gap-4">
+      <svg class="animate-spin h-12 w-12 text-[#ff007f]" xmlns="http://www.w3.org/2000/svg" fill="none"
         viewBox="0 0 24 24">
         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
         <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 00-8 8h4z"></path>
       </svg>
+      <p class="text-[#ff007f] text-[10px] font-black uppercase tracking-widest animate-pulse">Scanning Nexus...</p>
     </div>
 
     <div id="results-container"
-      class="overflow-hidden rounded-2xl border border-gray-800 bg-black min-h-[100px] flex flex-col items-center justify-center">
+      class="overflow-hidden rounded-2xl border border-white/5 bg-black/20 min-h-[100px] flex flex-col items-center justify-center shadow-inner">
       <p id="error-message" class="text-red-500 font-black uppercase p-8 hidden"></p>
-      <p id="no-data-message" class="text-gray-600 font-black uppercase p-8 hidden">No matches found for this selection.
-      </p>
+      <p id="no-data-message" class="text-gray-600 font-black uppercase p-8 hidden tracking-widest text-xs">No Signal
+        Detected for Selection.</p>
     </div>
   </main>
 
-  <footer class="w-full max-w-5xl mx-auto text-center text-gray-500 text-xs sm:text-sm mt-8 pb-8 font-bold">
-    <p>© 2026 Wiigii's WCA Tools • <span class="text-pink-500">Premium Data Quality</span></p>
+  <footer class="w-full max-w-5xl mx-auto text-center text-gray-600 text-xs sm:text-sm mt-8 pb-8 font-bold">
+    <p>© 2026 Wiigii's WCA Tools • <span class="text-[#ff007f]">Premium Pink Edition</span></p>
   </footer>
 
   <script>
@@ -152,10 +183,6 @@
       "444bf": '<span class="cubing-icon event-444bf event-icon"></span>',
       "555bf": '<span class="cubing-icon event-555bf event-icon"></span>',
       "333mbf": '<span class="cubing-icon event-333mbf event-icon"></span>',
-      "333ft": '<span class="cubing-icon event-333ft event-icon"></span>',
-      "magic": '<span class="cubing-icon event-magic event-icon"></span>',
-      "mmagic": '<span class="cubing-icon event-mmagic event-icon"></span>',
-      "333mbo": '<span class="cubing-icon event-333mbo event-icon"></span>'
     };
 
     const HIDDEN_FROM_SELECTOR = ["333ft", "magic", "mmagic", "333mbo", "fto"];
@@ -166,7 +193,7 @@
       if (HIDDEN_FROM_SELECTOR.includes(id)) return;
 
       const btn = document.createElement("button");
-      btn.className = "event-btn bg-[#1b1b1b] hover:border-pink-500 text-gray-100 rounded-lg px-3 py-2 transition-all border border-gray-800";
+      btn.className = "event-btn text-gray-400 rounded-lg px-3 py-2 transition-all";
       btn.innerHTML = icon;
       btn.dataset.event = id;
       btn.addEventListener("click", () => {
@@ -180,7 +207,7 @@
     function getDisplayIcon(eventId) {
       const rawIcon = EVENT_ICONS[eventId] || eventId;
       if (typeof rawIcon === 'string' && rawIcon.includes('event-icon')) {
-        return rawIcon.replace('event-icon', 'event-icon result-icon text-pink-500');
+        return rawIcon.replace('event-icon', 'event-icon result-icon text-[#ff007f]');
       }
       return rawIcon;
     }
@@ -200,7 +227,7 @@
 
       try {
         const res = await fetch(`${API_BASE_URL}/competitors?events=${selectedEvents.join(",")}`);
-        if (!res.ok) throw new Error("Failed to fetch competitors");
+        if (!res.ok) throw new Error("Connection failed");
         const competitors = await res.json();
 
         if (!competitors.length) {
@@ -209,24 +236,24 @@
         }
 
         const tableHtml = `
-          <div class="hidden sm:block w-full results-data">
+          <div class="hidden sm:block w-full results-data animate-fade-in">
             <table class="w-full text-left">
-              <thead class="bg-[#1b1b1b]">
+              <thead class="bg-white/5">
                 <tr>
-                  <th class="p-5 text-[10px] font-black text-gray-500 uppercase tracking-widest">Name</th>
-                  <th class="p-5 text-[10px] font-black text-gray-500 uppercase tracking-widest">WCA ID</th>
-                  <th class="p-5 text-[10px] font-black text-gray-500 uppercase tracking-widest">Country</th>
-                  <th class="p-5 text-[10px] font-black text-gray-500 uppercase tracking-widest">Completed</th>
+                  <th class="p-5 text-[10px] font-black text-purple-500 uppercase tracking-[0.2em]">Name</th>
+                  <th class="p-5 text-[10px] font-black text-purple-500 uppercase tracking-[0.2em]">WCA ID</th>
+                  <th class="p-5 text-[10px] font-black text-purple-500 uppercase tracking-[0.2em]">Origin</th>
+                  <th class="p-5 text-[10px] font-black text-purple-500 uppercase tracking-[0.2em]">Data Points</th>
                 </tr>
               </thead>
-              <tbody class="divide-y divide-gray-900">
+              <tbody class="divide-y divide-white/5">
                 ${competitors.map(c => `
-                  <tr class="hover:bg-pink-900/5 transition-colors">
-                    <td class="p-5 font-black text-white uppercase tracking-tighter">${c.personName}</td>
+                  <tr class="hover:bg-[#ff007f]/5 transition-colors group">
+                    <td class="p-5 font-black text-white uppercase tracking-tighter group-hover:text-[#ff007f] transition-colors">${c.personName}</td>
                     <td class="p-5">
-                      <a href="https://www.worldcubeassociation.org/persons/${c.personId}" target="_blank" class="text-pink-500 hover:text-pink-400 font-bold underline decoration-pink-500/30">${c.personId}</a>
+                      <a href="https://www.worldcubeassociation.org/persons/${c.personId}" target="_blank" class="text-[#ff007f] font-black text-xs hover:underline decoration-[#ff007f]/50">${c.personId}</a>
                     </td>
-                    <td class="p-5 text-gray-400 font-bold">${c.personCountryId}</td>
+                    <td class="p-5 text-gray-500 font-bold text-xs uppercase">${c.personCountryId}</td>
                     <td class="p-5">
                         <div class="flex flex-wrap gap-1">
                             ${c.completed_events.map(e => getDisplayIcon(e)).join(" ")}
@@ -241,10 +268,10 @@
         const cardsHtml = `
           <div class="sm:hidden flex flex-col gap-4 w-full p-4 results-data">
             ${competitors.map(c => `
-              <div class="bg-[#1b1b1b] border border-gray-800 rounded-xl p-5">
+              <div class="bg-white/5 border border-white/5 rounded-xl p-5 pink-glow-hover">
                 <p class="text-xl font-black text-white uppercase tracking-tighter">${c.personName}</p>
-                <a href="https://www.worldcubeassociation.org/persons/${c.personId}" target="_blank" class="text-pink-500 font-bold text-sm underline decoration-pink-500/30">${c.personId}</a>
-                <p class="mt-2 text-xs text-gray-500 font-black uppercase">Country: <span class="text-gray-300">${c.personCountryId}</span></p>
+                <a href="https://www.worldcubeassociation.org/persons/${c.personId}" target="_blank" class="text-[#ff007f] font-black text-[10px] underline decoration-[#ff007f]/30">${c.personId}</a>
+                <p class="mt-2 text-[10px] text-gray-500 font-black uppercase tracking-widest">Zone: <span class="text-gray-300">${c.personCountryId}</span></p>
                 <div class="mt-4 flex flex-wrap gap-2">${c.completed_events.map(e => getDisplayIcon(e)).join("")}</div>
               </div>
             `).join("")}

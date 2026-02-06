@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Comparison • Wiigii's WCA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #000000;
+        }
+
+        .nav-active {
+            color: #ec4899 !important;
+            border-bottom: 3px solid #ec4899;
+        }
+
+        .brand-logo {
+            font-weight: 900;
+            font-size: 2.5rem;
+            letter-spacing: -1px;
+        }
+
+        .brand-tag {
+            background-color: #ec4899;
+            color: black;
+            padding: 2px 8px;
+            border-radius: 4px;
+            margin-left: 2px;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #000;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #ec4899;
+            border-radius: 10px;
+        }
+
+        .select-custom {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23ec4899'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1.5em;
+        }
+
+        .toggle-active {
+            background-color: #ec4899 !important;
+            color: black !important;
+        }
+
+        .result-row:hover {
+            background: linear-gradient(90deg, rgba(236, 72, 153, 0.08) 0%, rgba(0, 0, 0, 0) 100%);
+        }
+    </style>
+</head>
+
+<body class="min-h-screen text-gray-100 p-2 sm:p-4 flex flex-col items-center">
+
+    <nav
+        class="w-full max-w-5xl mx-auto bg-[#111] rounded-t-2xl p-3 sm:p-4 flex flex-wrap justify-center items-center gap-2 sm:gap-5 sticky top-0 z-50 border-b border-pink-500/20 backdrop-blur-md">
+        <a href="/"
+            class="text-xs sm:text-sm text-gray-400 hover:text-pink-500 font-black px-2 uppercase tracking-tighter transition-colors">Rank
+            Finder</a>
+        <a href="/competitors"
+            class="text-xs sm:text-sm text-gray-400 hover:text-pink-500 font-black px-2 uppercase tracking-tighter transition-colors">Competitors</a>
+        <a href="/specialist"
+            class="text-xs sm:text-sm text-gray-400 hover:text-pink-500 font-black px-2 uppercase tracking-tighter transition-colors">Specialist</a>
+        <a href="/completionist"
+            class="text-xs sm:text-sm text-gray-400 hover:text-pink-500 font-black px-2 uppercase tracking-tighter transition-colors">Completionist</a>
+        <a href="/events"
+            class="text-xs sm:text-sm text-gray-400 hover:text-pink-500 font-black px-2 uppercase tracking-tighter transition-colors">Events</a>
+        <a href="/comparison"
+            class="text-xs sm:text-sm font-black px-2 nav-active uppercase tracking-tighter transition-colors">Comparison</a>
+        <a href="/competitions"
+            class="text-xs sm:text-sm text-gray-400 hover:text-pink-500 font-black px-2 uppercase tracking-tighter transition-colors">Competitions</a>
+    </nav>
+
+    <div
+        class="max-w-6xl w-full mx-auto bg-[#111111] rounded-b-2xl shadow-2xl p-4 sm:p-10 space-y-10 flex-grow border-x border-b border-pink-500/10">
+
+        <header class="text-center">
+            <h1 class="brand-logo text-white mb-2">
+                Event<span class="brand-tag">Comparison</span>
+            </h1>
+            <p class="text-pink-500/60 text-sm font-bold uppercase tracking-[0.3em] italic">Deep Analysis • Ranking
+                Imbalances</p>
+        </header>
+
+        <main class="space-y-8">
+            <div class="bg-black p-6 rounded-2xl border border-pink-500/10 shadow-inner">
+                <div class="flex justify-center mb-8">
+                    <div class="inline-flex p-1 bg-[#1b1b1b] rounded-xl border border-gray-800">
+                        <button id="type-singles" onclick="setType('singles')"
+                            class="toggle-active px-6 py-2 rounded-lg text-xs font-black uppercase tracking-widest transition-all">Singles</button>
+                        <button id="type-averages" onclick="setType('averages')"
+                            class="px-6 py-2 rounded-lg text-xs font-black uppercase tracking-widest transition-all text-gray-500 hover:text-pink-500">Averages</button>
+                    </div>
+                </div>
+
+                <div class="flex flex-col md:flex-row items-center justify-center gap-4">
+                    <div class="w-full md:w-5/12">
+                        <label class="block text-[10px] font-black text-pink-500 uppercase tracking-[0.2em] mb-2 ml-1">
+                            Focus Event (Higher Rank):
+                        </label>
+                        <select id="event1-select"
+                            class="select-custom w-full p-4 rounded-xl border border-gray-800 bg-[#1b1b1b] text-gray-100 focus:ring-2 focus:ring-pink-500 focus:border-pink-500 outline-none cursor-pointer font-bold transition-all"></select>
+                    </div>
+
+                    <div class="flex items-center justify-center pt-6">
+                        <button id="swap-btn"
+                            class="p-3 rounded-xl bg-gray-900 border border-gray-800 hover:border-pink-500 text-pink-500 transition-all transform hover:rotate-180">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+                            </svg>
+                        </button>
+                    </div>
+
+                    <div class="w-full md:w-5/12">
+                        <label class="block text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] mb-2 ml-1">
+                            Benchmark Event:
+                        </label>
+                        <select id="event2-select"
+                            class="select-custom w-full p-4 rounded-xl border border-gray-800 bg-[#1b1b1b] text-gray-100 focus:ring-2 focus:ring-pink-500 focus:border-pink-500 outline-none cursor-pointer font-bold transition-all"></select>
+                    </div>
+                </div>
+
+                <button id="compare-button"
+                    class="w-full mt-8 bg-pink-600 hover:bg-pink-500 text-black font-black py-4 rounded-xl shadow-[0_0_20px_rgba(236,72,153,0.3)] transition-all transform active:scale-95 uppercase tracking-tighter text-lg">
+                    Generate Imbalance Report
+                </button>
+            </div>
+
+            <div id="loading-spinner" class="hidden flex flex-col justify-center items-center py-20 space-y-4">
+                <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-pink-500 border-r-transparent"></div>
+                <p class="text-pink-500 font-black uppercase tracking-widest text-xs animate-pulse">Analyzing Global
+                    Standings...</p>
+            </div>
+
+            <div id="results-container" class="hidden">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 id="results-title"
+                        class="text-xl font-black text-white uppercase tracking-tighter border-l-4 border-pink-500 pl-4">
+                        Analysis Results
+                    </h2>
+                    <span id="result-count"
+                        class="text-[10px] font-black text-pink-500 bg-pink-500/10 border border-pink-500/20 px-3 py-1 rounded-full uppercase tracking-widest">
+                        0 Matches
+                    </span>
+                </div>
+
+                <div class="overflow-hidden rounded-2xl border border-gray-800 bg-black">
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full">
+                            <thead class="bg-[#1b1b1b] border-b border-gray-800">
+                                <tr>
+                                    <th
+                                        class="px-6 py-4 text-left text-[10px] font-black text-gray-500 uppercase tracking-widest">
+                                        Rank</th>
+                                    <th
+                                        class="px-6 py-4 text-left text-[10px] font-black text-gray-500 uppercase tracking-widest">
+                                        Competitor</th>
+                                    <th id="event1-header"
+                                        class="px-6 py-4 text-left text-[10px] font-black text-pink-500 uppercase tracking-widest bg-pink-500/5">
+                                        Focus Result</th>
+                                    <th id="event2-header"
+                                        class="px-6 py-4 text-left text-[10px] font-black text-gray-500 uppercase tracking-widest">
+                                        Benchmark Result</th>
+                                </tr>
+                            </thead>
+                            <tbody id="results-table-body" class="divide-y divide-gray-900"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div id="no-results-message"
+                class="hidden text-center py-20 bg-black rounded-3xl border border-dashed border-pink-500/20">
+                <p class="text-gray-600 font-black uppercase tracking-widest text-sm">No statistical outliers found for
+                    this pair.</p>
+            </div>
+
+            <div id="error-message"
+                class="hidden text-center py-10 bg-pink-950/10 rounded-2xl border border-pink-900/30 text-pink-500 font-black uppercase text-xs tracking-widest">
+                <p>Error: <span id="error-text">Failed to fetch data.</span></p>
+            </div>
+        </main>
+    </div>
+
+    <footer class="w-full max-w-6xl mx-auto text-center text-gray-600 text-xs sm:text-sm mt-8 pb-8 font-bold">
+        <p>© 2026 Wiigii's WCA Tools • <span class="text-pink-500 uppercase">Pink Edition</span></p>
+    </footer>
+
+    <script>
+        const eventMap = {
+            "3x3 Cube": "333", "2x2 Cube": "222", "4x4 Cube": "444", "5x5 Cube": "555",
+            "6x6 Cube": "666", "7x7 Cube": "777", "3x3 One-Handed": "333oh",
+            "3x3 Blindfolded": "333bf", "3x3 Fewest Moves": "333fm", "Clock": "clock",
+            "Megaminx": "minx", "Pyraminx": "pyram", "Skewb": "skewb",
+            "Square-1": "sq1", "4x4 Blindfolded": "444bf", "5x5 Blindfolded": "555bf",
+            "3x3 Multi-Blind": "333mbf"
+        };
+
+        let currentType = 'singles';
+        const eventSelect1 = document.getElementById('event1-select');
+        const eventSelect2 = document.getElementById('event2-select');
+        const compareButton = document.getElementById('compare-button');
+        const swapButton = document.getElementById('swap-btn');
+        const loadingSpinner = document.getElementById('loading-spinner');
+        const resultsContainer = document.getElementById('results-container');
+        const resultsTitle = document.getElementById('results-title');
+        const resultsTableBody = document.getElementById('results-table-body');
+        const event1Header = document.getElementById('event1-header');
+        const event2Header = document.getElementById('event2-header');
+        const noResultsMessage = document.getElementById('no-results-message');
+        const errorMessage = document.getElementById('error-message');
+        const errorText = document.getElementById('error-text');
+        const resultCountSpan = document.getElementById('result-count');
+
+        function setType(type) {
+            currentType = type;
+            document.getElementById('type-singles').className = type === 'singles' ? 'toggle-active px-6 py-2 rounded-lg text-xs font-black uppercase tracking-widest transition-all' : 'px-6 py-2 rounded-lg text-xs font-black uppercase tracking-widest transition-all text-gray-500 hover:text-pink-500';
+            document.getElementById('type-averages').className = type === 'averages' ? 'toggle-active px-6 py-2 rounded-lg text-xs font-black uppercase tracking-widest transition-all' : 'px-6 py-2 rounded-lg text-xs font-black uppercase tracking-widest transition-all text-gray-500 hover:text-pink-500';
+        }
+
+        function populateEventDropdowns() {
+            Object.keys(eventMap).forEach((name) => {
+                eventSelect1.add(new Option(name, name));
+                eventSelect2.add(new Option(name, name));
+            });
+            eventSelect1.value = "3x3 Multi-Blind";
+            eventSelect2.value = "3x3 Cube";
+        }
+
+        swapButton.onclick = () => {
+            const temp = eventSelect1.value;
+            eventSelect1.value = eventSelect2.value;
+            eventSelect2.value = temp;
+        };
+
+        async function fetchAndRenderData() {
+            const e1Name = eventSelect1.value;
+            const e2Name = eventSelect2.value;
+
+            resultsTableBody.innerHTML = '';
+            resultsContainer.classList.add('hidden');
+            noResultsMessage.classList.add('hidden');
+            errorMessage.classList.add('hidden');
+            loadingSpinner.classList.remove('hidden');
+
+            event1Header.textContent = e1Name;
+            event2Header.textContent = e2Name;
+
+            try {
+                const response = await fetch(`/api/compare_events?event1=${encodeURIComponent(e1Name)}&event2=${encodeURIComponent(e2Name)}&type=${currentType}`);
+                if (!response.ok) throw new Error((await response.json()).error || 'Server error');
+
+                const json = await response.json();
+                loadingSpinner.classList.add('hidden');
+
+                if (json.data && json.data.length > 0) {
+                    resultsTitle.textContent = `${e1Name} vs ${e2Name}`;
+                    resultCountSpan.textContent = `${json.count} Specialists`;
+
+                    json.data.slice(0, 150).forEach((comp, index) => {
+                        const row = document.createElement('tr');
+                        row.className = "result-row transition-colors border-b border-gray-900/50";
+                        row.innerHTML = `
+                            <td class="px-6 py-4 whitespace-nowrap text-[10px] font-black text-pink-500/40">#${index + 1}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex flex-col">
+                                    <span class="text-sm font-black text-white uppercase tracking-tighter">${comp.name}</span>
+                                    <div class="flex items-center gap-2 mt-1">
+                                        <span class="text-[10px] text-gray-500 font-bold uppercase">${comp.country}</span>
+                                        <a href="https://www.worldcubeassociation.org/persons/${comp.wca_id}" target="_blank" class="text-[9px] text-pink-500/60 hover:text-pink-500 font-bold underline transition-colors">${comp.wca_id}</a>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-black text-pink-500 bg-pink-500/5 border-x border-pink-500/10 italic">${comp.best1}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-500">${comp.best2}</td>
+                        `;
+                        resultsTableBody.appendChild(row);
+                    });
+                    resultsContainer.classList.remove('hidden');
+                } else {
+                    noResultsMessage.classList.remove('hidden');
+                }
+            } catch (err) {
+                loadingSpinner.classList.add('hidden');
+                errorText.textContent = err.message;
+                errorMessage.classList.remove('hidden');
+            }
+        }
+
+        populateEventDropdowns();
+        compareButton.onclick = fetchAndRenderData;
+    </script>
+</body>
+
+</html>

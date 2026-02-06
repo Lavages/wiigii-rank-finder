@@ -173,7 +173,7 @@ class SimulatorClock(tk.Canvas):
 class App(ctk.CTk):
     def __init__(self):
         super().__init__()
-        self.title("Mechanical Clock Simulator")
+        self.title("Crazy Clock Simulator")
         self.geometry("1600x950"); self.configure(fg_color="#ffffff")
         self.is_waiting_for_first_move = self.timer_running = self.is_scrambling = False
         self.modes = ["Triangular", "3x3", "Pentagonal", "Super-Pentagonal", "4x4", "5x5", "6x6", "7x7"]

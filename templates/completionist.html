@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Completionists Club • Wiigii's WCA</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #000000;
+    }
+
+    .nav-active {
+      color: #ec4899 !important;
+      border-bottom: 3px solid #ec4899;
+    }
+
+    .brand-logo {
+      font-weight: 900;
+      font-size: 2.5rem;
+      letter-spacing: -1px;
+    }
+
+    .brand-tag {
+      background-color: #ec4899;
+      color: black;
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-left: 2px;
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #000;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #ec4899;
+      border-radius: 10px;
+    }
+
+    .comp-table th,
+    .comp-table td {
+      padding: 1.25rem;
+    }
+
+    /* Premium Tier Row Gradients */
+    .platinum-row {
+      background: linear-gradient(to right, #1a1a1a, #2d1b24);
+      border-left: 4px solid #f472b6;
+      color: #fdf2f8;
+    }
+
+    .palladium-row {
+      background: linear-gradient(to right, #000000, #1b1b1b);
+      border-left: 4px solid #94a3b8;
+      color: #f1f5f9;
+    }
+
+    .iridium-row {
+      background: linear-gradient(135deg, #1f1218 0%, #000000 50%, #1a1a1a 100%);
+      border-left: 4px solid #ec4899;
+      color: #ffffff;
+      text-shadow: 0 0 10px rgba(236, 72, 153, 0.4);
+    }
+
+    /* Button Toggles */
+    .btn-category.active-tier {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(236, 72, 153, 0.3);
+      border: 2px solid #ec4899 !important;
+    }
+  </style>
+</head>
+
+<body class="min-h-screen text-gray-100 p-2 sm:p-4 flex flex-col items-center">
+
+  <nav
+    class="w-full max-w-5xl mx-auto bg-[#1b1b1b] rounded-t-2xl p-3 sm:p-4 flex flex-wrap justify-center items-center gap-2 sm:gap-5 sticky top-0 z-50 border-b border-gray-800 backdrop-blur-md">
+    <a href="/"
+      class="text-xs sm:text-sm text-gray-300 hover:text-pink-500 font-black px-2 uppercase tracking-tighter transition-colors">Rank
+      Finder</a>
+    <a href="/competitors"
+      class="text-xs sm:text-sm text-gray-300 hover:text-pink-500 font-black px-2 uppercase tracking-tighter transition-colors">Competitors</a>
+    <a href="/specialist"
+      class="text-xs sm:text-sm text-gray-300 hover:text-pink-500 font-black px-2 uppercase tracking-tighter transition-colors">Specialist</a>
+    <a href="/completionist"
+      class="text-xs sm:text-sm font-black px-2 nav-active uppercase tracking-tighter transition-colors">Completionist</a>
+    <a href="/events"
+      class="text-xs sm:text-sm text-gray-300 hover:text-pink-500 font-black px-2 uppercase tracking-tighter transition-colors">Events</a>
+    <a href="/comparison"
+      class="text-xs sm:text-sm text-gray-300 hover:text-pink-500 font-black px-2 uppercase tracking-tighter transition-colors">Comparison</a>
+    <a href="/competitions"
+      class="text-xs sm:text-sm text-gray-300 hover:text-pink-500 font-black px-2 uppercase tracking-tighter transition-colors">Competitions</a>
+  </nav>
+
+  <main
+    class="max-w-5xl w-full mx-auto bg-[#1b1b1b] rounded-b-2xl shadow-2xl p-4 sm:p-10 space-y-10 flex-grow border-x border-b border-gray-800">
+
+    <header class="text-center">
+      <h1 class="brand-logo text-white mb-2">
+        Completionist<span class="brand-tag">Club</span>
+      </h1>
+      <p class="text-gray-400 text-sm font-bold uppercase tracking-widest italic">Recognizing the masters of the WCA
+        spectrum</p>
+    </header>
+
+    <div class="flex justify-center flex-wrap gap-3 sm:gap-4">
+      <button
+        class="btn-category bg-amber-900/20 border border-amber-700/50 text-amber-500 font-black py-2 px-5 rounded-lg transition-all active:scale-95 uppercase text-xs tracking-widest"
+        data-category="bronze">Bronze</button>
+      <button
+        class="btn-category bg-slate-800/20 border border-slate-600/50 text-slate-400 font-black py-2 px-5 rounded-lg transition-all active:scale-95 uppercase text-xs tracking-widest"
+        data-category="silver">Silver</button>
+      <button
+        class="btn-category bg-yellow-500/10 border border-yellow-500/50 text-yellow-500 font-black py-2 px-5 rounded-lg transition-all active:scale-95 uppercase text-xs tracking-widest"
+        data-category="gold">Gold</button>
+      <button
+        class="btn-category bg-pink-500/10 border border-pink-500/50 text-pink-400 font-black py-2 px-5 rounded-lg transition-all active:scale-95 uppercase text-xs tracking-widest"
+        data-category="platinum">Platinum</button>
+      <button
+        class="btn-category bg-slate-400/10 border border-slate-400/50 text-slate-300 font-black py-2 px-5 rounded-lg transition-all active:scale-95 uppercase text-xs tracking-widest"
+        data-category="palladium">Palladium</button>
+      <button
+        class="btn-category bg-pink-600 border border-pink-400 text-black font-black py-2 px-5 rounded-lg transition-all active:scale-95 uppercase text-xs tracking-widest"
+        data-category="iridium">Iridium</button>
+    </div>
+
+    <div id="criteria-box"
+      class="bg-black rounded-2xl border border-gray-800 p-8 text-gray-300 text-center transition-all duration-300 min-h-[100px] flex items-center justify-center font-bold">
+      <p class="uppercase tracking-widest text-xs text-gray-500">Select a tier above to see requirements</p>
+    </div>
+
+    <div id="table-container"
+      class="rounded-2xl border border-gray-800 bg-black overflow-hidden min-h-[400px] flex flex-col items-center justify-start shadow-inner">
+      <div id="loading-spinner" class="hidden py-24 flex flex-col items-center gap-4">
+        <svg class="animate-spin h-12 w-12 text-pink-500" xmlns="http://www.w3.org/2000/svg" fill="none"
+          viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 00-8 8h4z"></path>
+        </svg>
+        <p class="text-pink-500 font-black uppercase tracking-widest text-xs animate-pulse">Syncing Leaderboards...</p>
+      </div>
+      <p id="error-message" class="text-red-500 font-black uppercase p-10 hidden"></p>
+      <p id="no-data-message" class="text-gray-600 font-black uppercase py-24 hidden">No members in this tier yet.</p>
+    </div>
+  </main>
+
+  <footer class="w-full max-w-5xl mx-auto text-center text-gray-600 text-xs sm:text-sm mt-8 pb-8 font-bold">
+    <p>© 2026 Wiigii's WCA Tools • <span class="text-pink-500">Verified Data</span></p>
+  </footer>
+
+  <script>
+    const API_BASE_URL = '/api';
+    let allCompletionistsData = [];
+    let currentCategory = 'bronze';
+
+    const tableContainer = document.getElementById('table-container');
+    const loadingSpinner = document.getElementById('loading-spinner');
+    const errorMessage = document.getElementById('error-message');
+    const noDataMessage = document.getElementById('no-data-message');
+    const buttons = document.querySelectorAll(".btn-category");
+    const criteriaBox = document.getElementById("criteria-box");
+
+    const EVENT_NAMES = {
+      "333": "3x3 Cube", "222": "2x2 Cube", "444": "4x4 Cube", "555": "5x5 Cube",
+      "666": "6x6 Cube", "777": "7x7 Cube", "333oh": "3x3 One-Handed", "333bf": "3x3 Blindfolded",
+      "333fm": "3x3 Fewest Moves", "clock": "Clock", "minx": "Megaminx", "pyram": "Pyraminx",
+      "skewb": "Skewb", "sq1": "Square-1", "444bf": "4x4 Blindfolded", "555bf": "5x5 Blindfolded",
+      "333mbf": "3x3 Multi-Blind", "WC Podium": "WC Podium"
+    };
+
+    const criteriaText = {
+      bronze: `<p class="uppercase tracking-tight"><span class="text-amber-500 font-black">🥉 Bronze:</span> Must have a <span class="text-white">single result</span> in every official WCA event.</p>`,
+      silver: `<p class="uppercase tracking-tight"><span class="text-slate-400 font-black">🥈 Silver:</span> All singles and averages, excluding <span class="text-white">FMC</span> and <span class="text-white">Blindfolded</span> events.</p>`,
+      gold: `<p class="uppercase tracking-tight"><span class="text-yellow-500 font-black">🥇 Gold:</span> All singles and all averages, including <span class="text-white">FMC</span> and <span class="text-white">Blindfolded</span> means.</p>`,
+      platinum: `<p class="uppercase tracking-tight"><span class="text-pink-400 font-black">🌌 Platinum:</span> All Gold criteria + a <span class="text-white">World Record</span> or <span class="text-white">WC podium</span>.</p>`,
+      palladium: `<p class="uppercase tracking-tight"><span class="text-slate-300 font-black">💎 Palladium:</span> Platinum criteria + at least <span class="text-pink-500">one podium (1st, 2nd, or 3rd)</span> in all 17 official WCA events.</p>`,
+      iridium: `<p class="uppercase tracking-tight"><span class="text-pink-600 font-black">☄️ Iridium:</span> The ultimate master. Achieved <span class="text-white">WR AND WC Podium</span> + <span class="text-pink-500">1st, 2nd, AND 3rd place</span> in every official WCA event.</p>`
+    };
+
+    function updateCriteria(category) {
+      criteriaBox.innerHTML = criteriaText[category];
+    }
+
+    async function fetchAllCompletionists() {
+      loadingSpinner.classList.remove('hidden');
+      errorMessage.classList.add('hidden');
+      noDataMessage.classList.add('hidden');
+
+      try {
+        const response = await fetch(`${API_BASE_URL}/completionists`);
+        if (!response.ok) throw new Error('Failed to fetch completionists');
+        allCompletionistsData = await response.json();
+        renderTable(currentCategory);
+      } catch (error) {
+        errorMessage.textContent = `CRITICAL ERROR: ${error.message}`;
+        errorMessage.classList.remove('hidden');
+      } finally {
+        loadingSpinner.classList.add('hidden');
+      }
+    }
+
+    function renderTable(category) {
+      currentCategory = category;
+      tableContainer.querySelectorAll('.dynamic-content').forEach(el => el.remove());
+      noDataMessage.classList.add('hidden');
+
+      let filtered = allCompletionistsData.filter(c => c.category.toLowerCase() === category.toLowerCase());
+
+      if (filtered.length === 0) {
+        noDataMessage.classList.remove('hidden');
+        return;
+      }
+
+      filtered.sort((a, b) => {
+        const dateA = a.categoryDate === "N/A" ? "9999-12-31" : a.categoryDate;
+        const dateB = b.categoryDate === "N/A" ? "9999-12-31" : b.categoryDate;
+        return new Date(dateA) - new Date(dateB);
+      });
+
+      const tableHtml = `
+            <div class="hidden sm:block w-full dynamic-content overflow-x-auto">
+                <table class="w-full text-left">
+                    <thead class="bg-[#1b1b1b] border-b border-gray-800">
+                        <tr>
+                            <th class="p-5 text-[10px] font-black text-gray-500 uppercase tracking-widest">Rank</th>
+                            <th class="p-5 text-[10px] font-black text-gray-500 uppercase tracking-widest">Name</th>
+                            <th class="p-5 text-[10px] font-black text-gray-500 uppercase tracking-widest">WCA ID</th>
+                            <th class="p-5 text-[10px] font-black text-gray-500 uppercase tracking-widest">Completion</th>
+                            <th class="p-5 text-[10px] font-black text-gray-500 uppercase tracking-widest">Final Event</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-900">
+                        ${filtered.map((c, i) => {
+        let rowClass = "hover:bg-pink-900/5 transition-colors";
+        if (category === 'platinum') rowClass = "platinum-row";
+        else if (category === 'palladium') rowClass = "palladium-row";
+        else if (category === 'iridium') rowClass = "iridium-row";
+
+        return `
+                            <tr class="${rowClass}">
+                                <td class="p-5 font-black text-gray-600 text-sm">#${i + 1}</td>
+                                <td class="p-5 font-black text-white uppercase tracking-tighter">${c.name}</td>
+                                <td class="p-5">
+                                    <a href="https://www.worldcubeassociation.org/persons/${c.id}" target="_blank"
+                                        class="text-pink-500 hover:text-pink-400 font-bold underline decoration-pink-500/30">${c.id}</a>
+                                </td>
+                                <td class="p-5 text-sm font-bold text-gray-400">${c.categoryDate || "N/A"}</td>
+                                <td class="p-5 text-xs font-black uppercase text-pink-500/80 tracking-widest">${EVENT_NAMES[c.lastEvent] || c.lastEvent || "N/A"}</td>
+                            </tr>
+                        `}).join('')}
+                    </tbody>
+                </table>
+            </div>
+          `;
+
+      const cardsHtml = `
+            <div class="sm:hidden flex flex-col gap-4 w-full p-4 dynamic-content">
+                ${filtered.map((c, i) => {
+        let cardStyle = "bg-[#1b1b1b] border border-gray-800";
+        if (category === 'platinum') cardStyle = "platinum-row";
+        else if (category === 'palladium') cardStyle = "palladium-row";
+        else if (category === 'iridium') cardStyle = "iridium-row";
+
+        return `
+                    <div class="${cardStyle} rounded-xl p-6 shadow-xl">
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="text-[10px] font-black text-gray-500 uppercase tracking-widest">#${i + 1}</span>
+                            <span class="text-[10px] font-black uppercase text-pink-500 tracking-widest">${c.category} Member</span>
+                        </div>
+                        <p class="text-xl font-black text-white uppercase tracking-tighter mb-1">${c.name}</p>
+                        <a href="https://www.worldcubeassociation.org/persons/${c.id}" target="_blank" class="text-pink-500 font-bold text-sm underline decoration-pink-500/30">${c.id}</a>
+                        <div class="mt-6 grid grid-cols-2 gap-4 text-[10px] border-t border-gray-800 pt-4">
+                            <div>
+                                <p class="text-gray-500 uppercase font-black mb-1">Achieved</p>
+                                <p class="text-gray-200 font-black">${c.categoryDate || "N/A"}</p>
+                            </div>
+                            <div>
+                                <p class="text-gray-500 uppercase font-black mb-1">Closer</p>
+                                <p class="text-pink-500 font-black uppercase">${EVENT_NAMES[c.lastEvent] || c.lastEvent || "N/A"}</p>
+                            </div>
+                        </div>
+                    </div>
+                `}).join('')}
+            </div>
+          `;
+
+      tableContainer.insertAdjacentHTML('beforeend', tableHtml + cardsHtml);
+    }
+
+    buttons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        buttons.forEach(b => b.classList.remove('active-tier'));
+        btn.classList.add('active-tier');
+        renderTable(btn.dataset.category);
+        updateCriteria(btn.dataset.category);
+      });
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const defaultButton = document.querySelector(`.btn-category[data-category="${currentCategory}"]`);
+      if (defaultButton) defaultButton.classList.add('active-tier');
+      updateCriteria(currentCategory);
+      fetchAllCompletionists();
+    });
+  </script>
+</body>
+
+</html>

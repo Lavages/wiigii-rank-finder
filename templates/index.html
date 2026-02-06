@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wiigii's RankFinder</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', Arial, sans-serif;
+            background-color: #000000;
+        }
+
+        .spinner {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .nav-active {
+            color: #ec4899 !important;
+            border-bottom: 3px solid #ec4899;
+        }
+
+        .brand-logo {
+            font-weight: 900;
+            font-size: 2.5rem;
+            letter-spacing: -1px;
+        }
+
+        .brand-tag {
+            background-color: #ec4899;
+            color: black;
+            padding: 2px 8px;
+            border-radius: 4px;
+            margin-left: 2px;
+        }
+
+        /* Custom scrollbar for a cleaner dark look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #000;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #ec4899;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen text-gray-100 p-2 sm:p-4 flex flex-col items-center">
+
+    <nav
+        class="w-full max-w-5xl mx-auto bg-[#1b1b1b] rounded-t-2xl p-3 sm:p-4 flex flex-wrap justify-center items-center gap-2 sm:gap-5 sticky top-0 z-50 border-b border-gray-800 backdrop-blur-md">
+        <a href="/"
+            class="text-xs sm:text-sm font-black px-2 nav-active uppercase tracking-tighter transition-colors">Rank
+            Finder</a>
+        <a href="/competitors"
+            class="text-xs sm:text-sm text-gray-300 hover:text-pink-500 font-black px-2 uppercase tracking-tighter transition-colors">Competitors</a>
+        <a href="/specialist"
+            class="text-xs sm:text-sm text-gray-300 hover:text-pink-500 font-black px-2 uppercase tracking-tighter transition-colors">Specialist</a>
+        <a href="/completionist"
+            class="text-xs sm:text-sm text-gray-300 hover:text-pink-500 font-black px-2 uppercase tracking-tighter transition-colors">Completionist</a>
+        <a href="/events"
+            class="text-xs sm:text-sm text-gray-300 hover:text-pink-500 font-black px-2 uppercase tracking-tighter transition-colors">Events</a>
+        <a href="/comparison"
+            class="text-xs sm:text-sm text-gray-300 hover:text-pink-500 font-black px-2 uppercase tracking-tighter transition-colors">Comparison</a>
+        <a href="/competitions"
+            class="text-xs sm:text-sm text-gray-300 hover:text-pink-500 font-black px-2 uppercase tracking-tighter transition-colors">Competitions</a>
+    </nav>
+
+    <div
+        class="max-w-5xl w-full mx-auto bg-[#1b1b1b] rounded-b-2xl shadow-2xl p-4 sm:p-10 space-y-10 flex-grow border-x border-b border-gray-800">
+
+        <header class="text-center">
+            <h1 class="brand-logo text-white mb-2">
+                Rank<span class="brand-tag">Finder</span>
+            </h1>
+            <p class="text-gray-400 text-sm font-bold uppercase tracking-widest">Global WCA Database Access</p>
+        </header>
+
+        <div id="main-content" class="space-y-8">
+            <div class="flex flex-col items-center justify-center py-20">
+                <p class="text-center text-xl text-pink-500 font-black animate-pulse uppercase">Syncing Database...</p>
+                <div class="mt-4 spinner">
+                    <svg class="h-8 w-8 text-pink-500" viewBox="0 0 24 24" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
+                        </circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 00-8 8h4z">
+                        </path>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="w-full max-w-5xl mx-auto text-center text-gray-500 text-xs sm:text-sm mt-8 pb-8 font-bold">
+        <p>© 2026 Wiigii's WCA Tools • <span class="text-pink-500">Premium Data Quality</span></p>
+    </footer>
+
+    <script>
+        const API_BASE_URL = '/api';
+        const WCA_DATA_API_BASE_URL = 'https://raw.githubusercontent.com/robiningelbrecht/wca-rest-api/master/api';
+
+        let selectedRegion = 'world';
+        let selectedEvent = '333';
+        let selectedRankingType = 'singles';
+        let rankNumber = '1';
+        let globalRankingsData = null;
+        let loading = false;
+        let error = null;
+        let viewMode = 'global_search_form';
+
+        const mainContentDiv = document.getElementById('main-content');
+
+        let regions = [
+            { value: 'world', label: 'World' },
+            { value: 'europe', label: 'Europe' },
+            { value: 'north-america', label: 'North America' },
+            { value: 'asia', label: 'Asia' },
+            { value: 'south-america', label: 'South America' },
+            { value: 'africa', label: 'Africa' },
+            { value: 'oceania', label: 'Oceania' },
+        ];
+
+        const events = [
+            { value: '333', label: '3x3x3 Cube' },
+            { value: '222', label: '2x2x2 Cube' },
+            { value: '444', label: '4x4x4 Cube' },
+            { value: '555', label: '5x5x5 Cube' },
+            { value: '666', label: '6x6x6 Cube' },
+            { value: '777', label: '7x7x7 Cube' },
+            { value: '333bf', label: '3x3x3 Blindfolded' },
+            { value: '333fm', label: '3x3x3 Fewest Moves' },
+            { value: '333oh', label: '3x3x3 One-Handed' },
+            { value: 'clock', label: 'Rubik\'s Clock' },
+            { value: 'minx', label: 'Megaminx' },
+            { value: 'pyram', label: 'Pyraminx' },
+            { value: 'sq1', label: 'Square-1' },
+            { value: 'skewb', label: 'Skewb' },
+            { value: '444bf', label: '4x4x4 Blindfolded' },
+            { value: '555bf', label: '5x5x5 Blindfolded' },
+            { value: '333mbf', label: '3x3x3 Multi-Blind' }
+        ];
+
+        function formatTime(centiseconds) {
+            if (centiseconds === -1) return 'DNF';
+            if (centiseconds === -2) return 'DNS';
+            if (centiseconds === 0 || centiseconds === null) return 'No Result';
+            const totalSeconds = centiseconds / 100;
+            const minutes = Math.floor(totalSeconds / 60);
+            const seconds = Math.floor(totalSeconds % 60);
+            const hundredths = Math.floor((totalSeconds * 100) % 100);
+            const formattedMinutes = minutes > 0 ? `${minutes}:` : '';
+            const formattedSeconds = minutes > 0 && seconds < 10 ? `0${seconds}` : seconds.toString();
+            const formattedHundredths = hundredths < 10 ? `0${hundredths}` : hundredths.toString();
+            return minutes > 0 ? `${formattedMinutes}${formattedSeconds}.${formattedHundredths}` : `${seconds}.${formattedHundredths}s`;
+        }
+
+        function formatMultiBlind(result) {
+            if (result < 0) return 'DNF';
+            const valueStr = String(result).padStart(10, '0');
+            const difference = 99 - parseInt(valueStr.substring(1, 3), 10);
+            const timeInSeconds = parseInt(valueStr.substring(3, 8), 10);
+            const missedCubes = parseInt(valueStr.substring(8, 10), 10);
+            const solvedCubes = difference + missedCubes;
+            const attemptedCubes = solvedCubes + missedCubes;
+            const minutes = Math.floor(timeInSeconds / 60);
+            const seconds = timeInSeconds % 60;
+            return `${solvedCubes}/${attemptedCubes} ${minutes}:${String(seconds).padStart(2, '0')}`;
+        }
+
+        function getFormattedResult(competitor) {
+            const result = competitor.result;
+            if (competitor.eventId === '333fm' && competitor.rankType === 'single') return `${result} moves`;
+            if (competitor.eventId === '333fm' && competitor.rankType === 'average') return `${(result / 100).toFixed(2)} moves`;
+            if (competitor.eventId === '333mbf' && competitor.rankType === 'single') return formatMultiBlind(result);
+            return formatTime(result);
+        }
+
+        async function fetchCountries() {
+            try {
+                const response = await fetch(`${WCA_DATA_API_BASE_URL}/countries.json`);
+                if (!response.ok) throw new Error('Network error');
+                const data = await response.json();
+                const countryOptions = data.items
+                    .map(country => ({ value: country.iso2Code.toLowerCase(), label: country.name }))
+                    .sort((a, b) => a.label.localeCompare(b.label));
+                regions = [...regions.slice(0, 7), ...countryOptions];
+            } catch (err) { console.error(err); }
+        }
+
+        function renderUI() {
+            mainContentDiv.innerHTML = '';
+
+            if (loading) {
+                mainContentDiv.innerHTML = `
+                    <div class="py-20 flex flex-col items-center gap-4">
+                        <div class="spinner">
+                            <svg class="h-10 w-10 text-pink-500" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 00-8 8h4z"></path>
+                            </svg>
+                        </div>
+                        <p class="text-xl text-pink-500 font-black animate-pulse uppercase">Fetching Data...</p>
+                    </div>`;
+                return;
+            }
+
+            if (error) {
+                mainContentDiv.innerHTML = `
+                    <div class="bg-red-950/30 text-white p-8 rounded-2xl border border-red-500/50 flex flex-col items-center gap-4">
+                        <p class="font-black uppercase text-red-500">Search Error</p>
+                        <p class="text-sm font-bold text-gray-300">${error}</p>
+                        <button onclick="handleBackToSearchForm()" class="mt-4 bg-white text-black font-black py-3 px-8 rounded-lg hover:bg-pink-500 transition-all uppercase text-xs">
+                            Try Again
+                        </button>
+                    </div>`;
+                return;
+            }
+
+            if (viewMode === 'global_search_form') {
+                mainContentDiv.innerHTML = `
+                    <div class="space-y-8 animate-fade-in">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                            <div class="flex flex-col">
+                                <label class="text-pink-500 text-[10px] font-black uppercase mb-2 ml-1 tracking-widest">Region</label>
+                                <select id="region-select" class="p-4 rounded-xl border border-gray-800 bg-black text-white focus:ring-2 focus:ring-pink-500 outline-none font-bold appearance-none cursor-pointer">
+                                    ${regions.map(r => `<option value="${r.value}" ${selectedRegion === r.value ? 'selected' : ''}>${r.label}</option>`).join('')}
+                                </select>
+                            </div>
+                            <div class="flex flex-col">
+                                <label class="text-pink-500 text-[10px] font-black uppercase mb-2 ml-1 tracking-widest">Event</label>
+                                <select id="event-select" class="p-4 rounded-xl border border-gray-800 bg-black text-white focus:ring-2 focus:ring-pink-500 outline-none font-bold appearance-none cursor-pointer">
+                                    ${events.map(e => `<option value="${e.value}" ${selectedEvent === e.value ? 'selected' : ''}>${e.label}</option>`).join('')}
+                                </select>
+                            </div>
+                            <div class="flex flex-col">
+                                <label class="text-pink-500 text-[10px] font-black uppercase mb-2 ml-1 tracking-widest">Result Type</label>
+                                <select id="ranking-type-select" class="p-4 rounded-xl border border-gray-800 bg-black text-white focus:ring-2 focus:ring-pink-500 outline-none font-bold cursor-pointer">
+                                    <option value="singles" ${selectedRankingType === 'singles' ? 'selected' : ''}>Singles</option>
+                                    <option value="averages" ${selectedRankingType === 'averages' ? 'selected' : ''}>Averages</option>
+                                </select>
+                            </div>
+                            <div class="flex flex-col">
+                                <label class="text-pink-500 text-[10px] font-black uppercase mb-2 ml-1 tracking-widest">Rank Position</label>
+                                <input type="number" id="rank-number-input" value="${rankNumber}" min="1" class="p-4 rounded-xl border border-gray-800 bg-black text-white focus:ring-2 focus:ring-pink-500 outline-none font-bold" />
+                            </div>
+                        </div>
+                        <button id="search-button" onclick="handleFetchGlobalRankings()" class="w-full bg-pink-600 hover:bg-pink-500 text-black font-black text-xl py-5 rounded-2xl shadow-lg shadow-pink-600/20 transition-all active:scale-[0.98] uppercase tracking-tighter">
+                            Analyze Rankings
+                        </button>
+                    </div>
+                `;
+                setupListeners();
+
+            } else if (viewMode === 'single_rank_result') {
+                const eventLabel = events.find(e => e.value === selectedEvent)?.label || selectedEvent;
+                const regionLabel = regions.find(r => r.value === selectedRegion)?.label || selectedRegion;
+                const { competitors, actualRank } = globalRankingsData;
+
+                mainContentDiv.innerHTML = `
+                    <button onclick="handleBackToSearchForm()" class="text-pink-500 hover:text-white font-black uppercase mb-6 flex items-center gap-2 transition-colors text-xs tracking-widest">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15 19l-7-7 7-7"></path></svg>
+                        Back to Finder
+                    </button>
+                    <div class="text-center mb-10">
+                        <p class="text-[10px] font-black text-pink-500 uppercase tracking-[0.3em] mb-2">${regionLabel} Dataset</p>
+                        <h2 class="text-4xl font-black text-white uppercase tracking-tighter">Rank #${actualRank}</h2>
+                        <div class="inline-block bg-[#222] border border-gray-800 text-gray-400 rounded-lg px-4 py-1 mt-4 font-black text-xs uppercase">
+                            ${eventLabel} • ${selectedRankingType}
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 gap-4">
+                        ${competitors.map(c => `
+                            <div class="bg-black p-8 rounded-2xl border border-gray-800 hover:border-pink-500/50 transition-all group">
+                                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+                                    <div>
+                                        <p class="font-black text-3xl text-white uppercase tracking-tighter group-hover:text-pink-500 transition-colors">${c.person.name}</p>
+                                        <div class="flex items-center gap-3 mt-2">
+                                            <span class="text-[10px] bg-pink-600 text-black px-2 py-0.5 rounded font-black uppercase tracking-widest">${c.person.wcaId}</span>
+                                            <span class="text-[10px] text-gray-500 font-black uppercase tracking-widest">${c.person.countryId}</span>
+                                        </div>
+                                    </div>
+                                    <div class="bg-[#0f0f0f] p-4 px-8 rounded-xl border border-gray-800 text-center">
+                                        <p class="text-[10px] text-gray-500 font-black uppercase tracking-widest mb-1">Time/Result</p>
+                                        <p class="font-black text-4xl text-white">${getFormattedResult(c)}</p>
+                                    </div>
+                                </div>
+                                <a href="https://www.worldcubeassociation.org/persons/${c.person.wcaId}" target="_blank"
+                                   class="mt-8 block text-center w-full bg-pink-600/10 hover:bg-pink-600 text-pink-500 hover:text-black font-black py-4 rounded-xl transition-all uppercase text-xs tracking-widest border border-pink-600/20">
+                                    Official WCA Profile
+                                </a>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            }
+        }
+
+        function setupListeners() {
+            const regionEl = document.getElementById('region-select');
+            const eventEl = document.getElementById('event-select');
+            const typeEl = document.getElementById('ranking-type-select');
+            const rankEl = document.getElementById('rank-number-input');
+
+            if (regionEl) regionEl.onchange = (e) => selectedRegion = e.target.value;
+            if (eventEl) eventEl.onchange = (e) => selectedEvent = e.target.value;
+            if (typeEl) typeEl.onchange = (e) => selectedRankingType = e.target.value;
+            if (rankEl) rankEl.oninput = (e) => rankNumber = e.target.value;
+        }
+
+        async function handleFetchGlobalRankings() {
+            loading = true; error = null; renderUI();
+            try {
+                const type = selectedRankingType === 'singles' ? 'single' : 'average';
+                const res = await fetch(`/api/global-rankings/${selectedRegion}/${type}/${selectedEvent}?rankNumber=${rankNumber}`);
+                if (!res.ok) throw new Error("Rank position not found in the current dataset.");
+                const data = await res.json();
+                if (data.competitors && data.competitors.length > 0) {
+                    globalRankingsData = data;
+                    viewMode = 'single_rank_result';
+                } else {
+                    throw new Error("No competitors found for this specific rank.");
+                }
+            } catch (err) {
+                error = err.message;
+            } finally {
+                loading = false;
+                renderUI();
+            }
+        }
+
+        function handleBackToSearchForm() {
+            error = null;
+            viewMode = 'global_search_form';
+            renderUI();
+        }
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Wait for countries but keep the loading state visible if needed
+            await fetchCountries();
+            renderUI();
+        });
+    </script>
+</body>
+
+</html>

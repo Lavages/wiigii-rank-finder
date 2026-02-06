@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Competitors Compass • Wiigii's WCA</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.cubing.net/v0/css/@cubing/icons/css">
+
+  <style>
+    body {
+      font-family: 'Inter', Arial, sans-serif;
+      background-color: #000000;
+    }
+
+    .nav-active {
+      color: #ec4899 !important;
+      border-bottom: 3px solid #ec4899;
+    }
+
+    .brand-logo {
+      font-weight: 900;
+      font-size: 2.5rem;
+      letter-spacing: -1px;
+    }
+
+    .brand-tag {
+      background-color: #ec4899;
+      color: black;
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-left: 2px;
+    }
+
+    .event-icon {
+      font-size: 2.4rem;
+      vertical-align: middle;
+    }
+
+    .result-icon {
+      font-size: 1.8rem;
+    }
+
+    /* Custom scrollbar for pink aesthetic */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #000;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #ec4899;
+      border-radius: 10px;
+    }
+
+    /* Button Toggles */
+    .event-btn.active {
+      background-color: #ec4899;
+      color: black;
+      border-color: #ec4899;
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+
+<body class="min-h-screen text-gray-100 p-2 sm:p-4 flex flex-col items-center">
+
+  <nav
+    class="w-full max-w-5xl mx-auto bg-[#1b1b1b] rounded-t-2xl p-3 sm:p-4 flex flex-wrap justify-center items-center gap-2 sm:gap-5 sticky top-0 z-50 border-b border-gray-800 backdrop-blur-md">
+    <a href="/"
+      class="text-xs sm:text-sm text-gray-300 hover:text-pink-500 font-black px-2 uppercase tracking-tighter transition-colors">Rank
+      Finder</a>
+    <a href="/competitors"
+      class="text-xs sm:text-sm font-black px-2 nav-active uppercase tracking-tighter transition-colors">Competitors</a>
+    <a href="/specialist"
+      class="text-xs sm:text-sm text-gray-300 hover:text-pink-500 font-black px-2 uppercase tracking-tighter transition-colors">Specialist</a>
+    <a href="/completionist"
+      class="text-xs sm:text-sm text-gray-300 hover:text-pink-500 font-black px-2 uppercase tracking-tighter transition-colors">Completionist</a>
+    <a href="/events"
+      class="text-xs sm:text-sm text-gray-300 hover:text-pink-500 font-black px-2 uppercase tracking-tighter transition-colors">Events</a>
+    <a href="/comparison"
+      class="text-xs sm:text-sm text-gray-300 hover:text-pink-500 font-black px-2 uppercase tracking-tighter transition-colors">Comparison</a>
+    <a href="/competitions"
+      class="text-xs sm:text-sm text-gray-300 hover:text-pink-500 font-black px-2 uppercase tracking-tighter transition-colors">Competitions</a>
+  </nav>
+
+  <main
+    class="max-w-5xl w-full mx-auto bg-[#1b1b1b] rounded-b-2xl shadow-2xl p-4 sm:p-10 space-y-10 flex-grow border-x border-b border-gray-800">
+
+    <header class="text-center">
+      <h1 class="brand-logo text-white mb-2">
+        Competitors<span class="brand-tag">Compass</span>
+      </h1>
+      <p class="text-gray-400 text-sm font-bold uppercase tracking-widest">Multi-Event Participation Discovery</p>
+    </header>
+
+    <div class="bg-black p-6 rounded-2xl border border-gray-800 space-y-8">
+      <div id="event-selector" class="flex flex-wrap justify-center gap-3">
+      </div>
+
+      <div class="flex justify-center">
+        <button id="find-btn"
+          class="bg-pink-600 hover:bg-pink-500 text-black font-black py-4 px-12 rounded-xl shadow-xl transition-all active:scale-95 uppercase tracking-tighter text-lg">
+          Find Competitors
+        </button>
+      </div>
+    </div>
+
+    <div id="loading-spinner" class="hidden flex justify-center items-center py-10">
+      <svg class="animate-spin h-12 w-12 text-pink-500" xmlns="http://www.w3.org/2000/svg" fill="none"
+        viewBox="0 0 24 24">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 00-8 8h4z"></path>
+      </svg>
+    </div>
+
+    <div id="results-container"
+      class="overflow-hidden rounded-2xl border border-gray-800 bg-black min-h-[100px] flex flex-col items-center justify-center">
+      <p id="error-message" class="text-red-500 font-black uppercase p-8 hidden"></p>
+      <p id="no-data-message" class="text-gray-600 font-black uppercase p-8 hidden">No matches found for this selection.
+      </p>
+    </div>
+  </main>
+
+  <footer class="w-full max-w-5xl mx-auto text-center text-gray-500 text-xs sm:text-sm mt-8 pb-8 font-bold">
+    <p>© 2026 Wiigii's WCA Tools • <span class="text-pink-500">Premium Data Quality</span></p>
+  </footer>
+
+  <script>
+    const API_BASE_URL = '/api';
+
+    const EVENT_ICONS = {
+      "333": '<span class="cubing-icon event-333 event-icon"></span>',
+      "222": '<span class="cubing-icon event-222 event-icon"></span>',
+      "444": '<span class="cubing-icon event-444 event-icon"></span>',
+      "555": '<span class="cubing-icon event-555 event-icon"></span>',
+      "666": '<span class="cubing-icon event-666 event-icon"></span>',
+      "777": '<span class="cubing-icon event-777 event-icon"></span>',
+      "333oh": '<span class="cubing-icon event-333oh event-icon"></span>',
+      "333bf": '<span class="cubing-icon event-333bf event-icon"></span>',
+      "333fm": '<span class="cubing-icon event-333fm event-icon"></span>',
+      "clock": '<span class="cubing-icon event-clock event-icon"></span>',
+      "minx": '<span class="cubing-icon event-minx event-icon"></span>',
+      "pyram": '<span class="cubing-icon event-pyram event-icon"></span>',
+      "skewb": '<span class="cubing-icon event-skewb event-icon"></span>',
+      "sq1": '<span class="cubing-icon event-sq1 event-icon"></span>',
+      "444bf": '<span class="cubing-icon event-444bf event-icon"></span>',
+      "555bf": '<span class="cubing-icon event-555bf event-icon"></span>',
+      "333mbf": '<span class="cubing-icon event-333mbf event-icon"></span>',
+      "333ft": '<span class="cubing-icon event-333ft event-icon"></span>',
+      "magic": '<span class="cubing-icon event-magic event-icon"></span>',
+      "mmagic": '<span class="cubing-icon event-mmagic event-icon"></span>',
+      "333mbo": '<span class="cubing-icon event-333mbo event-icon"></span>'
+    };
+
+    const HIDDEN_FROM_SELECTOR = ["333ft", "magic", "mmagic", "333mbo", "fto"];
+    let selectedEvents = [];
+
+    const eventSelector = document.getElementById("event-selector");
+    Object.entries(EVENT_ICONS).forEach(([id, icon]) => {
+      if (HIDDEN_FROM_SELECTOR.includes(id)) return;
+
+      const btn = document.createElement("button");
+      btn.className = "event-btn bg-[#1b1b1b] hover:border-pink-500 text-gray-100 rounded-lg px-3 py-2 transition-all border border-gray-800";
+      btn.innerHTML = icon;
+      btn.dataset.event = id;
+      btn.addEventListener("click", () => {
+        btn.classList.toggle("active");
+        if (selectedEvents.includes(id)) selectedEvents = selectedEvents.filter(e => e !== id);
+        else selectedEvents.push(id);
+      });
+      eventSelector.appendChild(btn);
+    });
+
+    function getDisplayIcon(eventId) {
+      const rawIcon = EVENT_ICONS[eventId] || eventId;
+      if (typeof rawIcon === 'string' && rawIcon.includes('event-icon')) {
+        return rawIcon.replace('event-icon', 'event-icon result-icon text-pink-500');
+      }
+      return rawIcon;
+    }
+
+    document.getElementById("find-btn").addEventListener("click", async () => {
+      const container = document.getElementById("results-container");
+      const spinner = document.getElementById("loading-spinner");
+      const errorMsg = document.getElementById("error-message");
+      const noData = document.getElementById("no-data-message");
+
+      if (selectedEvents.length === 0) return;
+
+      spinner.classList.remove("hidden");
+      errorMsg.classList.add("hidden");
+      noData.classList.add("hidden");
+      container.querySelectorAll(".results-data").forEach(el => el.remove());
+
+      try {
+        const res = await fetch(`${API_BASE_URL}/competitors?events=${selectedEvents.join(",")}`);
+        if (!res.ok) throw new Error("Failed to fetch competitors");
+        const competitors = await res.json();
+
+        if (!competitors.length) {
+          noData.classList.remove("hidden");
+          return;
+        }
+
+        const tableHtml = `
+          <div class="hidden sm:block w-full results-data">
+            <table class="w-full text-left">
+              <thead class="bg-[#1b1b1b]">
+                <tr>
+                  <th class="p-5 text-[10px] font-black text-gray-500 uppercase tracking-widest">Name</th>
+                  <th class="p-5 text-[10px] font-black text-gray-500 uppercase tracking-widest">WCA ID</th>
+                  <th class="p-5 text-[10px] font-black text-gray-500 uppercase tracking-widest">Country</th>
+                  <th class="p-5 text-[10px] font-black text-gray-500 uppercase tracking-widest">Completed</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-900">
+                ${competitors.map(c => `
+                  <tr class="hover:bg-pink-900/5 transition-colors">
+                    <td class="p-5 font-black text-white uppercase tracking-tighter">${c.personName}</td>
+                    <td class="p-5">
+                      <a href="https://www.worldcubeassociation.org/persons/${c.personId}" target="_blank" class="text-pink-500 hover:text-pink-400 font-bold underline decoration-pink-500/30">${c.personId}</a>
+                    </td>
+                    <td class="p-5 text-gray-400 font-bold">${c.personCountryId}</td>
+                    <td class="p-5">
+                        <div class="flex flex-wrap gap-1">
+                            ${c.completed_events.map(e => getDisplayIcon(e)).join(" ")}
+                        </div>
+                    </td>
+                  </tr>
+                `).join("")}
+              </tbody>
+            </table>
+          </div>`;
+
+        const cardsHtml = `
+          <div class="sm:hidden flex flex-col gap-4 w-full p-4 results-data">
+            ${competitors.map(c => `
+              <div class="bg-[#1b1b1b] border border-gray-800 rounded-xl p-5">
+                <p class="text-xl font-black text-white uppercase tracking-tighter">${c.personName}</p>
+                <a href="https://www.worldcubeassociation.org/persons/${c.personId}" target="_blank" class="text-pink-500 font-bold text-sm underline decoration-pink-500/30">${c.personId}</a>
+                <p class="mt-2 text-xs text-gray-500 font-black uppercase">Country: <span class="text-gray-300">${c.personCountryId}</span></p>
+                <div class="mt-4 flex flex-wrap gap-2">${c.completed_events.map(e => getDisplayIcon(e)).join("")}</div>
+              </div>
+            `).join("")}
+          </div>`;
+
+        container.insertAdjacentHTML("beforeend", tableHtml + cardsHtml);
+      } catch (err) {
+        errorMsg.textContent = err.message;
+        errorMsg.classList.remove("hidden");
+      } finally {
+        spinner.classList.add("hidden");
+      }
+    });
+  </script>
+
+</body>
+
+</html>

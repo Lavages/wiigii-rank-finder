@@ -166,6 +166,44 @@
             countryMenu.appendChild(opt);
         });
 
+        /**
+         * Logic to handle different WCA result formats
+         */
+        function formatWCAResult(result, eventId, resType) {
+            if (result <= 0) return "DNF";
+
+            // 3x3x3 Fewest Moves (Single is whole number, Average is decimal)
+            if (eventId === '333fm') {
+                return resType === 'single' ? result.toString() : (result / 100).toFixed(2);
+            }
+
+            // 3x3x3 Multi-Blind (Special encoding)
+            if (eventId === '333mbf') {
+                const resultStr = result.toString().padStart(9, '0');
+                const DD = parseInt(resultStr.substring(0, 2));
+                const TTTTT = parseInt(resultStr.substring(2, 7));
+                const MM = parseInt(resultStr.substring(7, 9));
+
+                const points = 99 - DD;
+                const solved = points + MM;
+                const attempted = solved + MM;
+                const timeSeconds = TTTTT;
+                const minutes = Math.floor(timeSeconds / 60);
+                const seconds = timeSeconds % 60;
+
+                return `${solved}/${attempted} ${minutes}:${seconds.toString().padStart(2, '0')}`;
+            }
+
+            // Standard timing (centiseconds to seconds)
+            const totalSeconds = result / 100;
+            const minutes = Math.floor(totalSeconds / 60);
+            const seconds = (totalSeconds % 60).toFixed(2);
+
+            return minutes > 0
+                ? `${minutes}:${seconds.padStart(5, '0')}`
+                : `${seconds}s`;
+        }
+
         async function fetchRank() {
             const out = document.getElementById('results');
             out.innerHTML = '<div class="text-center py-24 serif italic text-3xl text-m-accent animate-pulse">Consulting the Vault...</div>';
@@ -176,39 +214,44 @@
             const rank = document.getElementById('rank').value;
 
             try {
-                const response = await fetch(`/api/global-rankings/${region}/${resType}/${event}?rankNumber=${rank}`);
+                const url = `/api/global-rankings/${encodeURIComponent(region)}/${resType}/${event}?rankNumber=${rank}`;
+                const response = await fetch(url);
 
                 if (response.status === 503) throw new Error("Database initializing. Please wait 10 seconds.");
+                if (!response.ok) {
+                    const errData = await response.json();
+                    throw new Error(errData.error || "No result found for this rank.");
+                }
+
                 const data = await response.json();
-                if (data.error) throw new Error(data.error);
 
                 out.innerHTML = `
-                    <div class="animate-in fade-in slide-in-from-bottom-6 duration-1000">
-                        <div class="flex items-baseline gap-4 mb-12">
-                            <h2 class="serif text-5xl italic tracking-tighter">Rank #${data.actualRank}</h2>
-                            <span class="text-[10px] uppercase font-black tracking-widest text-gray-300">Verified Result</span>
-                        </div>
-                        <div class="grid gap-6">
-                            ${data.competitors.map(c => `
-                                <div class="flex justify-between items-center p-8 bg-white/50 rounded-[2.5rem] border border-white hover:shadow-2xl transition-all group">
-                                    <div class="flex items-center gap-6">
-                                        <span class="fi fi-${c.flag} rounded-sm scale-150 shadow-sm border border-gray-100"></span>
-                                        <div>
-                                            <a href="https://www.worldcubeassociation.org/persons/${c.wca_id}" target="_blank" class="font-bold text-2xl tracking-tight hover:text-m-accent transition-colors">
-                                                ${c.name}
-                                            </a>
-                                            <p class="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] mt-1">
-                                                ${c.wca_id} • ${c.country}
-                                            </p>
-                                        </div>
+                <div class="animate-in fade-in slide-in-from-bottom-6 duration-1000">
+                    <div class="flex items-baseline gap-4 mb-12">
+                        <h2 class="serif text-5xl italic tracking-tighter">Rank #${data.actualRank}</h2>
+                        <span class="text-[10px] uppercase font-black tracking-widest text-gray-300">Verified Result</span>
+                    </div>
+                    <div class="grid gap-6">
+                        ${data.competitors.map(c => `
+                            <div class="flex flex-col sm:flex-row justify-between items-center p-8 bg-white/50 rounded-[2.5rem] border border-white hover:shadow-2xl transition-all group gap-6">
+                                <div class="flex items-center gap-6">
+                                    <span class="fi fi-${c.flag.toLowerCase()} rounded-sm scale-150 shadow-sm border border-gray-100"></span>
+                                    <div>
+                                        <a href="https://www.worldcubeassociation.org/persons/${c.wca_id}" target="_blank" class="font-bold text-2xl tracking-tight hover:text-m-accent transition-colors">
+                                            ${c.name}
+                                        </a>
+                                        <p class="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] mt-1">
+                                            ${c.wca_id} • ${c.country}
+                                        </p>
                                     </div>
-                                    <p class="serif text-5xl italic group-hover:scale-105 transition-transform duration-500">
-                                        ${(c.result / 100).toFixed(2)}s
-                                    </p>
                                 </div>
-                            `).join('')}
-                        </div>
-                    </div>`;
+                                <p class="serif text-5xl italic group-hover:scale-105 transition-transform duration-500">
+                                    ${formatWCAResult(c.result, event, resType)}
+                                </p>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>`;
             } catch (e) {
                 out.innerHTML = `<div class="py-24 text-center uppercase text-[11px] font-black tracking-[0.3em] text-red-300">${e.message}</div>`;
             }

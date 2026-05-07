@@ -1,0 +1,12 @@
+# Ignore the massive source TSVs
+data/*.tsv
+
+# Ignore Python environment and cache
+__pycache__/
+venv/
+.env
+
+# Keep the Parquet vault (optional - usually recommended for small repos)
+!data/*.parquet
+
+global_persons_cache.json

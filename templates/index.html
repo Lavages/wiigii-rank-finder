@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>RankFinder // Global Records</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,300&family=Inter:wght@300;400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.0.0/css/flag-icons.min.css" />
+    <style>
+        :root {
+            --m-lavender: #e6e0f3;
+            --m-dark: #2a1b3d;
+            --m-accent: #8e7cc3;
+            --m-grid: rgba(142, 124, 195, 0.1);
+        }
+
+        body {
+            background-color: #fcfaff;
+            background-image: linear-gradient(var(--m-grid) 1px, transparent 1px), linear-gradient(90deg, var(--m-grid) 1px, transparent 1px);
+            background-size: 32px 32px;
+            font-family: 'Inter', sans-serif;
+            color: var(--m-dark);
+        }
+
+        .serif {
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(25px);
+            border: 1px solid white;
+            box-shadow: 0 40px 100px rgba(142, 124, 195, 0.1);
+        }
+
+        .btn-m {
+            background: var(--m-dark);
+            color: white;
+            transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            letter-spacing: 0.15em;
+        }
+
+        .btn-m:hover {
+            background: var(--m-accent);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(142, 124, 195, 0.3);
+        }
+
+        select,
+        input {
+            background: transparent !important;
+            border-bottom: 1px solid var(--m-lavender);
+            padding: 10px 0;
+            outline: none;
+            transition: 0.3s;
+            width: 100%;
+        }
+
+        select:focus,
+        input:focus {
+            border-bottom-color: var(--m-accent);
+        }
+
+        optgroup {
+            font-style: normal;
+            font-weight: bold;
+            color: var(--m-accent);
+        }
+    </style>
+</head>
+
+<body class="p-6 sm:p-12">
+    <div class="max-w-7xl mx-auto glass rounded-[3.5rem] p-10 sm:p-20 relative overflow-hidden">
+        <header class="text-center mb-16">
+            <h1 class="serif text-7xl italic tracking-tighter">RankFinder</h1>
+            <p class="text-[10px] tracking-[0.5em] text-gray-400 font-bold uppercase mt-3">Unified Global Vault // 2026
+                Edition</p>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-16">
+            <div class="flex flex-col lg:col-span-1">
+                <label class="text-[10px] font-black uppercase text-m-accent tracking-widest mb-1">Region</label>
+                <select id="region_id">
+                    <option value="World">World (Global)</option>
+                    <optgroup label="Continents">
+                        <option value="_Africa">Africa</option>
+                        <option value="_Asia">Asia</option>
+                        <option value="_Europe">Europe</option>
+                        <option value="_North America">North America</option>
+                        <option value="_Oceania">Oceania</option>
+                        <option value="_South America">South America</option>
+                    </optgroup>
+                    <optgroup label="Countries" id="country_list">
+                    </optgroup>
+                </select>
+            </div>
+
+            <div class="flex flex-col">
+                <label class="text-[10px] font-black uppercase text-m-accent tracking-widest mb-1">Event</label>
+                <select id="event">
+                    <option value="333">3x3x3 Cube</option>
+                    <option value="222">2x2x2 Cube</option>
+                    <option value="444">4x4x4 Cube</option>
+                    <option value="555">5x5x5 Cube</option>
+                    <option value="666">6x6x6 Cube</option>
+                    <option value="777">7x7x7 Cube</option>
+                    <option value="333oh">3x3 One-Handed</option>
+                    <option value="333bf">3x3 Blindfolded</option>
+                    <option value="pyram">Pyraminx</option>
+                    <option value="megaminx">Megaminx</option>
+                    <option value="clock">Clock</option>
+                    <option value="skewb">Skewb</option>
+                    <option value="sq1">Square-1</option>
+                    <option value="444bf">4x4 Blindfolded</option>
+                    <option value="555bf">5x5 Blindfolded</option>
+                    <option value="333mbf">3x3 Multi-Blind</option>
+                    <option value="333mb0">3x3 Multi-Blind Oldstyle</option>
+                    <option value="magic">Magic</option>
+                    <option value="mmagic">Master Magic</option>
+                    <option value="333ft">3x3 with Feet</option>
+                </select>
+            </div>
+
+            <div class="flex flex-col">
+                <label class="text-[10px] font-black uppercase text-m-accent tracking-widest mb-1">Format</label>
+                <select id="res_type">
+                    <option value="single">Single</option>
+                    <option value="average">Average</option>
+                </select>
+            </div>
+
+            <div class="flex flex-col">
+                <label class="text-[10px] font-black uppercase text-m-accent tracking-widest mb-1">Target Rank</label>
+                <input type="number" id="rank" value="1" min="1">
+            </div>
+
+            <div class="flex flex-col justify-end">
+                <button onclick="fetchRank()"
+                    class="btn-m py-3 rounded-2xl text-[10px] font-bold uppercase w-full">Search</button>
+            </div>
+        </div>
+
+        <div id="results" class="min-h-[400px] border-t border-gray-100 pt-12">
+            <div class="h-full flex items-center justify-center text-gray-300 italic serif text-3xl">Enter parameters to
+                search...</div>
+        </div>
+    </div>
+
+    <footer class="mt-12 text-center opacity-30">
+        <p class="serif italic text-gray-500 text-xl">両手いっぱいの幸せを、あなたに。</p>
+        <p class="text-[8px] uppercase tracking-[0.6em] text-gray-400 font-black mt-2">Millsage Arch • WCA Data Tools
+        </p>
+    </footer>
+
+    <script>
+        // Automatic Country Population from your TSV list
+        const countries = ["Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cabo Verde", "Cambodia", "Cameroon", "Canada", "Central African Republic", "Chad", "Chile", "China", "Colombia", "Comoros", "Congo", "Costa Rica", "Cote d_Ivoire", "Croatia", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Eswatini", "Ethiopia", "Fiji", "Finland", "France", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Grenada", "Guatemala", "Guinea", "Guinea Bissau", "Guyana", "Haiti", "Honduras", "Hong Kong", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Korea", "Kosovo", "Kuwait", "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Macau", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Moldova", "Monaco", "Mongolia", "Montenegro", "Morocco", "Mozambique", "Myanmar", "Namibia", "Nauru", "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Niger", "Nigeria", "North Macedonia", "Norway", "Oman", "Pakistan", "Palau", "Palestine", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Russia", "Rwanda", "Samoa", "San Marino", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "South Sudan", "Spain", "Sri Lanka", "Sudan", "Suriname", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Timor-Leste", "Togo", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "Uruguay", "USA", "Uzbekistan", "Vanuatu", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe"];
+
+        const countryMenu = document.getElementById('country_list');
+        countries.sort().forEach(c => {
+            const opt = document.createElement('option');
+            opt.value = opt.textContent = c;
+            countryMenu.appendChild(opt);
+        });
+
+        async function fetchRank() {
+            const out = document.getElementById('results');
+            out.innerHTML = '<div class="text-center py-24 serif italic text-3xl text-m-accent animate-pulse">Consulting the Vault...</div>';
+
+            const region = document.getElementById('region_id').value;
+            const resType = document.getElementById('res_type').value;
+            const event = document.getElementById('event').value;
+            const rank = document.getElementById('rank').value;
+
+            try {
+                const response = await fetch(`/api/global-rankings/${region}/${resType}/${event}?rankNumber=${rank}`);
+
+                if (response.status === 503) throw new Error("Database initializing. Please wait 10 seconds.");
+                const data = await response.json();
+                if (data.error) throw new Error(data.error);
+
+                out.innerHTML = `
+                    <div class="animate-in fade-in slide-in-from-bottom-6 duration-1000">
+                        <div class="flex items-baseline gap-4 mb-12">
+                            <h2 class="serif text-5xl italic tracking-tighter">Rank #${data.actualRank}</h2>
+                            <span class="text-[10px] uppercase font-black tracking-widest text-gray-300">Verified Result</span>
+                        </div>
+                        <div class="grid gap-6">
+                            ${data.competitors.map(c => `
+                                <div class="flex justify-between items-center p-8 bg-white/50 rounded-[2.5rem] border border-white hover:shadow-2xl transition-all group">
+                                    <div class="flex items-center gap-6">
+                                        <span class="fi fi-${c.flag} rounded-sm scale-150 shadow-sm border border-gray-100"></span>
+                                        <div>
+                                            <a href="https://www.worldcubeassociation.org/persons/${c.wca_id}" target="_blank" class="font-bold text-2xl tracking-tight hover:text-m-accent transition-colors">
+                                                ${c.name}
+                                            </a>
+                                            <p class="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] mt-1">
+                                                ${c.wca_id} • ${c.country}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <p class="serif text-5xl italic group-hover:scale-105 transition-transform duration-500">
+                                        ${(c.result / 100).toFixed(2)}s
+                                    </p>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>`;
+            } catch (e) {
+                out.innerHTML = `<div class="py-24 text-center uppercase text-[11px] font-black tracking-[0.3em] text-red-300">${e.message}</div>`;
+            }
+        }
+    </script>
+</body>
+
+</html>
